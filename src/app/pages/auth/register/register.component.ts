@@ -27,10 +27,10 @@ export class RegisterComponent {
     }
     this.loading = true; this.error = '';
     setTimeout(() => {
-      const ok = this.auth.register(this.form.name, this.form.email, this.form.password);
+      const result = this.auth.register(this.form.name, this.form.email, this.form.password);
       this.loading = false;
-      if (ok) this.router.navigate(['/']);
-      else this.error = 'Une erreur est survenue. Veuillez réessayer.';
+      if (result.ok) this.router.navigate(['/']);
+      else this.error = result.error || 'Une erreur est survenue. Veuillez réessayer.';
     }, 700);
   }
 }

@@ -23,10 +23,10 @@ export class LoginComponent {
     this.loading = true;
     this.error = '';
     setTimeout(() => {
-      const ok = this.auth.login(this.email, this.password);
+      const result = this.auth.login(this.email, this.password);
       this.loading = false;
-      if (ok) this.router.navigate(['/']);
-      else this.error = 'Email ou mot de passe incorrect.';
+      if (result.ok) this.router.navigate(['/']);
+      else this.error = result.error || 'Email ou mot de passe incorrect.';
     }, 600);
   }
 }
