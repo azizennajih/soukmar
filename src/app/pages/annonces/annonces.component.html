@@ -1,0 +1,89 @@
+<div class="annonces container fade-in">
+  <div class="annonces__layout">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar card">
+      <div class="sidebar__header">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        Filtres
+      </div>
+
+      <!-- Category -->
+      <div class="sidebar__section">
+        <label class="sidebar__label">Catégorie</label>
+        <a routerLink="/annonces" class="sidebar__cat-link" [class.active]="!filters.categorie">Toutes</a>
+        @for (cat of categories; track cat.value) {
+          <a
+            [routerLink]="['/annonces']"
+            [queryParams]="{categorie: cat.value, q: filters.q || null, ville: filters.ville || null}"
+            class="sidebar__cat-link"
+            [class.active]="filters.categorie === cat.value"
+          >{{ cat.icon }} {{ cat.label }}</a>
+        }
+      </div>
+
+      <!-- City -->
+      <div class="sidebar__section">
+        <label class="sidebar__label">Ville</label>
+        <select [(ngModel)]="filters.ville" class="sidebar__select">
+          <option value="">Toutes les villes</option>
+          @for (city of cities; track city) {
+            <option [value]="city">{{ city }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Price -->
+      <div class="sidebar__section">
+        <label class="sidebar__label">Prix (MAD)</label>
+        <div class="sidebar__price-row">
+          <input type="number" [(ngModel)]="filters.minPrix" placeholder="Min" />
+          <input type="number" [(ngModel)]="filters.maxPrix" placeholder="Max" />
+        </div>
+      </div>
+
+      <!-- Sort -->
+      <div class="sidebar__section">
+        <label class="sidebar__label">Trier par</label>
+        <select [(ngModel)]="filters.tri" class="sidebar__select">
+          <option value="">Plus récent</option>
+          <option value="prix_asc">Prix croissant</option>
+          <option value="prix_desc">Prix décroissant</option>
+        </select>
+      </div>
+
+      <button class="btn-primary sidebar__apply" (click)="applyFilters()">Appliquer</button>
+      <button class="btn-outline sidebar__reset" (click)="resetFilters()">Réinitialiser</button>
+    </aside>
+
+    <!-- ===== MAIN ===== -->
+    <div class="annonces__main">
+      <div class="annonces__header">
+        <div>
+          <h1 class="annonces__title">
+            @if (filters.q) { Résultats pour "{{ filters.q }}" }
+            @else if (activeCategory) { {{ activeCategory.icon }} {{ activeCategory.label }} }
+            @else { Toutes les annonces }
+          </h1>
+          <p class="annonces__count">{{ listings.length }} annonce{{ listings.length > 1 ? 's' : '' }} trouvée{{ listings.length > 1 ? 's' : '' }}</p>
+        </div>
+      </div>
+
+      @if (listings.length > 0) {
+        <div class="grid-3">
+          @for (listing of listings; track listing.id) {
+            <app-listing-card [listing]="listing" />
+          }
+        </div>
+      } @else {
+        <div class="empty-state">
+          <span>🔍</span>
+          <p>Aucun résultat trouvé</p>
+          <small>Essayez d'autres mots-clés ou élargissez vos filtres</small>
+          <button class="btn-outline" (click)="resetFilters()">Réinitialiser les filtres</button>
+        </div>
+      }
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<div class="admin container fade-in">
+
+  <div class="admin__header">
+    <div>
+      <h1>Dashboard Admin</h1>
+      <p>Gérez et supervisez SoukMar</p>
+    </div>
+    <div class="admin__actions">
+      <button class="btn-outline">Utilisateurs</button>
+      <button class="btn-primary">Annonces</button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="admin__stats">
+    @for (stat of stats; track stat.label) {
+      <div class="stat-card card">
+        <div class="stat-card__icon" [style.background]="stat.color + '18'" [style.color]="stat.color">
+          {{ stat.icon }}
+        </div>
+        <div class="stat-card__value">{{ stat.value }}</div>
+        <div class="stat-card__label">{{ stat.label }}</div>
+        <div class="stat-card__trend">{{ stat.trend }}</div>
+      </div>
+    }
+  </div>
+
+  <!-- Pending listings -->
+  <div class="card admin__pending">
+    <div class="admin__pending-header">
+      <div class="admin__pending-title">
+        ⚠️ Annonces en attente de modération
+        <span class="badge badge-pending">{{ pending.length }}</span>
+      </div>
+    </div>
+
+    @if (pending.length === 0) {
+      <div class="admin__empty">
+        ✅ Toutes les annonces sont modérées !
+      </div>
+    } @else {
+      <div class="admin__table">
+        <div class="admin__table-header">
+          <span>Annonce</span>
+          <span>Vendeur</span>
+          <span>Catégorie</span>
+          <span>Ville</span>
+          <span>Actions</span>
+        </div>
+        @for (listing of pending; track listing.id) {
+          <div class="admin__table-row">
+            <span class="admin__table-title">{{ listing.title }}</span>
+            <span>{{ listing.user?.name || '—' }}</span>
+            <span>
+              <span class="badge" [ngClass]="getCategory(listing.category)?.color">
+                {{ getCategory(listing.category)?.icon }} {{ getCategory(listing.category)?.label }}
+              </span>
+            </span>
+            <span>{{ listing.city }}</span>
+            <div class="admin__table-btns">
+              <a [routerLink]="['/annonces', listing.id]" class="admin__table-btn">👁</a>
+              <button class="admin__table-btn admin__table-btn--approve">✅ Approuver</button>
+              <button class="admin__table-btn admin__table-btn--reject">❌ Rejeter</button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Charts placeholder -->
+  <div class="admin__charts">
+    <div class="card admin__chart-card">
+      <h3>📈 Annonces par mois</h3>
+      <div class="admin__chart-bars">
+        @for (bar of [40, 65, 55, 80, 70, 90, 75, 95, 85, 100, 88, 110]; track $index) {
+          <div class="admin__bar" [style.height.%]="bar" [style.opacity]="$index === 11 ? 1 : 0.6"></div>
+        }
+      </div>
+      <div class="admin__chart-months">
+        @for (m of ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc']; track m) {
+          <span>{{ m }}</span>
+        }
+      </div>
+    </div>
+
+    <div class="card admin__chart-card">
+      <h3>🏷️ Répartition par catégorie</h3>
+      <div class="admin__cat-stats">
+        @for (item of [
+          {label:'Véhicules', pct:28, color:'#3b82f6'},
+          {label:'Immobilier', pct:22, color:'#22c55e'},
+          {label:'Électronique', pct:18, color:'#f59e0b'},
+          {label:'Emploi', pct:12, color:'#8b5cf6'},
+          {label:'Mode', pct:10, color:'#ec4899'},
+          {label:'Autres', pct:10, color:'#94a3b8'}
+        ]; track item.label) {
+          <div class="admin__cat-row">
+            <span>{{ item.label }}</span>
+            <div class="admin__cat-bar">
+              <div class="admin__cat-fill" [style.width.%]="item.pct" [style.background]="item.color"></div>
+            </div>
+            <span>{{ item.pct }}%</span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+</div>

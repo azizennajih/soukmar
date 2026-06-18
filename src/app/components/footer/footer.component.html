@@ -1,0 +1,64 @@
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a routerLink="/" class="footer__logo">
+        <div class="footer__logo-icon">S</div>
+        <span>Souk<em>Mar</em></span>
+      </a>
+      <p>La première plateforme de petites annonces au Maroc. Simple, rapide et sécurisée.</p>
+      <div class="footer__social">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">ig</a>
+        <a href="#" aria-label="Twitter">tw</a>
+      </div>
+    </div>
+
+    <div class="footer__col">
+      <h4>Catégories</h4>
+      <ul>
+        <li><a routerLink="/annonces" [queryParams]="{categorie:'VEHICLES'}">Véhicules</a></li>
+        <li><a routerLink="/annonces" [queryParams]="{categorie:'REAL_ESTATE'}">Immobilier</a></li>
+        <li><a routerLink="/annonces" [queryParams]="{categorie:'JOBS'}">Emploi</a></li>
+        <li><a routerLink="/annonces" [queryParams]="{categorie:'ELECTRONICS'}">Électronique</a></li>
+        <li><a routerLink="/annonces" [queryParams]="{categorie:'FASHION'}">Mode</a></li>
+        <li><a routerLink="/annonces" [queryParams]="{categorie:'SERVICES'}">Services</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h4>SoukMar</h4>
+      <ul>
+        <li><a routerLink="/">À propos</a></li>
+        <li><a routerLink="/">Comment ça marche</a></li>
+        <li><a routerLink="/premium">Annonces premium</a></li>
+        <li><a routerLink="/">Sécurité</a></li>
+        <li><a routerLink="/">Blog</a></li>
+        <li><a routerLink="/">Contactez-nous</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h4>Contact</h4>
+      <a href="mailto:contact@soukmar.ma" class="footer__contact-link">📧 contact&#64;soukmar.ma</a>
+      <a href="tel:+212522000000" class="footer__contact-link">📞 +212 5 22 00 00 00</a>
+      <div class="footer__apps">
+        <p>Téléchargez l'application</p>
+        <div class="footer__app-btns">
+          <button>App Store</button>
+          <button>Google Play</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <div class="container footer__bottom-inner">
+      <span>© {{ year }} SoukMar. Tous droits réservés.</span>
+      <div class="footer__bottom-links">
+        <a routerLink="/">CGU</a>
+        <a routerLink="/">Confidentialité</a>
+        <a routerLink="/">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>

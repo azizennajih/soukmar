@@ -1,0 +1,155 @@
+<div class="deposer fade-in">
+
+  @if (!auth.isLoggedIn) {
+    <div class="deposer__gate card">
+      <div class="deposer__gate-icon">🔐</div>
+      <h2>Connexion requise</h2>
+      <p>Connectez-vous pour déposer une annonce gratuitement.</p>
+      <a routerLink="/auth/login" class="btn-primary">Se connecter</a>
+    </div>
+  } @else if (success) {
+    <div class="deposer__success card">
+      <div class="deposer__success-icon">✅</div>
+      <h2>Annonce publiée !</h2>
+      <p>Votre annonce est maintenant visible par tous les acheteurs.</p>
+    </div>
+  } @else {
+
+    <div class="deposer__header">
+      <h1>Déposer une annonce</h1>
+      <p>Gratuit · Rapide · En moins de 2 minutes</p>
+    </div>
+
+    <!-- Stepper -->
+    <div class="stepper">
+      @for (s of steps; track $index) {
+        <div class="stepper__item" [class.active]="$index === step" [class.done]="$index < step">
+          <div class="stepper__circle">{{ $index < step ? '✓' : $index + 1 }}</div>
+          <span>{{ s }}</span>
+        </div>
+        @if ($index < steps.length - 1) {
+          <div class="stepper__line" [class.done]="$index < step"></div>
+        }
+      }
+    </div>
+
+    <div class="card deposer__card">
+
+      <!-- STEP 0: Category -->
+      @if (step === 0) {
+        <div class="deposer__step">
+          <h2 class="deposer__step-title">🏷️ Choisissez une catégorie</h2>
+          <div class="deposer__cats">
+            @for (cat of categories; track cat.value) {
+              <button
+                class="deposer__cat"
+                [class.selected]="form.category === cat.value"
+                (click)="selectCategory(cat.value)"
+              >
+                <span class="deposer__cat-icon">{{ cat.icon }}</span>
+                <span>{{ cat.label }}</span>
+              </button>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- STEP 1: Details -->
+      @if (step === 1) {
+        <div class="deposer__step">
+          <h2 class="deposer__step-title">📝 Détails de l'annonce</h2>
+          <div class="deposer__form">
+            <div class="form-group">
+              <label>Titre de l'annonce *</label>
+              <input type="text" [(ngModel)]="form.title" placeholder="Ex: iPhone 15 Pro Max 256GB Noir" maxlength="100" />
+              <small>{{ form.title.length }}/100 caractères</small>
+            </div>
+            <div class="form-group">
+              <label>Description *</label>
+              <textarea [(ngModel)]="form.description" rows="5" placeholder="Décrivez votre article (état, caractéristiques, raison de vente...)"></textarea>
+            </div>
+            <div class="deposer__row">
+              <div class="form-group">
+                <label>Prix</label>
+                <input type="number" [(ngModel)]="form.price" placeholder="0" min="0" />
+              </div>
+              <div class="form-group deposer__currency">
+                <label>Devise</label>
+                <select [(ngModel)]="form.currency">
+                  <option value="MAD">MAD</option>
+                  <option value="EUR">EUR</option>
+                  <option value="USD">USD</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Ville *</label>
+              <select [(ngModel)]="form.city">
+                <option value="">Choisir une ville</option>
+                @for (city of cities; track city) {
+                  <option [value]="city">{{ city }}</option>
+                }
+              </select>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- STEP 2: Photos -->
+      @if (step === 2) {
+        <div class="deposer__step">
+          <h2 class="deposer__step-title">📸 Ajouter des photos</h2>
+          <p class="deposer__step-sub">Jusqu'à 10 photos — la première sera la photo principale.</p>
+          <div class="deposer__upload">
+            <div class="deposer__upload-icon">📷</div>
+            <p>Cliquez ou glissez vos photos ici</p>
+            <small>JPG, PNG, WEBP · Max 5 MB par photo</small>
+          </div>
+          <p class="deposer__skip-note">Vous pouvez continuer sans photos et les ajouter plus tard.</p>
+        </div>
+      }
+
+      <!-- STEP 3: Contact -->
+      @if (step === 3) {
+        <div class="deposer__step">
+          <h2 class="deposer__step-title">📞 Coordonnées de contact</h2>
+          <div class="deposer__form">
+            <div class="form-group">
+              <label>Téléphone</label>
+              <input type="tel" [(ngModel)]="form.phone" placeholder="+212 6 00 00 00 00" />
+            </div>
+            <div class="form-group">
+              <label>WhatsApp</label>
+              <input type="tel" [(ngModel)]="form.whatsapp" placeholder="+212 6 00 00 00 00" />
+            </div>
+
+            <!-- Summary -->
+            <div class="deposer__summary">
+              <div class="deposer__summary-title">📋 Récapitulatif</div>
+              <div class="deposer__summary-row"><span>Catégorie</span><strong>{{ summaryCategory?.icon }} {{ summaryCategory?.label }}</strong></div>
+              <div class="deposer__summary-row"><span>Titre</span><strong>{{ form.title || '—' }}</strong></div>
+              <div class="deposer__summary-row"><span>Prix</span><strong>{{ form.price ? form.price + ' ' + form.currency : 'À négocier' }}</strong></div>
+              <div class="deposer__summary-row"><span>Ville</span><strong>{{ form.city || '—' }}</strong></div>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Navigation -->
+      <div class="deposer__nav">
+        @if (step > 0) {
+          <button class="btn-outline" (click)="step = step - 1">← Retour</button>
+        }
+        <div style="flex:1"></div>
+        @if (step < steps.length - 1) {
+          <button class="btn-primary" [disabled]="!canNext" (click)="step = step + 1">Suivant →</button>
+        } @else {
+          <button class="btn-primary deposer__publish" [disabled]="loading || !canNext" (click)="publish()">
+            @if (loading) { <span class="spinner-sm"></span> }
+            🚀 Publier l'annonce
+          </button>
+        }
+      </div>
+    </div>
+  }
+</div>

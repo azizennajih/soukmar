@@ -1,0 +1,82 @@
+.annonces {
+  padding: 2rem 1.25rem;
+
+  &__layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 1.75rem;
+    align-items: start;
+
+    @media (max-width: 900px) { grid-template-columns: 1fr; }
+  }
+
+  &__header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 1.25rem;
+  }
+
+  &__title { font-size: 1.3rem; font-weight: 900; color: #0f172a; }
+  &__count { font-size: .82rem; color: #64748b; margin-top: .2rem; }
+}
+
+/* Sidebar */
+.sidebar {
+  padding: 1.25rem;
+  position: sticky;
+  top: 5.5rem;
+
+  @media (max-width: 900px) { position: static; }
+
+  &__header {
+    display: flex; align-items: center; gap: .5rem;
+    font-weight: 800; font-size: 1rem; color: #0f172a;
+    margin-bottom: 1.25rem;
+  }
+
+  &__section { margin-bottom: 1.25rem; }
+
+  &__label {
+    display: block;
+    font-size: .75rem; font-weight: 700; color: #64748b;
+    text-transform: uppercase; letter-spacing: .05em;
+    margin-bottom: .5rem;
+  }
+
+  &__cat-link {
+    display: flex; align-items: center; gap: .5rem;
+    padding: .5rem .75rem; border-radius: .5rem;
+    font-size: .85rem; font-weight: 500; color: #374151;
+    text-decoration: none; transition: background .15s, color .15s;
+
+    &:hover { background: #f8fafc; }
+    &.active { background: #fee2e2; color: #e63946; font-weight: 700; }
+  }
+
+  &__select {
+    padding: .6rem .85rem;
+    font-size: .85rem;
+    cursor: pointer;
+  }
+
+  &__price-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: .5rem;
+    input { padding: .6rem .75rem; font-size: .85rem; }
+  }
+
+  &__apply {
+    width: 100%; justify-content: center;
+    margin-bottom: .5rem;
+  }
+
+  &__reset {
+    width: 100%; justify-content: center;
+    font-size: .85rem; padding: .55rem;
+  }
+}
+
+.empty-state {
+  text-align: center; padding: 4rem 1rem; color: #94a3b8;
+  span { font-size: 3.5rem; display: block; margin-bottom: 1rem; }
+  p    { font-size: 1.1rem; color: #475569; font-weight: 600; margin-bottom: .4rem; }
+  small{ display: block; margin-bottom: 1.5rem; font-size: .875rem; }
+}

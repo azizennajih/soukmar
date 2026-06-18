@@ -1,0 +1,112 @@
+<header class="navbar">
+  <!-- Top bar -->
+  <div class="navbar__topbar">
+    <div class="container navbar__topbar-inner">
+      <span>🇲🇦 La N°1 des petites annonces au Maroc</span>
+      <div class="navbar__topbar-links">
+        @if (!auth.isLoggedIn) {
+          <a routerLink="/auth/login">Se connecter</a>
+          <a routerLink="/auth/register">S'inscrire</a>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Main bar -->
+  <div class="navbar__main">
+    <div class="container navbar__main-inner">
+      <!-- Logo -->
+      <a routerLink="/" class="navbar__logo">
+        <div class="navbar__logo-icon">S</div>
+        <span class="navbar__logo-text">Souk<span>Mar</span></span>
+      </a>
+
+      <!-- Search -->
+      <form class="navbar__search" (ngSubmit)="search()">
+        <div class="navbar__search-input-wrapper">
+          <svg class="navbar__search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input
+            type="text"
+            [(ngModel)]="searchQuery"
+            name="q"
+            placeholder="Rechercher une annonce..."
+            class="navbar__search-input"
+          />
+        </div>
+        <button type="submit" class="navbar__search-btn">Chercher</button>
+      </form>
+
+      <!-- Right actions -->
+      <div class="navbar__actions">
+        @if (auth.isLoggedIn) {
+          <div class="user-menu-wrapper">
+            <button class="navbar__user-btn" (click)="toggleUserMenu($event)">
+              <div class="navbar__user-avatar">{{ auth.currentUser()?.name?.[0]?.toUpperCase() }}</div>
+              <span class="navbar__user-name">{{ auth.currentUser()?.name }}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+
+            @if (userMenuOpen()) {
+              <div class="navbar__dropdown">
+                <a routerLink="/mes-annonces" (click)="userMenuOpen.set(false)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  Mes annonces
+                </a>
+                @if (auth.currentUser()?.role === 'ADMIN') {
+                  <a routerLink="/admin" (click)="userMenuOpen.set(false)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    Dashboard Admin
+                  </a>
+                }
+                <hr />
+                <button class="dropdown-logout" (click)="logout()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                  Se déconnecter
+                </button>
+              </div>
+            }
+          </div>
+        } @else {
+          <a routerLink="/auth/login" class="btn-outline navbar__login-btn">Connexion</a>
+        }
+
+        <a routerLink="/deposer-annonce" class="btn-primary navbar__post-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Déposer
+        </a>
+
+        <button class="navbar__burger" (click)="toggleMobile()">
+          @if (mobileOpen()) {
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categories bar -->
+  <div class="navbar__cats">
+    <div class="container navbar__cats-inner">
+      <a routerLink="/annonces" class="navbar__cat-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Toutes</a>
+      @for (cat of categories; track cat.value) {
+        <a [routerLink]="['/annonces']" [queryParams]="{categorie: cat.value}" class="navbar__cat-link">
+          {{ cat.icon }} {{ cat.label }}
+        </a>
+      }
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  @if (mobileOpen()) {
+    <div class="navbar__mobile">
+      @for (cat of categories; track cat.value) {
+        <a [routerLink]="['/annonces']" [queryParams]="{categorie: cat.value}" class="navbar__mobile-link" (click)="mobileOpen.set(false)">
+          <span class="navbar__mobile-icon">{{ cat.icon }}</span>
+          {{ cat.label }}
+        </a>
+      }
+    </div>
+  }
+</header>

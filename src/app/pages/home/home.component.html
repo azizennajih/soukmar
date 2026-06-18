@@ -1,0 +1,176 @@
+<div class="fade-in">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero__bg-dots"></div>
+    <div class="hero__circle hero__circle--tr"></div>
+    <div class="hero__circle hero__circle--bl"></div>
+
+    <div class="container hero__content">
+      <div class="hero__badge">
+        <span class="hero__badge-dot"></span>
+        Plus de 50,000 annonces actives
+      </div>
+
+      <h1 class="hero__title">
+        Achetez &amp; Vendez<br />
+        <span class="hero__title-accent">facilement</span> au Maroc
+      </h1>
+
+      <p class="hero__subtitle">
+        SoukMar — votre marketplace locale pour trouver des bonnes affaires près de chez vous.
+      </p>
+
+      <form class="hero__search" (ngSubmit)="search()">
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          name="q"
+          placeholder="Que cherchez-vous ?"
+          class="hero__search-input"
+        />
+        <select [(ngModel)]="selectedCity" name="ville" class="hero__search-city">
+          <option value="">Toutes les villes</option>
+          @for (city of cities; track city) {
+            <option [value]="city">{{ city }}</option>
+          }
+        </select>
+        <button type="submit" class="hero__search-btn">Chercher</button>
+      </form>
+
+      <div class="hero__tags">
+        @for (tag of ['iPhone', 'Toyota', 'Appartement Casablanca', 'Emploi Rabat', 'MacBook']; track tag) {
+          <a [routerLink]="['/annonces']" [queryParams]="{q: tag}" class="hero__tag">{{ tag }}</a>
+        }
+      </div>
+    </div>
+
+    <!-- Stats bar -->
+    <div class="hero__stats">
+      <div class="container hero__stats-inner">
+        @for (stat of stats; track stat.label) {
+          <div class="hero__stat">
+            <div class="hero__stat-value">{{ stat.value }}</div>
+            <div class="hero__stat-label">{{ stat.label }}</div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CATEGORIES ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Parcourir par catégorie</h2>
+          <p class="section-sub">Trouvez ce que vous cherchez</p>
+        </div>
+        <a routerLink="/annonces" class="section-link">Voir tout →</a>
+      </div>
+
+      <div class="cat-grid">
+        @for (cat of categories; track cat.value) {
+          <a [routerLink]="['/annonces']" [queryParams]="{categorie: cat.value}" class="cat-item">
+            <div class="cat-icon" [ngClass]="cat.color">{{ cat.icon }}</div>
+            <span>{{ cat.label }}</span>
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURED ===== -->
+  @if (featured.length > 0) {
+    <section class="section section--yellow">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">⭐ Annonces Premium</h2>
+            <p class="section-sub">Mises en avant par nos annonceurs</p>
+          </div>
+          <a routerLink="/annonces" class="section-link">Voir tout →</a>
+        </div>
+        <div class="grid-4">
+          @for (listing of featured; track listing.id) {
+            <app-listing-card [listing]="listing" [featured]="true" />
+          }
+        </div>
+      </div>
+    </section>
+  }
+
+  <!-- ===== LATEST ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🕐 Dernières annonces</h2>
+          <p class="section-sub">Fraîchement publiées</p>
+        </div>
+        <a routerLink="/annonces" class="section-link">Voir tout →</a>
+      </div>
+
+      @if (latest.length > 0) {
+        <div class="grid-4">
+          @for (listing of latest; track listing.id) {
+            <app-listing-card [listing]="listing" />
+          }
+        </div>
+      } @else {
+        <div class="empty-state">
+          <span>📦</span>
+          <p>Aucune annonce pour le moment.</p>
+          <a routerLink="/deposer-annonce" class="btn-primary">Déposer la première</a>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- ===== CITIES ===== -->
+  <section class="section section--gray">
+    <div class="container">
+      <h2 class="section-title">📍 Villes populaires</h2>
+      <div class="cities-grid">
+        @for (city of cities; track city) {
+          <button class="city-btn" (click)="goToCity(city)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            {{ city }}
+          </button>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHY ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="why-header">
+        <h2 class="section-title">Pourquoi choisir SoukMar ?</h2>
+        <p class="section-sub">La plateforme la plus simple et sécurisée du Maroc</p>
+      </div>
+      <div class="grid-4">
+        @for (f of features; track f.title) {
+          <div class="feature-card">
+            <div class="feature-icon" [style.background]="f.bg" [style.color]="f.color">{{ f.icon }}</div>
+            <h3>{{ f.title }}</h3>
+            <p>{{ f.desc }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta-section">
+    <div class="container cta-inner">
+      <h2>Prêt à vendre ?</h2>
+      <p>Déposez votre annonce gratuitement et touchez des milliers d'acheteurs potentiels.</p>
+      <div class="cta-btns">
+        <a routerLink="/deposer-annonce" class="cta-btn cta-btn--white">Déposer une annonce gratuite</a>
+        <a routerLink="/premium" class="cta-btn cta-btn--yellow">Découvrir le Premium ✨</a>
+      </div>
+    </div>
+  </section>
+
+</div>

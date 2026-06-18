@@ -1,0 +1,90 @@
+<div class="premium fade-in">
+
+  <!-- Hero -->
+  <section class="premium__hero">
+    <div class="container premium__hero-inner">
+      <div class="premium__hero-badge">✨ Boost your listings</div>
+      <h1>Vendez plus vite<br /><span>avec SoukMar Premium</span></h1>
+      <p>Des outils professionnels pour maximiser la visibilité de vos annonces et vendre plus rapidement.</p>
+    </div>
+  </section>
+
+  <!-- Plans -->
+  <section class="section container">
+    <div class="premium__plans">
+      @for (plan of plans; track plan.name) {
+        <div class="plan-card" [class.plan-card--popular]="plan.popular">
+          @if (plan.popular) {
+            <div class="plan-card__popular-badge">⭐ Le plus populaire</div>
+          }
+
+          <div class="plan-card__header">
+            <h3 [style.color]="plan.color">{{ plan.name }}</h3>
+            <div class="plan-card__price">
+              <span class="plan-card__amount">{{ plan.price }} MAD</span>
+              <span class="plan-card__period">/ {{ plan.period }}</span>
+            </div>
+          </div>
+
+          <ul class="plan-card__features">
+            @for (f of plan.features; track f) {
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" [attr.stroke]="plan.color" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                {{ f }}
+              </li>
+            }
+          </ul>
+
+          <a
+            [routerLink]="plan.ctaLink"
+            class="plan-card__cta"
+            [class.plan-card__cta--ghost]="plan.ghost"
+            [style.background]="!plan.ghost ? plan.color : 'transparent'"
+            [style.border-color]="plan.color"
+            [style.color]="!plan.ghost ? '#fff' : plan.color"
+          >{{ plan.cta }}</a>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section section--gray">
+    <div class="container">
+      <h2 class="section-title" style="text-align:center;margin-bottom:2rem">Pourquoi passer Premium ?</h2>
+      <div class="grid-4">
+        @for (f of [
+          {icon:'👁', title:'10x plus de vues', desc:'Vos annonces apparaissent en haut des résultats et dans les sections mises en avant.'},
+          {icon:'⚡', title:'Vente 3x plus rapide', desc:'Les annonces premium se vendent en moyenne 3 fois plus vite que les annonces standard.'},
+          {icon:'📊', title:'Statistiques détaillées', desc:'Suivez les vues, les contacts et les conversions de chaque annonce en temps réel.'},
+          {icon:'🛡️', title:'Badge de confiance', desc:'Un badge Pro sur votre profil rassure les acheteurs et augmente la crédibilité.'},
+        ]; track f.title) {
+          <div class="premium__feature card">
+            <div class="premium__feature-icon">{{ f.icon }}</div>
+            <h3>{{ f.title }}</h3>
+            <p>{{ f.desc }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section container">
+    <h2 class="section-title" style="text-align:center;margin-bottom:2rem">Questions fréquentes</h2>
+    <div class="premium__faq">
+      @for (q of [
+        {q:'Puis-je annuler à tout moment ?', a:"Oui, vous pouvez annuler votre abonnement à tout moment sans frais. L'accès Premium reste actif jusqu'à la fin de la période payée."},
+        {q:'Quels modes de paiement acceptez-vous ?', a:'Nous acceptons les cartes bancaires (Visa, Mastercard), CMI, PayPal et le virement bancaire pour les plans Business.'},
+        {q:'Comment sont mis en avant mes annonces ?', a:"Vos annonces apparaissent en tête des résultats de recherche, dans la section 'Annonces Premium' de la page d'accueil et reçoivent un badge distinctif."},
+        {q:'Y a-t-il un essai gratuit ?', a:"Oui ! Vous bénéficiez de 7 jours d'essai gratuit pour le plan Pro. Aucune carte bancaire requise pour commencer."},
+      ]; track q.q) {
+        <div class="faq-item">
+          <div class="faq-item__q">{{ q.q }}</div>
+          <div class="faq-item__a">{{ q.a }}</div>
+        </div>
+      }
+    </div>
+  </section>
+
+</div>
