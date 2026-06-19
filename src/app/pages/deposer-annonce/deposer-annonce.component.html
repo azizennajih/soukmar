@@ -100,11 +100,26 @@
         <div class="deposer__step">
           <h2 class="deposer__step-title">📸 Ajouter des photos</h2>
           <p class="deposer__step-sub">Jusqu'à 10 photos — la première sera la photo principale.</p>
-          <div class="deposer__upload">
+
+          <label class="deposer__upload" for="fileInput">
             <div class="deposer__upload-icon">📷</div>
             <p>Cliquez ou glissez vos photos ici</p>
-            <small>JPG, PNG, WEBP · Max 5 MB par photo</small>
-          </div>
+            <small>JPG, PNG, WEBP · Max 10 MB par photo</small>
+            <input id="fileInput" type="file" multiple accept="image/*" (change)="onFilesSelected($event)" style="display:none" />
+          </label>
+
+          @if (previews.length > 0) {
+            <div class="deposer__previews">
+              @for (preview of previews; track $index) {
+                <div class="deposer__preview">
+                  <img [src]="preview" alt="preview" />
+                  @if ($index === 0) { <span class="deposer__preview-badge">Principale</span> }
+                  <button class="deposer__preview-remove" (click)="removeImage($index)">✕</button>
+                </div>
+              }
+            </div>
+          }
+
           <p class="deposer__skip-note">Vous pouvez continuer sans photos et les ajouter plus tard.</p>
         </div>
       }
@@ -135,18 +150,23 @@
         </div>
       }
 
+      @if (error) {
+        <div class="deposer__error">⚠️ {{ error }}</div>
+      }
+
       <!-- Navigation -->
       <div class="deposer__nav">
         @if (step > 0) {
-          <button class="btn-outline" (click)="step = step - 1">← Retour</button>
+          <button class="btn-outline" (click)="step = step - 1" [disabled]="loading">← Retour</button>
         }
         <div style="flex:1"></div>
         @if (step < steps.length - 1) {
           <button class="btn-primary" [disabled]="!canNext" (click)="step = step + 1">Suivant →</button>
         } @else {
           <button class="btn-primary deposer__publish" [disabled]="loading || !canNext" (click)="publish()">
-            @if (loading) { <span class="spinner-sm"></span> }
-            🚀 Publier l'annonce
+            @if (uploading) { <span class="spinner-sm"></span> Upload... }
+            @else if (loading) { <span class="spinner-sm"></span> Publication... }
+            @else { 🚀 Publier l'annonce }
           </button>
         }
       </div>
