@@ -1,7 +1,8 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
 import { ApiService } from './api.service';
+
+const BASE = 'http://localhost:3000/api';
 
 export interface AuthUser {
   id: string;
@@ -30,42 +31,35 @@ export class AuthService {
     return this.currentUser() !== null;
   }
 
-  async login(email: string, password: string): Promise<{ ok: boolean; error?: string }> {
-    try {
-      const res = await firstValueFrom(
-        this.api.post<{ user: AuthUser; token: string }>('/auth/login', { email, password })
-      );
-      this.setSession(res.user, res.token);
-      return { ok: true };
-    } catch (e: unknown) {
-      const msg = this.extractError(e, 'Email ou mot de passe incorrect.');
-      return { ok: false, error: msg };
-    }
+  login(email: string, password: string): Promise<{ ok: boolean; error?: string }> {
+    return this.postJson<{ user: AuthUser; token: string }>('/auth/login', { email, password })
+      .then(res => { this.setSession(res.user, res.token); return { ok: true }; })
+      .catch(e => ({ ok: false, error: this.extractError(e, 'Email ou mot de passe incorrect.') }));
   }
 
-  async register(name: string, email: string, password: string, phone?: string, city?: string): Promise<{ ok: boolean; error?: string }> {
-    try {
-      const res = await firstValueFrom(
-        this.api.post<{ user: AuthUser; token: string }>('/auth/register', { name, email, password, phone, city })
-      );
-      this.setSession(res.user, res.token);
-      return { ok: true };
-    } catch (e: unknown) {
-      const msg = this.extractError(e, 'Une erreur est survenue. Veuillez réessayer.');
-      return { ok: false, error: msg };
-    }
+  register(name: string, email: string, password: string, phone?: string, city?: string): Promise<{ ok: boolean; error?: string }> {
+    return this.postJson<{ user: AuthUser; token: string }>('/auth/register', { name, email, password, phone, city })
+      .then(res => { this.setSession(res.user, res.token); return { ok: true }; })
+      .catch(e => ({ ok: false, error: this.extractError(e, 'Une erreur est survenue. Veuillez réessayer.') }));
+  }
+
+  private postJson<T>(path: string, body: unknown): Promise<T> {
+    return fetch(`${BASE}${path}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    }).then(async res => {
+      const data = await res.json();
+      if (!res.ok) throw data;
+      return data as T;
+    });
   }
 
   private extractError(e: unknown, fallback: string): string {
     if (!e || typeof e !== 'object') return fallback;
     const err = e as Record<string, unknown>;
-    // HttpErrorResponse: err.error is the parsed body
-    if (err['error'] && typeof err['error'] === 'object') {
-      const body = err['error'] as Record<string, unknown>;
-      if (typeof body['error'] === 'string') return body['error'];
-      if (typeof body['message'] === 'string') return body['message'];
-    }
-    if (typeof err['message'] === 'string' && err['message'].includes('Http')) return 'Serveur inaccessible. Vérifiez votre connexion.';
+    if (typeof err['error'] === 'string') return err['error'];
+    if (typeof err['message'] === 'string') return err['message'];
     return fallback;
   }
 
