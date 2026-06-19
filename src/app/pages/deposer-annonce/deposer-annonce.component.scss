@@ -102,9 +102,12 @@ small { font-size: .75rem; color: #94a3b8; }
   padding: 3rem 1.5rem; text-align: center;
   cursor: pointer; transition: border-color .2s;
   &:hover { border-color: #e63946; }
-  &-icon { font-size: 3rem; margin-bottom: .75rem; }
   p     { font-weight: 600; color: #374151; margin-bottom: .35rem; }
   small { color: #94a3b8; }
+}
+
+.deposer__upload-svg {
+  width: 3rem; height: 3rem; color: #94a3b8; margin-bottom: .75rem;
 }
 
 .deposer__skip-note { text-align: center; font-size: .8rem; color: #94a3b8; margin-top: 1rem; }
