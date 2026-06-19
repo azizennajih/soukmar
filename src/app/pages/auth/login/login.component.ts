@@ -23,9 +23,14 @@ export class LoginComponent {
     if (!this.email || !this.password) { this.error = 'Veuillez remplir tous les champs.'; return; }
     this.loading = true;
     this.error = '';
-    const result = await this.auth.login(this.email, this.password);
-    this.loading = false;
-    if (result.ok) this.router.navigate(['/']);
-    else this.error = result.error || 'Email ou mot de passe incorrect.';
+    try {
+      const result = await this.auth.login(this.email, this.password);
+      if (result.ok) this.router.navigate(['/']);
+      else this.error = result.error || 'Email ou mot de passe incorrect.';
+    } catch {
+      this.error = 'Une erreur inattendue est survenue.';
+    } finally {
+      this.loading = false;
+    }
   }
 }

@@ -27,12 +27,17 @@ export class RegisterComponent {
     }
     this.loading = true;
     this.error = '';
-    const result = await this.auth.register(
-      this.form.name, this.form.email, this.form.password,
-      this.form.phone, this.form.city
-    );
-    this.loading = false;
-    if (result.ok) this.router.navigate(['/']);
-    else this.error = result.error || 'Une erreur est survenue. Veuillez réessayer.';
+    try {
+      const result = await this.auth.register(
+        this.form.name, this.form.email, this.form.password,
+        this.form.phone, this.form.city
+      );
+      if (result.ok) this.router.navigate(['/']);
+      else this.error = result.error || 'Une erreur est survenue. Veuillez réessayer.';
+    } catch {
+      this.error = 'Une erreur inattendue est survenue.';
+    } finally {
+      this.loading = false;
+    }
   }
 }

@@ -38,8 +38,8 @@ export class AuthService {
       this.setSession(res.user, res.token);
       return { ok: true };
     } catch (e: unknown) {
-      const err = e as { error?: { error?: string } };
-      return { ok: false, error: err?.error?.error || 'Email ou mot de passe incorrect.' };
+      const msg = this.extractError(e, 'Email ou mot de passe incorrect.');
+      return { ok: false, error: msg };
     }
   }
 
@@ -51,9 +51,22 @@ export class AuthService {
       this.setSession(res.user, res.token);
       return { ok: true };
     } catch (e: unknown) {
-      const err = e as { error?: { error?: string } };
-      return { ok: false, error: err?.error?.error || 'Une erreur est survenue. Veuillez réessayer.' };
+      const msg = this.extractError(e, 'Une erreur est survenue. Veuillez réessayer.');
+      return { ok: false, error: msg };
     }
+  }
+
+  private extractError(e: unknown, fallback: string): string {
+    if (!e || typeof e !== 'object') return fallback;
+    const err = e as Record<string, unknown>;
+    // HttpErrorResponse: err.error is the parsed body
+    if (err['error'] && typeof err['error'] === 'object') {
+      const body = err['error'] as Record<string, unknown>;
+      if (typeof body['error'] === 'string') return body['error'];
+      if (typeof body['message'] === 'string') return body['message'];
+    }
+    if (typeof err['message'] === 'string' && err['message'].includes('Http')) return 'Serveur inaccessible. Vérifiez votre connexion.';
+    return fallback;
   }
 
   logout(): void {
