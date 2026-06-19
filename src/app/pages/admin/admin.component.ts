@@ -26,9 +26,9 @@ export class AdminComponent implements OnInit {
   constructor(private ls: ListingService) {}
 
   ngOnInit() {
-    this.allListings = this.ls.getAll();
-    this.pending     = this.allListings.filter(l => l.status === 'PENDING');
-    // use first 5 as mock pending
-    if (!this.pending.length) this.pending = this.allListings.slice(0, 5);
+    this.ls.getAll().subscribe(res => {
+      this.allListings = res.listings;
+      this.pending = res.listings.filter(l => l.status === 'PENDING');
+    });
   }
 }

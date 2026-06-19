@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ListingService } from '../../services/listing.service';
+import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
 import { Listing, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.model';
 
 @Component({
@@ -15,15 +17,24 @@ export class AnnonceDetailComponent implements OnInit {
   listing?: Listing;
   message = '';
   messageSent = false;
+  messageSending = false;
   selectedImage = 0;
+  loading = true;
 
-  constructor(private route: ActivatedRoute, private router: Router, private ls: ListingService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private ls: ListingService,
+    private api: ApiService,
+    public auth: AuthService
+  ) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id')!;
-    this.listing = this.ls.getById(id);
-    if (!this.listing) { this.router.navigate(['/annonces']); return; }
-    this.ls.incrementViews(id);
+    this.ls.getById(id).subscribe({
+      next: listing => { this.listing = listing; this.loading = false; },
+      error: () => { this.loading = false; this.router.navigate(['/annonces']); }
+    });
   }
 
   get category() { return CATEGORIES.find(c => c.value === this.listing?.category); }
@@ -35,6 +46,15 @@ export class AnnonceDetailComponent implements OnInit {
   get timeDisplay() { return this.listing ? timeAgo(this.listing.createdAt) : ''; }
 
   sendMessage() {
-    if (this.message.trim()) { this.messageSent = true; }
+    if (!this.message.trim() || !this.listing) return;
+    this.messageSending = true;
+    this.api.post('/messages', {
+      receiverId: this.listing.userId,
+      listingId: this.listing.id,
+      content: this.message.trim()
+    }).subscribe({
+      next: () => { this.messageSent = true; this.messageSending = false; },
+      error: () => this.messageSending = false
+    });
   }
 }

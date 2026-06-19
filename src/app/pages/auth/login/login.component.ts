@@ -19,14 +19,13 @@ export class LoginComponent {
 
   constructor(private auth: AuthService, private router: Router) {}
 
-  submit() {
+  async submit() {
+    if (!this.email || !this.password) { this.error = 'Veuillez remplir tous les champs.'; return; }
     this.loading = true;
     this.error = '';
-    setTimeout(() => {
-      const result = this.auth.login(this.email, this.password);
-      this.loading = false;
-      if (result.ok) this.router.navigate(['/']);
-      else this.error = result.error || 'Email ou mot de passe incorrect.';
-    }, 600);
+    const result = await this.auth.login(this.email, this.password);
+    this.loading = false;
+    if (result.ok) this.router.navigate(['/']);
+    else this.error = result.error || 'Email ou mot de passe incorrect.';
   }
 }

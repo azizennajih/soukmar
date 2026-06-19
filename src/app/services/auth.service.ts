@@ -1,29 +1,25 @@
 import { Injectable, signal } from '@angular/core';
+import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+import { ApiService } from './api.service';
 
 export interface AuthUser {
   id: string;
   name: string;
   email: string;
-  role: 'USER' | 'ADMIN';
+  role: 'USER' | 'ADMIN' | 'MODERATOR';
+  phone?: string;
+  city?: string;
 }
 
-interface StoredUser {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-  role: 'USER' | 'ADMIN';
-}
-
-const STORAGE_KEY = 'soukmar_users';
 const SESSION_KEY = 'soukmar_session';
+const TOKEN_KEY = 'soukmar_token';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   currentUser = signal<AuthUser | null>(null);
 
-  constructor() {
-    // Restore session from localStorage on app start
+  constructor(private api: ApiService, private router: Router) {
     const saved = localStorage.getItem(SESSION_KEY);
     if (saved) {
       try { this.currentUser.set(JSON.parse(saved)); } catch { }
@@ -34,59 +30,42 @@ export class AuthService {
     return this.currentUser() !== null;
   }
 
-  private getUsers(): StoredUser[] {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; }
+  async login(email: string, password: string): Promise<{ ok: boolean; error?: string }> {
+    try {
+      const res = await firstValueFrom(
+        this.api.post<{ user: AuthUser; token: string }>('/auth/login', { email, password })
+      );
+      this.setSession(res.user, res.token);
+      return { ok: true };
+    } catch (e: unknown) {
+      const err = e as { error?: { error?: string } };
+      return { ok: false, error: err?.error?.error || 'Email ou mot de passe incorrect.' };
+    }
   }
 
-  private saveUsers(users: StoredUser[]): void {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
-  }
-
-  login(email: string, password: string): { ok: boolean; error?: string } {
-    const users = this.getUsers();
-    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-
-    if (!user) {
-      return { ok: false, error: 'Aucun compte trouvé avec cet email.' };
+  async register(name: string, email: string, password: string, phone?: string, city?: string): Promise<{ ok: boolean; error?: string }> {
+    try {
+      const res = await firstValueFrom(
+        this.api.post<{ user: AuthUser; token: string }>('/auth/register', { name, email, password, phone, city })
+      );
+      this.setSession(res.user, res.token);
+      return { ok: true };
+    } catch (e: unknown) {
+      const err = e as { error?: { error?: string } };
+      return { ok: false, error: err?.error?.error || 'Une erreur est survenue. Veuillez réessayer.' };
     }
-    if (user.password !== password) {
-      return { ok: false, error: 'Mot de passe incorrect.' };
-    }
-
-    const authUser: AuthUser = { id: user.id, name: user.name, email: user.email, role: user.role };
-    this.currentUser.set(authUser);
-    localStorage.setItem(SESSION_KEY, JSON.stringify(authUser));
-    return { ok: true };
-  }
-
-  register(name: string, email: string, password: string): { ok: boolean; error?: string } {
-    if (!name.trim() || !email.trim() || password.length < 6) {
-      return { ok: false, error: 'Veuillez remplir tous les champs correctement.' };
-    }
-
-    const users = this.getUsers();
-    if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
-      return { ok: false, error: 'Un compte avec cet email existe déjà.' };
-    }
-
-    const newUser: StoredUser = {
-      id: Date.now().toString(),
-      name: name.trim(),
-      email: email.trim().toLowerCase(),
-      password,
-      role: 'USER',
-    };
-    users.push(newUser);
-    this.saveUsers(users);
-
-    const authUser: AuthUser = { id: newUser.id, name: newUser.name, email: newUser.email, role: newUser.role };
-    this.currentUser.set(authUser);
-    localStorage.setItem(SESSION_KEY, JSON.stringify(authUser));
-    return { ok: true };
   }
 
   logout(): void {
     this.currentUser.set(null);
     localStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem(TOKEN_KEY);
+    this.router.navigate(['/']);
+  }
+
+  private setSession(user: AuthUser, token: string): void {
+    this.currentUser.set(user);
+    localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+    localStorage.setItem(TOKEN_KEY, token);
   }
 }

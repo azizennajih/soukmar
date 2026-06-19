@@ -38,12 +38,14 @@ export class HomeComponent implements OnInit {
   constructor(private listingService: ListingService, private router: Router) {}
 
   ngOnInit() {
-    this.featured = this.listingService.getFeatured();
-    this.latest   = this.listingService.getLatest(8);
+    this.listingService.getAll({ limit: '20' }).subscribe(res => {
+      this.featured = res.listings.filter(l => l.isFeatured);
+      this.latest = res.listings.slice(0, 8);
+    });
   }
 
   search() {
-    const params: any = {};
+    const params: Record<string, string> = {};
     if (this.searchQuery.trim()) params['q'] = this.searchQuery;
     if (this.selectedCity) params['ville'] = this.selectedCity;
     this.router.navigate(['/annonces'], { queryParams: params });

@@ -19,6 +19,7 @@ export class DeposerAnnonceComponent {
   step = 0;
   loading = false;
   success = false;
+  error = '';
 
   form = {
     category: '' as Category | '',
@@ -54,32 +55,29 @@ export class DeposerAnnonceComponent {
   }
 
   publish() {
+    if (!this.auth.isLoggedIn) { this.router.navigate(['/auth/login']); return; }
     this.loading = true;
-    setTimeout(() => {
-      const listing = this.ls.create({
-        title: this.form.title,
-        description: this.form.description,
-        price: this.form.price ? +this.form.price : undefined,
-        currency: this.form.currency,
-        category: this.form.category as Category,
-        city: this.form.city,
-        images: this.form.images,
-        status: 'ACTIVE',
-        isPremium: false,
-        isFeatured: false,
-        phone: this.form.phone,
-        whatsapp: this.form.whatsapp,
-        userId: this.auth.currentUser()?.id || 'guest',
-        user: this.auth.currentUser() ? {
-          id: this.auth.currentUser()!.id,
-          name: this.auth.currentUser()!.name,
-          email: this.auth.currentUser()!.email,
-          createdAt: new Date(),
-        } : undefined,
-      });
-      this.loading = false;
-      this.success = true;
-      setTimeout(() => this.router.navigate(['/annonces', listing.id]), 2000);
-    }, 800);
+    this.error = '';
+    this.ls.create({
+      title: this.form.title,
+      description: this.form.description,
+      price: this.form.price ? +this.form.price : undefined,
+      currency: this.form.currency,
+      category: this.form.category as Category,
+      city: this.form.city,
+      images: this.form.images,
+      phone: this.form.phone,
+      whatsapp: this.form.whatsapp,
+    }).subscribe({
+      next: listing => {
+        this.loading = false;
+        this.success = true;
+        setTimeout(() => this.router.navigate(['/annonces', listing.id]), 2000);
+      },
+      error: () => {
+        this.loading = false;
+        this.error = 'Une erreur est survenue. Veuillez réessayer.';
+      }
+    });
   }
 }

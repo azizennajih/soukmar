@@ -13,6 +13,7 @@ import { Listing, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.
 })
 export class MesAnnoncesComponent implements OnInit {
   listings: Listing[] = [];
+  loading = false;
 
   statusConfig: Record<string, { label: string; cls: string }> = {
     ACTIVE:   { label: 'Active',      cls: 'badge-active'   },
@@ -26,9 +27,18 @@ export class MesAnnoncesComponent implements OnInit {
 
   ngOnInit() {
     if (!this.auth.isLoggedIn) { this.router.navigate(['/auth/login']); return; }
-    this.listings = this.ls.getUserListings(this.auth.currentUser()!.id);
-    // show all mock listings for demo
-    if (!this.listings.length) this.listings = this.ls.getLatest(8);
+    this.loading = true;
+    this.ls.getMyListings().subscribe({
+      next: listings => { this.listings = listings; this.loading = false; },
+      error: () => this.loading = false
+    });
+  }
+
+  delete(id: string) {
+    if (!confirm('Supprimer cette annonce ?')) return;
+    this.ls.delete(id).subscribe(() => {
+      this.listings = this.listings.filter(l => l.id !== id);
+    });
   }
 
   getCategory(val: string) { return CATEGORIES.find(c => c.value === val); }
