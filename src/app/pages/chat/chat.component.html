@@ -1,0 +1,134 @@
+<div class="chat fade-in">
+
+  <!-- Sidebar: conversation list -->
+  <aside class="chat__sidebar">
+    <div class="chat__sidebar-header">
+      <h2>Messages</h2>
+      <span class="chat__count">{{ conversations.length }}</span>
+    </div>
+
+    @if (conversations.length === 0) {
+      <div class="chat__empty-list">
+        <div style="font-size:2.5rem">💬</div>
+        <p>Aucune conversation</p>
+        <small>Contactez un vendeur depuis une annonce</small>
+      </div>
+    }
+
+    @for (conv of conversations; track conv.id) {
+      <div
+        class="chat__conv-item"
+        [class.active]="activeConv?.id === conv.id"
+        (click)="openConversation(conv)"
+      >
+        <div class="chat__conv-avatar">{{ getConvPartner(conv)[0] }}</div>
+        <div class="chat__conv-info">
+          <div class="chat__conv-name">{{ getConvPartner(conv) }}</div>
+          <div class="chat__conv-listing">{{ conv.listing.title }}</div>
+          <div class="chat__conv-last">{{ getLastMessage(conv) }}</div>
+        </div>
+      </div>
+    }
+  </aside>
+
+  <!-- Main chat area -->
+  <main class="chat__main">
+    @if (!activeConv) {
+      <div class="chat__placeholder">
+        <div style="font-size:4rem">💬</div>
+        <h3>Sélectionnez une conversation</h3>
+        <p>Ou contactez un vendeur depuis une annonce</p>
+        <a routerLink="/annonces" class="btn-primary">Parcourir les annonces</a>
+      </div>
+    } @else {
+      <!-- Header -->
+      <div class="chat__header">
+        <div class="chat__header-avatar">{{ getPartnerName()[0] }}</div>
+        <div class="chat__header-info">
+          <div class="chat__header-name">{{ getPartnerName() }}</div>
+          <a [routerLink]="['/annonces', activeConv.listingId]" class="chat__header-listing">
+            📌 {{ activeConv.listing.title }}
+            @if (activeConv.listing.price) {
+              · {{ activeConv.listing.price | number }} {{ activeConv.listing.currency }}
+            }
+          </a>
+        </div>
+        @if (partnerTyping) {
+          <div class="chat__typing">en train d'écrire...</div>
+        }
+      </div>
+
+      <!-- Messages -->
+      <div class="chat__messages">
+        @if (loading) {
+          <div class="chat__loading">Chargement...</div>
+        }
+
+        @for (msg of messages; track msg.id) {
+          <!-- System message -->
+          @if (isSystem(msg)) {
+            <div class="chat__system-msg">{{ msg.content }}</div>
+          }
+
+          <!-- Offer message -->
+          @else if (isOffer(msg)) {
+            <div class="chat__bubble-wrap" [class.mine]="isMine(msg)">
+              <div class="chat__offer" [class.mine]="isMine(msg)" [class.offer-accepted]="msg.offerStatus === 'ACCEPTED'" [class.offer-rejected]="msg.offerStatus === 'REJECTED'">
+                <div class="chat__offer-label">💰 Offre de prix</div>
+                <div class="chat__offer-amount">{{ msg.offerAmount | number }} MAD</div>
+                <div class="chat__offer-status">
+                  @if (msg.offerStatus === 'PENDING') { <span class="badge-pending">En attente</span> }
+                  @if (msg.offerStatus === 'ACCEPTED') { <span class="badge-accepted">✅ Acceptée</span> }
+                  @if (msg.offerStatus === 'REJECTED') { <span class="badge-rejected">❌ Refusée</span> }
+                </div>
+                @if (canRespond(msg)) {
+                  <div class="chat__offer-actions">
+                    <button class="btn-accept" (click)="respondOffer(msg, 'ACCEPTED')">✅ Accepter</button>
+                    <button class="btn-reject" (click)="respondOffer(msg, 'REJECTED')">❌ Refuser</button>
+                  </div>
+                }
+              </div>
+              <div class="chat__time">{{ msg.createdAt | date:'HH:mm' }}</div>
+            </div>
+          }
+
+          <!-- Text message -->
+          @else {
+            <div class="chat__bubble-wrap" [class.mine]="isMine(msg)">
+              <div class="chat__bubble" [class.mine]="isMine(msg)">{{ msg.content }}</div>
+              <div class="chat__time">{{ msg.createdAt | date:'HH:mm' }}</div>
+            </div>
+          }
+        }
+        <div #messagesEnd></div>
+      </div>
+
+      <!-- Offer input panel -->
+      @if (showOfferInput) {
+        <div class="chat__offer-panel">
+          <span>💰 Votre offre :</span>
+          <input type="number" [(ngModel)]="offerAmount" placeholder="Montant en MAD" min="1" />
+          <button class="btn-primary" (click)="sendOffer()">Envoyer l'offre</button>
+          <button class="btn-outline" (click)="showOfferInput=false">Annuler</button>
+        </div>
+      }
+
+      <!-- Input bar -->
+      <div class="chat__input-bar">
+        <button class="chat__offer-btn" (click)="showOfferInput=!showOfferInput" title="Faire une offre">💰</button>
+        <textarea
+          [(ngModel)]="messageText"
+          (input)="onTyping()"
+          (keydown)="onEnter($event)"
+          placeholder="Écrivez un message... (Entrée pour envoyer)"
+          rows="1"
+        ></textarea>
+        <button class="chat__send-btn" (click)="sendMessage()" [disabled]="!messageText.trim()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+    }
+  </main>
+</div>

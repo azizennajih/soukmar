@@ -98,15 +98,19 @@
           </a>
         }
 
-        @if (!messageSent) {
-          <form (ngSubmit)="sendMessage()" class="detail__msg-form">
-            <textarea [(ngModel)]="message" name="msg" placeholder="Écrivez votre message au vendeur..." rows="3" required></textarea>
-            <button type="submit" class="btn-primary" style="width:100%;justify-content:center">
-              ✉️ Envoyer un message
-            </button>
-          </form>
-        } @else {
-          <div class="detail__msg-sent">✅ Message envoyé avec succès !</div>
+        <!-- Live Chat Button -->
+        @if (auth.isLoggedIn && listing.userId !== auth.currentUser()?.id) {
+          <a
+            routerLink="/chat"
+            [queryParams]="{listing: listing.id}"
+            class="detail__contact-btn detail__contact-btn--chat"
+          >
+            💬 Chat en direct & Négocier
+          </a>
+        } @else if (!auth.isLoggedIn) {
+          <a routerLink="/auth/login" class="detail__contact-btn detail__contact-btn--chat">
+            🔐 Connectez-vous pour contacter
+          </a>
         }
       </div>
 

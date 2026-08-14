@@ -30,6 +30,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/mes-annonces/mes-annonces.component').then(m => m.MesAnnoncesComponent)
   },
   {
+    path: 'chat',
+    loadComponent: () => import('./pages/chat/chat.component').then(m => m.ChatComponent)
+  },
+  {
     path: 'admin',
     loadComponent: () => import('./pages/admin/admin.component').then(m => m.AdminComponent)
   },
