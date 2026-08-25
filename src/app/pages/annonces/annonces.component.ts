@@ -3,8 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ListingService } from '../../services/listing.service';
+import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing } from '../../models/listing.model';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-annonces',
@@ -18,13 +21,16 @@ export class AnnoncesComponent implements OnInit {
   listings: Listing[] = [];
   total = 0;
   loading = false;
+  favoriteIds = new Set<string>();
 
   filters = { q: '', categorie: '', ville: '', minPrix: '', maxPrix: '', tri: '' };
 
   constructor(
     private listingService: ListingService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private api: ApiService,
+    private auth: AuthService
   ) {}
 
   ngOnInit() {
@@ -37,6 +43,14 @@ export class AnnoncesComponent implements OnInit {
       this.filters.tri       = params['tri']       || '';
       this.loadListings();
     });
+    if (this.auth.isLoggedIn) this.loadFavorites();
+  }
+
+  async loadFavorites() {
+    try {
+      const favs = await firstValueFrom(this.api.get<Listing[]>('/favorites'));
+      this.favoriteIds = new Set(favs.map(f => f.id));
+    } catch { /* silently ignore */ }
   }
 
   loadListings() {
@@ -59,6 +73,10 @@ export class AnnoncesComponent implements OnInit {
       },
       error: () => this.loading = false
     });
+  }
+
+  isFav(listing: Listing): boolean {
+    return this.favoriteIds.has(listing.id);
   }
 
   applyFilters() {

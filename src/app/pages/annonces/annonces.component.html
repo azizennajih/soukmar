@@ -72,7 +72,7 @@
       @if (listings.length > 0) {
         <div class="grid-3">
           @for (listing of listings; track listing.id) {
-            <app-listing-card [listing]="listing" />
+            <app-listing-card [listing]="listing" [initialFav]="isFav(listing)" />
           }
         </div>
       } @else {

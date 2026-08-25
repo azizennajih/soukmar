@@ -15,4 +15,17 @@ export class UploadService {
     files.forEach(f => form.append('images', f));
     return this.http.post<{ urls: string[] }>(`${BASE_URL}/upload`, form, { headers });
   }
+
+  uploadFile(file: File): Observable<string> {
+    const token = localStorage.getItem('soukmar_token');
+    const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : new HttpHeaders();
+    const form = new FormData();
+    form.append('images', file);
+    return new Observable(observer => {
+      this.http.post<{ urls: string[] }>(`${BASE_URL}/upload`, form, { headers }).subscribe({
+        next: res => { observer.next(res.urls[0]); observer.complete(); },
+        error: err => observer.error(err)
+      });
+    });
+  }
 }

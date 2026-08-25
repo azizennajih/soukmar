@@ -34,6 +34,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/chat/chat.component').then(m => m.ChatComponent)
   },
   {
+    path: 'profil',
+    loadComponent: () => import('./pages/profil/profil.component').then(m => m.ProfilComponent)
+  },
+  {
     path: 'admin',
     loadComponent: () => import('./pages/admin/admin.component').then(m => m.AdminComponent)
   },

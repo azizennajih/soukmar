@@ -79,6 +79,7 @@
     display: flex; align-items: center; justify-content: center;
     transition: all .15s;
     &:hover { border-color: #e63946; color: #e63946; background: #fff5f5; }
+    &--fav { border-color: #e63946; color: #e63946; background: #fff5f5; }
   }
 
   &__price {
