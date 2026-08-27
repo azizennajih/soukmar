@@ -173,23 +173,61 @@ chunk-CB6HWK2B.js   | chat-component | 56.29 kB |
 Application bundle generation complete. [3.686 seconds] - 2026-08-27T19:08:33.391Z
 
 Component update sent to client(s).
-e reload sent to client(s).
 ❯ Changes detected. Rebuilding...
 ✔ Changes detected. Rebuilding...
 Initial chunk files | Names | Raw size
-main.js             | main  | 67.96 kB | 
+main.js             | main  | 67.98 kB | 
 
-Application bundle generation complete. [19.852 seconds] - 2026-08-27T19:08:29.210Z
+Application bundle generation complete. [44.994 seconds] - 2026-08-27T19:49:08.404Z
+
+Page reload sent to client(s).
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files | Names | Raw size
+main.js             | main  | 69.89 kB | 
+
+Application bundle generation complete. [100.959 seconds] - 2026-08-27T19:50:50.355Z
+
+Page reload sent to client(s).
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files | Names              | Raw size
+main.js             | main               | 71.81 kB | 
+
+Lazy chunk files    | Names              | Raw size
+chunk-UNHZNNI7.js   | annonces-component | 27.02 kB | 
+
+Application bundle generation complete. [32.561 seconds] - 2026-08-27T19:51:23.033Z
+
+Component update sent to client(s).
+ to client(s).
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files | Names | Raw size
+main.js             | main  | 69.89 kB | 
+
+Application bundle generation complete. [35.520 seconds] - 2026-08-27T19:49:58.622Z
+
+Page reload sent to client(s).
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files | Names              | Raw size
+main.js             | main               | 71.81 kB | 
+
+Lazy chunk files    | Names              | Raw size
+chunk-6BRACERI.js   | annonces-component | 28.57 kB | 
+
+Application bundle generation complete. [32.635 seconds] - 2026-08-27T19:50:31.306Z
 
 Component update sent to client(s).
 ❯ Changes detected. Rebuilding...
 ✔ Changes detected. Rebuilding...
-Initial chunk files | Names          | Raw size
-main.js             | main           | 67.96 kB | 
+Initial chunk files | Names              | Raw size
+main.js             | main               | 71.81 kB | 
 
-Lazy chunk files    | Names          | Raw size
-chunk-CB6HWK2B.js   | chat-component | 56.29 kB | 
+Lazy chunk files    | Names              | Raw size
+chunk-UNHZNNI7.js   | annonces-component | 27.02 kB | 
 
-Application bundle generation complete. [4.153 seconds] - 2026-08-27T19:08:33.385Z
+Application bundle generation complete. [8.273 seconds] - 2026-08-27T19:50:39.591Z
 
 Component update sent to client(s).

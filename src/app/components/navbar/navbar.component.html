@@ -23,13 +23,20 @@
 
       <!-- Search -->
       <form class="navbar__search" (ngSubmit)="search()">
+        <select [(ngModel)]="selectedCategory" name="cat" class="navbar__search-cat">
+          <option value="">Toutes catégories</option>
+          @for (cat of categories; track cat.value) {
+            <option [value]="cat.value">{{ cat.icon }} {{ cat.label }}</option>
+          }
+        </select>
+        <div class="navbar__search-divider"></div>
         <div class="navbar__search-input-wrapper">
           <svg class="navbar__search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           <input
             type="text"
             [(ngModel)]="searchQuery"
             name="q"
-            placeholder="Rechercher une annonce..."
+            placeholder="Que cherchez-vous ?"
             class="navbar__search-input"
           />
         </div>

@@ -16,6 +16,7 @@ import { CATEGORIES } from '../../models/listing.model';
 export class NavbarComponent implements OnInit, OnDestroy {
   categories = CATEGORIES;
   searchQuery = '';
+  selectedCategory = '';
   mobileOpen = signal(false);
   userMenuOpen = signal(false);
   unreadCount = signal(0);
@@ -51,9 +52,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   search() {
-    if (this.searchQuery.trim()) {
-      this.router.navigate(['/annonces'], { queryParams: { q: this.searchQuery } });
-    }
+    const params: Record<string, string> = {};
+    if (this.searchQuery.trim()) params['q'] = this.searchQuery.trim();
+    if (this.selectedCategory) params['categorie'] = this.selectedCategory;
+    this.router.navigate(['/annonces'], { queryParams: params });
   }
 
   toggleMobile() { this.mobileOpen.update(v => !v); }

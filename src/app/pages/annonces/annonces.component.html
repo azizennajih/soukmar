@@ -1,17 +1,4 @@
 <div class="annonces container fade-in">
-
-  <!-- Search bar -->
-  <div class="annonces__search-bar">
-    <input
-      type="text"
-      [(ngModel)]="filters.q"
-      (keydown.enter)="applyFilters()"
-      placeholder="🔍 Rechercher une annonce, une ville, un produit..."
-      class="annonces__search-input"
-    />
-    <button class="btn-primary annonces__search-btn" (click)="applyFilters()">Rechercher</button>
-  </div>
-
   <div class="annonces__layout">
 
     <!-- ===== SIDEBAR ===== -->
