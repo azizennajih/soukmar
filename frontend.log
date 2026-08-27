@@ -154,23 +154,42 @@ chunk-KCI2LM7E.js   | annonces-component | 30.19 kB |
 Application bundle generation complete. [6.908 seconds] - 2026-08-27T18:59:19.469Z
 
 Page reload sent to client(s).
-    | Raw size
-main.js             | main               | 68.07 kB | 
-
-Lazy chunk files    | Names              | Raw size
-chunk-5V2TSV5K.js   | annonces-component | 30.09 kB | 
-
-Application bundle generation complete. [4.166 seconds] - 2026-08-27T18:59:10.912Z
-
-Page reload sent to client(s).
 ❯ Changes detected. Rebuilding...
 ✔ Changes detected. Rebuilding...
-Initial chunk files | Names              | Raw size
-main.js             | main               | 68.07 kB | 
+Initial chunk files | Names | Raw size
+main.js             | main  | 67.96 kB | 
 
-Lazy chunk files    | Names              | Raw size
-chunk-KCI2LM7E.js   | annonces-component | 30.19 kB | 
+Application bundle generation complete. [20.058 seconds] - 2026-08-27T19:08:29.549Z
 
-Application bundle generation complete. [7.604 seconds] - 2026-08-27T18:59:20.170Z
+Component update sent to client(s).
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files | Names          | Raw size
+main.js             | main           | 67.96 kB | 
 
-Page reload sent to client(s).
+Lazy chunk files    | Names          | Raw size
+chunk-CB6HWK2B.js   | chat-component | 56.29 kB | 
+
+Application bundle generation complete. [3.686 seconds] - 2026-08-27T19:08:33.391Z
+
+Component update sent to client(s).
+e reload sent to client(s).
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files | Names | Raw size
+main.js             | main  | 67.96 kB | 
+
+Application bundle generation complete. [19.852 seconds] - 2026-08-27T19:08:29.210Z
+
+Component update sent to client(s).
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files | Names          | Raw size
+main.js             | main           | 67.96 kB | 
+
+Lazy chunk files    | Names          | Raw size
+chunk-CB6HWK2B.js   | chat-component | 56.29 kB | 
+
+Application bundle generation complete. [4.153 seconds] - 2026-08-27T19:08:33.385Z
+
+Component update sent to client(s).
