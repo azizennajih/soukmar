@@ -1,3 +1,16 @@
+@if (loading) {
+  <div class="container" style="padding:4rem;text-align:center;font-size:1.1rem;color:var(--text-muted)">
+    ⏳ Chargement...
+  </div>
+}
+
+@if (loadError) {
+  <div class="container" style="padding:4rem;text-align:center">
+    <p>❌ Annonce introuvable.</p>
+    <a routerLink="/annonces" class="btn-primary">Retour aux annonces</a>
+  </div>
+}
+
 @if (listing) {
 <div class="detail container fade-in">
 

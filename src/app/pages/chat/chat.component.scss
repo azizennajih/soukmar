@@ -1,7 +1,12 @@
+:host {
+  display: block;
+  overflow: hidden;
+}
+
 .chat {
   display: grid;
   grid-template-columns: 320px 1fr;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 150px);
   max-width: 1200px;
   margin: 0 auto;
   border: 1px solid #e2e8f0;
@@ -12,7 +17,7 @@
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 130px);
   }
 }
 

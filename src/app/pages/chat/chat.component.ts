@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
@@ -32,7 +32,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     public auth: AuthService,
     public chatService: ChatService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
@@ -41,11 +42,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.chatService.connect(token);
 
     this.subs.push(
-      this.chatService.messages$.subscribe(msgs => { this.messages = msgs; }),
-      this.chatService.typing$.subscribe(t => { this.partnerTyping = t; })
+      this.chatService.messages$.subscribe(msgs => { this.messages = msgs; this.cdr.markForCheck(); }),
+      this.chatService.typing$.subscribe(t => { this.partnerTyping = t; this.cdr.markForCheck(); })
     );
 
     await this.loadConversations();
+    this.cdr.markForCheck();
 
     // Open conversation from query param (e.g. from listing detail)
     const listingId = this.route.snapshot.queryParamMap.get('listing');
@@ -62,6 +64,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   async loadConversations() {
     this.conversations = await this.chatService.getConversations();
+    this.cdr.markForCheck();
   }
 
   async openConversation(conv: Conversation) {
@@ -72,6 +75,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.chatService.messages$.next(msgs);
     this.chatService.joinConversation(conv.id);
     this.loading = false;
+    this.cdr.markForCheck();
   }
 
   sendMessage() {
@@ -145,7 +149,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    this.messagesEnd?.nativeElement?.scrollIntoView({ behavior: 'smooth' });
+    const el = this.messagesEnd?.nativeElement;
+    if (el) {
+      const container = el.closest('.chat__messages');
+      if (container) container.scrollTop = container.scrollHeight;
+    }
   }
 
   ngOnDestroy() {

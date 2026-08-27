@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -38,7 +38,8 @@ export class ProfilComponent implements OnInit {
     private api: ApiService,
     private auth: AuthService,
     private upload: UploadService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -56,6 +57,7 @@ export class ProfilComponent implements OnInit {
       this.errorMsg = 'Impossible de charger le profil.';
     } finally {
       this.loading = false;
+      this.cdr.markForCheck();
     }
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -23,14 +23,14 @@ export class MesAnnoncesComponent implements OnInit {
     EXPIRED:  { label: 'Expirée',     cls: 'badge-rejected' },
   };
 
-  constructor(public auth: AuthService, private ls: ListingService, private router: Router) {}
+  constructor(public auth: AuthService, private ls: ListingService, private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     if (!this.auth.isLoggedIn) { this.router.navigate(['/auth/login']); return; }
     this.loading = true;
     this.ls.getMyListings().subscribe({
-      next: listings => { this.listings = listings; this.loading = false; },
-      error: () => this.loading = false
+      next: listings => { this.listings = listings; this.loading = false; this.cdr.markForCheck(); },
+      error: () => { this.loading = false; this.cdr.markForCheck(); }
     });
   }
 

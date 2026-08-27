@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -21,6 +21,7 @@ export class AnnonceDetailComponent implements OnInit {
   messageSending = false;
   selectedImage = 0;
   loading = true;
+  loadError = false;
   favorited = signal(false);
   favLoading = signal(false);
 
@@ -29,7 +30,8 @@ export class AnnonceDetailComponent implements OnInit {
     private router: Router,
     private ls: ListingService,
     private api: ApiService,
-    public auth: AuthService
+    public auth: AuthService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -38,9 +40,10 @@ export class AnnonceDetailComponent implements OnInit {
       next: listing => {
         this.listing = listing;
         this.loading = false;
+        this.cdr.markForCheck();
         if (this.auth.isLoggedIn) this.checkFavorite();
       },
-      error: () => { this.loading = false; this.router.navigate(['/annonces']); }
+      error: (e) => { console.error('Detail error:', e); this.loading = false; this.loadError = true; this.cdr.markForCheck(); }
     });
   }
 

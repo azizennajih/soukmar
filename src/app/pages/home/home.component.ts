@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -43,13 +43,15 @@ export class HomeComponent implements OnInit {
     private listingService: ListingService,
     private api: ApiService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.listingService.getAll({ limit: '20' }).subscribe(res => {
       this.featured = res.listings.filter(l => l.isFeatured);
       this.latest = res.listings.slice(0, 8);
+      this.cdr.markForCheck();
     });
     if (this.auth.isLoggedIn) this.loadFavorites();
   }
