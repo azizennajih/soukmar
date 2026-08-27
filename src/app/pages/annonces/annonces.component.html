@@ -1,4 +1,17 @@
 <div class="annonces container fade-in">
+
+  <!-- Search bar -->
+  <div class="annonces__search-bar">
+    <input
+      type="text"
+      [(ngModel)]="filters.q"
+      (keydown.enter)="applyFilters()"
+      placeholder="🔍 Rechercher une annonce, une ville, un produit..."
+      class="annonces__search-input"
+    />
+    <button class="btn-primary annonces__search-btn" (click)="applyFilters()">Rechercher</button>
+  </div>
+
   <div class="annonces__layout">
 
     <!-- ===== SIDEBAR ===== -->
@@ -24,13 +37,19 @@
 
       <!-- City -->
       <div class="sidebar__section">
-        <label class="sidebar__label">Ville</label>
-        <select [(ngModel)]="filters.ville" class="sidebar__select">
-          <option value="">Toutes les villes</option>
+        <label class="sidebar__label">Ville / Commune</label>
+        <input
+          type="text"
+          [(ngModel)]="filters.ville"
+          list="city-list"
+          placeholder="Tapez une ville..."
+          class="sidebar__select"
+        />
+        <datalist id="city-list">
           @for (city of cities; track city) {
             <option [value]="city">{{ city }}</option>
           }
-        </select>
+        </datalist>
       </div>
 
       <!-- Price -->
