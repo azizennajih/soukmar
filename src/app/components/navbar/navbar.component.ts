@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ApiService } from '../../services/api.service';
-import { CATEGORIES } from '../../models/listing.model';
+import { CATEGORIES, MOROCCO_CITIES } from '../../models/listing.model';
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +15,9 @@ import { CATEGORIES } from '../../models/listing.model';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   categories = CATEGORIES;
+  cities = MOROCCO_CITIES;
   searchQuery = '';
+  selectedCity = '';
   selectedCategory = '';
   mobileOpen = signal(false);
   userMenuOpen = signal(false);
@@ -54,7 +56,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   search() {
     const params: Record<string, string> = {};
     if (this.searchQuery.trim()) params['q'] = this.searchQuery.trim();
-    if (this.selectedCategory) params['categorie'] = this.selectedCategory;
+    if (this.selectedCity.trim()) params['ville'] = this.selectedCity.trim();
     this.router.navigate(['/annonces'], { queryParams: params });
   }
 

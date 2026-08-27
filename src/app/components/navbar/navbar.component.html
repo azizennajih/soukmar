@@ -23,15 +23,9 @@
 
       <!-- Search -->
       <form class="navbar__search" (ngSubmit)="search()">
-        <select [(ngModel)]="selectedCategory" name="cat" class="navbar__search-cat">
-          <option value="">Toutes catégories</option>
-          @for (cat of categories; track cat.value) {
-            <option [value]="cat.value">{{ cat.icon }} {{ cat.label }}</option>
-          }
-        </select>
-        <div class="navbar__search-divider"></div>
-        <div class="navbar__search-input-wrapper">
-          <svg class="navbar__search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <!-- Keyword -->
+        <div class="navbar__search-field">
+          <svg class="navbar__search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           <input
             type="text"
             [(ngModel)]="searchQuery"
@@ -40,7 +34,30 @@
             class="navbar__search-input"
           />
         </div>
-        <button type="submit" class="navbar__search-btn">Chercher</button>
+        <!-- Divider -->
+        <div class="navbar__search-sep"></div>
+        <!-- Location -->
+        <div class="navbar__search-field navbar__search-field--location">
+          <svg class="navbar__search-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <input
+            type="text"
+            [(ngModel)]="selectedCity"
+            name="ville"
+            list="navbar-city-list"
+            placeholder="Ville ou région"
+            class="navbar__search-input navbar__search-input--location"
+          />
+          <datalist id="navbar-city-list">
+            @for (city of cities; track city) {
+              <option [value]="city" />
+            }
+          </datalist>
+        </div>
+        <!-- Button -->
+        <button type="submit" class="navbar__search-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <span class="navbar__search-btn-text">Chercher</span>
+        </button>
       </form>
 
       <!-- Right actions -->

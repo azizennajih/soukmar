@@ -66,81 +66,81 @@
 
   &__search {
     flex: 1;
-    max-width: 640px;
+    max-width: 660px;
     display: flex;
     align-items: stretch;
-    border: 1.5px solid #e2e8f0;
-    border-radius: .875rem;
+    height: 44px;
+    border: 2px solid #e2e8f0;
+    border-radius: 999px;
     overflow: hidden;
-    background: #f8fafc;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
     transition: border-color .2s, box-shadow .2s;
     &:focus-within {
       border-color: #e63946;
-      box-shadow: 0 0 0 3px rgba(230,57,70,.1);
-      background: #fff;
+      box-shadow: 0 0 0 3px rgba(230,57,70,.12);
     }
     @media (max-width: 640px) { display: none; }
 
-    &-cat {
-      width: 150px;
-      flex-shrink: 0;
-      border: none;
-      border-right: 1.5px solid #e2e8f0;
-      border-radius: 0;
-      background: transparent;
-      font-size: .8rem;
-      font-weight: 600;
-      color: #374151;
-      padding: 0 .75rem;
-      cursor: pointer;
-      outline: none;
-      box-shadow: none;
-      &:focus { border-color: transparent; box-shadow: none; }
-      @media (max-width: 900px) { width: 110px; font-size: .75rem; }
-    }
-
-    &-divider {
-      width: 1px;
-      background: #e2e8f0;
-      flex-shrink: 0;
-    }
-
-    &-input-wrapper {
+    &-field {
       position: relative;
+      display: flex;
+      align-items: center;
       flex: 1;
+      min-width: 0;
+
+      &--location {
+        flex: 0 0 185px;
+        border-left: 1.5px solid #e2e8f0;
+        @media (max-width: 900px) { flex: 0 0 130px; }
+      }
     }
 
     &-icon {
       position: absolute;
-      left: .9rem;
-      top: 50%;
-      transform: translateY(-50%);
+      left: .85rem;
       color: #94a3b8;
       pointer-events: none;
+      flex-shrink: 0;
+    }
+
+    &-sep {
+      width: 1px;
+      background: #e2e8f0;
+      flex-shrink: 0;
+      margin: .4rem 0;
     }
 
     &-input {
       border: none;
       border-radius: 0;
-      padding-left: 2.5rem;
+      padding: 0 .75rem 0 2.4rem;
       background: transparent;
       font-size: .875rem;
       height: 100%;
+      width: 100%;
       &:focus { border-color: transparent; box-shadow: none; }
+      &--location { font-size: .85rem; }
     }
 
     &-btn {
-      padding: 0 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      padding: 0 1.1rem;
       background: #e63946;
       color: #fff;
       border: none;
-      border-radius: 0;
+      border-radius: 0 999px 999px 0;
       font-weight: 700;
       font-size: .875rem;
       cursor: pointer;
       white-space: nowrap;
       transition: background .2s;
+      flex-shrink: 0;
       &:hover { background: #c62d3a; }
+
+      &-text { @media (max-width: 900px) { display: none; } }
     }
   }
 
