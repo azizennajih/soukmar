@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +14,8 @@ import { firstValueFrom } from 'rxjs';
   selector: 'app-home',
   imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
   categories = CATEGORIES;
@@ -48,6 +49,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.cdr.markForCheck();
     this.listingService.getAll({ limit: '20' }).subscribe(res => {
       this.featured = res.listings.filter(l => l.isFeatured);
       this.latest = res.listings.slice(0, 8);

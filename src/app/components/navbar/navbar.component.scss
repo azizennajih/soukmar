@@ -68,6 +68,7 @@
     flex: 1;
     max-width: 560px;
     display: flex;
+    @media (max-width: 480px) { display: none; }
 
     &-input-wrapper {
       position: relative;

@@ -72,33 +72,105 @@ chunk-BCV5OYCE.js   | annonces-component | 30.09 kB |
 Application bundle generation complete. [3.839 seconds] - 2026-08-27T12:27:42.528Z
 
 Component update sent to client(s).
-    | main               | 67.90 kB | 
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files | Names          | Raw size
+main.js             | main           | 67.90 kB | 
 
-Lazy chunk files    | Names              | Raw size
-chunk-T6DA3S77.js   | annonces-component | 28.35 kB | 
+Lazy chunk files    | Names          | Raw size
+chunk-TEKD4KZA.js   | home-component | 46.60 kB | 
 
-Application bundle generation complete. [7.710 seconds] - 2026-08-27T12:27:28.966Z
+Application bundle generation complete. [9.416 seconds] - 2026-08-27T18:57:42.519Z
+
+Page reload sent to client(s).
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files | Names          | Raw size
+main.js             | main           | 67.90 kB | 
+
+Lazy chunk files    | Names          | Raw size
+chunk-DJL6CSSG.js   | home-component | 46.70 kB | 
+
+Application bundle generation complete. [1.345 seconds] - 2026-08-27T18:57:44.096Z
+
+Page reload sent to client(s).
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files | Names          | Raw size
+main.js             | main           | 67.90 kB | 
+
+Lazy chunk files    | Names          | Raw size
+chunk-ELCYJO46.js   | home-component | 46.73 kB | 
+
+Application bundle generation complete. [2.387 seconds] - 2026-08-27T18:57:46.502Z
+
+Page reload sent to client(s).
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files | Names  | Raw size
+styles.css          | styles |  8.70 kB | 
+
+Application bundle generation complete. [2.380 seconds] - 2026-08-27T18:58:46.767Z
+
+Stylesheet update sent to client(s).
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files | Names | Raw size
+main.js             | main  | 68.07 kB | 
+
+Application bundle generation complete. [12.925 seconds] - 2026-08-27T18:59:02.957Z
+
+Component update sent to client(s).
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files | Names          | Raw size
+main.js             | main           | 68.07 kB | 
+
+Lazy chunk files    | Names          | Raw size
+chunk-IFHCC4LF.js   | home-component | 46.93 kB | 
+
+Application bundle generation complete. [4.216 seconds] - 2026-08-27T18:59:07.180Z
 
 Component update sent to client(s).
 ❯ Changes detected. Rebuilding...
 ✔ Changes detected. Rebuilding...
 Initial chunk files | Names              | Raw size
-main.js             | main               | 67.90 kB | 
+main.js             | main               | 68.07 kB | 
 
 Lazy chunk files    | Names              | Raw size
-chunk-X23FE7FM.js   | annonces-component | 29.91 kB | 
+chunk-5V2TSV5K.js   | annonces-component | 30.09 kB | 
 
-Application bundle generation complete. [4.502 seconds] - 2026-08-27T12:27:33.475Z
+Application bundle generation complete. [3.982 seconds] - 2026-08-27T18:59:11.168Z
 
-Component update sent to client(s).
+Page reload sent to client(s).
 ❯ Changes detected. Rebuilding...
 ✔ Changes detected. Rebuilding...
 Initial chunk files | Names              | Raw size
-main.js             | main               | 67.90 kB | 
+main.js             | main               | 68.07 kB | 
 
 Lazy chunk files    | Names              | Raw size
-chunk-BCV5OYCE.js   | annonces-component | 30.09 kB | 
+chunk-KCI2LM7E.js   | annonces-component | 30.19 kB | 
 
-Application bundle generation complete. [3.755 seconds] - 2026-08-27T12:27:40.262Z
+Application bundle generation complete. [6.908 seconds] - 2026-08-27T18:59:19.469Z
 
-Component update sent to client(s).
+Page reload sent to client(s).
+    | Raw size
+main.js             | main               | 68.07 kB | 
+
+Lazy chunk files    | Names              | Raw size
+chunk-5V2TSV5K.js   | annonces-component | 30.09 kB | 
+
+Application bundle generation complete. [4.166 seconds] - 2026-08-27T18:59:10.912Z
+
+Page reload sent to client(s).
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files | Names              | Raw size
+main.js             | main               | 68.07 kB | 
+
+Lazy chunk files    | Names              | Raw size
+chunk-KCI2LM7E.js   | annonces-component | 30.19 kB | 
+
+Application bundle generation complete. [7.604 seconds] - 2026-08-27T18:59:20.170Z
+
+Page reload sent to client(s).

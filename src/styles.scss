@@ -187,7 +187,19 @@ input, select, textarea {
 @media (max-width: 768px) {
   .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .grid-2 { grid-template-columns: 1fr; }
+  .section { padding: 2rem 0; }
+  .container { padding: 0 .875rem; }
 }
 @media (max-width: 480px) {
   .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+}
+
+/* ===== MOBILE EMPTY STATE ===== */
+.empty-state {
+  display: flex; flex-direction: column; align-items: center;
+  gap: .75rem; padding: 3rem 1rem; text-align: center;
+  span { font-size: 3rem; }
+  p { font-size: 1rem; font-weight: 600; color: #374151; }
+  small { font-size: .85rem; color: #94a3b8; }
 }

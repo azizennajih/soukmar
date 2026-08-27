@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +13,8 @@ import { firstValueFrom } from 'rxjs';
   selector: 'app-annonces',
   imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent],
   templateUrl: './annonces.component.html',
-  styleUrl: './annonces.component.scss'
+  styleUrl: './annonces.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AnnoncesComponent implements OnInit {
   categories = CATEGORIES;
