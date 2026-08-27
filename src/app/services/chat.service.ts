@@ -21,7 +21,7 @@ export interface Conversation {
   id: string;
   listingId: string;
   buyerId: string;
-  listing: { id: string; title: string; price?: number; currency: string; images: string[]; userId: string; user: { id: string; name: string } };
+  listing: { id: string; title: string; price?: number; currency: string; images: string[]; userId: string; status: string; user: { id: string; name: string } };
   buyer: { id: string; name: string };
   messages: ChatMessage[];
   updatedAt: string;
@@ -32,6 +32,7 @@ export class ChatService {
   private socket: Socket | null = null;
   messages$ = new BehaviorSubject<ChatMessage[]>([]);
   typing$ = new BehaviorSubject<boolean>(false);
+  listingStatus$ = new BehaviorSubject<{ listingId: string; status: string } | null>(null);
 
   constructor(private api: ApiService) {}
 
@@ -48,6 +49,9 @@ export class ChatService {
     });
     this.socket.on('user_typing', (data: { isTyping: boolean }) => {
       this.typing$.next(data.isTyping);
+    });
+    this.socket.on('listing_status_changed', (data: { listingId: string; status: string }) => {
+      this.listingStatus$.next(data);
     });
   }
 
@@ -71,6 +75,10 @@ export class ChatService {
 
   respondOffer(messageId: string, conversationId: string, status: 'ACCEPTED' | 'REJECTED') {
     this.socket?.emit('respond_offer', { messageId, conversationId, status });
+  }
+
+  cancelReservation(conversationId: string, listingId: string) {
+    this.socket?.emit('cancel_reservation', { conversationId, listingId });
   }
 
   emitTyping(conversationId: string, isTyping: boolean) {

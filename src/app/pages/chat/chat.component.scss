@@ -1,13 +1,19 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   overflow: hidden;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 .chat {
   display: grid;
   grid-template-columns: 320px 1fr;
-  height: calc(100vh - 150px);
+  flex: 1;
+  min-height: 0;
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   border: 1px solid #e2e8f0;
   border-radius: 1.25rem;
@@ -17,7 +23,6 @@
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    height: calc(100vh - 130px);
   }
 }
 
@@ -106,6 +111,32 @@
   color: #94a3b8;
   h3 { color: #374151; font-weight: 800; }
   p  { font-size: .9rem; }
+}
+
+/* Reservation banner */
+.chat__reserved-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .65rem 1.5rem;
+  background: #fef3c7;
+  border-bottom: 1px solid #fcd34d;
+  font-size: .875rem;
+  color: #92400e;
+}
+
+.chat__cancel-btn {
+  margin-left: auto;
+  padding: .35rem .875rem;
+  border-radius: .5rem;
+  border: 1.5px solid #d97706;
+  background: transparent;
+  color: #92400e;
+  font-size: .8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+  &:hover { background: #fde68a; }
 }
 
 /* Header */

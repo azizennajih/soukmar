@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef, ApplicationRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
@@ -10,7 +10,8 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-chat',
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss'
+  styleUrl: './chat.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild('messagesEnd') messagesEnd!: ElementRef;
@@ -24,6 +25,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   partnerTyping = false;
   loading = false;
   sendingOffer = false;
+  listingStatus = '';
 
   private subs: Subscription[] = [];
   private typingTimer: ReturnType<typeof setTimeout> | null = null;
@@ -33,7 +35,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     public chatService: ChatService,
     private route: ActivatedRoute,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private appRef: ApplicationRef
   ) {}
 
   async ngOnInit() {
@@ -43,11 +46,16 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     this.subs.push(
       this.chatService.messages$.subscribe(msgs => { this.messages = msgs; this.cdr.markForCheck(); }),
-      this.chatService.typing$.subscribe(t => { this.partnerTyping = t; this.cdr.markForCheck(); })
+      this.chatService.typing$.subscribe(t => { this.partnerTyping = t; this.cdr.markForCheck(); }),
+      this.chatService.listingStatus$.subscribe(data => {
+        if (data && this.activeConv?.listingId === data.listingId) {
+          this.listingStatus = data.status;
+          this.cdr.markForCheck();
+        }
+      })
     );
 
     await this.loadConversations();
-    this.cdr.markForCheck();
 
     // Open conversation from query param (e.g. from listing detail)
     const listingId = this.route.snapshot.queryParamMap.get('listing');
@@ -70,11 +78,20 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   async openConversation(conv: Conversation) {
     this.activeConv = conv;
     this.showOfferInput = false;
+    this.listingStatus = conv.listing.status || '';
     this.loading = true;
     const msgs = await this.chatService.getMessages(conv.id);
     this.chatService.messages$.next(msgs);
     this.chatService.joinConversation(conv.id);
     this.loading = false;
+    this.cdr.markForCheck();
+  }
+
+  cancelReservation() {
+    if (!this.activeConv) return;
+    if (!confirm('Réservation annuler? L\'annonce redevient active.')) return;
+    this.chatService.cancelReservation(this.activeConv.id, this.activeConv.listingId);
+    this.listingStatus = 'ACTIVE';
     this.cdr.markForCheck();
   }
 

@@ -41,6 +41,14 @@
         <a routerLink="/annonces" class="btn-primary">Parcourir les annonces</a>
       </div>
     } @else {
+      <!-- Reservation banner -->
+      @if (listingStatus === 'RESERVED') {
+        <div class="chat__reserved-banner">
+          🔒 Cette annonce est <strong>réservée</strong>
+          <button class="chat__cancel-btn" (click)="cancelReservation()">Annuler la réservation</button>
+        </div>
+      }
+
       <!-- Header -->
       <div class="chat__header">
         <div class="chat__header-avatar">{{ getPartnerName()[0] }}</div>

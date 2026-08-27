@@ -2,7 +2,7 @@ export type Category =
   | 'VEHICLES' | 'REAL_ESTATE' | 'JOBS' | 'ELECTRONICS'
   | 'HOME_GARDEN' | 'FASHION' | 'SERVICES' | 'OTHER';
 
-export type ListingStatus = 'ACTIVE' | 'SOLD' | 'PENDING' | 'REJECTED' | 'EXPIRED';
+export type ListingStatus = 'ACTIVE' | 'RESERVED' | 'SOLD' | 'PENDING' | 'REJECTED' | 'EXPIRED'; // updated
 
 export interface User {
   id: string;

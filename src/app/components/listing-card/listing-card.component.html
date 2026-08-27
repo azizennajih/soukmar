@@ -9,6 +9,9 @@
 
     <!-- Badges -->
     <div class="listing-card__badges">
+      @if (listing.status === 'RESERVED') {
+        <span class="listing-card__badge listing-card__badge--reserved">🔒 Réservé</span>
+      }
       @if (listing.isFeatured) {
         <span class="listing-card__badge listing-card__badge--premium">⭐ Premium</span>
       }

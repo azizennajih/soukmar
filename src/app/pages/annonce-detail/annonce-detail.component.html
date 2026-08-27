@@ -111,6 +111,11 @@
           </a>
         }
 
+        <!-- Reserved badge -->
+        @if ($any(listing).status === 'RESERVED') {
+          <div class="detail__reserved-badge">🔒 Annonce réservée</div>
+        }
+
         <!-- Live Chat Button -->
         @if (auth.isLoggedIn && listing.userId !== auth.currentUser()?.id) {
           <a
