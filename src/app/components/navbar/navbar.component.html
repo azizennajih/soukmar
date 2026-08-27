@@ -49,7 +49,7 @@
           />
           <datalist id="navbar-city-list">
             @for (city of cities; track city) {
-              <option [value]="city" />
+              <option [value]="city">{{ city }}</option>
             }
           </datalist>
         </div>

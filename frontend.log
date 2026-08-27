@@ -8,252 +8,7 @@ websocket connection issues.
     
 ❯ Building...
 ✔ Building...
-Initial chunk files | Names                     | Raw size
-main.js             | main                      | 67.90 kB | 
-styles.css          | styles                    |  8.25 kB | 
-chunk-SL3U54EQ.js   | -                         |  3.19 kB | 
-chunk-7HOAXFQQ.js   | -                         |  1.99 kB | 
-chunk-4TOG76F5.js   | -                         |  1.88 kB | 
-chunk-CZJLB7T5.js   | -                         |  1.08 kB | 
-
-                    | Initial total             | 84.29 kB
-
-Lazy chunk files    | Names                     | Raw size
-chunk-Z27WD3AS.js   | deposer-annonce-component | 56.39 kB | 
-chunk-HDITQNUH.js   | chat-component            | 56.38 kB | 
-chunk-P2OD6XGU.js   | home-component            | 46.60 kB | 
-chunk-YUWJMNEC.js   | annonce-detail-component  | 44.08 kB | 
-chunk-J4DFLWFS.js   | profil-component          | 28.29 kB | 
-chunk-VU3LSCHI.js   | admin-component           | 27.36 kB | 
-chunk-6L6W6UTQ.js   | annonces-component        | 26.73 kB | 
-chunk-2QX2BURH.js   | premium-component         | 25.43 kB | 
-chunk-OJSW5Q67.js   | login-component           | 24.18 kB | 
-chunk-PGTLGI5Y.js   | mes-annonces-component    | 20.89 kB | 
-chunk-OXWCFPM7.js   | -                         | 19.81 kB | 
-chunk-5IQYUJXN.js   | register-component        | 15.49 kB | 
-chunk-5KJKCBFD.js   | -                         |  2.07 kB | 
-chu❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names                     | Raw size
-main.js             | main                      | 67.90 kB | 
-chunk-E7EIIVKS.js   | -                         |  7.34 kB | 
-
-Lazy chunk files    | Names                     | Raw size
-chunk-RJXRABCX.js   | deposer-annonce-component | 56.39 kB | 
-chunk-5XN7AIY7.js   | home-component            | 46.60 kB | 
-chunk-RSGTCMRL.js   | annonce-detail-component  | 44.08 kB | 
-chunk-C63HEHCX.js   | admin-component           | 27.36 kB | 
-chunk-K4UZ25XN.js   | annonces-component        | 26.73 kB | 
-chunk-JXNMKFHC.js   | mes-annonces-component    | 20.89 kB | 
-chunk-EEQ2QIQN.js   | -                         | 19.81 kB | 
-
-Application bundle generation complete. [21.179 seconds] - 2026-08-27T12:27:31.439Z
-
-Page reload sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names              | Raw size
-main.js             | main               | 67.90 kB | 
-
-Lazy chunk files    | Names              | Raw size
-chunk-X23FE7FM.js   | annonces-component | 29.91 kB | 
-
-Application bundle generation complete. [7.142 seconds] - 2026-08-27T12:27:38.668Z
-
-Component update sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names              | Raw size
-main.js             | main               | 67.90 kB | 
-
-Lazy chunk files    | Names              | Raw size
-chunk-BCV5OYCE.js   | annonces-component | 30.09 kB | 
-
-Application bundle generation complete. [3.839 seconds] - 2026-08-27T12:27:42.528Z
-
-Component update sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names          | Raw size
-main.js             | main           | 67.90 kB | 
-
-Lazy chunk files    | Names          | Raw size
-chunk-TEKD4KZA.js   | home-component | 46.60 kB | 
-
-Application bundle generation complete. [9.416 seconds] - 2026-08-27T18:57:42.519Z
-
-Page reload sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names          | Raw size
-main.js             | main           | 67.90 kB | 
-
-Lazy chunk files    | Names          | Raw size
-chunk-DJL6CSSG.js   | home-component | 46.70 kB | 
-
-Application bundle generation complete. [1.345 seconds] - 2026-08-27T18:57:44.096Z
-
-Page reload sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names          | Raw size
-main.js             | main           | 67.90 kB | 
-
-Lazy chunk files    | Names          | Raw size
-chunk-ELCYJO46.js   | home-component | 46.73 kB | 
-
-Application bundle generation complete. [2.387 seconds] - 2026-08-27T18:57:46.502Z
-
-Page reload sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names  | Raw size
-styles.css          | styles |  8.70 kB | 
-
-Application bundle generation complete. [2.380 seconds] - 2026-08-27T18:58:46.767Z
-
-Stylesheet update sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names | Raw size
-main.js             | main  | 68.07 kB | 
-
-Application bundle generation complete. [12.925 seconds] - 2026-08-27T18:59:02.957Z
-
-Component update sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names          | Raw size
-main.js             | main           | 68.07 kB | 
-
-Lazy chunk files    | Names          | Raw size
-chunk-IFHCC4LF.js   | home-component | 46.93 kB | 
-
-Application bundle generation complete. [4.216 seconds] - 2026-08-27T18:59:07.180Z
-
-Component update sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names              | Raw size
-main.js             | main               | 68.07 kB | 
-
-Lazy chunk files    | Names              | Raw size
-chunk-5V2TSV5K.js   | annonces-component | 30.09 kB | 
-
-Application bundle generation complete. [3.982 seconds] - 2026-08-27T18:59:11.168Z
-
-Page reload sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names              | Raw size
-main.js             | main               | 68.07 kB | 
-
-Lazy chunk files    | Names              | Raw size
-chunk-KCI2LM7E.js   | annonces-component | 30.19 kB | 
-
-Application bundle generation complete. [6.908 seconds] - 2026-08-27T18:59:19.469Z
-
-Page reload sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names | Raw size
-main.js             | main  | 67.96 kB | 
-
-Application bundle generation complete. [20.058 seconds] - 2026-08-27T19:08:29.549Z
-
-Component update sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names          | Raw size
-main.js             | main           | 67.96 kB | 
-
-Lazy chunk files    | Names          | Raw size
-chunk-CB6HWK2B.js   | chat-component | 56.29 kB | 
-
-Application bundle generation complete. [3.686 seconds] - 2026-08-27T19:08:33.391Z
-
-Component update sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names | Raw size
-main.js             | main  | 67.98 kB | 
-
-Application bundle generation complete. [44.994 seconds] - 2026-08-27T19:49:08.404Z
-
-Page reload sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names | Raw size
-main.js             | main  | 69.89 kB | 
-
-Application bundle generation complete. [100.959 seconds] - 2026-08-27T19:50:50.355Z
-
-Page reload sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names              | Raw size
-main.js             | main               | 71.81 kB | 
-
-Lazy chunk files    | Names              | Raw size
-chunk-UNHZNNI7.js   | annonces-component | 27.02 kB | 
-
-Application bundle generation complete. [32.561 seconds] - 2026-08-27T19:51:23.033Z
-
-Component update sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Initial chunk files | Names | Raw size
-main.js             | main  | 71.83 kB | 
-
-Application bundle generation complete. [114.957 seconds] - 2026-08-27T20:12:25.180Z
-
-Page reload sent to client(s).
-❯ Changes detected. Rebuilding...
-✔ Changes detected. Rebuilding...
-Application bundle generation failed. [109.421 seconds] - 2026-08-27T20:14:14.832Z
-
-[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: RouterLink is not used within the template of NavbarComponent[0m [1m[35m[plugin angular-compiler][0m
-
-    src/app/components/navbar/navbar.component.ts:12:26:
-[37m      12 │   imports: [CommonModule, [32mRouterLink[37m, RouterLinkActive, FormsModule],
-         ╵                           [32m~~~~~~~~~~[0m
-
-
-[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: RouterLinkActive is not used within the template of NavbarComponent[0m [1m[35m[plugin angular-compiler][0m
-
-    src/app/components/navbar/navbar.component.ts:12:38:
-[37m      12 │   imports: [CommonModule, RouterLink, [32mRouterLinkActive[37m, FormsModule],
-         ╵                                       [32m~~~~~~~~~~~~~~~~[0m
-
-
-[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Only void, custom and foreign elements can be self closed "option"[0m [1m[35m[plugin angular-compiler][0m
-
-    src/app/components/navbar/navbar.component.html:52:14:
-[37m      52 │               [32m<option[37m [value]="city" />
-         ╵               [[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: RouterLink is not used within the template of NavbarComponent[0m [1m[35m[plugin angular-compiler][0m
-
-    src/app/components/navbar/navbar.component.ts:12:26:
-[37m      12 │   imports: [CommonModule, [32mRouterLink[37m, RouterLinkActive, F✔ Changes detected. Rebuilding...
-Application bundle generation failed. [83.388 seconds] - 2026-08-27T20:15:39.693Z
-
-[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: RouterLink is not used within the template of NavbarComponent[0m [1m[35m[plugin angular-compiler][0m
-
-    src/app/components/navbar/navbar.component.ts:12:26:
-[37m      12 │   imports: [CommonModule, [32mRouterLink[37m, RouterLinkActive, FormsModule],
-         ╵                           [32m~~~~~~~~~~[0m
-
-
-[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: RouterLinkActive is not used within the template of NavbarComponent[0m [1m[35m[plugin angular-compiler][0m
-
-    src/app/components/navbar/navbar.component.ts:12:38:
-[37m      12 │   imports: [CommonModule, RouterLink, [32mRouterLinkActive[37m, FormsModule],
-         ╵                                       [32m~~~~~~~~~~~~~~~~[0m
-
-
-[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Only void, custom and foreign elements can be self closed "option"[0m [1m[35m[plugin angular-compiler][0m
-
-    src/app/components/navbar/navbar✔ Changes detected. Rebuilding...
-Application bundle generation failed. [86.172 seconds] - 2026-08-27T20:15:43.075Z
+Application bundle generation failed. [16.031 seconds] - 2026-08-27T20:38:56.288Z
 
 [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: RouterLink is not used within the template of NavbarComponent[0m [1m[35m[plugin angular-compiler][0m
 
@@ -282,3 +37,39 @@ Application bundle generation failed. [86.172 seconds] - 2026-08-27T20:15:43.075
          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
 
+Watch mode enabled. Watching for file changes...
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files | Names                     | Raw size
+main.js             | main                      | 73.69 kB | 
+styles.css          | styles                    |  8.70 kB | 
+chunk-E7EIIVKS.js   | -                         |  7.34 kB | 
+chunk-SL3U54EQ.js   | -                         |  3.19 kB | 
+chunk-7HOAXFQQ.js   | -                         |  1.99 kB | 
+chunk-CZJLB7T5.js   | -                         |  1.08 kB | 
+
+                    | Initial total             | 95.99 kB
+
+Lazy chunk files    | Names                     | Raw size
+chunk-RJXRABCX.js   | deposer-annonce-component | 56.39 kB | 
+chunk-CB6HWK2B.js   | chat-component            | 56.29 kB | 
+chunk-IFHCC4LF.js   | home-component            | 46.93 kB | 
+chunk-RSGTCMRL.js   | annonce-detail-component  | 44.08 kB | 
+chunk-J4DFLWFS.js   | profil-component          | 28.29 kB | 
+chunk-C63HEHCX.js   | admin-component           | 27.36 kB | 
+chunk-UNHZNNI7.js   | annonces-component        | 27.02 kB | 
+chunk-2QX2BURH.js   | premium-component         | 25.43 kB | 
+chunk-OJSW5Q67.js   | login-component           | 24.18 kB | 
+chunk-JXNMKFHC.js   | mes-annonces-component    | 20.89 kB | 
+chunk-EEQ2QIQN.js   | -                         | 19.81 kB | 
+chunk-5IQYUJXN.js   | register-component        | 15.49 kB | 
+chunk-5KJKCBFD.js   | -                         |  2.07 kB | 
+chunk-6Y2NCU7B.js   | -                         |  1.49 kB | 
+
+Application bundle generation complete. [6.835 seconds] - 2026-08-27T20:40:19.569Z
+
+NOTE: Raw file sizes do not reflect development server per-request transformations.
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m4200[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://169.254.123.104:[1m4200[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://169.254.123.65:[1m4200[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://192.168.0.102:[1m4200[22m/[39m
