@@ -191,7 +191,7 @@ input, select, textarea {
   .container { padding: 0 .875rem; }
 }
 @media (max-width: 480px) {
-  .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+  .grid-3, .grid-4 { grid-template-columns: 1fr; }
   .grid-2 { grid-template-columns: 1fr; }
 }
 

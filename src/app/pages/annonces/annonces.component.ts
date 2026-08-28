@@ -20,6 +20,7 @@ export class AnnoncesComponent implements OnInit {
   categories = CATEGORIES;
   cities = MOROCCO_CITIES;
   listings: Listing[] = [];
+  filterOpen = false;
   total = 0;
   loading = false;
   favoriteIds = new Set<string>();
