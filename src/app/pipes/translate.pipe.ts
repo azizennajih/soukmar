@@ -6,7 +6,8 @@ export class TranslatePipe implements PipeTransform {
   private i18n = inject(I18nService);
 
   transform(key: string): string {
-    this.i18n._tick(); // subscribe to ticks so pipe re-evaluates on lang change
+    // Reading lang() makes Angular track this signal and re-run on change
+    this.i18n.lang();
     return this.i18n.t(key);
   }
 }
