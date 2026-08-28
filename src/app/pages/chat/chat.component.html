@@ -81,18 +81,24 @@
           <!-- Offer message -->
           @else if (isOffer(msg)) {
             <div class="chat__bubble-wrap" [class.mine]="isMine(msg)">
-              <div class="chat__offer" [class.mine]="isMine(msg)" [class.offer-accepted]="msg.offerStatus === 'ACCEPTED'" [class.offer-rejected]="msg.offerStatus === 'REJECTED'">
+              <div class="chat__offer" [class.mine]="isMine(msg)" [class.offer-accepted]="msg.offerStatus === 'ACCEPTED'" [class.offer-rejected]="msg.offerStatus === 'REJECTED'" [class.offer-cancelled]="msg.offerStatus === 'REJECTED' && isMine(msg)">
                 <div class="chat__offer-label">💰 Offre de prix</div>
                 <div class="chat__offer-amount">{{ msg.offerAmount | number }} MAD</div>
                 <div class="chat__offer-status">
-                  @if (msg.offerStatus === 'PENDING') { <span class="badge-pending">En attente</span> }
+                  @if (msg.offerStatus === 'PENDING') { <span class="badge-pending">⏳ En attente</span> }
                   @if (msg.offerStatus === 'ACCEPTED') { <span class="badge-accepted">✅ Acceptée</span> }
-                  @if (msg.offerStatus === 'REJECTED') { <span class="badge-rejected">❌ Refusée</span> }
+                  @if (msg.offerStatus === 'REJECTED' && !isMine(msg)) { <span class="badge-rejected">❌ Refusée</span> }
+                  @if (msg.offerStatus === 'REJECTED' && isMine(msg)) { <span class="badge-cancelled">🚫 Annulée</span> }
                 </div>
                 @if (canRespond(msg)) {
                   <div class="chat__offer-actions">
                     <button class="btn-accept" (click)="respondOffer(msg, 'ACCEPTED')">✅ Accepter</button>
                     <button class="btn-reject" (click)="respondOffer(msg, 'REJECTED')">❌ Refuser</button>
+                  </div>
+                }
+                @if (canCancel(msg)) {
+                  <div class="chat__offer-actions">
+                    <button class="btn-cancel-offer" (click)="cancelOffer(msg)">🚫 Annuler mon offre</button>
                   </div>
                 }
               </div>

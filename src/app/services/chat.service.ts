@@ -9,7 +9,7 @@ export interface ChatMessage {
   content: string;
   type: 'TEXT' | 'OFFER' | 'SYSTEM';
   offerAmount?: number;
-  offerStatus?: 'PENDING' | 'ACCEPTED' | 'REJECTED' | 'COUNTERED';
+  offerStatus?: 'PENDING' | 'ACCEPTED' | 'REJECTED' | 'COUNTERED' | 'CANCELLED';
   senderId: string;
   receiverId: string;
   conversationId?: string;
@@ -75,6 +75,10 @@ export class ChatService {
 
   respondOffer(messageId: string, conversationId: string, status: 'ACCEPTED' | 'REJECTED') {
     this.socket?.emit('respond_offer', { messageId, conversationId, status });
+  }
+
+  cancelOffer(messageId: string, conversationId: string, listingId: string) {
+    this.socket?.emit('cancel_offer', { messageId, conversationId, listingId });
   }
 
   cancelReservation(conversationId: string, listingId: string) {

@@ -242,9 +242,10 @@
   }
 }
 
-.badge-pending  { font-size: .75rem; color: #d97706; background: #fef3c7; padding: .2rem .6rem; border-radius: 999px; }
-.badge-accepted { font-size: .75rem; color: #15803d; background: #dcfce7; padding: .2rem .6rem; border-radius: 999px; }
-.badge-rejected { font-size: .75rem; color: #dc2626; background: #fee2e2; padding: .2rem .6rem; border-radius: 999px; }
+.badge-pending   { font-size: .75rem; color: #d97706; background: #fef3c7; padding: .2rem .6rem; border-radius: 999px; }
+.badge-accepted  { font-size: .75rem; color: #15803d; background: #dcfce7; padding: .2rem .6rem; border-radius: 999px; }
+.badge-rejected  { font-size: .75rem; color: #dc2626; background: #fee2e2; padding: .2rem .6rem; border-radius: 999px; }
+.badge-cancelled { font-size: .75rem; color: #6b7280; background: #f3f4f6; padding: .2rem .6rem; border-radius: 999px; }
 
 .btn-accept {
   flex: 1; padding: .5rem; border-radius: .625rem; border: none; cursor: pointer;
@@ -255,6 +256,11 @@
   flex: 1; padding: .5rem; border-radius: .625rem; border: none; cursor: pointer;
   background: #f1f5f9; color: #dc2626; font-weight: 700; font-size: .82rem;
   &:hover { background: #fee2e2; }
+}
+.btn-cancel-offer {
+  width: 100%; padding: .5rem; border-radius: .625rem; border: 1.5px solid #e2e8f0; cursor: pointer;
+  background: #f8fafc; color: #6b7280; font-weight: 600; font-size: .82rem;
+  &:hover { background: #f1f5f9; color: #374151; border-color: #cbd5e1; }
 }
 
 /* Offer panel */

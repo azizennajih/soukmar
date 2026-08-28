@@ -153,6 +153,16 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     return msg.type === 'OFFER' && msg.offerStatus === 'PENDING' && !this.isMine(msg);
   }
 
+  canCancel(msg: ChatMessage): boolean {
+    return msg.type === 'OFFER' && msg.offerStatus === 'PENDING' && this.isMine(msg);
+  }
+
+  cancelOffer(msg: ChatMessage) {
+    if (!this.activeConv) return;
+    if (!confirm('Annuler votre offre ?')) return;
+    this.chatService.cancelOffer(msg.id, this.activeConv.id, this.activeConv.listingId);
+  }
+
   getConvPartner(conv: Conversation): string {
     const me = this.auth.currentUser()!.id;
     return conv.listing.userId === me ? conv.buyer.name : conv.listing.user.name;
