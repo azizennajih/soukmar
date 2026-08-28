@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 
-const BASE = 'http://localhost:3000/api';
+const BASE = 'http://127.0.0.1:3000/api';
 
 export interface AuthUser {
   id: string;

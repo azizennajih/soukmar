@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef, ApplicationRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
@@ -29,14 +29,14 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   private subs: Subscription[] = [];
   private typingTimer: ReturnType<typeof setTimeout> | null = null;
+  private shouldScroll = false;
 
   constructor(
     public auth: AuthService,
     public chatService: ChatService,
     private route: ActivatedRoute,
     private router: Router,
-    private cdr: ChangeDetectorRef,
-    private appRef: ApplicationRef
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
@@ -45,8 +45,15 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.chatService.connect(token);
 
     this.subs.push(
-      this.chatService.messages$.subscribe(msgs => { this.messages = msgs; this.cdr.markForCheck(); }),
-      this.chatService.typing$.subscribe(t => { this.partnerTyping = t; this.cdr.markForCheck(); }),
+      this.chatService.messages$.subscribe(msgs => {
+        this.messages = msgs;
+        this.shouldScroll = true;
+        this.cdr.markForCheck();
+      }),
+      this.chatService.typing$.subscribe(t => {
+        this.partnerTyping = t;
+        this.cdr.markForCheck();
+      }),
       this.chatService.listingStatus$.subscribe(data => {
         if (data && this.activeConv?.listingId === data.listingId) {
           this.listingStatus = data.status;
@@ -57,7 +64,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     await this.loadConversations();
 
-    // Open conversation from query param (e.g. from listing detail)
     const listingId = this.route.snapshot.queryParamMap.get('listing');
     if (listingId) {
       try {
@@ -80,10 +86,13 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.showOfferInput = false;
     this.listingStatus = conv.listing.status || '';
     this.loading = true;
+    this.cdr.markForCheck();
+
     const msgs = await this.chatService.getMessages(conv.id);
     this.chatService.messages$.next(msgs);
     this.chatService.joinConversation(conv.id);
     this.loading = false;
+    this.shouldScroll = true;
     this.cdr.markForCheck();
   }
 
@@ -176,6 +185,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
+    if (!this.shouldScroll) return;
+    this.shouldScroll = false;
     const el = this.messagesEnd?.nativeElement;
     if (el) {
       const container = el.closest('.chat__messages');
