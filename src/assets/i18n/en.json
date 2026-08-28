@@ -128,6 +128,21 @@
     "login_link": "Sign in",
     "google": "Continue with Google"
   },
+  "footer": {
+    "tagline": "Morocco's first classifieds platform. Simple, fast and secure.",
+    "categories": "Categories",
+    "about": "About us",
+    "how": "How it works",
+    "premium": "Premium listings",
+    "safety": "Safety",
+    "blog": "Blog",
+    "contact_us": "Contact us",
+    "download": "Download the app",
+    "rights": "All rights reserved.",
+    "cgu": "Terms",
+    "privacy": "Privacy",
+    "cookies": "Cookies"
+  },
   "common": {
     "mad": "MAD",
     "ago": "ago",

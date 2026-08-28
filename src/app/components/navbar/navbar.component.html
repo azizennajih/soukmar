@@ -5,8 +5,8 @@
       <span>🇲🇦 La N°1 des petites annonces au Maroc</span>
       <div class="navbar__topbar-links">
         @if (!auth.isLoggedIn) {
-          <a routerLink="/auth/login">Se connecter</a>
-          <a routerLink="/auth/register">S'inscrire</a>
+          <a routerLink="/auth/login">{{ 'nav.login' | T }}</a>
+          <a routerLink="/auth/register">{{ 'nav.register' | T }}</a>
         }
       </div>
     </div>

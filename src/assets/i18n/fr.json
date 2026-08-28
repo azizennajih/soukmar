@@ -128,6 +128,21 @@
     "login_link": "Se connecter",
     "google": "Continuer avec Google"
   },
+  "footer": {
+    "tagline": "La première plateforme de petites annonces au Maroc. Simple, rapide et sécurisée.",
+    "categories": "Catégories",
+    "about": "À propos",
+    "how": "Comment ça marche",
+    "premium": "Annonces premium",
+    "safety": "Sécurité",
+    "blog": "Blog",
+    "contact_us": "Contactez-nous",
+    "download": "Téléchargez l'application",
+    "rights": "Tous droits réservés.",
+    "cgu": "CGU",
+    "privacy": "Confidentialité",
+    "cookies": "Cookies"
+  },
   "common": {
     "mad": "MAD",
     "ago": "il y a",
