@@ -116,9 +116,10 @@
         <div class="navbar__lang">
           @for (l of langs; track l.code) {
             <button
+              type="button"
               class="navbar__lang-btn"
               [class.active]="i18n.lang() === l.code"
-              (click)="i18n.setLang(l.code)"
+              (click)="$event.preventDefault(); $event.stopPropagation(); i18n.setLang(l.code)"
               [title]="l.label"
             >{{ l.flag }}</button>
           }
@@ -167,7 +168,7 @@
       <!-- Language switcher mobile -->
       <div class="navbar__mobile-lang">
         @for (l of langs; track l.code) {
-          <button class="navbar__mobile-lang-btn" [class.active]="i18n.lang() === l.code" (click)="i18n.setLang(l.code)">
+          <button type="button" class="navbar__mobile-lang-btn" [class.active]="i18n.lang() === l.code" (click)="$event.preventDefault(); $event.stopPropagation(); i18n.setLang(l.code)">
             {{ l.flag }} {{ l.label }}
           </button>
         }

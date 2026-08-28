@@ -26,7 +26,10 @@ export class I18nService {
       const l = this.lang();
       localStorage.setItem(LANG_KEY, l);
       document.documentElement.lang = l;
+      // Preserve scroll position when changing direction (RTL/LTR switch)
+      const scrollY = window.scrollY;
       document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+      requestAnimationFrame(() => window.scrollTo(0, scrollY));
     });
   }
 
