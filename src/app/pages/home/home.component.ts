@@ -9,10 +9,11 @@ import { AuthService } from '../../services/auth.service';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent],
+  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, TranslatePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

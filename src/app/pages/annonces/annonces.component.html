@@ -3,7 +3,7 @@
   <!-- Mobile filter toggle -->
   <button class="mobile-filter-toggle" (click)="filterOpen = !filterOpen">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
-    Filtres
+    {{ 'annonces.mobile_filter' | T }}
     <span class="mobile-filter-toggle__arrow">{{ filterOpen ? '▲' : '▼' }}</span>
   </button>
 
@@ -13,13 +13,13 @@
     <aside class="sidebar card" [class.sidebar--open]="filterOpen">
       <div class="sidebar__header">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
-        Filtres
+        {{ 'annonces.filters' | T }}
       </div>
 
       <!-- Category -->
       <div class="sidebar__section">
-        <label class="sidebar__label">Catégorie</label>
-        <a routerLink="/annonces" class="sidebar__cat-link" [class.active]="!filters.categorie">Toutes</a>
+        <label class="sidebar__label">{{ 'annonces.category' | T }}</label>
+        <a routerLink="/annonces" class="sidebar__cat-link" [class.active]="!filters.categorie">{{ 'nav.all' | T }}</a>
         @for (cat of categories; track cat.value) {
           <a
             [routerLink]="['/annonces']"
@@ -32,12 +32,12 @@
 
       <!-- City -->
       <div class="sidebar__section">
-        <label class="sidebar__label">Ville / Commune</label>
+        <label class="sidebar__label">{{ 'annonces.city' | T }}</label>
         <input
           type="text"
           [(ngModel)]="filters.ville"
           list="city-list"
-          placeholder="Tapez une ville..."
+          [placeholder]="'nav.city_placeholder' | T"
           class="sidebar__select"
         />
         <datalist id="city-list">
@@ -49,25 +49,25 @@
 
       <!-- Price -->
       <div class="sidebar__section">
-        <label class="sidebar__label">Prix (MAD)</label>
+        <label class="sidebar__label">{{ 'annonces.price' | T }}</label>
         <div class="sidebar__price-row">
-          <input type="number" [(ngModel)]="filters.minPrix" placeholder="Min" />
-          <input type="number" [(ngModel)]="filters.maxPrix" placeholder="Max" />
+          <input type="number" [(ngModel)]="filters.minPrix" [placeholder]="'annonces.min' | T" />
+          <input type="number" [(ngModel)]="filters.maxPrix" [placeholder]="'annonces.max' | T" />
         </div>
       </div>
 
       <!-- Sort -->
       <div class="sidebar__section">
-        <label class="sidebar__label">Trier par</label>
+        <label class="sidebar__label">{{ 'annonces.sort' | T }}</label>
         <select [(ngModel)]="filters.tri" class="sidebar__select">
-          <option value="">Plus récent</option>
-          <option value="prix_asc">Prix croissant</option>
-          <option value="prix_desc">Prix décroissant</option>
+          <option value="">{{ 'annonces.newest' | T }}</option>
+          <option value="prix_asc">{{ 'annonces.price_asc' | T }}</option>
+          <option value="prix_desc">{{ 'annonces.price_desc' | T }}</option>
         </select>
       </div>
 
-      <button class="btn-primary sidebar__apply" (click)="applyFilters()">Appliquer</button>
-      <button class="btn-outline sidebar__reset" (click)="resetFilters()">Réinitialiser</button>
+      <button class="btn-primary sidebar__apply" (click)="applyFilters()">{{ 'annonces.apply' | T }}</button>
+      <button class="btn-outline sidebar__reset" (click)="resetFilters()">{{ 'annonces.reset' | T }}</button>
     </aside>
 
     <!-- ===== MAIN ===== -->
@@ -75,11 +75,11 @@
       <div class="annonces__header">
         <div>
           <h1 class="annonces__title">
-            @if (filters.q) { Résultats pour "{{ filters.q }}" }
+            @if (filters.q) { "{{ filters.q }}" }
             @else if (activeCategory) { {{ activeCategory.icon }} {{ activeCategory.label }} }
-            @else { Toutes les annonces }
+            @else { {{ 'annonces.title' | T }} }
           </h1>
-          <p class="annonces__count">{{ listings.length }} annonce{{ listings.length > 1 ? 's' : '' }} trouvée{{ listings.length > 1 ? 's' : '' }}</p>
+          <p class="annonces__count">{{ listings.length }} {{ 'annonces.found' | T }}</p>
         </div>
       </div>
 
@@ -92,9 +92,9 @@
       } @else {
         <div class="empty-state">
           <span>🔍</span>
-          <p>Aucun résultat trouvé</p>
-          <small>Essayez d'autres mots-clés ou élargissez vos filtres</small>
-          <button class="btn-outline" (click)="resetFilters()">Réinitialiser les filtres</button>
+          <p>{{ 'annonces.empty' | T }}</p>
+          <small>{{ 'annonces.empty_sub' | T }}</small>
+          <button class="btn-outline" (click)="resetFilters()">{{ 'annonces.reset' | T }}</button>
         </div>
       }
     </div>

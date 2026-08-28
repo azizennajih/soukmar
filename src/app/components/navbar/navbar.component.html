@@ -30,7 +30,7 @@
             type="text"
             [(ngModel)]="searchQuery"
             name="q"
-            placeholder="Que cherchez-vous ?"
+            [placeholder]="'nav.search_placeholder' | T"
             class="navbar__search-input"
           />
         </div>
@@ -44,7 +44,7 @@
             [(ngModel)]="selectedCity"
             name="ville"
             list="navbar-city-list"
-            placeholder="Ville ou région"
+            [placeholder]="'nav.city_placeholder' | T"
             class="navbar__search-input navbar__search-input--location"
           />
           <datalist id="navbar-city-list">
@@ -56,7 +56,7 @@
         <!-- Button -->
         <button type="submit" class="navbar__search-btn">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          <span class="navbar__search-btn-text">Chercher</span>
+          <span class="navbar__search-btn-text">{{ 'nav.search_btn' | T }}</span>
         </button>
       </form>
 
@@ -81,35 +81,35 @@
               <div class="navbar__dropdown">
                 <a routerLink="/chat" (click)="userMenuOpen.set(false)" class="dropdown-chat-link">
                   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                  Messages
+                  {{ 'nav.messages' | T }}
                   @if (unreadCount() > 0) {
                     <span class="dropdown-badge">{{ unreadCount() > 99 ? '99+' : unreadCount() }}</span>
                   }
                 </a>
                 <a routerLink="/profil" (click)="userMenuOpen.set(false)">
                   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  Mon profil
+                  {{ 'nav.profile' | T }}
                 </a>
                 <a routerLink="/mes-annonces" (click)="userMenuOpen.set(false)">
                   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                  Mes annonces
+                  {{ 'nav.my_listings' | T }}
                 </a>
                 @if (auth.currentUser()?.role === 'ADMIN') {
                   <a routerLink="/admin" (click)="userMenuOpen.set(false)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                    Dashboard Admin
+                    {{ 'nav.admin' | T }}
                   </a>
                 }
                 <hr />
                 <button class="dropdown-logout" (click)="logout()">
                   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                  Se déconnecter
+                  {{ 'nav.logout' | T }}
                 </button>
               </div>
             }
           </div>
         } @else {
-          <a routerLink="/auth/login" class="btn-outline navbar__login-btn">Connexion</a>
+          <a routerLink="/auth/login" class="btn-outline navbar__login-btn">{{ 'nav.login' | T }}</a>
         }
 
         <!-- Language switcher -->
@@ -144,15 +144,15 @@
   <div class="navbar__mobile-search">
     <form class="navbar__mobile-search-form" (ngSubmit)="search()">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-      <input type="text" [(ngModel)]="searchQuery" name="q_mobile" placeholder="Que cherchez-vous ?" />
-      <button type="submit">Chercher</button>
+      <input type="text" [(ngModel)]="searchQuery" name="q_mobile" [placeholder]="'nav.search_placeholder' | T" />
+      <button type="submit">{{ 'nav.search_btn' | T }}</button>
     </form>
   </div>
 
   <!-- Categories bar -->
   <div class="navbar__cats">
     <div class="container navbar__cats-inner">
-      <a routerLink="/annonces" class="navbar__cat-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Toutes</a>
+      <a routerLink="/annonces" class="navbar__cat-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{ 'nav.all' | T }}</a>
       @for (cat of categories; track cat.value) {
         <a [routerLink]="['/annonces']" [queryParams]="{categorie: cat.value}" class="navbar__cat-link">
           {{ cat.icon }} {{ cat.label }}
@@ -177,38 +177,38 @@
       <!-- Déposer button -->
       <a routerLink="/deposer-annonce" class="navbar__mobile-deposit" (click)="mobileOpen.set(false)">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Déposer une annonce
+        {{ 'nav.post_full' | T }}
       </a>
 
       <!-- Nav links -->
       @if (auth.isLoggedIn) {
         <div class="navbar__mobile-nav">
           <a routerLink="/chat" class="navbar__mobile-link" (click)="mobileOpen.set(false)">
-            <span class="navbar__mobile-icon">💬</span> Messages
+            <span class="navbar__mobile-icon">💬</span> {{ 'nav.messages' | T }}
             @if (unreadCount() > 0) { <span class="navbar__mobile-badge">{{ unreadCount() }}</span> }
           </a>
           <a routerLink="/profil" class="navbar__mobile-link" (click)="mobileOpen.set(false)">
-            <span class="navbar__mobile-icon">👤</span> Mon profil
+            <span class="navbar__mobile-icon">👤</span> {{ 'nav.profile' | T }}
           </a>
           <a routerLink="/mes-annonces" class="navbar__mobile-link" (click)="mobileOpen.set(false)">
-            <span class="navbar__mobile-icon">📋</span> Mes annonces
+            <span class="navbar__mobile-icon">📋</span> {{ 'nav.my_listings' | T }}
           </a>
         </div>
         <div class="navbar__mobile-sep"></div>
       } @else {
         <div class="navbar__mobile-nav">
           <a routerLink="/auth/login" class="navbar__mobile-link" (click)="mobileOpen.set(false)">
-            <span class="navbar__mobile-icon">🔑</span> Se connecter
+            <span class="navbar__mobile-icon">🔑</span> {{ 'nav.login' | T }}
           </a>
           <a routerLink="/auth/register" class="navbar__mobile-link" (click)="mobileOpen.set(false)">
-            <span class="navbar__mobile-icon">✨</span> S'inscrire
+            <span class="navbar__mobile-icon">✨</span> {{ 'nav.register' | T }}
           </a>
         </div>
         <div class="navbar__mobile-sep"></div>
       }
 
       <!-- Categories -->
-      <div class="navbar__mobile-cats-label">Catégories</div>
+      <div class="navbar__mobile-cats-label">{{ 'nav.categories' | T }}</div>
       <div class="navbar__mobile-cats">
         @for (cat of categories; track cat.value) {
           <a [routerLink]="['/annonces']" [queryParams]="{categorie: cat.value}" class="navbar__mobile-link" (click)="mobileOpen.set(false)">
@@ -222,7 +222,7 @@
         <div class="navbar__mobile-sep"></div>
         <button class="navbar__mobile-logout" (click)="logout()">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-          Se déconnecter
+          {{ 'nav.logout' | T }}
         </button>
       }
     </div>

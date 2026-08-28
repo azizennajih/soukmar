@@ -5,10 +5,11 @@ import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ChatService, ChatMessage, Conversation } from '../../services/chat.service';
 import { AuthService } from '../../services/auth.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-chat',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

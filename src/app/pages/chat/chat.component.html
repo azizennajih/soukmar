@@ -3,15 +3,15 @@
   <!-- Sidebar: conversation list -->
   <aside class="chat__sidebar">
     <div class="chat__sidebar-header">
-      <h2>Messages</h2>
+      <h2>{{ 'chat.title' | T }}</h2>
       <span class="chat__count">{{ conversations.length }}</span>
     </div>
 
     @if (conversations.length === 0) {
       <div class="chat__empty-list">
         <div style="font-size:2.5rem">💬</div>
-        <p>Aucune conversation</p>
-        <small>Contactez un vendeur depuis une annonce</small>
+        <p>{{ 'chat.no_conv' | T }}</p>
+        <small>{{ 'chat.no_conv_sub' | T }}</small>
       </div>
     }
 
@@ -36,16 +36,16 @@
     @if (!activeConv) {
       <div class="chat__placeholder">
         <div style="font-size:4rem">💬</div>
-        <h3>Sélectionnez une conversation</h3>
-        <p>Ou contactez un vendeur depuis une annonce</p>
-        <a routerLink="/annonces" class="btn-primary">Parcourir les annonces</a>
+        <h3>{{ 'chat.select' | T }}</h3>
+        <p>{{ 'chat.select_sub' | T }}</p>
+        <a routerLink="/annonces" class="btn-primary">{{ 'chat.browse' | T }}</a>
       </div>
     } @else {
       <!-- Reservation banner -->
       @if (listingStatus === 'RESERVED') {
         <div class="chat__reserved-banner">
-          🔒 Cette annonce est <strong>réservée</strong>
-          <button class="chat__cancel-btn" (click)="cancelReservation()">Annuler la réservation</button>
+          🔒 {{ 'chat.reserved_msg' | T }} <strong>{{ 'chat.reserved_word' | T }}</strong>
+          <button class="chat__cancel-btn" (click)="cancelReservation()">{{ 'chat.cancel_reservation' | T }}</button>
         </div>
       }
 
@@ -62,14 +62,14 @@
           </a>
         </div>
         @if (partnerTyping) {
-          <div class="chat__typing">en train d'écrire...</div>
+          <div class="chat__typing">{{ 'chat.typing' | T }}</div>
         }
       </div>
 
       <!-- Messages -->
       <div class="chat__messages">
         @if (loading) {
-          <div class="chat__loading">Chargement...</div>
+          <div class="chat__loading">{{ 'chat.loading' | T }}</div>
         }
 
         @for (msg of messages; track msg.id) {
@@ -82,23 +82,23 @@
           @else if (isOffer(msg)) {
             <div class="chat__bubble-wrap" [class.mine]="isMine(msg)">
               <div class="chat__offer" [class.mine]="isMine(msg)" [class.offer-accepted]="msg.offerStatus === 'ACCEPTED'" [class.offer-rejected]="msg.offerStatus === 'REJECTED'" [class.offer-cancelled]="msg.offerStatus === 'REJECTED' && isMine(msg)">
-                <div class="chat__offer-label">💰 Offre de prix</div>
+                <div class="chat__offer-label">💰 {{ 'chat.offer_price' | T }}</div>
                 <div class="chat__offer-amount">{{ msg.offerAmount | number }} MAD</div>
                 <div class="chat__offer-status">
-                  @if (msg.offerStatus === 'PENDING') { <span class="badge-pending">⏳ En attente</span> }
-                  @if (msg.offerStatus === 'ACCEPTED') { <span class="badge-accepted">✅ Acceptée</span> }
-                  @if (msg.offerStatus === 'REJECTED' && !isMine(msg)) { <span class="badge-rejected">❌ Refusée</span> }
-                  @if (msg.offerStatus === 'REJECTED' && isMine(msg)) { <span class="badge-cancelled">🚫 Annulée</span> }
+                  @if (msg.offerStatus === 'PENDING') { <span class="badge-pending">⏳ {{ 'chat.pending' | T }}</span> }
+                  @if (msg.offerStatus === 'ACCEPTED') { <span class="badge-accepted">✅ {{ 'chat.accepted' | T }}</span> }
+                  @if (msg.offerStatus === 'REJECTED' && !isMine(msg)) { <span class="badge-rejected">❌ {{ 'chat.rejected' | T }}</span> }
+                  @if (msg.offerStatus === 'REJECTED' && isMine(msg)) { <span class="badge-cancelled">🚫 {{ 'chat.cancelled' | T }}</span> }
                 </div>
                 @if (canRespond(msg)) {
                   <div class="chat__offer-actions">
-                    <button class="btn-accept" (click)="respondOffer(msg, 'ACCEPTED')">✅ Accepter</button>
-                    <button class="btn-reject" (click)="respondOffer(msg, 'REJECTED')">❌ Refuser</button>
+                    <button class="btn-accept" (click)="respondOffer(msg, 'ACCEPTED')">✅ {{ 'chat.accept' | T }}</button>
+                    <button class="btn-reject" (click)="respondOffer(msg, 'REJECTED')">❌ {{ 'chat.reject' | T }}</button>
                   </div>
                 }
                 @if (canCancel(msg)) {
                   <div class="chat__offer-actions">
-                    <button class="btn-cancel-offer" (click)="cancelOffer(msg)">🚫 Annuler mon offre</button>
+                    <button class="btn-cancel-offer" (click)="cancelOffer(msg)">🚫 {{ 'chat.cancel_offer' | T }}</button>
                   </div>
                 }
               </div>
@@ -120,21 +120,21 @@
       <!-- Offer input panel -->
       @if (showOfferInput) {
         <div class="chat__offer-panel">
-          <span>💰 Votre offre :</span>
+          <span>💰 {{ 'chat.offer_label' | T }}</span>
           <input type="number" [(ngModel)]="offerAmount" placeholder="Montant en MAD" min="1" />
-          <button class="btn-primary" (click)="sendOffer()">Envoyer l'offre</button>
-          <button class="btn-outline" (click)="showOfferInput=false">Annuler</button>
+          <button class="btn-primary" (click)="sendOffer()">{{ 'chat.send_offer' | T }}</button>
+          <button class="btn-outline" (click)="showOfferInput=false">{{ 'chat.cancel' | T }}</button>
         </div>
       }
 
       <!-- Input bar -->
       <div class="chat__input-bar">
-        <button class="chat__offer-btn" (click)="showOfferInput=!showOfferInput" title="Faire une offre">💰</button>
+        <button class="chat__offer-btn" (click)="showOfferInput=!showOfferInput" [title]="'listing.offer' | T">💰</button>
         <textarea
           [(ngModel)]="messageText"
           (input)="onTyping()"
           (keydown)="onEnter($event)"
-          placeholder="Écrivez un message... (Entrée pour envoyer)"
+          [placeholder]="'chat.placeholder' | T"
           rows="1"
         ></textarea>
         <button class="chat__send-btn" (click)="sendMessage()" [disabled]="!messageText.trim()">

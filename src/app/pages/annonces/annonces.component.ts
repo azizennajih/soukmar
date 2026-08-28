@@ -8,10 +8,11 @@ import { AuthService } from '../../services/auth.service';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-annonces',
-  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent],
+  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, TranslatePipe],
   templateUrl: './annonces.component.html',
   styleUrl: './annonces.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -7,10 +7,11 @@ import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { Listing, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-annonce-detail',
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe],
   templateUrl: './annonce-detail.component.html',
   styleUrl: './annonce-detail.component.scss'
 })
