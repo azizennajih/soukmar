@@ -112,9 +112,21 @@
           <a routerLink="/auth/login" class="btn-outline navbar__login-btn">Connexion</a>
         }
 
+        <!-- Language switcher -->
+        <div class="navbar__lang">
+          @for (l of langs; track l.code) {
+            <button
+              class="navbar__lang-btn"
+              [class.active]="i18n.lang() === l.code"
+              (click)="i18n.setLang(l.code)"
+              [title]="l.label"
+            >{{ l.flag }}</button>
+          }
+        </div>
+
         <a routerLink="/deposer-annonce" class="btn-primary navbar__post-btn">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Déposer
+          <span class="navbar__post-text">{{ 'nav.post_btn' | T }}</span>
         </a>
 
         <button class="navbar__burger" (click)="toggleMobile()">
@@ -152,6 +164,16 @@
   <!-- Mobile menu -->
   @if (mobileOpen()) {
     <div class="navbar__mobile">
+      <!-- Language switcher mobile -->
+      <div class="navbar__mobile-lang">
+        @for (l of langs; track l.code) {
+          <button class="navbar__mobile-lang-btn" [class.active]="i18n.lang() === l.code" (click)="i18n.setLang(l.code)">
+            {{ l.flag }} {{ l.label }}
+          </button>
+        }
+      </div>
+      <div class="navbar__mobile-sep"></div>
+
       <!-- Déposer button -->
       <a routerLink="/deposer-annonce" class="navbar__mobile-deposit" (click)="mobileOpen.set(false)">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
