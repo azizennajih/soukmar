@@ -128,6 +128,16 @@
     "login_link": "تسجيل الدخول",
     "google": "المتابعة مع Google"
   },
+  "cats": {
+    "VEHICLES": "سيارات",
+    "REAL_ESTATE": "عقارات",
+    "JOBS": "وظائف",
+    "ELECTRONICS": "إلكترونيات",
+    "HOME_GARDEN": "منزل وحديقة",
+    "FASHION": "أزياء",
+    "SERVICES": "خدمات",
+    "OTHER": "أخرى"
+  },
   "footer": {
     "tagline": "أول منصة إعلانات مبوبة في المغرب. بسيطة، سريعة وآمنة.",
     "categories": "الفئات",

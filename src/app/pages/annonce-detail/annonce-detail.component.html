@@ -18,7 +18,7 @@
   <nav class="breadcrumb">
     <a routerLink="/">{{ 'listing.breadcrumb_home' | T }}</a> /
     <a routerLink="/annonces">{{ 'listing.breadcrumb_listings' | T }}</a> /
-    @if (category) { <a [routerLink]="['/annonces']" [queryParams]="{categorie: listing.category}">{{ category.label }}</a> / }
+    @if (category) { <a [routerLink]="['/annonces']" [queryParams]="{categorie: listing.category}">{{ ('cats.' + listing.category) | T }}</a> / }
     <span>{{ listing.title }}</span>
   </nav>
 
@@ -74,7 +74,7 @@
         <div class="detail__price">{{ priceDisplay }}</div>
 
         @if (category) {
-          <span class="badge" [ngClass]="category.color">{{ category.icon }} {{ category.label }}</span>
+          <span class="badge" [ngClass]="category.color">{{ category.icon }} {{ ('cats.' + listing.category) | T }}</span>
         }
 
         <h2 class="detail__desc-title">{{ 'listing.description' | T }}</h2>

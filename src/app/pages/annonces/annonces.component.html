@@ -26,7 +26,7 @@
             [queryParams]="{categorie: cat.value, q: filters.q || null, ville: filters.ville || null}"
             class="sidebar__cat-link"
             [class.active]="filters.categorie === cat.value"
-          >{{ cat.icon }} {{ cat.label }}</a>
+          >{{ cat.icon }} {{ ('cats.' + cat.value) | T }}</a>
         }
       </div>
 
@@ -76,7 +76,7 @@
         <div>
           <h1 class="annonces__title">
             @if (filters.q) { "{{ filters.q }}" }
-            @else if (activeCategory) { {{ activeCategory.icon }} {{ activeCategory.label }} }
+            @else if (activeCategory) { {{ activeCategory.icon }} {{ ('cats.' + activeCategory.value) | T }} }
             @else { {{ 'annonces.title' | T }} }
           </h1>
           <p class="annonces__count">{{ listings.length }} {{ 'annonces.found' | T }}</p>

@@ -156,7 +156,7 @@
       <a routerLink="/annonces" class="navbar__cat-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{ 'nav.all' | T }}</a>
       @for (cat of categories; track cat.value) {
         <a [routerLink]="['/annonces']" [queryParams]="{categorie: cat.value}" class="navbar__cat-link">
-          {{ cat.icon }} {{ cat.label }}
+          {{ cat.icon }} {{ ('cats.' + cat.value) | T }}
         </a>
       }
     </div>
@@ -214,7 +214,7 @@
         @for (cat of categories; track cat.value) {
           <a [routerLink]="['/annonces']" [queryParams]="{categorie: cat.value}" class="navbar__mobile-link" (click)="mobileOpen.set(false)">
             <span class="navbar__mobile-icon">{{ cat.icon }}</span>
-            {{ cat.label }}
+            {{ ('cats.' + cat.value) | T }}
           </a>
         }
       </div>

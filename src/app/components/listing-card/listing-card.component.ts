@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { Listing, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.model';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-listing-card',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, TranslatePipe],
   templateUrl: './listing-card.component.html',
   styleUrl: './listing-card.component.scss'
 })

@@ -128,6 +128,16 @@
     "login_link": "Sign in",
     "google": "Continue with Google"
   },
+  "cats": {
+    "VEHICLES": "Vehicles",
+    "REAL_ESTATE": "Real Estate",
+    "JOBS": "Jobs",
+    "ELECTRONICS": "Electronics",
+    "HOME_GARDEN": "Home & Garden",
+    "FASHION": "Fashion",
+    "SERVICES": "Services",
+    "OTHER": "Other"
+  },
   "footer": {
     "tagline": "Morocco's first classifieds platform. Simple, fast and secure.",
     "categories": "Categories",
