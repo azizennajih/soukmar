@@ -128,6 +128,15 @@
     </div>
   </div>
 
+  <!-- Mobile search bar -->
+  <div class="navbar__mobile-search">
+    <form class="navbar__mobile-search-form" (ngSubmit)="search()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" [(ngModel)]="searchQuery" name="q_mobile" placeholder="Que cherchez-vous ?" />
+      <button type="submit">Chercher</button>
+    </form>
+  </div>
+
   <!-- Categories bar -->
   <div class="navbar__cats">
     <div class="container navbar__cats-inner">

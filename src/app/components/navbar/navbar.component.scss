@@ -318,6 +318,50 @@
     &:hover, &.active { background: #fee2e2; color: #e63946; }
   }
 
+  &__mobile-search {
+    display: none;
+    padding: .5rem 1rem .6rem;
+    background: #fff;
+    border-bottom: 1px solid #f1f5f9;
+
+    @media (max-width: 640px) { display: block; }
+
+    &-form {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 999px;
+      padding: .45rem .75rem;
+
+      svg { color: #94a3b8; flex-shrink: 0; }
+
+      input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        font-size: .875rem;
+        outline: none;
+        color: #0f172a;
+        &::placeholder { color: #94a3b8; }
+      }
+
+      button {
+        background: #e63946;
+        color: #fff;
+        border: none;
+        border-radius: 999px;
+        padding: .35rem .85rem;
+        font-size: .8rem;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+    }
+  }
+
   &__mobile {
     border-top: 1px solid #f1f5f9;
     padding: .75rem;
