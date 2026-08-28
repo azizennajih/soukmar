@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth.service';
 import { Listing, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { I18nService } from '../../services/i18n.service';
 
 @Component({
   selector: 'app-annonce-detail',
@@ -32,7 +33,8 @@ export class AnnonceDetailComponent implements OnInit {
     private ls: ListingService,
     private api: ApiService,
     public auth: AuthService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    public i18n: I18nService
   ) {}
 
   ngOnInit() {
@@ -72,11 +74,12 @@ export class AnnonceDetailComponent implements OnInit {
 
   get category() { return CATEGORIES.find(c => c.value === this.listing?.category); }
   get priceDisplay() {
+    const lang = this.i18n.lang();
     return this.listing?.price != null
-      ? formatPrice(this.listing.price, this.listing.currency)
-      : 'Prix à négocier';
+      ? formatPrice(this.listing.price, this.listing.currency, lang)
+      : this.i18n.t('listing.negotiate');
   }
-  get timeDisplay() { return this.listing ? timeAgo(this.listing.createdAt) : ''; }
+  get timeDisplay() { return this.listing ? timeAgo(this.listing.createdAt, this.i18n.lang()) : ''; }
 
   sendMessage() {
     if (!this.message.trim() || !this.listing) return;

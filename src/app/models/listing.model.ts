@@ -163,19 +163,21 @@ export const MOROCCO_CITIES = [
   'Aït Oujane', 'Aït Benhaddou',
 ].sort();
 
-export function formatPrice(price: number, currency = 'MAD'): string {
-  return new Intl.NumberFormat('fr-MA', {
+export function formatPrice(price: number, currency = 'MAD', lang = 'fr'): string {
+  const locale = lang === 'ar' ? 'ar-MA' : lang === 'en' ? 'en-US' : 'fr-MA';
+  return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: currency === 'MAD' ? 'MAD' : 'EUR',
     minimumFractionDigits: 0,
   }).format(price);
 }
 
-export function timeAgo(date: Date): string {
+export function timeAgo(date: Date, lang = 'fr'): string {
   const seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000);
-  if (seconds < 60) return "à l'instant";
-  if (seconds < 3600) return `il y a ${Math.floor(seconds / 60)} min`;
-  if (seconds < 86400) return `il y a ${Math.floor(seconds / 3600)}h`;
-  if (seconds < 2592000) return `il y a ${Math.floor(seconds / 86400)}j`;
-  return `il y a ${Math.floor(seconds / 2592000)} mois`;
+  const rtf = new Intl.RelativeTimeFormat(lang, { numeric: 'auto' });
+  if (seconds < 60) return rtf.format(-seconds, 'second');
+  if (seconds < 3600) return rtf.format(-Math.floor(seconds / 60), 'minute');
+  if (seconds < 86400) return rtf.format(-Math.floor(seconds / 3600), 'hour');
+  if (seconds < 2592000) return rtf.format(-Math.floor(seconds / 86400), 'day');
+  return rtf.format(-Math.floor(seconds / 2592000), 'month');
 }

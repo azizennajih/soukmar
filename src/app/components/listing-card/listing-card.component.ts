@@ -5,6 +5,7 @@ import { Listing, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { I18nService } from '../../services/i18n.service';
 
 @Component({
   selector: 'app-listing-card',
@@ -19,6 +20,7 @@ export class ListingCardComponent implements OnInit {
 
   private api = inject(ApiService);
   private auth = inject(AuthService);
+  private i18n = inject(I18nService);
 
   favorited = signal(false);
   favLoading = signal(false);
@@ -32,13 +34,14 @@ export class ListingCardComponent implements OnInit {
   }
 
   get priceDisplay(): string {
+    const lang = this.i18n.lang();
     return this.listing.price != null
-      ? formatPrice(this.listing.price, this.listing.currency)
-      : 'Prix à négocier';
+      ? formatPrice(this.listing.price, this.listing.currency, lang)
+      : this.i18n.t('listing.negotiate');
   }
 
   get timeDisplay(): string {
-    return timeAgo(this.listing.createdAt);
+    return timeAgo(this.listing.createdAt, this.i18n.lang());
   }
 
   toggleFav(e: Event) {
