@@ -126,6 +126,7 @@
     &--green    { background: #22c55e; color: #fff; }
     &--whatsapp { background: #25D366; color: #fff; }
     &--chat     { background: #e63946; color: #fff; font-size: 1rem; padding: .9rem; }
+    &--number   { cursor: default; letter-spacing: .03em; font-size: 1rem; &:hover { opacity: 1; } }
   }
 
   &__reserved-badge {

@@ -100,35 +100,29 @@
       <div class="card detail__contact-card">
         <div class="detail__contact-price">{{ priceDisplay }}</div>
 
-        @if (listing.phone) {
-          <a [href]="'tel:' + listing.phone" class="detail__contact-btn detail__contact-btn--green">
-            📞 {{ listing.phone }}
-          </a>
-        }
-        @if (listing.whatsapp) {
-          <a [href]="'https://wa.me/' + listing.whatsapp" target="_blank" class="detail__contact-btn detail__contact-btn--whatsapp">
-            💬 WhatsApp · {{ listing.whatsapp }}
-          </a>
-        }
-
-        <!-- Reserved badge -->
-        @if ($any(listing).status === 'RESERVED') {
-          <div class="detail__reserved-badge">🔒 {{ 'listing.reserved_badge' | T }}</div>
-        }
-
-        <!-- Live Chat Button — always visible -->
         @if (auth.isLoggedIn) {
-          <a
-            routerLink="/chat"
-            [queryParams]="{listing: listing.id}"
-            class="detail__contact-btn detail__contact-btn--chat"
-          >
+          @if (listing.phone) {
+            <div class="detail__contact-btn detail__contact-btn--green detail__contact-btn--number">
+              📞 {{ listing.phone }}
+            </div>
+          }
+          @if (listing.whatsapp) {
+            <a [href]="'https://wa.me/' + listing.whatsapp" target="_blank" class="detail__contact-btn detail__contact-btn--whatsapp">
+              💬 WhatsApp · {{ listing.whatsapp }}
+            </a>
+          }
+          <a routerLink="/chat" [queryParams]="{listing: listing.id}" class="detail__contact-btn detail__contact-btn--chat">
             💬 {{ 'listing.chat_btn' | T }}
           </a>
         } @else {
           <a routerLink="/auth/login" class="detail__contact-btn detail__contact-btn--chat">
             🔐 {{ 'listing.login_contact' | T }}
           </a>
+        }
+
+        <!-- Reserved badge -->
+        @if ($any(listing).status === 'RESERVED') {
+          <div class="detail__reserved-badge">🔒 {{ 'listing.reserved_badge' | T }}</div>
         }
       </div>
 
