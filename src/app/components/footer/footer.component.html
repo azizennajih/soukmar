@@ -16,12 +16,9 @@
     <div class="footer__col">
       <h4>{{ 'footer.categories' | T }}</h4>
       <ul>
-        <li><a routerLink="/annonces" [queryParams]="{categorie:'VEHICLES'}">Véhicules</a></li>
-        <li><a routerLink="/annonces" [queryParams]="{categorie:'REAL_ESTATE'}">Immobilier</a></li>
-        <li><a routerLink="/annonces" [queryParams]="{categorie:'JOBS'}">Emploi</a></li>
-        <li><a routerLink="/annonces" [queryParams]="{categorie:'ELECTRONICS'}">Électronique</a></li>
-        <li><a routerLink="/annonces" [queryParams]="{categorie:'FASHION'}">Mode</a></li>
-        <li><a routerLink="/annonces" [queryParams]="{categorie:'SERVICES'}">Services</a></li>
+        @for (cat of categories; track cat.value) {
+          <li><a routerLink="/annonces" [queryParams]="{categorie: cat.value}">{{ ('cats.' + cat.value) | T }}</a></li>
+        }
       </ul>
     </div>
 

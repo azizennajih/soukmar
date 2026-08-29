@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { CATEGORIES } from '../../models/listing.model';
 
 @Component({
   selector: 'app-footer',
@@ -10,4 +11,5 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 })
 export class FooterComponent {
   year = new Date().getFullYear();
+  readonly categories = CATEGORIES.slice(0, 6);
 }
