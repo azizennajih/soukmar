@@ -127,7 +127,15 @@
     "register_link": "Kostenlos registrieren",
     "has_account": "Schon ein Konto?",
     "login_link": "Einloggen",
-    "google": "Mit Google fortfahren"
+    "google": "Mit Google fortfahren",
+    "verify_email_title": "E-Mail bestätigen",
+    "verify_email_sub": "Ein Bestätigungslink wurde gesendet an",
+    "verify_email_hint": "Klicken Sie auf den Link in der E-Mail, um Ihr Konto zu aktivieren.",
+    "verify_resend": "E-Mail erneut senden",
+    "verify_resend_ok": "E-Mail erneut gesendet!",
+    "verified_success": "E-Mail bestätigt! Sie können sich jetzt anmelden.",
+    "unverified_error": "Konto nicht verifiziert. Bitte prüfen Sie Ihre E-Mail.",
+    "unverified_resend": "Bestätigungs-E-Mail erneut senden"
   },
   "cats": {
     "VEHICLES": "Fahrzeuge",

@@ -9,8 +9,25 @@
     <h1 class="auth-title">{{ 'auth.login_title' | T }}</h1>
     <p class="auth-sub">{{ 'auth.login_sub' | T }}</p>
 
+    @if (verifiedSuccess) {
+      <div class="auth-success">✅ {{ 'auth.verified_success' | T }}</div>
+    }
+
     @if (error) {
       <div class="auth-error">{{ error }}</div>
+    }
+
+    @if (unverifiedEmail) {
+      <div class="auth-unverified">
+        @if (resendOk) {
+          <span class="auth-unverified__ok">{{ 'auth.verify_resend_ok' | T }}</span>
+        } @else {
+          <button class="auth-unverified__btn" [disabled]="resendLoading" (click)="resend()">
+            @if (resendLoading) { <span class="spinner spinner--sm"></span> }
+            {{ 'auth.unverified_resend' | T }}
+          </button>
+        }
+      </div>
     }
 
     <form (ngSubmit)="submit()" class="auth-form">

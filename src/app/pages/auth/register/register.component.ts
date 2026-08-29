@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
+import { I18nService } from '../../../services/i18n.service';
 import { TranslatePipe } from '../../../pipes/translate.pipe';
 
 @Component({
@@ -12,19 +13,24 @@ import { TranslatePipe } from '../../../pipes/translate.pipe';
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
+  private auth = inject(AuthService);
+  i18n = inject(I18nService);
+
   form = { name: '', email: '', phone: '', city: '', password: '', confirm: '' };
   showPass = false;
   loading = false;
   error = '';
-
-  constructor(private auth: AuthService, private router: Router) {}
+  emailSent = false;
+  registeredEmail = '';
+  resendLoading = false;
+  resendOk = false;
 
   async submit() {
     if (this.form.password !== this.form.confirm) {
-      this.error = 'Les mots de passe ne correspondent pas.'; return;
+      this.error = this.i18n.t('deposer.error_required'); return;
     }
     if (this.form.password.length < 6) {
-      this.error = 'Le mot de passe doit contenir au moins 6 caractères.'; return;
+      this.error = this.i18n.t('deposer.error_required'); return;
     }
     this.loading = true;
     this.error = '';
@@ -33,12 +39,25 @@ export class RegisterComponent {
         this.form.name, this.form.email, this.form.password,
         this.form.phone, this.form.city
       );
-      if (result.ok) this.router.navigate(['/']);
-      else this.error = result.error || 'Une erreur est survenue. Veuillez réessayer.';
+      if (result.ok && result.emailSent) {
+        this.registeredEmail = this.form.email;
+        this.emailSent = true;
+      } else {
+        this.error = result.error || 'Une erreur est survenue.';
+      }
     } catch {
       this.error = 'Une erreur inattendue est survenue.';
     } finally {
       this.loading = false;
     }
+  }
+
+  async resend() {
+    if (this.resendLoading) return;
+    this.resendLoading = true;
+    this.resendOk = false;
+    const result = await this.auth.resendVerification(this.registeredEmail);
+    this.resendLoading = false;
+    if (result.ok) this.resendOk = true;
   }
 }

@@ -1,6 +1,5 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from './api.service';
 
 const BASE = 'http://127.0.0.1:3000/api';
 
@@ -20,7 +19,7 @@ const TOKEN_KEY = 'soukmar_token';
 export class AuthService {
   currentUser = signal<AuthUser | null>(null);
 
-  constructor(private api: ApiService, private router: Router) {
+  constructor(private router: Router) {
     const saved = localStorage.getItem(SESSION_KEY);
     if (saved) {
       try { this.currentUser.set(JSON.parse(saved)); } catch { }
@@ -31,16 +30,42 @@ export class AuthService {
     return this.currentUser() !== null;
   }
 
-  login(email: string, password: string): Promise<{ ok: boolean; error?: string }> {
-    return this.postJson<{ user: AuthUser; token: string }>('/auth/login', { email, password })
-      .then(res => { this.setSession(res.user, res.token); return { ok: true }; })
-      .catch(e => ({ ok: false, error: this.extractError(e, 'Email ou mot de passe incorrect.') }));
+  get token(): string | null {
+    return localStorage.getItem(TOKEN_KEY);
   }
 
-  register(name: string, email: string, password: string, phone?: string, city?: string): Promise<{ ok: boolean; error?: string }> {
-    return this.postJson<{ user: AuthUser; token: string }>('/auth/register', { name, email, password, phone, city })
+  login(email: string, password: string): Promise<{ ok: boolean; unverified?: boolean; error?: string }> {
+    return this.postJson<{ user: AuthUser; token: string }>('/auth/login', { email, password })
       .then(res => { this.setSession(res.user, res.token); return { ok: true }; })
-      .catch(e => ({ ok: false, error: this.extractError(e, 'Une erreur est survenue. Veuillez réessayer.') }));
+      .catch(e => {
+        const err = e as Record<string, unknown>;
+        return {
+          ok: false,
+          unverified: err['unverified'] === true,
+          error: typeof err['error'] === 'string' ? err['error'] : 'Email ou mot de passe incorrect.'
+        };
+      });
+  }
+
+  register(name: string, email: string, password: string, phone?: string, city?: string): Promise<{ ok: boolean; emailSent?: boolean; error?: string }> {
+    return this.postJson<{ message: string; emailSent: boolean }>('/auth/register', { name, email, password, phone, city })
+      .then(() => ({ ok: true, emailSent: true }))
+      .catch(e => {
+        const err = e as Record<string, unknown>;
+        return {
+          ok: false,
+          error: typeof err['error'] === 'string' ? err['error'] : 'Une erreur est survenue. Veuillez réessayer.'
+        };
+      });
+  }
+
+  resendVerification(email: string): Promise<{ ok: boolean; error?: string }> {
+    return this.postJson<{ message: string }>('/auth/resend-verification', { email })
+      .then(() => ({ ok: true }))
+      .catch(e => {
+        const err = e as Record<string, unknown>;
+        return { ok: false, error: typeof err['error'] === 'string' ? err['error'] : 'Erreur.' };
+      });
   }
 
   private postJson<T>(path: string, body: unknown): Promise<T> {
@@ -53,14 +78,6 @@ export class AuthService {
       if (!res.ok) throw data;
       return data as T;
     });
-  }
-
-  private extractError(e: unknown, fallback: string): string {
-    if (!e || typeof e !== 'object') return fallback;
-    const err = e as Record<string, unknown>;
-    if (typeof err['error'] === 'string') return err['error'];
-    if (typeof err['message'] === 'string') return err['message'];
-    return fallback;
   }
 
   logout(): void {

@@ -127,7 +127,15 @@
     "register_link": "Sign up for free",
     "has_account": "Already have an account?",
     "login_link": "Sign in",
-    "google": "Continue with Google"
+    "google": "Continue with Google",
+    "verify_email_title": "Check your email",
+    "verify_email_sub": "A confirmation link was sent to",
+    "verify_email_hint": "Click the link in the email to activate your account.",
+    "verify_resend": "Resend email",
+    "verify_resend_ok": "Email resent!",
+    "verified_success": "Email confirmed! You can now sign in.",
+    "unverified_error": "Account not verified. Please check your email.",
+    "unverified_resend": "Resend confirmation email"
   },
   "cats": {
     "VEHICLES": "Vehicles",

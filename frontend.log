@@ -2326,3 +2326,290 @@ Application bundle generation complete. [0.631 seconds] - 2026-08-29T18:23:39.94
 
 Page reload sent to client(s).
 > Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names |  Raw size
+main.js             | main  | 105.57 kB | 
+
+Application bundle generation complete. [1.131 seconds] - 2026-08-29T18:23:47.591Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                    |  Raw size
+main.js             | main                     | 105.57 kB | 
+
+Lazy chunk files    | Names                    |  Raw size
+chunk-XR2GHMV2.js   | annonce-detail-component |  47.73 kB | 
+
+Application bundle generation complete. [0.963 seconds] - 2026-08-29T18:45:34.812Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                    |  Raw size
+main.js             | main                     | 105.57 kB | 
+
+Lazy chunk files    | Names                    |  Raw size
+chunk-KLO2GH5C.js   | annonce-detail-component |  49.30 kB | 
+
+Application bundle generation complete. [1.011 seconds] - 2026-08-29T18:46:46.795Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                    |  Raw size
+main.js             | main                     | 105.57 kB | 
+
+Lazy chunk files    | Names                    |  Raw size
+chunk-4Q4GOMAD.js   | annonce-detail-component |  49.66 kB | 
+
+Application bundle generation complete. [1.109 seconds] - 2026-08-29T18:47:02.735Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                    |  Raw size
+main.js             | main                     | 105.57 kB | 
+
+Lazy chunk files    | Names                    |  Raw size
+chunk-GWRPDQ3J.js   | annonce-detail-component |  47.97 kB | 
+
+Application bundle generation complete. [0.860 seconds] - 2026-08-29T18:47:37.145Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                     |  Raw size
+main.js             | main                      | 105.57 kB | 
+chunk-X4MMJCPC.js   | -                         |  95.33 kB | 
+chunk-2FKS2LLZ.js   | -                         |   5.04 kB | 
+
+Lazy chunk files    | Names                     |  Raw size
+chunk-IMUBXWFK.js   | admin-component           | 109.19 kB | 
+chunk-2ZW5B35F.js   | chat-component            |  63.55 kB | 
+chunk-FTYOGSGH.js   | deposer-annonce-component |  61.79 kB | 
+chunk-NQCV5AQF.js   | annonce-detail-component  |  47.97 kB | 
+chunk-HMSX5DQ2.js   | home-component            |  47.20 kB | 
+chunk-24XPUZHU.js   | annonces-component        |  32.63 kB | 
+chunk-R6T2OW73.js   | profil-component          |  29.86 kB | 
+chunk-OEXPC74J.js   | login-component           |  25.31 kB | 
+chunk-ZHJ6VH6R.js   | premium-component         |  24.02 kB | 
+chunk-3BNJFQE2.js   | mes-annonces-component    |  21.82 kB | 
+chunk-OM4GUKYC.js   | -                         |  20.91 kB | 
+chunk-6DQEYAKV.js   | register-component        |  16.14 kB | 
+chunk-E7ECS6H5.js   | -                         |   2.07 kB | 
+chunk-LWVR4UOK.js   | -                         |   1.49 kB | 
+
+Application bundle generation complete. [2.304 seconds] - 2026-08-29T19:59:21.606Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                     |  Raw size
+main.js             | main                      | 105.57 kB | 
+chunk-SWITQ5LV.js   | -                         |  95.78 kB | 
+chunk-EYBHCHFE.js   | -                         |   5.04 kB | 
+
+Lazy chunk files    | Names                     |  Raw size
+chunk-VGLT4BXT.js   | admin-component           | 109.19 kB | 
+chunk-3EKPQK22.js   | chat-component            |  63.55 kB | 
+chunk-I6KPVUV5.js   | deposer-annonce-component |  61.79 kB | 
+chunk-LSC7RLI7.js   | annonce-detail-component  |  47.97 kB | 
+chunk-BDLOCKMN.js   | home-component            |  47.20 kB | 
+chunk-S74W4YOS.js   | annonces-component        |  32.63 kB | 
+chunk-IICOMHG7.js   | profil-component          |  29.86 kB | 
+chunk-JXWOO425.js   | login-component           |  25.31 kB | 
+chunk-GHXZQURG.js   | premium-component         |  24.02 kB | 
+chunk-72W6VSPI.js   | mes-annonces-component    |  21.82 kB | 
+chunk-W6MSWJ56.js   | -                         |  20.91 kB | 
+chunk-QLFK7754.js   | register-component        |  16.14 kB | 
+chunk-6U23EGFB.js   | -                         |   2.07 kB | 
+chunk-6BFAZJ6T.js   | -                         |   1.49 kB | 
+
+Application bundle generation complete. [1.025 seconds] - 2026-08-29T19:59:24.713Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                     |  Raw size
+main.js             | main                      | 105.57 kB | 
+chunk-JUIV2LKK.js   | -                         |  97.30 kB | 
+chunk-4LQIDXHE.js   | -                         |   5.04 kB | 
+
+Lazy chunk files    | Names                     |  Raw size
+chunk-6EEGCHDJ.js   | admin-component           | 109.19 kB | 
+chunk-JZ5YNGQZ.js   | chat-component            |  63.55 kB | 
+chunk-AM4SBVJE.js   | deposer-annonce-component |  61.79 kB | 
+chunk-RYVUA22F.js   | annonce-detail-component  |  47.97 kB | 
+chunk-6LIJXEOA.js   | home-component            |  47.20 kB | 
+chunk-PAVUJFTJ.js   | annonces-component        |  32.63 kB | 
+chunk-GDMBYIZR.js   | profil-component          |  29.86 kB | 
+chunk-ALYAUPHZ.js   | login-component           |  25.31 kB | 
+chunk-6X4CK2VS.js   | premium-component         |  24.02 kB | 
+chunk-W3NHPDUC.js   | mes-annonces-component    |  21.82 kB | 
+chunk-RQVLUKO2.js   | -                         |  20.91 kB | 
+chunk-YS7XS3IX.js   | register-component        |  16.14 kB | 
+chunk-JD7AUNXN.js   | -                         |   2.07 kB | 
+chunk-ZQWQNTRZ.js   | -                         |   1.49 kB | 
+
+Application bundle generation complete. [0.949 seconds] - 2026-08-29T19:59:29.723Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                     |  Raw size
+main.js             | main                      | 105.57 kB | 
+chunk-34N2KPCX.js   | -                         |  97.83 kB | 
+chunk-52HT7J5D.js   | -                         |   5.04 kB | 
+
+Lazy chunk files    | Names                     |  Raw size
+chunk-3FKW3C7F.js   | admin-component           | 109.19 kB | 
+chunk-UCUA2H3G.js   | chat-component            |  63.55 kB | 
+chunk-JQ7EEPL2.js   | deposer-annonce-component |  61.79 kB | 
+chunk-HD4G5ZTG.js   | annonce-detail-component  |  47.97 kB | 
+chunk-3J3QS3KE.js   | home-component            |  47.20 kB | 
+chunk-M42GIAXX.js   | annonces-component        |  32.63 kB | 
+chunk-DW2QEFQV.js   | profil-component          |  29.86 kB | 
+chunk-3QMO3CJR.js   | login-component           |  25.31 kB | 
+chunk-4GJ2UABV.js   | premium-component         |  24.02 kB | 
+chunk-F5QNU2LZ.js   | mes-annonces-component    |  21.82 kB | 
+chunk-YA4JZAMD.js   | -                         |  20.91 kB | 
+chunk-RRKDLE2G.js   | register-component        |  16.14 kB | 
+chunk-NMRYGALX.js   | -                         |   2.07 kB | 
+chunk-RF3KFCSK.js   | -                         |   1.49 kB | 
+
+Application bundle generation complete. [0.818 seconds] - 2026-08-29T19:59:37.321Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                     |  Raw size
+main.js             | main                      | 105.57 kB | 
+chunk-5DFNEPKD.js   | -                         |  98.32 kB | 
+chunk-XFW3KOTC.js   | -                         |   5.04 kB | 
+
+Lazy chunk files    | Names                     |  Raw size
+chunk-QTGO53XA.js   | admin-component           | 109.19 kB | 
+chunk-X2TGJPAT.js   | chat-component            |  63.55 kB | 
+chunk-IIKFTVZ7.js   | deposer-annonce-component |  61.79 kB | 
+chunk-DKD2QWFX.js   | annonce-detail-component  |  47.97 kB | 
+chunk-3FW667FP.js   | home-component            |  47.20 kB | 
+chunk-J4AE2SXK.js   | annonces-component        |  32.63 kB | 
+chunk-LD76QCH6.js   | profil-component          |  29.86 kB | 
+chunk-LUO4NW2G.js   | login-component           |  25.31 kB | 
+chunk-KR55HHXS.js   | premium-component         |  24.02 kB | 
+chunk-TCKYBSL5.js   | mes-annonces-component    |  21.82 kB | 
+chunk-DZKEBSVM.js   | -                         |  20.91 kB | 
+chunk-BCYL53UZ.js   | register-component        |  16.14 kB | 
+chunk-CAHI344V.js   | -                         |   2.07 kB | 
+chunk-5VGNZQDC.js   | -                         |   1.49 kB | 
+
+Application bundle generation complete. [0.877 seconds] - 2026-08-29T19:59:45.079Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                     |  Raw size
+main.js             | main                      | 105.57 kB | 
+chunk-YSKS372V.js   | -                         |  98.78 kB | 
+chunk-L65MG7YX.js   | -                         |   5.04 kB | 
+
+Lazy chunk files    | Names                     |  Raw size
+chunk-NGC3XSHE.js   | admin-component           | 109.19 kB | 
+chunk-YGGSC245.js   | chat-component            |  63.55 kB | 
+chunk-NUL7CFGE.js   | deposer-annonce-component |  61.79 kB | 
+chunk-ZXIDYKZO.js   | annonce-detail-component  |  47.97 kB | 
+chunk-3AZ637K4.js   | home-component            |  47.20 kB | 
+chunk-PYEETOYH.js   | annonces-component        |  32.63 kB | 
+chunk-USUC6Y4A.js   | profil-component          |  29.86 kB | 
+chunk-LGE6XYR4.js   | login-component           |  25.31 kB | 
+chunk-4WSVTKDJ.js   | premium-component         |  24.02 kB | 
+chunk-5HWJZBVG.js   | mes-annonces-component    |  21.82 kB | 
+chunk-OJLL4QDH.js   | -                         |  20.91 kB | 
+chunk-X2V2SUPC.js   | register-component        |  16.14 kB | 
+chunk-THHK2677.js   | -                         |   2.07 kB | 
+chunk-X4Z2VLBH.js   | -                         |   1.49 kB | 
+
+Application bundle generation complete. [1.188 seconds] - 2026-08-29T19:59:47.418Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                     |  Raw size
+main.js             | main                      | 105.61 kB | 
+chunk-7K5RSPV2.js   | -                         |   3.29 kB | 
+chunk-NDW6XCW3.js   | -                         |   1.99 kB | 
+
+Lazy chunk files    | Names                     |  Raw size
+chunk-2D7FKQCT.js   | admin-component           | 109.23 kB | 
+chunk-OUORTEHL.js   | chat-component            |  63.59 kB | 
+chunk-OJMNUQUX.js   | deposer-annonce-component |  61.82 kB | 
+chunk-MICYKRIU.js   | annonce-detail-component  |  48.01 kB | 
+chunk-C5VHD25V.js   | home-component            |  47.24 kB | 
+chunk-32LV4SQJ.js   | annonces-component        |  32.67 kB | 
+chunk-MAKTFCPS.js   | profil-component          |  29.90 kB | 
+chunk-LVSTLHOJ.js   | login-component           |  25.31 kB | 
+chunk-J7LJGMGD.js   | mes-annonces-component    |  21.85 kB | 
+chunk-B6XYC5JU.js   | -                         |  20.95 kB | 
+chunk-BLYTI6KN.js   | register-component        |  16.14 kB | 
+chunk-RZ5KWHYA.js   | -                         |   1.49 kB | 
+
+Application bundle generation complete. [1.295 seconds] - 2026-08-29T20:00:01.467Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names              |  Raw size
+main.js             | main               | 105.61 kB | 
+
+Lazy chunk files    | Names              |  Raw size
+chunk-QJRYCD4R.js   | register-component |  16.30 kB | 
+
+Application bundle generation complete. [0.742 seconds] - 2026-08-29T20:00:10.810Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names              |  Raw size
+main.js             | main               | 105.61 kB | 
+
+Lazy chunk files    | Names              |  Raw size
+chunk-RWUSZ2CH.js   | register-component |  22.20 kB | 
+
+Application bundle generation complete. [1.184 seconds] - 2026-08-29T20:00:25.911Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names              |  Raw size
+main.js             | main               | 105.61 kB | 
+
+Lazy chunk files    | Names              |  Raw size
+chunk-46ZTT2J2.js   | register-component |  23.55 kB | 
+
+Application bundle generation complete. [1.006 seconds] - 2026-08-29T20:00:35.050Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names           |  Raw size
+main.js             | main            | 105.61 kB | 
+
+Lazy chunk files    | Names           |  Raw size
+chunk-KKBPDAPZ.js   | login-component |  25.90 kB | 
+
+Application bundle generation complete. [0.655 seconds] - 2026-08-29T20:00:44.991Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names           |  Raw size
+main.js             | main            | 105.61 kB | 
+
+Lazy chunk files    | Names           |  Raw size
+chunk-2S2E3H4W.js   | login-component |  29.54 kB | 
+
+Application bundle generation complete. [0.719 seconds] - 2026-08-29T20:01:07.249Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...

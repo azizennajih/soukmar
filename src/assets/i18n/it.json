@@ -127,7 +127,15 @@
     "register_link": "Registrati gratis",
     "has_account": "Hai già un account?",
     "login_link": "Accedi",
-    "google": "Continua con Google"
+    "google": "Continua con Google",
+    "verify_email_title": "Verifica la tua email",
+    "verify_email_sub": "Un link di conferma è stato inviato a",
+    "verify_email_hint": "Clicca il link nell'email per attivare il tuo account.",
+    "verify_resend": "Reinvia email",
+    "verify_resend_ok": "Email reinviata!",
+    "verified_success": "Email confermata! Puoi ora accedere.",
+    "unverified_error": "Account non verificato. Controlla la tua email.",
+    "unverified_resend": "Reinvia email di conferma"
   },
   "cats": {
     "VEHICLES": "Veicoli",
