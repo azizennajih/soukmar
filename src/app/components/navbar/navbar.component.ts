@@ -30,7 +30,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
     { code: 'fr', flag: '🇫🇷', label: 'FR' },
     { code: 'en', flag: '🇬🇧', label: 'EN' },
     { code: 'ar', flag: '🇲🇦', label: 'عر' },
+    { code: 'de', flag: '🇩🇪', label: 'DE' },
+    { code: 'es', flag: '🇪🇸', label: 'ES' },
+    { code: 'it', flag: '🇮🇹', label: 'IT' },
   ];
+
+  langMenuOpen = signal(false);
 
   constructor(public auth: AuthService, private api: ApiService, private router: Router, public i18n: I18nService) {}
 
@@ -59,7 +64,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
   onDocumentClick(e: Event) {
     const target = e.target as HTMLElement;
     if (!target.closest('.user-menu-wrapper')) this.userMenuOpen.set(false);
+    if (!target.closest('.navbar__lang-wrapper')) this.langMenuOpen.set(false);
   }
+
+  toggleLangMenu(e: Event) { e.stopPropagation(); this.langMenuOpen.update(v => !v); }
+  selectLang(code: Lang, e: Event) { e.stopPropagation(); this.i18n.setLang(code); this.langMenuOpen.set(false); }
+
+  get activeLang() { return this.langs.find(l => l.code === this.i18n.lang())!; }
 
   search() {
     const params: Record<string, string> = {};
