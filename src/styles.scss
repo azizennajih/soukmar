@@ -1,29 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --primary: #e63946;
-  --primary-dark: #c62d3a;
-  --primary-light: #fef2f2;
-  --secondary: #1d3557;
-  --text: #0f172a;
-  --text-muted: #64748b;
-  --border: #e2e8f0;
-  --bg: #f8fafc;
-  --white: #ffffff;
-  --radius: 1rem;
-  --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -1px rgba(0,0,0,.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
+  --primary:       #D93D4A;
+  --primary-dark:  #B8313C;
+  --primary-light: #FEF1F2;
+  --gold:          #C9941A;
+  --gold-light:    #FEF6E4;
+  --secondary:     #1E3A5F;
+  --text:          #111827;
+  --text-muted:    #6B7280;
+  --border:        #E5E9EE;
+  --bg:            #F8F7F5;
+  --white:         #FFFFFF;
+  --radius:        .875rem;
+  --shadow:    0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
+  --shadow-lg: 0 12px 28px rgba(0,0,0,.10), 0 4px 8px rgba(0,0,0,.04);
 }
 
 body {
   font-family: 'Inter', sans-serif;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  font-size: .9375rem;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  line-height: 1.25;
+  letter-spacing: -.02em;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -88,7 +97,7 @@ a { color: inherit; text-decoration: none; }
   padding: .2rem .6rem; border-radius: 999px;
   font-size: .72rem; font-weight: 700;
 }
-.badge-premium { background: #fef9c3; color: #a16207; }
+.badge-premium { background: var(--gold-light); color: var(--gold); border: 1px solid rgba(201,148,26,.2); }
 .badge-active  { background: #dcfce7; color: #15803d; }
 .badge-pending { background: #fef9c3; color: #a16207; }
 .badge-sold    { background: #dbeafe; color: #1d4ed8; }
@@ -104,7 +113,7 @@ a { color: inherit; text-decoration: none; }
 .auth-card {
   width: 100%; max-width: 440px;
   padding: 2.5rem 2rem; border-radius: 1.5rem;
-  box-shadow: 0 20px 60px rgba(230,57,70,.1);
+  box-shadow: 0 20px 60px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.04);
 }
 .auth-logo {
   display: flex; align-items: center; gap: .5rem;

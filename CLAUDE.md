@@ -12,27 +12,31 @@ Marokkanisches Kleinanzeigen-Portal (wie Avito/Leboncoin).
 ## Design System — IMMER einhalten
 
 ### Farben (CSS-Variablen aus `src/styles.scss`)
-| Variable          | Wert        | Verwendung                        |
-|-------------------|-------------|-----------------------------------|
-| `--primary`       | `#e63946`   | Buttons, Akzente, Links           |
-| `--primary-dark`  | `#c62d3a`   | Hover-Zustand für Primary         |
-| `--primary-light` | `#fef2f2`   | Hintergrund für Primär-Highlights |
-| `--secondary`     | `#1d3557`   | Sekundäre Elemente                |
-| `--text`          | `#0f172a`   | Haupttext                         |
-| `--text-muted`    | `#64748b`   | Sekundärtext, Placeholder         |
-| `--border`        | `#e2e8f0`   | Rahmen, Trennlinien               |
-| `--bg`            | `#f8fafc`   | Seitenhintergrund                 |
-| `--white`         | `#ffffff`   | Karten, Overlays                  |
-| `--radius`        | `1rem`      | Standard-Borderradius             |
+| Variable          | Wert        | Verwendung                                |
+|-------------------|-------------|-------------------------------------------|
+| `--primary`       | `#D93D4A`   | Buttons, CTAs, Logo, Hover — sparsam      |
+| `--primary-dark`  | `#B8313C`   | Hover-Zustand für Primary                 |
+| `--primary-light` | `#FEF1F2`   | Hintergrund für Primär-Highlights         |
+| `--gold`          | `#C9941A`   | Premium-Badges, Featured-Akzent           |
+| `--gold-light`    | `#FEF6E4`   | Hintergrund für Gold-Highlights           |
+| `--secondary`     | `#1E3A5F`   | Navbar-Topbar, sekundäre Elemente         |
+| `--text`          | `#111827`   | Haupttext                                 |
+| `--text-muted`    | `#6B7280`   | Sekundärtext, Placeholder                 |
+| `--border`        | `#E5E9EE`   | Rahmen, Trennlinien                       |
+| `--bg`            | `#F8F7F5`   | Seitenhintergrund (leicht warm)           |
+| `--white`         | `#FFFFFF`   | Karten, Overlays                          |
+| `--radius`        | `.875rem`   | Standard-Borderradius                     |
 
+**WICHTIG:** Preise NIEMALS rot oder fett-900 — immer `color: var(--text)`, `font-weight: 700`.  
 **Hardcoded Farben vermeiden** — immer CSS-Variablen nutzen.  
-**Niemals neue Farben erfinden** — nur die obigen Palette verwenden.
+**Niemals neue Farben erfinden** — nur die obige Palette verwenden.
 
 ### Typografie
-- **Font:** Inter (Google Fonts, bereits geladen)
-- Gewichte: 400 (normal), 500 (medium), 600 (semibold), 700 (bold), 800/900 (headings)
-- Basis-Fontsize: 0.875rem–0.95rem für Body, 1.25–1.6rem für Headings
-- Smooth: `-webkit-font-smoothing: antialiased` bereits global
+- **Body-Font:** Inter (400–700)
+- **Heading-Font:** Plus Jakarta Sans (600–900) — für h1–h5
+- Preise: `font-weight: 700`, `color: var(--text)` — nicht rot, nicht fett-900
+
+<!-- Typografie ist im obigen Block enthalten -->
 
 ### Abstände & Größen
 - Spacing-Einheit: `rem` (kein px außer für 1px-Borders)
