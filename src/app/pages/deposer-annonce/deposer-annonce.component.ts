@@ -1,22 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ListingService } from '../../services/listing.service';
 import { UploadService } from '../../services/upload.service';
+import { I18nService } from '../../services/i18n.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CATEGORIES, MOROCCO_CITIES, Category } from '../../models/listing.model';
 
 @Component({
   selector: 'app-deposer-annonce',
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe],
   templateUrl: './deposer-annonce.component.html',
   styleUrl: './deposer-annonce.component.scss'
 })
 export class DeposerAnnonceComponent {
+  i18n = inject(I18nService);
   categories = CATEGORIES;
   cities = MOROCCO_CITIES;
-  steps = ['Catégorie', 'Détails', 'Photos', 'Contact'];
+
+  get steps(): string[] {
+    const t = (k: string) => this.i18n.t(k);
+    return [t('deposer.step_category'), t('deposer.step_details'), t('deposer.step_photos'), t('deposer.step_contact')];
+  }
   step = 0;
   loading = false;
   uploading = false;
@@ -113,13 +120,13 @@ export class DeposerAnnonceComponent {
         },
         error: () => {
           this.loading = false;
-          this.error = 'Une erreur est survenue. Veuillez réessayer.';
+          this.error = this.i18n.t('deposer.error_publish');
         }
       });
     } catch {
       this.uploading = false;
       this.loading = false;
-      this.error = 'Erreur lors du téléchargement des images.';
+      this.error = this.i18n.t('deposer.error_upload');
     }
   }
 }

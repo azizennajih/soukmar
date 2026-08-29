@@ -3,21 +3,21 @@
   @if (!auth.isLoggedIn) {
     <div class="deposer__gate card">
       <div class="deposer__gate-icon">🔐</div>
-      <h2>Connexion requise</h2>
-      <p>Connectez-vous pour déposer une annonce gratuitement.</p>
-      <a routerLink="/auth/login" class="btn-primary">Se connecter</a>
+      <h2>{{ 'deposer.gate_title' | T }}</h2>
+      <p>{{ 'deposer.gate_sub' | T }}</p>
+      <a routerLink="/auth/login" class="btn-primary">{{ 'deposer.gate_btn' | T }}</a>
     </div>
   } @else if (success) {
     <div class="deposer__success card">
       <div class="deposer__success-icon">✅</div>
-      <h2>Annonce publiée !</h2>
-      <p>Votre annonce est maintenant visible par tous les acheteurs.</p>
+      <h2>{{ 'deposer.success_title' | T }}</h2>
+      <p>{{ 'deposer.success_sub' | T }}</p>
     </div>
   } @else {
 
     <div class="deposer__header">
-      <h1>Déposer une annonce</h1>
-      <p>Gratuit · Rapide · En moins de 2 minutes</p>
+      <h1>{{ 'deposer.header_title' | T }}</h1>
+      <p>{{ 'deposer.header_sub' | T }}</p>
     </div>
 
     <!-- Stepper -->
@@ -38,7 +38,7 @@
       <!-- STEP 0: Category -->
       @if (step === 0) {
         <div class="deposer__step">
-          <h2 class="deposer__step-title">🏷️ Choisissez une catégorie</h2>
+          <h2 class="deposer__step-title">{{ 'deposer.cat_title' | T }}</h2>
           <div class="deposer__cats">
             @for (cat of categories; track cat.value) {
               <button
@@ -47,7 +47,7 @@
                 (click)="selectCategory(cat.value)"
               >
                 <span class="deposer__cat-icon">{{ cat.icon }}</span>
-                <span>{{ cat.label }}</span>
+                <span>{{ ('cats.' + cat.value) | T }}</span>
               </button>
             }
           </div>
@@ -57,24 +57,24 @@
       <!-- STEP 1: Details -->
       @if (step === 1) {
         <div class="deposer__step">
-          <h2 class="deposer__step-title">📝 Détails de l'annonce</h2>
+          <h2 class="deposer__step-title">{{ 'deposer.details_title' | T }}</h2>
           <div class="deposer__form">
             <div class="form-group">
-              <label>Titre de l'annonce *</label>
-              <input type="text" [(ngModel)]="form.title" placeholder="Ex: iPhone 15 Pro Max 256GB Noir" maxlength="100" />
-              <small>{{ form.title.length }}/100 caractères</small>
+              <label>{{ 'deposer.label_title' | T }}</label>
+              <input type="text" [(ngModel)]="form.title" [placeholder]="'deposer.placeholder_title' | T" maxlength="100" />
+              <small>{{ form.title.length }}/100 {{ 'deposer.chars' | T }}</small>
             </div>
             <div class="form-group">
-              <label>Description *</label>
-              <textarea [(ngModel)]="form.description" rows="5" placeholder="Décrivez votre article (état, caractéristiques, raison de vente...)"></textarea>
+              <label>{{ 'deposer.label_desc' | T }}</label>
+              <textarea [(ngModel)]="form.description" rows="5" [placeholder]="'deposer.placeholder_desc' | T"></textarea>
             </div>
             <div class="deposer__row">
               <div class="form-group">
-                <label>Prix</label>
+                <label>{{ 'deposer.label_price' | T }}</label>
                 <input type="number" [(ngModel)]="form.price" placeholder="0" min="0" />
               </div>
               <div class="form-group deposer__currency">
-                <label>Devise</label>
+                <label>{{ 'deposer.label_currency' | T }}</label>
                 <select [(ngModel)]="form.currency">
                   <option value="MAD">MAD</option>
                   <option value="EUR">EUR</option>
@@ -83,9 +83,9 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Ville *</label>
+              <label>{{ 'deposer.label_city' | T }}</label>
               <select [(ngModel)]="form.city">
-                <option value="">Choisir une ville</option>
+                <option value="">{{ 'deposer.city_default' | T }}</option>
                 @for (city of cities; track city) {
                   <option [value]="city">{{ city }}</option>
                 }
@@ -98,16 +98,16 @@
       <!-- STEP 2: Photos -->
       @if (step === 2) {
         <div class="deposer__step">
-          <h2 class="deposer__step-title">📸 Ajouter des photos</h2>
-          <p class="deposer__step-sub">Jusqu'à 10 photos — la première sera la photo principale.</p>
+          <h2 class="deposer__step-title">{{ 'deposer.photos_title' | T }}</h2>
+          <p class="deposer__step-sub">{{ 'deposer.photos_sub' | T }}</p>
 
           <label class="deposer__upload" for="fileInput">
             <svg class="deposer__upload-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
               <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
             </svg>
-            <p>Cliquez ou glissez vos photos ici</p>
-            <small>JPG, PNG, WEBP · Max 10 MB par photo</small>
+            <p>{{ 'deposer.upload_hint' | T }}</p>
+            <small>{{ 'deposer.upload_types' | T }}</small>
             <input id="fileInput" type="file" multiple accept="image/*" (change)="onFilesSelected($event)" style="display:none" />
           </label>
 
@@ -116,38 +116,38 @@
               @for (preview of previews; track $index) {
                 <div class="deposer__preview">
                   <img [src]="preview" alt="preview" />
-                  @if ($index === 0) { <span class="deposer__preview-badge">Principale</span> }
+                  @if ($index === 0) { <span class="deposer__preview-badge">{{ 'deposer.photo_main' | T }}</span> }
                   <button class="deposer__preview-remove" (click)="removeImage($index)">✕</button>
                 </div>
               }
             </div>
           }
 
-          <p class="deposer__skip-note">Vous pouvez continuer sans photos et les ajouter plus tard.</p>
+          <p class="deposer__skip-note">{{ 'deposer.skip_note' | T }}</p>
         </div>
       }
 
       <!-- STEP 3: Contact -->
       @if (step === 3) {
         <div class="deposer__step">
-          <h2 class="deposer__step-title">📞 Coordonnées de contact</h2>
+          <h2 class="deposer__step-title">{{ 'deposer.contact_title' | T }}</h2>
           <div class="deposer__form">
             <div class="form-group">
-              <label>Téléphone</label>
+              <label>{{ 'deposer.label_phone' | T }}</label>
               <input type="tel" [(ngModel)]="form.phone" placeholder="+212 6 00 00 00 00" />
             </div>
             <div class="form-group">
-              <label>WhatsApp</label>
+              <label>{{ 'deposer.label_whatsapp' | T }}</label>
               <input type="tel" [(ngModel)]="form.whatsapp" placeholder="+212 6 00 00 00 00" />
             </div>
 
             <!-- Summary -->
             <div class="deposer__summary">
-              <div class="deposer__summary-title">📋 Récapitulatif</div>
-              <div class="deposer__summary-row"><span>Catégorie</span><strong>{{ summaryCategory?.icon }} {{ summaryCategory?.label }}</strong></div>
-              <div class="deposer__summary-row"><span>Titre</span><strong>{{ form.title || '—' }}</strong></div>
-              <div class="deposer__summary-row"><span>Prix</span><strong>{{ form.price ? form.price + ' ' + form.currency : 'À négocier' }}</strong></div>
-              <div class="deposer__summary-row"><span>Ville</span><strong>{{ form.city || '—' }}</strong></div>
+              <div class="deposer__summary-title">{{ 'deposer.summary_title' | T }}</div>
+              <div class="deposer__summary-row"><span>{{ 'deposer.summary_cat' | T }}</span><strong>{{ summaryCategory?.icon }} {{ ('cats.' + summaryCategory?.value) | T }}</strong></div>
+              <div class="deposer__summary-row"><span>{{ 'deposer.summary_listing_title' | T }}</span><strong>{{ form.title || '—' }}</strong></div>
+              <div class="deposer__summary-row"><span>{{ 'deposer.summary_price' | T }}</span><strong>{{ form.price ? form.price + ' ' + form.currency : ('deposer.negotiate' | T) }}</strong></div>
+              <div class="deposer__summary-row"><span>{{ 'deposer.summary_city' | T }}</span><strong>{{ form.city || '—' }}</strong></div>
             </div>
           </div>
         </div>
@@ -160,16 +160,16 @@
       <!-- Navigation -->
       <div class="deposer__nav">
         @if (step > 0) {
-          <button class="btn-outline" (click)="step = step - 1" [disabled]="loading">← Retour</button>
+          <button class="btn-outline" (click)="step = step - 1" [disabled]="loading">{{ 'deposer.back' | T }}</button>
         }
         <div style="flex:1"></div>
         @if (step < steps.length - 1) {
-          <button class="btn-primary" [disabled]="!canNext" (click)="step = step + 1">Suivant →</button>
+          <button class="btn-primary" [disabled]="!canNext" (click)="step = step + 1">{{ 'deposer.next' | T }}</button>
         } @else {
           <button class="btn-primary deposer__publish" [disabled]="loading || !canNext" (click)="publish()">
-            @if (uploading) { <span class="spinner-sm"></span> Upload... }
-            @else if (loading) { <span class="spinner-sm"></span> Publication... }
-            @else { 🚀 Publier l'annonce }
+            @if (uploading) { <span class="spinner-sm"></span> {{ 'deposer.uploading' | T }} }
+            @else if (loading) { <span class="spinner-sm"></span> {{ 'deposer.publishing' | T }} }
+            @else { {{ 'deposer.publish' | T }} }
           </button>
         }
       </div>
