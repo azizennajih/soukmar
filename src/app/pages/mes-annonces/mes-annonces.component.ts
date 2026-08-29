@@ -1,27 +1,33 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ListingService } from '../../services/listing.service';
+import { I18nService } from '../../services/i18n.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 import { Listing, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.model';
 
 @Component({
   selector: 'app-mes-annonces',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, TranslatePipe],
   templateUrl: './mes-annonces.component.html',
   styleUrl: './mes-annonces.component.scss'
 })
 export class MesAnnoncesComponent implements OnInit {
+  i18n = inject(I18nService);
   listings: Listing[] = [];
   loading = false;
 
-  statusConfig: Record<string, { label: string; cls: string }> = {
-    ACTIVE:   { label: 'Active',      cls: 'badge-active'   },
-    SOLD:     { label: 'Vendue',      cls: 'badge-sold'     },
-    PENDING:  { label: 'En attente',  cls: 'badge-pending'  },
-    REJECTED: { label: 'Rejetée',     cls: 'badge-rejected' },
-    EXPIRED:  { label: 'Expirée',     cls: 'badge-rejected' },
-  };
+  get statusConfig(): Record<string, { label: string; cls: string }> {
+    const t = (k: string) => this.i18n.t(k);
+    return {
+      ACTIVE:   { label: t('annonces.active') || 'Active',       cls: 'badge-active'   },
+      SOLD:     { label: t('annonces.sold') || 'Vendue',         cls: 'badge-sold'     },
+      PENDING:  { label: t('annonces.pending') || 'En attente',  cls: 'badge-pending'  },
+      REJECTED: { label: t('annonces.rejected') || 'Rejetée',    cls: 'badge-rejected' },
+      EXPIRED:  { label: t('annonces.expired') || 'Expirée',     cls: 'badge-rejected' },
+    };
+  }
 
   constructor(public auth: AuthService, private ls: ListingService, private router: Router, private cdr: ChangeDetectorRef) {}
 
@@ -35,7 +41,7 @@ export class MesAnnoncesComponent implements OnInit {
   }
 
   delete(id: string) {
-    if (!confirm('Supprimer cette annonce ?')) return;
+    if (!confirm(this.i18n.t('mes_annonces.confirm_delete'))) return;
     this.ls.delete(id).subscribe(() => {
       this.listings = this.listings.filter(l => l.id !== id);
     });

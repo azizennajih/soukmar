@@ -2,21 +2,21 @@
 
   <div class="mes-annonces__header">
     <div>
-      <h1>Mes annonces</h1>
-      <p>{{ listings.length }} annonce{{ listings.length !== 1 ? 's' : '' }}</p>
+      <h1>{{ 'mes_annonces.title' | T }}</h1>
+      <p>{{ listings.length }}</p>
     </div>
     <a routerLink="/deposer-annonce" class="btn-primary">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      Nouvelle annonce
+      {{ 'mes_annonces.new' | T }}
     </a>
   </div>
 
   @if (listings.length === 0) {
     <div class="mes-annonces__empty">
       <span>📋</span>
-      <p>Aucune annonce pour le moment</p>
-      <small>Créez votre première annonce et commencez à vendre !</small>
-      <a routerLink="/deposer-annonce" class="btn-primary">Déposer une annonce</a>
+      <p>{{ 'mes_annonces.empty' | T }}</p>
+      <small>{{ 'mes_annonces.empty_sub' | T }}</small>
+      <a routerLink="/deposer-annonce" class="btn-primary">{{ 'mes_annonces.post_btn' | T }}</a>
     </div>
   } @else {
     <div class="mes-annonces__list">

@@ -1,10 +1,12 @@
-import { Component, OnInit, signal, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, inject, signal, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { AuthService, AuthUser } from '../../services/auth.service';
 import { UploadService } from '../../services/upload.service';
+import { I18nService } from '../../services/i18n.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 import { firstValueFrom } from 'rxjs';
 
 interface ProfileData {
@@ -20,11 +22,12 @@ interface ProfileData {
 
 @Component({
   selector: 'app-profil',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslatePipe],
   templateUrl: './profil.component.html',
   styleUrl: './profil.component.scss'
 })
 export class ProfilComponent implements OnInit {
+  i18n = inject(I18nService);
   profile: ProfileData | null = null;
   loading = true;
   saving = signal(false);
@@ -80,7 +83,7 @@ export class ProfilComponent implements OnInit {
         (this.auth as any).currentUser.set(updatedUser);
         localStorage.setItem('soukmar_session', JSON.stringify(updatedUser));
       }
-      this.successMsg = 'Profil mis à jour avec succès !';
+      this.successMsg = this.i18n.t('profil.saved');
     } catch {
       this.errorMsg = 'Erreur lors de la mise à jour.';
     } finally {
