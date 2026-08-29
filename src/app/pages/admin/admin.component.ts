@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { ListingService } from '../../services/listing.service';
 import { AuthService } from '../../services/auth.service';
+import { I18nService } from '../../services/i18n.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 import { Listing, CATEGORIES, formatPrice } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
 
@@ -25,7 +27,7 @@ type ListingFilter = 'ALL' | 'ACTIVE' | 'PENDING' | 'REJECTED' | 'SOLD' | 'RESER
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })
@@ -33,6 +35,7 @@ export class AdminComponent implements OnInit {
   private api = inject(ApiService);
   private ls = inject(ListingService);
   public auth = inject(AuthService);
+  public i18n = inject(I18nService);
   private cdr = inject(ChangeDetectorRef);
 
   tab = signal<Tab>('overview');

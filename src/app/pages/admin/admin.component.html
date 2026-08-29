@@ -5,8 +5,8 @@
     <div class="admin-header__left">
       <div class="admin-header__icon">🛡️</div>
       <div>
-        <h1 class="admin-header__title">Tableau de bord Admin</h1>
-        <p class="admin-header__sub">SoukMar — Gestion & Supervision</p>
+        <h1 class="admin-header__title">{{ 'admin.title' | T }}</h1>
+        <p class="admin-header__sub">{{ 'admin.subtitle' | T }}</p>
       </div>
     </div>
     <div class="admin-header__user">
@@ -18,52 +18,52 @@
   <!-- Tabs -->
   <nav class="admin-tabs">
     <button class="admin-tab" [class.active]="tab() === 'overview'" (click)="setTab('overview')">
-      📊 Aperçu
+      📊 {{ 'admin.tab_overview' | T }}
     </button>
     <button class="admin-tab" [class.active]="tab() === 'listings'" (click)="setTab('listings')">
-      📋 Annonces
+      📋 {{ 'admin.tab_listings' | T }}
       @if (stats.pending > 0) {
         <span class="tab-badge">{{ stats.pending }}</span>
       }
     </button>
     <button class="admin-tab" [class.active]="tab() === 'users'" (click)="setTab('users')">
-      👥 Utilisateurs
+      👥 {{ 'admin.tab_users' | T }}
     </button>
     <button class="admin-tab" [class.active]="tab() === 'revenue'" (click)="setTab('revenue')">
-      💰 Revenus
+      💰 {{ 'admin.tab_revenue' | T }}
     </button>
   </nav>
 
   <!-- ══════════════ OVERVIEW ══════════════ -->
   @if (tab() === 'overview') {
     @if (loading()) {
-      <div class="admin-loading">⏳ Chargement des données...</div>
+      <div class="admin-loading">{{ 'admin.loading' | T }}</div>
     } @else {
       <!-- KPI Cards -->
       <div class="kpi-grid">
         <div class="kpi-card kpi-card--primary">
           <div class="kpi-card__icon">📋</div>
           <div class="kpi-card__value">{{ stats.total }}</div>
-          <div class="kpi-card__label">Annonces totales</div>
-          <div class="kpi-card__sub">{{ stats.active }} actives</div>
+          <div class="kpi-card__label">{{ 'admin.kpi_total' | T }}</div>
+          <div class="kpi-card__sub">{{ stats.active }} {{ 'admin.kpi_active' | T }}</div>
         </div>
         <div class="kpi-card kpi-card--warning">
           <div class="kpi-card__icon">⏳</div>
           <div class="kpi-card__value">{{ stats.pending }}</div>
-          <div class="kpi-card__label">En attente</div>
-          <div class="kpi-card__sub">À modérer</div>
+          <div class="kpi-card__label">{{ 'admin.kpi_pending' | T }}</div>
+          <div class="kpi-card__sub">{{ 'admin.kpi_to_moderate' | T }}</div>
         </div>
         <div class="kpi-card kpi-card--success">
           <div class="kpi-card__icon">👥</div>
           <div class="kpi-card__value">{{ stats.users }}</div>
-          <div class="kpi-card__label">Utilisateurs</div>
-          <div class="kpi-card__sub">Inscrits</div>
+          <div class="kpi-card__label">{{ 'admin.kpi_users' | T }}</div>
+          <div class="kpi-card__sub">{{ 'admin.kpi_registered' | T }}</div>
         </div>
         <div class="kpi-card kpi-card--gold">
           <div class="kpi-card__icon">⭐</div>
           <div class="kpi-card__value">{{ stats.premium }}</div>
-          <div class="kpi-card__label">Annonces Premium</div>
-          <div class="kpi-card__sub">{{ formatPrice(stats.premiumRevenue) }} générés</div>
+          <div class="kpi-card__label">{{ 'admin.kpi_premium' | T }}</div>
+          <div class="kpi-card__sub">{{ formatPrice(stats.premiumRevenue) }} {{ 'admin.kpi_generated' | T }}</div>
         </div>
       </div>
 
@@ -71,7 +71,7 @@
       <div class="charts-row">
         <!-- Monthly bar chart -->
         <div class="chart-card card">
-          <h3 class="chart-title">📈 Annonces par mois</h3>
+          <h3 class="chart-title">{{ 'admin.monthly_chart' | T }}</h3>
           <div class="bar-chart">
             @for (val of monthlyData; track $index) {
               <div class="bar-chart__col">
@@ -88,7 +88,7 @@
 
         <!-- Category breakdown -->
         <div class="chart-card card">
-          <h3 class="chart-title">🏷️ Répartition par catégorie</h3>
+          <h3 class="chart-title">{{ 'admin.cat_breakdown' | T }}</h3>
           <div class="cat-breakdown">
             @for (cat of categoryStats; track cat.value) {
               @if (cat.count > 0) {
@@ -109,7 +109,7 @@
       @if (stats.pending > 0) {
         <div class="card pending-card">
           <div class="pending-card__header">
-            <span>⚠️ Annonces en attente de modération</span>
+            <span>{{ 'admin.pending_moderation' | T }}</span>
             <span class="badge badge-pending">{{ stats.pending }}</span>
           </div>
           @for (listing of allListings | slice:0:5; track listing.id) {
@@ -122,16 +122,16 @@
                 <div class="pending-row__actions">
                   <button class="action-btn action-btn--approve"
                           [disabled]="isActionLoading(listing.id)"
-                          (click)="updateListingStatus(listing, 'ACTIVE')">✅ Approuver</button>
+                          (click)="updateListingStatus(listing, 'ACTIVE')">{{ 'admin.approve' | T }}</button>
                   <button class="action-btn action-btn--reject"
                           [disabled]="isActionLoading(listing.id)"
-                          (click)="updateListingStatus(listing, 'REJECTED')">❌ Rejeter</button>
+                          (click)="updateListingStatus(listing, 'REJECTED')">{{ 'admin.reject' | T }}</button>
                 </div>
               </div>
             }
           }
           <button class="btn-outline pending-card__more" (click)="setTab('listings'); setListingFilter('PENDING')">
-            Voir toutes les annonces en attente →
+            {{ 'admin.see_pending' | T }}
           </button>
         </div>
       }
@@ -141,8 +141,8 @@
   <!-- ══════════════ LISTINGS ══════════════ -->
   @if (tab() === 'listings') {
     <div class="section-header">
-      <h2 class="section-title">Gestion des annonces</h2>
-      <span class="section-count">{{ filteredListings.length }} annonce(s)</span>
+      <h2 class="section-title">{{ 'admin.listings_title' | T }}</h2>
+      <span class="section-count">{{ filteredListings.length }}</span>
     </div>
 
     <!-- Filter bar -->
@@ -150,7 +150,7 @@
       @for (f of filterOptions; track f) {
         <button class="filter-pill" [class.active]="listingFilter() === f"
                 (click)="setListingFilter($any(f))">
-          {{ f === 'ALL' ? 'Toutes' : statusLabel(f) }}
+          {{ f === 'ALL' ? ('admin.filter_all' | T) : statusLabel(f) }}
           <span class="filter-pill__count">
             {{ f === 'ALL' ? allListings.length : allListings.filter(l => l.status === f).length }}
           </span>
@@ -159,19 +159,19 @@
     </div>
 
     @if (loading()) {
-      <div class="admin-loading">⏳ Chargement...</div>
+      <div class="admin-loading">{{ 'admin.loading' | T }}</div>
     } @else if (filteredListings.length === 0) {
       <div class="empty-state">
-        <span>🎉</span><p>Aucune annonce dans cette catégorie</p>
+        <span>🎉</span><p>{{ 'admin.empty_listings' | T }}</p>
       </div>
     } @else {
       <div class="data-table card">
         <div class="data-table__head">
-          <span>Annonce</span>
-          <span>Vendeur</span>
-          <span>Prix</span>
-          <span>Statut</span>
-          <span>Actions</span>
+          <span>{{ 'admin.col_listing' | T }}</span>
+          <span>{{ 'admin.col_seller' | T }}</span>
+          <span>{{ 'admin.col_price' | T }}</span>
+          <span>{{ 'admin.col_status' | T }}</span>
+          <span>{{ 'admin.col_actions' | T }}</span>
         </div>
         @for (listing of filteredListings; track listing.id) {
           <div class="data-table__row" [class.data-table__row--pending]="listing.status === 'PENDING'">
@@ -210,7 +210,7 @@
               @if (listing.price != null) {
                 {{ formatPrice(listing.price) }}
               } @else {
-                <span style="color:var(--text-muted);font-size:.8rem">À négocier</span>
+                <span style="color:var(--text-muted);font-size:.8rem">{{ 'admin.negotiate' | T }}</span>
               }
             </div>
             <!-- Statut -->
@@ -249,29 +249,29 @@
   <!-- ══════════════ USERS ══════════════ -->
   @if (tab() === 'users') {
     <div class="section-header">
-      <h2 class="section-title">Gestion des utilisateurs</h2>
-      <span class="section-count">{{ filteredUsers.length }} utilisateur(s)</span>
+      <h2 class="section-title">{{ 'admin.users_title' | T }}</h2>
+      <span class="section-count">{{ filteredUsers.length }}</span>
     </div>
 
     <div class="users-toolbar">
       <div class="search-input-wrap">
         <span class="search-icon">🔍</span>
-        <input type="text" placeholder="Rechercher un utilisateur..." [(ngModel)]="userSearch" class="search-input">
+        <input type="text" [placeholder]="'admin.search_users' | T" [(ngModel)]="userSearch" class="search-input">
       </div>
     </div>
 
     @if (usersLoading()) {
       <div class="admin-loading">⏳ Chargement...</div>
     } @else if (filteredUsers.length === 0) {
-      <div class="empty-state"><span>👥</span><p>Aucun utilisateur trouvé</p></div>
+      <div class="empty-state"><span>👥</span><p>{{ 'admin.empty_users' | T }}</p></div>
     } @else {
       <div class="data-table card">
         <div class="data-table__head data-table__head--users">
-          <span>Utilisateur</span>
-          <span>Ville</span>
-          <span>Annonces</span>
-          <span>Rôle</span>
-          <span>Actions</span>
+          <span>{{ 'admin.tab_users' | T }}</span>
+          <span>{{ 'admin.col_city' | T }}</span>
+          <span>{{ 'admin.col_listings' | T }}</span>
+          <span>{{ 'admin.col_role' | T }}</span>
+          <span>{{ 'admin.col_actions' | T }}</span>
         </div>
         @for (user of filteredUsers; track user.id) {
           <div class="data-table__row data-table__row--users">
@@ -306,7 +306,7 @@
   <!-- ══════════════ REVENUE ══════════════ -->
   @if (tab() === 'revenue') {
     <div class="section-header">
-      <h2 class="section-title">Revenus & Umsatz</h2>
+      <h2 class="section-title">{{ 'admin.revenue_title' | T }}</h2>
     </div>
 
     <!-- Revenue KPIs -->
@@ -314,26 +314,26 @@
       <div class="kpi-card kpi-card--gold">
         <div class="kpi-card__icon">💰</div>
         <div class="kpi-card__value">{{ formatPrice(stats.premiumRevenue) }}</div>
-        <div class="kpi-card__label">Revenus totaux Premium</div>
-        <div class="kpi-card__sub">{{ stats.premium }} annonces × 99 MAD</div>
+        <div class="kpi-card__label">{{ 'admin.revenue_total' | T }}</div>
+        <div class="kpi-card__sub">{{ stats.premium }} × 99 MAD</div>
       </div>
       <div class="kpi-card kpi-card--primary">
         <div class="kpi-card__icon">⭐</div>
         <div class="kpi-card__value">{{ stats.premium }}</div>
-        <div class="kpi-card__label">Annonces Premium actives</div>
-        <div class="kpi-card__sub">{{ stats.total > 0 ? ((stats.premium / stats.total) * 100).toFixed(1) : 0 }}% du total</div>
+        <div class="kpi-card__label">{{ 'admin.revenue_active' | T }}</div>
+        <div class="kpi-card__sub">{{ stats.total > 0 ? ((stats.premium / stats.total) * 100).toFixed(1) : 0 }}{{ 'admin.revenue_pct' | T }}</div>
       </div>
       <div class="kpi-card kpi-card--success">
         <div class="kpi-card__icon">📈</div>
         <div class="kpi-card__value">{{ formatPrice(stats.premiumRevenue / 12) }}</div>
-        <div class="kpi-card__label">Revenu mensuel moyen</div>
-        <div class="kpi-card__sub">Sur 12 mois</div>
+        <div class="kpi-card__label">{{ 'admin.revenue_monthly_avg' | T }}</div>
+        <div class="kpi-card__sub">{{ 'admin.revenue_12m' | T }}</div>
       </div>
     </div>
 
     <!-- Revenue chart -->
     <div class="card chart-card chart-card--wide">
-      <h3 class="chart-title">💰 Revenus Premium par mois (MAD)</h3>
+      <h3 class="chart-title">{{ 'admin.revenue_chart' | T }}</h3>
       <div class="bar-chart bar-chart--revenue">
         @for (val of revenueMonthly; track $index) {
           <div class="bar-chart__col">
@@ -358,7 +358,7 @@
       } @else {
         <div class="data-table">
           <div class="data-table__head">
-            <span>Annonce</span><span>Vendeur</span><span>Prix</span><span>Revenu</span>
+            <span>{{ 'admin.col_listing' | T }}</span><span>{{ 'admin.col_seller' | T }}</span><span>{{ 'admin.col_price' | T }}</span><span>{{ 'admin.tab_revenue' | T }}</span>
           </div>
           @for (listing of allListings; track listing.id) {
             @if (listing.isPremium) {
