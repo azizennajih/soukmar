@@ -1,17 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ListingService } from '../../services/listing.service';
+import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing } from '../../models/listing.model';
+import { firstValueFrom } from 'rxjs';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent],
+  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, TranslatePipe],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
   categories = CATEGORIES;
@@ -20,6 +25,7 @@ export class HomeComponent implements OnInit {
   latest: Listing[] = [];
   searchQuery = '';
   selectedCity = '';
+  favoriteIds = new Set<string>();
 
   stats = [
     { label: 'Annonces actives', value: '50K+' },
@@ -35,15 +41,37 @@ export class HomeComponent implements OnInit {
     { icon: '📈', title: 'Boostez vos ventes', desc: 'Options premium pour maximiser la visibilité', bg: '#f3e8ff', color: '#7e22ce' },
   ];
 
-  constructor(private listingService: ListingService, private router: Router) {}
+  constructor(
+    private listingService: ListingService,
+    private api: ApiService,
+    private auth: AuthService,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.featured = this.listingService.getFeatured();
-    this.latest   = this.listingService.getLatest(8);
+    this.cdr.markForCheck();
+    this.listingService.getAll({ limit: '20' }).subscribe(res => {
+      this.featured = res.listings.filter(l => l.isFeatured);
+      this.latest = res.listings.slice(0, 8);
+      this.cdr.markForCheck();
+    });
+    if (this.auth.isLoggedIn) this.loadFavorites();
+  }
+
+  async loadFavorites() {
+    try {
+      const favs = await firstValueFrom(this.api.get<Listing[]>('/favorites'));
+      this.favoriteIds = new Set(favs.map(f => f.id));
+    } catch { /* silently ignore */ }
+  }
+
+  isFav(listing: Listing): boolean {
+    return this.favoriteIds.has(listing.id);
   }
 
   search() {
-    const params: any = {};
+    const params: Record<string, string> = {};
     if (this.searchQuery.trim()) params['q'] = this.searchQuery;
     if (this.selectedCity) params['ville'] = this.selectedCity;
     this.router.navigate(['/annonces'], { queryParams: params });

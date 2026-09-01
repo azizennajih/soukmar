@@ -1,0 +1,73 @@
+<div class="profil container fade-in">
+  @if (loading) {
+    <div class="profil__loading">{{ 'profil.loading' | T }}</div>
+  } @else if (profile) {
+    <div class="profil__layout">
+
+      <!-- Left: Avatar + info -->
+      <div class="card profil__sidebar">
+        <div class="profil__avatar-wrap">
+          @if (profile.image) {
+            <img [src]="profile.image" [alt]="profile.name" class="profil__avatar-img" />
+          } @else {
+            <div class="profil__avatar-initials">{{ initials }}</div>
+          }
+          <label class="profil__avatar-upload" [class.loading]="uploadingImage()" title="Changer la photo">
+            @if (uploadingImage()) {
+              <span class="profil__spinner"></span>
+            } @else {
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            }
+            <input type="file" accept="image/*" (change)="onImageChange($event)" style="display:none" />
+          </label>
+        </div>
+
+        <div class="profil__sidebar-name">{{ profile.name }}</div>
+        <div class="profil__sidebar-email">{{ profile.email }}</div>
+        <div class="profil__sidebar-since">{{ 'profil.member_since' | T }} {{ memberSince }}</div>
+
+        <div class="profil__sidebar-badge" [class.profil__sidebar-badge--admin]="profile.role === 'ADMIN'">
+          {{ profile.role === 'ADMIN' ? ('profil.role_admin' | T) : profile.role === 'MODERATOR' ? ('profil.role_mod' | T) : ('profil.role_user' | T) }}
+        </div>
+      </div>
+
+      <!-- Right: Edit form -->
+      <div class="card profil__form-card">
+        <h2 class="profil__form-title">{{ 'profil.edit_title' | T }}</h2>
+
+        @if (successMsg) {
+          <div class="profil__alert profil__alert--success">✅ {{ successMsg }}</div>
+        }
+        @if (errorMsg) {
+          <div class="profil__alert profil__alert--error">❌ {{ errorMsg }}</div>
+        }
+
+        <form (ngSubmit)="saveProfile()" class="profil__form">
+          <div class="form-group">
+            <label class="form-label">{{ 'profil.name' | T }} *</label>
+            <input type="text" [(ngModel)]="form.name" name="name" class="form-input" [placeholder]="'profil.name' | T" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" [value]="profile.email" class="form-input form-input--disabled" disabled />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ 'profil.phone' | T }}</label>
+            <input type="tel" [(ngModel)]="form.phone" name="phone" class="form-input" placeholder="+212 6xx xxx xxx" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ 'profil.city' | T }}</label>
+            <input type="text" [(ngModel)]="form.city" name="city" class="form-input" [placeholder]="'profil.city' | T" />
+          </div>
+
+          <button type="submit" class="btn-primary profil__save-btn" [disabled]="saving()">
+            @if (saving()) { {{ 'profil.saving' | T }} } @else { {{ 'profil.save' | T }} }
+          </button>
+        </form>
+      </div>
+    </div>
+  }
+</div>

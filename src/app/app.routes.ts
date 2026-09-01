@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   {
@@ -30,7 +31,16 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/mes-annonces/mes-annonces.component').then(m => m.MesAnnoncesComponent)
   },
   {
+    path: 'chat',
+    loadComponent: () => import('./pages/chat/chat.component').then(m => m.ChatComponent)
+  },
+  {
+    path: 'profil',
+    loadComponent: () => import('./pages/profil/profil.component').then(m => m.ProfilComponent)
+  },
+  {
     path: 'admin',
+    canActivate: [adminGuard],
     loadComponent: () => import('./pages/admin/admin.component').then(m => m.AdminComponent)
   },
   {

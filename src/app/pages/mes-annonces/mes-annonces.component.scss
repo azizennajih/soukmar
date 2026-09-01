@@ -4,7 +4,7 @@
   &__header {
     display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 2rem;
-    h1 { font-size: 1.75rem; font-weight: 900; color: #0f172a; }
+    h1 { font-size: 1.6rem; font-weight: 800; color: #111827; letter-spacing: -.02em; }
     p  { font-size: .875rem; color: #64748b; margin-top: .2rem; }
   }
 
@@ -46,7 +46,7 @@
     font-size: .8rem; color: #64748b;
   }
 
-  &__price { font-weight: 800; color: #e63946; font-size: .9rem; }
+  &__price { font-weight: 600; color: #111827; font-size: .9rem; }
 
   &__actions { display: flex; gap: .4rem; flex-shrink: 0; }
 }

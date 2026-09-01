@@ -5,7 +5,7 @@
         <div class="footer__logo-icon">S</div>
         <span>Souk<em>Mar</em></span>
       </a>
-      <p>La première plateforme de petites annonces au Maroc. Simple, rapide et sécurisée.</p>
+      <p>{{ 'footer.tagline' | T }}</p>
       <div class="footer__social">
         <a href="#" aria-label="Facebook">f</a>
         <a href="#" aria-label="Instagram">ig</a>
@@ -14,26 +14,23 @@
     </div>
 
     <div class="footer__col">
-      <h4>Catégories</h4>
+      <h4>{{ 'footer.categories' | T }}</h4>
       <ul>
-        <li><a routerLink="/annonces" [queryParams]="{categorie:'VEHICLES'}">Véhicules</a></li>
-        <li><a routerLink="/annonces" [queryParams]="{categorie:'REAL_ESTATE'}">Immobilier</a></li>
-        <li><a routerLink="/annonces" [queryParams]="{categorie:'JOBS'}">Emploi</a></li>
-        <li><a routerLink="/annonces" [queryParams]="{categorie:'ELECTRONICS'}">Électronique</a></li>
-        <li><a routerLink="/annonces" [queryParams]="{categorie:'FASHION'}">Mode</a></li>
-        <li><a routerLink="/annonces" [queryParams]="{categorie:'SERVICES'}">Services</a></li>
+        @for (cat of categories; track cat.value) {
+          <li><a routerLink="/annonces" [queryParams]="{categorie: cat.value}">{{ ('cats.' + cat.value) | T }}</a></li>
+        }
       </ul>
     </div>
 
     <div class="footer__col">
       <h4>SoukMar</h4>
       <ul>
-        <li><a routerLink="/">À propos</a></li>
-        <li><a routerLink="/">Comment ça marche</a></li>
-        <li><a routerLink="/premium">Annonces premium</a></li>
-        <li><a routerLink="/">Sécurité</a></li>
-        <li><a routerLink="/">Blog</a></li>
-        <li><a routerLink="/">Contactez-nous</a></li>
+        <li><a routerLink="/">{{ 'footer.about' | T }}</a></li>
+        <li><a routerLink="/">{{ 'footer.how' | T }}</a></li>
+        <li><a routerLink="/premium">{{ 'footer.premium' | T }}</a></li>
+        <li><a routerLink="/">{{ 'footer.safety' | T }}</a></li>
+        <li><a routerLink="/">{{ 'footer.blog' | T }}</a></li>
+        <li><a routerLink="/">{{ 'footer.contact_us' | T }}</a></li>
       </ul>
     </div>
 
@@ -42,7 +39,7 @@
       <a href="mailto:contact@soukmar.ma" class="footer__contact-link">📧 contact&#64;soukmar.ma</a>
       <a href="tel:+212522000000" class="footer__contact-link">📞 +212 5 22 00 00 00</a>
       <div class="footer__apps">
-        <p>Téléchargez l'application</p>
+        <p>{{ 'footer.download' | T }}</p>
         <div class="footer__app-btns">
           <button>App Store</button>
           <button>Google Play</button>
@@ -53,11 +50,11 @@
 
   <div class="footer__bottom">
     <div class="container footer__bottom-inner">
-      <span>© {{ year }} SoukMar. Tous droits réservés.</span>
+      <span>© {{ year }} SoukMar. {{ 'footer.rights' | T }}</span>
       <div class="footer__bottom-links">
-        <a routerLink="/">CGU</a>
-        <a routerLink="/">Confidentialité</a>
-        <a routerLink="/">Cookies</a>
+        <a routerLink="/">{{ 'footer.cgu' | T }}</a>
+        <a routerLink="/">{{ 'footer.privacy' | T }}</a>
+        <a routerLink="/">{{ 'footer.cookies' | T }}</a>
       </div>
     </div>
   </div>

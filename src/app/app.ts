@@ -14,7 +14,8 @@ import { FooterComponent } from './components/footer/footer.component';
     <app-footer />
   `,
   styles: [`
-    .main-content { min-height: calc(100vh - 140px); }
+    :host { display: flex; flex-direction: column; min-height: 100vh; }
+    .main-content { flex: 1; }
   `]
 })
 export class App {}

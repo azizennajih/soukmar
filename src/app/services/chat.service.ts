@@ -1,0 +1,103 @@
+import { Injectable } from '@angular/core';
+import { io, Socket } from 'socket.io-client';
+import { BehaviorSubject } from 'rxjs';
+import { ApiService } from './api.service';
+import { firstValueFrom } from 'rxjs';
+
+export interface ChatMessage {
+  id: string;
+  content: string;
+  type: 'TEXT' | 'OFFER' | 'SYSTEM';
+  offerAmount?: number;
+  offerStatus?: 'PENDING' | 'ACCEPTED' | 'REJECTED' | 'COUNTERED' | 'CANCELLED';
+  senderId: string;
+  receiverId: string;
+  conversationId?: string;
+  createdAt: string;
+  sender?: { id: string; name: string };
+}
+
+export interface Conversation {
+  id: string;
+  listingId: string;
+  buyerId: string;
+  listing: { id: string; title: string; price?: number; currency: string; images: string[]; userId: string; status: string; user: { id: string; name: string } };
+  buyer: { id: string; name: string };
+  messages: ChatMessage[];
+  updatedAt: string;
+}
+
+@Injectable({ providedIn: 'root' })
+export class ChatService {
+  private socket: Socket | null = null;
+  messages$ = new BehaviorSubject<ChatMessage[]>([]);
+  typing$ = new BehaviorSubject<boolean>(false);
+  listingStatus$ = new BehaviorSubject<{ listingId: string; status: string } | null>(null);
+
+  constructor(private api: ApiService) {}
+
+  connect(token: string) {
+    if (this.socket?.connected) return;
+    this.socket = io('http://127.0.0.1:3000', { auth: { token } });
+    this.socket.on('connect', () => console.log('Socket connected'));
+    this.socket.on('new_message', (msg: ChatMessage) => {
+      this.messages$.next([...this.messages$.getValue(), msg]);
+    });
+    this.socket.on('offer_updated', (updated: ChatMessage) => {
+      const msgs = this.messages$.getValue().map(m => m.id === updated.id ? updated : m);
+      this.messages$.next(msgs);
+    });
+    this.socket.on('user_typing', (data: { isTyping: boolean }) => {
+      this.typing$.next(data.isTyping);
+    });
+    this.socket.on('listing_status_changed', (data: { listingId: string; status: string }) => {
+      this.listingStatus$.next(data);
+    });
+  }
+
+  disconnect() {
+    this.socket?.disconnect();
+    this.socket = null;
+    this.messages$.next([]);
+  }
+
+  joinConversation(conversationId: string) {
+    this.socket?.emit('join_conversation', conversationId);
+  }
+
+  sendMessage(conversationId: string, receiverId: string, listingId: string, content: string) {
+    this.socket?.emit('send_message', { conversationId, receiverId, listingId, content });
+  }
+
+  sendOffer(conversationId: string, receiverId: string, listingId: string, amount: number) {
+    this.socket?.emit('send_offer', { conversationId, receiverId, listingId, amount });
+  }
+
+  respondOffer(messageId: string, conversationId: string, status: 'ACCEPTED' | 'REJECTED') {
+    this.socket?.emit('respond_offer', { messageId, conversationId, status });
+  }
+
+  cancelOffer(messageId: string, conversationId: string, listingId: string) {
+    this.socket?.emit('cancel_offer', { messageId, conversationId, listingId });
+  }
+
+  cancelReservation(conversationId: string, listingId: string) {
+    this.socket?.emit('cancel_reservation', { conversationId, listingId });
+  }
+
+  emitTyping(conversationId: string, isTyping: boolean) {
+    this.socket?.emit('typing', { conversationId, isTyping });
+  }
+
+  getConversations(): Promise<Conversation[]> {
+    return firstValueFrom(this.api.get<Conversation[]>('/chat/conversations'));
+  }
+
+  getOrCreateConversation(listingId: string): Promise<Conversation> {
+    return firstValueFrom(this.api.post<Conversation>('/chat/conversations', { listingId }));
+  }
+
+  getMessages(conversationId: string): Promise<ChatMessage[]> {
+    return firstValueFrom(this.api.get<ChatMessage[]>(`/chat/conversations/${conversationId}/messages`));
+  }
+}

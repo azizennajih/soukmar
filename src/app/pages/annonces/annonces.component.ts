@@ -1,28 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ListingService } from '../../services/listing.service';
+import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing } from '../../models/listing.model';
+import { firstValueFrom } from 'rxjs';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-annonces',
-  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent],
+  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, TranslatePipe],
   templateUrl: './annonces.component.html',
-  styleUrl: './annonces.component.scss'
+  styleUrl: './annonces.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AnnoncesComponent implements OnInit {
   categories = CATEGORIES;
   cities = MOROCCO_CITIES;
   listings: Listing[] = [];
+  filterOpen = false;
+  total = 0;
+  loading = false;
+  favoriteIds = new Set<string>();
 
   filters = { q: '', categorie: '', ville: '', minPrix: '', maxPrix: '', tri: '' };
 
   constructor(
     private listingService: ListingService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private api: ApiService,
+    private auth: AuthService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -35,30 +47,51 @@ export class AnnoncesComponent implements OnInit {
       this.filters.tri       = params['tri']       || '';
       this.loadListings();
     });
+    if (this.auth.isLoggedIn) this.loadFavorites();
+  }
+
+  async loadFavorites() {
+    try {
+      const favs = await firstValueFrom(this.api.get<Listing[]>('/favorites'));
+      this.favoriteIds = new Set(favs.map(f => f.id));
+    } catch { /* silently ignore */ }
   }
 
   loadListings() {
-    this.listings = this.listingService.getAll({
-      q:        this.filters.q        || undefined,
+    this.loading = true;
+    this.listingService.getAll({
+      q:        this.filters.q         || undefined,
       category: this.filters.categorie || undefined,
-      city:     this.filters.ville    || undefined,
-      minPrice: this.filters.minPrix  ? +this.filters.minPrix : undefined,
-      maxPrice: this.filters.maxPrix  ? +this.filters.maxPrix : undefined,
+      city:     this.filters.ville     || undefined,
+      minPrice: this.filters.minPrix   || undefined,
+      maxPrice: this.filters.maxPrix   || undefined,
+    }).subscribe({
+      next: res => {
+        this.listings = res.listings;
+        this.total = res.total;
+        if (this.filters.tri === 'prix_asc')
+          this.listings.sort((a, b) => (a.price ?? 0) - (b.price ?? 0));
+        else if (this.filters.tri === 'prix_desc')
+          this.listings.sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
+        this.loading = false;
+        this.cdr.markForCheck();
+      },
+      error: () => { this.loading = false; this.cdr.markForCheck(); }
     });
-    if (this.filters.tri === 'prix_asc')
-      this.listings.sort((a, b) => (a.price ?? 0) - (b.price ?? 0));
-    else if (this.filters.tri === 'prix_desc')
-      this.listings.sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
+  }
+
+  isFav(listing: Listing): boolean {
+    return this.favoriteIds.has(listing.id);
   }
 
   applyFilters() {
-    const qp: any = {};
-    if (this.filters.q)        qp['q']         = this.filters.q;
+    const qp: Record<string, string> = {};
+    if (this.filters.q)         qp['q']         = this.filters.q;
     if (this.filters.categorie) qp['categorie'] = this.filters.categorie;
-    if (this.filters.ville)    qp['ville']     = this.filters.ville;
-    if (this.filters.minPrix)  qp['minPrix']   = this.filters.minPrix;
-    if (this.filters.maxPrix)  qp['maxPrix']   = this.filters.maxPrix;
-    if (this.filters.tri)      qp['tri']       = this.filters.tri;
+    if (this.filters.ville)     qp['ville']     = this.filters.ville;
+    if (this.filters.minPrix)   qp['minPrix']   = this.filters.minPrix;
+    if (this.filters.maxPrix)   qp['maxPrix']   = this.filters.maxPrix;
+    if (this.filters.tri)       qp['tri']       = this.filters.tri;
     this.router.navigate([], { queryParams: qp });
   }
 

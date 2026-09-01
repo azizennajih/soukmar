@@ -1,24 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ListingService } from '../../services/listing.service';
+import { UploadService } from '../../services/upload.service';
+import { I18nService } from '../../services/i18n.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CATEGORIES, MOROCCO_CITIES, Category } from '../../models/listing.model';
 
 @Component({
   selector: 'app-deposer-annonce',
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe],
   templateUrl: './deposer-annonce.component.html',
   styleUrl: './deposer-annonce.component.scss'
 })
 export class DeposerAnnonceComponent {
+  i18n = inject(I18nService);
   categories = CATEGORIES;
   cities = MOROCCO_CITIES;
-  steps = ['Catégorie', 'Détails', 'Photos', 'Contact'];
+
+  get steps(): string[] {
+    const t = (k: string) => this.i18n.t(k);
+    return [t('deposer.step_category'), t('deposer.step_details'), t('deposer.step_photos'), t('deposer.step_contact')];
+  }
   step = 0;
   loading = false;
+  uploading = false;
   success = false;
+  error = '';
+
+  previews: string[] = [];
+  selectedFiles: File[] = [];
 
   form = {
     category: '' as Category | '',
@@ -35,6 +48,7 @@ export class DeposerAnnonceComponent {
   constructor(
     public auth: AuthService,
     private ls: ListingService,
+    private uploadService: UploadService,
     private router: Router
   ) {}
 
@@ -53,10 +67,42 @@ export class DeposerAnnonceComponent {
     return this.categories.find(c => c.value === this.form.category);
   }
 
-  publish() {
+  onFilesSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files) return;
+    const newFiles = Array.from(input.files).slice(0, 10 - this.selectedFiles.length);
+    newFiles.forEach(file => {
+      this.selectedFiles.push(file);
+      const reader = new FileReader();
+      reader.onload = e => this.previews.push(e.target?.result as string);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  removeImage(index: number) {
+    this.selectedFiles.splice(index, 1);
+    this.previews.splice(index, 1);
+    this.form.images.splice(index, 1);
+  }
+
+  async publish() {
+    if (!this.auth.isLoggedIn) { this.router.navigate(['/auth/login']); return; }
     this.loading = true;
-    setTimeout(() => {
-      const listing = this.ls.create({
+    this.error = '';
+
+    try {
+      // Upload images to Cloudinary first
+      if (this.selectedFiles.length > 0) {
+        this.uploading = true;
+        const result = await new Promise<{ urls: string[] }>((resolve, reject) => {
+          this.uploadService.uploadImages(this.selectedFiles).subscribe({ next: resolve, error: reject });
+        });
+        this.form.images = result.urls;
+        this.uploading = false;
+      }
+
+      // Create listing with image URLs
+      this.ls.create({
         title: this.form.title,
         description: this.form.description,
         price: this.form.price ? +this.form.price : undefined,
@@ -64,22 +110,23 @@ export class DeposerAnnonceComponent {
         category: this.form.category as Category,
         city: this.form.city,
         images: this.form.images,
-        status: 'ACTIVE',
-        isPremium: false,
-        isFeatured: false,
         phone: this.form.phone,
         whatsapp: this.form.whatsapp,
-        userId: this.auth.currentUser()?.id || 'guest',
-        user: this.auth.currentUser() ? {
-          id: this.auth.currentUser()!.id,
-          name: this.auth.currentUser()!.name,
-          email: this.auth.currentUser()!.email,
-          createdAt: new Date(),
-        } : undefined,
+      }).subscribe({
+        next: listing => {
+          this.loading = false;
+          this.success = true;
+          setTimeout(() => this.router.navigate(['/annonces', listing.id]), 2000);
+        },
+        error: () => {
+          this.loading = false;
+          this.error = this.i18n.t('deposer.error_publish');
+        }
       });
+    } catch {
+      this.uploading = false;
       this.loading = false;
-      this.success = true;
-      setTimeout(() => this.router.navigate(['/annonces', listing.id]), 2000);
-    }, 800);
+      this.error = this.i18n.t('deposer.error_upload');
+    }
   }
 }
