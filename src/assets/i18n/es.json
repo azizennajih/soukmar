@@ -186,7 +186,8 @@
     "edit": "Editar",
     "close": "Cerrar",
     "yes": "Sí",
-    "no": "No"
+    "no": "No",
+    "no_results": "Sin resultados"
   },
   "premium": {
     "badge": "✨ Impulsa tus anuncios",

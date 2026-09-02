@@ -399,7 +399,8 @@
     "edit": "Modifier",
     "close": "Fermer",
     "yes": "Oui",
-    "no": "Non"
+    "no": "Non",
+    "no_results": "Aucun résultat"
   },
   "premium": {
     "badge": "✨ Boostez vos annonces",

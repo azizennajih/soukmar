@@ -186,7 +186,8 @@
     "edit": "Bearbeiten",
     "close": "Schließen",
     "yes": "Ja",
-    "no": "Nein"
+    "no": "Nein",
+    "no_results": "Keine Ergebnisse"
   },
   "premium": {
     "badge": "✨ Anzeigen boosten",

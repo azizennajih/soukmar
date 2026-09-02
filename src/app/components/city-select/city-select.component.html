@@ -1,0 +1,35 @@
+<div class="city-select">
+  <div class="city-select__field" [class.city-select__field--open]="open()">
+    <svg class="city-select__icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    <input
+      type="text"
+      [value]="displayValue"
+      [placeholder]="placeholder"
+      (focus)="onFocus()"
+      (input)="onInput($any($event.target).value)"
+      (keydown)="onKeydown($event)"
+      autocomplete="off"
+    />
+    @if (value) {
+      <button type="button" class="city-select__clear" (click)="clear($event)" aria-label="Effacer">✕</button>
+    }
+  </div>
+
+  @if (open()) {
+    <div class="city-select__panel">
+      @if (filtered().length) {
+        @for (city of filtered(); track city; let i = $index) {
+          <button
+            type="button"
+            class="city-select__option"
+            [class.city-select__option--active]="i === activeIndex()"
+            [class.city-select__option--selected]="city === value"
+            (mousedown)="$event.preventDefault(); select(city)"
+          >{{ city }}</button>
+        }
+      } @else {
+        <div class="city-select__empty">{{ 'common.no_results' | T }}</div>
+      }
+    </div>
+  }
+</div>

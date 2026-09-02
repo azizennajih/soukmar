@@ -104,18 +104,7 @@
       <!-- City -->
       <div class="sidebar__section">
         <label class="sidebar__label">{{ 'annonces.city' | T }}</label>
-        <input
-          type="text"
-          [(ngModel)]="filters.ville"
-          list="city-list"
-          [placeholder]="'nav.city_placeholder' | T"
-          class="sidebar__select"
-        />
-        <datalist id="city-list">
-          @for (city of cities; track city) {
-            <option [value]="city">{{ city }}</option>
-          }
-        </datalist>
+        <app-city-select [cities]="cities" [(value)]="filters.ville" [placeholder]="'nav.city_placeholder' | T" />
       </div>
 
       <!-- Price -->

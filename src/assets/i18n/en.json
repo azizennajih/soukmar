@@ -365,7 +365,8 @@
     "edit": "Edit",
     "close": "Close",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "no_results": "No results"
   },
   "subcats": {
     "AUTO": "Car",
