@@ -9,6 +9,7 @@
     "messages": "Messaggi",
     "profile": "Il mio profilo",
     "my_listings": "I miei annunci",
+    "my_favorites": "I miei preferiti",
     "admin": "Dashboard Admin",
     "logout": "Esci",
     "register": "Registrati",
@@ -279,6 +280,12 @@
     "delete": "Elimina",
     "see": "Visualizza",
     "confirm_delete": "Eliminare questo annuncio?"
+  },
+  "mes_favoris": {
+    "title": "I miei preferiti",
+    "empty": "Nessun preferito per ora",
+    "empty_sub": "Tocca il cuore su un annuncio per aggiungerlo qui.",
+    "browse_btn": "Sfoglia gli annunci"
   },
   "profil": {
     "loading": "Caricamento...",

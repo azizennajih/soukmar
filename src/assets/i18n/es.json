@@ -9,6 +9,7 @@
     "messages": "Mensajes",
     "profile": "Mi perfil",
     "my_listings": "Mis anuncios",
+    "my_favorites": "Mis favoritos",
     "admin": "Panel de administración",
     "logout": "Cerrar sesión",
     "register": "Registrarse",
@@ -279,6 +280,12 @@
     "delete": "Eliminar",
     "see": "Ver",
     "confirm_delete": "¿Eliminar este anuncio?"
+  },
+  "mes_favoris": {
+    "title": "Mis favoritos",
+    "empty": "Aún no tienes favoritos",
+    "empty_sub": "Toca el corazón de un anuncio para añadirlo aquí.",
+    "browse_btn": "Explorar anuncios"
   },
   "profil": {
     "loading": "Cargando...",

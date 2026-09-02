@@ -9,6 +9,7 @@
     "messages": "Messages",
     "profile": "My profile",
     "my_listings": "My listings",
+    "my_favorites": "My favorites",
     "admin": "Admin Dashboard",
     "logout": "Sign out",
     "register": "Sign up",
@@ -311,6 +312,12 @@
     "delete": "Delete",
     "see": "View",
     "confirm_delete": "Delete this listing?"
+  },
+  "mes_favoris": {
+    "title": "My favorites",
+    "empty": "No favorites yet",
+    "empty_sub": "Tap the heart on a listing to add it here.",
+    "browse_btn": "Browse listings"
   },
   "profil": {
     "loading": "Loading...",

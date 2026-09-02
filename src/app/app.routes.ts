@@ -31,6 +31,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/mes-annonces/mes-annonces.component').then(m => m.MesAnnoncesComponent)
   },
   {
+    path: 'mes-favoris',
+    loadComponent: () => import('./pages/mes-favoris/mes-favoris.component').then(m => m.MesFavorisComponent)
+  },
+  {
     path: 'chat',
     loadComponent: () => import('./pages/chat/chat.component').then(m => m.ChatComponent)
   },

@@ -1,0 +1,26 @@
+<div class="mes-favoris container fade-in">
+
+  <div class="mes-favoris__header">
+    <div>
+      <h1>{{ 'mes_favoris.title' | T }}</h1>
+      <p>{{ listings.length }}</p>
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="mes-favoris__loading">…</div>
+  } @else if (listings.length === 0) {
+    <div class="empty-state">
+      <span>🤍</span>
+      <p>{{ 'mes_favoris.empty' | T }}</p>
+      <small>{{ 'mes_favoris.empty_sub' | T }}</small>
+      <a routerLink="/annonces" class="btn-primary">{{ 'mes_favoris.browse_btn' | T }}</a>
+    </div>
+  } @else {
+    <div class="grid-3">
+      @for (listing of listings; track listing.id) {
+        <app-listing-card [listing]="listing" [initialFav]="true" />
+      }
+    </div>
+  }
+</div>

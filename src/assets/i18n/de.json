@@ -9,6 +9,7 @@
     "messages": "Nachrichten",
     "profile": "Mein Profil",
     "my_listings": "Meine Anzeigen",
+    "my_favorites": "Meine Favoriten",
     "admin": "Admin-Dashboard",
     "logout": "Abmelden",
     "register": "Registrieren",
@@ -279,6 +280,12 @@
     "delete": "Löschen",
     "see": "Anzeigen",
     "confirm_delete": "Diese Anzeige löschen?"
+  },
+  "mes_favoris": {
+    "title": "Meine Favoriten",
+    "empty": "Noch keine Favoriten",
+    "empty_sub": "Tippe auf das Herz bei einer Anzeige, um sie hier zu speichern.",
+    "browse_btn": "Anzeigen durchstöbern"
   },
   "profil": {
     "loading": "Lädt...",
