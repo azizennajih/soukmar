@@ -366,6 +366,11 @@
       padding: .5rem 1.25rem;
       scrollbar-width: none;
       &::-webkit-scrollbar { display: none; }
+      // Fades the edges instead of hard-clipping the last category when the
+      // row (now 11 categories) is wider than the viewport — signals that
+      // it's scrollable rather than looking cut off/broken.
+      mask-image: linear-gradient(to right, transparent, black 1.25rem, black calc(100% - 1.25rem), transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 1.25rem, black calc(100% - 1.25rem), transparent);
     }
   }
 
