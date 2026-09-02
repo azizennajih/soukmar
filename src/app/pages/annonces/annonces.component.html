@@ -92,6 +92,9 @@
                     <input type="number" [ngModel]="attrFilters['attr_' + def.code + '_max']" (ngModelChange)="setRangeFilter(def.code, 'max', $event)" [placeholder]="'annonces.max' | T" />
                   </div>
                 }
+                @case ('TEXT') {
+                  <input type="text" class="sidebar__select" [ngModel]="attrFilters['attr_' + def.code]" (ngModelChange)="setTextFilter(def.code, $event)" />
+                }
               }
             </div>
           }

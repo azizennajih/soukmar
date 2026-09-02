@@ -147,6 +147,12 @@ export class AnnoncesComponent implements OnInit {
     else delete this.attrFilters[key];
   }
 
+  setTextFilter(code: string, value: string) {
+    const key = `attr_${code}`;
+    if (value) this.attrFilters[key] = value;
+    else delete this.attrFilters[key];
+  }
+
   applyFilters() {
     const qp: Record<string, string> = {};
     if (this.filters.q)             qp['q']             = this.filters.q;
