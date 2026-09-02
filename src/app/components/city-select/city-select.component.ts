@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, Output, EventEmitter, inject, signal, computed } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, Output, EventEmitter, ViewChild, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../pipes/translate.pipe';
@@ -7,6 +7,12 @@ const DIACRITICS = /[̀-ͯ]/g;
 
 function normalize(s: string): string {
   return s.normalize('NFD').replace(DIACRITICS, '').toLowerCase();
+}
+
+interface PanelStyle {
+  top: string;
+  left: string;
+  width: string;
 }
 
 @Component({
@@ -21,11 +27,14 @@ export class CitySelectComponent {
   @Input() value = '';
   @Output() valueChange = new EventEmitter<string>();
 
+  @ViewChild('fieldWrap') fieldWrap!: ElementRef<HTMLElement>;
+
   private host = inject(ElementRef<HTMLElement>);
 
   open = signal(false);
   query = signal('');
   activeIndex = signal(-1);
+  panelStyle = signal<PanelStyle>({ top: '0px', left: '0px', width: '0px' });
 
   filtered = computed(() => {
     const q = normalize(this.query());
@@ -37,16 +46,26 @@ export class CitySelectComponent {
     return this.open() ? this.query() : this.value;
   }
 
+  private openPanel() {
+    const rect = this.fieldWrap.nativeElement.getBoundingClientRect();
+    this.panelStyle.set({
+      top: `${rect.bottom + 6}px`,
+      left: `${rect.left}px`,
+      width: `${rect.width}px`,
+    });
+    this.open.set(true);
+  }
+
   onFocus() {
     this.query.set('');
     this.activeIndex.set(-1);
-    this.open.set(true);
+    this.openPanel();
   }
 
   onInput(v: string) {
     this.query.set(v);
     this.activeIndex.set(-1);
-    if (!this.open()) this.open.set(true);
+    if (!this.open()) this.openPanel();
   }
 
   select(city: string) {
@@ -67,7 +86,7 @@ export class CitySelectComponent {
     const list = this.filtered();
     if (e.key === 'ArrowDown') {
       e.preventDefault();
-      if (!this.open()) { this.open.set(true); return; }
+      if (!this.open()) { this.openPanel(); return; }
       this.activeIndex.set(Math.min(this.activeIndex() + 1, list.length - 1));
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
@@ -89,5 +108,11 @@ export class CitySelectComponent {
       this.open.set(false);
       this.query.set('');
     }
+  }
+
+  @HostListener('window:scroll')
+  @HostListener('window:resize')
+  onViewportChange() {
+    if (this.open()) { this.open.set(false); this.query.set(''); }
   }
 }
