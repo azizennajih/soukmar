@@ -97,6 +97,21 @@
     white-space: pre-line;
   }
 
+  /* Specs */
+  &__specs { margin-top: 1.25rem; padding: 1.25rem; }
+
+  &__specs-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: .6rem 1.5rem;
+    @media (max-width: 640px) { grid-template-columns: 1fr; }
+  }
+
+  &__specs-row {
+    display: flex; justify-content: space-between; gap: .75rem;
+    padding: .5rem 0; border-bottom: 1px solid var(--border);
+    span { font-size: .82rem; color: var(--text-muted); }
+    strong { font-size: .85rem; color: var(--text); font-weight: 700; text-align: right; }
+  }
+
   /* Safety */
   &__safety {
     background: #eff6ff; border: 1px solid #bfdbfe;

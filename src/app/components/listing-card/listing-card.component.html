@@ -38,6 +38,9 @@
       <span class="listing-card__cat" [ngClass]="category?.color">
         {{ category?.icon }} {{ ('cats.' + listing.category) | T }}
       </span>
+      @if (highlightAttr) {
+        <span class="listing-card__attr">{{ highlightAttr.display }}</span>
+      }
     </div>
 
     <div class="listing-card__footer">

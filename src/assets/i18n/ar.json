@@ -51,7 +51,10 @@
     "empty": "لا توجد إعلانات",
     "empty_sub": "حاول تعديل الفلاتر",
     "reserved": "محجوز",
-    "mobile_filter": "الفلاتر"
+    "mobile_filter": "الفلاتر",
+    "subcategory": "الفئة الفرعية",
+    "all_subcats": "جميع الفئات الفرعية",
+    "condition": "الحالة"
   },
   "listing": {
     "loading": "جارٍ التحميل...",
@@ -84,7 +87,10 @@
     "details": "التفاصيل",
     "similar": "إعلانات مشابهة",
     "premium_badge": "مميز",
-    "negotiate": "السعر قابل للتفاوض"
+    "negotiate": "السعر قابل للتفاوض",
+    "specs_title": "المواصفات",
+    "condition_new": "جديد",
+    "condition_used": "مستعمل"
   },
   "chat": {
     "title": "الرسائل",
@@ -146,7 +152,10 @@
     "HOME_GARDEN": "منزل وحديقة",
     "FASHION": "أزياء",
     "SERVICES": "خدمات",
-    "OTHER": "أخرى"
+    "OTHER": "أخرى",
+    "BABY_KIDS": "طفل ورضيع",
+    "PETS": "حيوانات أليفة",
+    "SPORTS_LEISURE": "رياضة وترفيه"
   },
   "footer": {
     "tagline": "أول منصة إعلانات مبوبة في المغرب. بسيطة، سريعة وآمنة.",
@@ -300,7 +309,12 @@
     "uploading": "جارٍ الرفع...",
     "publishing": "جارٍ النشر...",
     "error_publish": "حدث خطأ. حاول مرة أخرى.",
-    "error_upload": "خطأ في رفع الصور."
+    "error_upload": "خطأ في رفع الصور.",
+    "step_subcategory": "الفئة الفرعية",
+    "subcat_title": "🗂️ اختر فئة فرعية",
+    "label_condition": "الحالة",
+    "condition_default": "اختر الحالة",
+    "summary_subcat": "الفئة الفرعية"
   },
   "mes_annonces": {
     "title": "إعلاناتي",
@@ -349,6 +363,8 @@
     "cancel": "إلغاء",
     "delete": "حذف",
     "edit": "تعديل",
-    "close": "إغلاق"
+    "close": "إغلاق",
+    "yes": "نعم",
+    "no": "لا"
   }
 }

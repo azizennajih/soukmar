@@ -30,6 +30,74 @@
         }
       </div>
 
+      <!-- Subcategory -->
+      @if (filters.categorie && subcategoryOptions.length) {
+        <div class="sidebar__section">
+          <label class="sidebar__label">{{ 'annonces.subcategory' | T }}</label>
+          <a
+            [routerLink]="['/annonces']"
+            [queryParams]="{categorie: filters.categorie, souscategorie: null, q: filters.q || null, ville: filters.ville || null}"
+            class="sidebar__cat-link"
+            [class.active]="!filters.souscategorie"
+          >{{ 'annonces.all_subcats' | T }}</a>
+          @for (sub of subcategoryOptions; track sub.id) {
+            <a
+              [routerLink]="['/annonces']"
+              [queryParams]="{categorie: filters.categorie, souscategorie: sub.id, q: filters.q || null, ville: filters.ville || null}"
+              class="sidebar__cat-link"
+              [class.active]="filters.souscategorie === sub.id"
+            >{{ ('subcats.' + sub.code) | T }}</a>
+          }
+        </div>
+      }
+
+      <!-- Condition -->
+      @if (filters.categorie) {
+        <div class="sidebar__section">
+          <label class="sidebar__label">{{ 'annonces.condition' | T }}</label>
+          <select [(ngModel)]="filters.condition" class="sidebar__select">
+            <option value="">{{ 'nav.all' | T }}</option>
+            <option value="NEW">{{ 'listing.condition_new' | T }}</option>
+            <option value="USED">{{ 'listing.condition_used' | T }}</option>
+          </select>
+        </div>
+      }
+
+      <!-- Dynamic attribute filters -->
+      @if (attributeFilterDefs.length) {
+        <div class="sidebar__section sidebar__attrs">
+          @for (def of attributeFilterDefs; track def.id) {
+            <div class="sidebar__attr-group">
+              <label class="sidebar__label">{{ ('attrs.' + def.code) | T }}</label>
+              @switch (def.type) {
+                @case ('SELECT') {
+                  <div class="sidebar__checkboxes">
+                    @for (opt of def.options; track opt) {
+                      <label class="sidebar__checkbox">
+                        <input type="checkbox" [checked]="isOptionChecked(def.code, opt)" (change)="selectOptionValue(def.code, opt, $any($event.target).checked)" />
+                        {{ ('attrs.opts.' + opt) | T }}
+                      </label>
+                    }
+                  </div>
+                }
+                @case ('BOOLEAN') {
+                  <label class="sidebar__checkbox">
+                    <input type="checkbox" [checked]="attrFilters['attr_' + def.code] === 'true'" (change)="setBoolFilter(def.code, $any($event.target).checked)" />
+                    {{ 'common.yes' | T }}
+                  </label>
+                }
+                @case ('NUMBER') {
+                  <div class="sidebar__price-row">
+                    <input type="number" [ngModel]="attrFilters['attr_' + def.code + '_min']" (ngModelChange)="setRangeFilter(def.code, 'min', $event)" [placeholder]="'annonces.min' | T" />
+                    <input type="number" [ngModel]="attrFilters['attr_' + def.code + '_max']" (ngModelChange)="setRangeFilter(def.code, 'max', $event)" [placeholder]="'annonces.max' | T" />
+                  </div>
+                }
+              }
+            </div>
+          }
+        </div>
+      }
+
       <!-- City -->
       <div class="sidebar__section">
         <label class="sidebar__label">{{ 'annonces.city' | T }}</label>

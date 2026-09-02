@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ListingService } from '../../services/listing.service';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
-import { Listing, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.model';
+import { Listing, ListingAttributeValue, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
@@ -80,6 +80,20 @@ export class AnnonceDetailComponent implements OnInit {
       : this.i18n.t('listing.negotiate');
   }
   get timeDisplay() { return this.listing ? timeAgo(this.listing.createdAt, this.i18n.lang()) : ''; }
+
+  get specAttrs(): ListingAttributeValue[] {
+    return [...(this.listing?.attributeValues ?? [])]
+      .filter(av => av.attributeDefinition)
+      .sort((a, b) => a.attributeDefinition!.sortOrder - b.attributeDefinition!.sortOrder);
+  }
+
+  formatAttrValue(av: ListingAttributeValue): string {
+    const def = av.attributeDefinition!;
+    if (def.type === 'SELECT') return this.i18n.t('attrs.opts.' + av.valueText);
+    if (def.type === 'BOOLEAN') return this.i18n.t(av.valueBoolean ? 'common.yes' : 'common.no');
+    if (def.type === 'NUMBER') return String(av.valueNumber);
+    return av.valueText ?? '';
+  }
 
   sendMessage() {
     if (!this.message.trim() || !this.listing) return;

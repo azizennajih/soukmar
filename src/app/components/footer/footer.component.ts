@@ -11,5 +11,5 @@ import { CATEGORIES } from '../../models/listing.model';
 })
 export class FooterComponent {
   year = new Date().getFullYear();
-  readonly categories = CATEGORIES.slice(0, 6);
+  readonly categories = CATEGORIES;
 }

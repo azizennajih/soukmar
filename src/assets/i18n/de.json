@@ -51,7 +51,10 @@
     "empty": "Keine Anzeigen gefunden",
     "empty_sub": "Versuchen Sie, Ihre Filter anzupassen",
     "reserved": "Reserviert",
-    "mobile_filter": "Filter"
+    "mobile_filter": "Filter",
+    "subcategory": "Unterkategorie",
+    "all_subcats": "Alle Unterkategorien",
+    "condition": "Zustand"
   },
   "listing": {
     "loading": "Lädt...",
@@ -84,7 +87,10 @@
     "details": "Details",
     "similar": "Ähnliche Anzeigen",
     "premium_badge": "Premium",
-    "negotiate": "Preis verhandelbar"
+    "negotiate": "Preis verhandelbar",
+    "specs_title": "Ausstattung",
+    "condition_new": "Neu",
+    "condition_used": "Gebraucht"
   },
   "chat": {
     "title": "Nachrichten",
@@ -146,7 +152,10 @@
     "HOME_GARDEN": "Haus & Garten",
     "FASHION": "Mode",
     "SERVICES": "Dienstleistungen",
-    "OTHER": "Sonstiges"
+    "OTHER": "Sonstiges",
+    "BABY_KIDS": "Baby & Kind",
+    "PETS": "Haustiere",
+    "SPORTS_LEISURE": "Sport & Freizeit"
   },
   "footer": {
     "tagline": "Marokkos erste Kleinanzeigen-Plattform. Einfach, schnell und sicher.",
@@ -175,7 +184,9 @@
     "cancel": "Abbrechen",
     "delete": "Löschen",
     "edit": "Bearbeiten",
-    "close": "Schließen"
+    "close": "Schließen",
+    "yes": "Ja",
+    "no": "Nein"
   },
   "premium": {
     "badge": "✨ Anzeigen boosten",
@@ -349,7 +360,12 @@
     "uploading": "Lädt hoch...",
     "publishing": "Veröffentlicht...",
     "error_publish": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
-    "error_upload": "Fehler beim Hochladen der Bilder."
+    "error_upload": "Fehler beim Hochladen der Bilder.",
+    "step_subcategory": "Unterkategorie",
+    "subcat_title": "🗂️ Unterkategorie wählen",
+    "label_condition": "Zustand",
+    "condition_default": "Zustand wählen",
+    "summary_subcat": "Unterkategorie"
   },
   "annonces_status": {
     "ACTIVE": "Aktiv",

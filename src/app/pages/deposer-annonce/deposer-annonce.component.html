@@ -54,8 +54,30 @@
         </div>
       }
 
-      <!-- STEP 1: Details -->
+      <!-- STEP 1: Subcategory -->
       @if (step === 1) {
+        <div class="deposer__step">
+          <h2 class="deposer__step-title">{{ 'deposer.subcat_title' | T }}</h2>
+          @if (loadingSubcats) {
+            <p class="deposer__step-sub">…</p>
+          } @else {
+            <div class="deposer__cats">
+              @for (sub of subcategories; track sub.id) {
+                <button
+                  class="deposer__cat"
+                  [class.selected]="form.subcategoryId === sub.id"
+                  (click)="selectSubcategory(sub)"
+                >
+                  <span>{{ ('subcats.' + sub.code) | T }}</span>
+                </button>
+              }
+            </div>
+          }
+        </div>
+      }
+
+      <!-- STEP 2: Details + attributes -->
+      @if (step === 2) {
         <div class="deposer__step">
           <h2 class="deposer__step-title">{{ 'deposer.details_title' | T }}</h2>
           <div class="deposer__form">
@@ -91,12 +113,60 @@
                 }
               </select>
             </div>
+            @if (showCondition) {
+              <div class="form-group">
+                <label>{{ 'deposer.label_condition' | T }}</label>
+                <select [(ngModel)]="form.condition">
+                  <option value="">{{ 'deposer.condition_default' | T }}</option>
+                  <option value="NEW">{{ 'listing.condition_new' | T }}</option>
+                  <option value="USED">{{ 'listing.condition_used' | T }}</option>
+                </select>
+              </div>
+            }
+
+            @if (loadingAttrs) {
+              <p class="deposer__step-sub">…</p>
+            } @else if (attributeDefs.length) {
+              <div class="deposer__attrs">
+                @for (def of attributeDefs; track def.id) {
+                  <div class="form-group">
+                    <label>
+                      {{ ('attrs.' + def.code) | T }}
+                      @if (def.required) { <span class="deposer__required">*</span> }
+                    </label>
+                    @switch (def.type) {
+                      @case ('TEXT') {
+                        <input type="text" [ngModel]="form.attributes[def.code]" (ngModelChange)="setAttr(def.code, $event)" />
+                      }
+                      @case ('NUMBER') {
+                        <input type="number" [ngModel]="form.attributes[def.code]" (ngModelChange)="setAttr(def.code, $event)" />
+                      }
+                      @case ('BOOLEAN') {
+                        <select [ngModel]="attrBoolStr(def.code)" (ngModelChange)="setAttr(def.code, $event === 'true')">
+                          <option value="">—</option>
+                          <option value="true">{{ 'common.yes' | T }}</option>
+                          <option value="false">{{ 'common.no' | T }}</option>
+                        </select>
+                      }
+                      @case ('SELECT') {
+                        <select [ngModel]="form.attributes[def.code]" (ngModelChange)="setAttr(def.code, $event)">
+                          <option value="">—</option>
+                          @for (opt of def.options; track opt) {
+                            <option [value]="opt">{{ ('attrs.opts.' + opt) | T }}</option>
+                          }
+                        </select>
+                      }
+                    }
+                  </div>
+                }
+              </div>
+            }
           </div>
         </div>
       }
 
-      <!-- STEP 2: Photos -->
-      @if (step === 2) {
+      <!-- STEP 3: Photos -->
+      @if (step === 3) {
         <div class="deposer__step">
           <h2 class="deposer__step-title">{{ 'deposer.photos_title' | T }}</h2>
           <p class="deposer__step-sub">{{ 'deposer.photos_sub' | T }}</p>
@@ -127,8 +197,8 @@
         </div>
       }
 
-      <!-- STEP 3: Contact -->
-      @if (step === 3) {
+      <!-- STEP 4: Contact -->
+      @if (step === 4) {
         <div class="deposer__step">
           <h2 class="deposer__step-title">{{ 'deposer.contact_title' | T }}</h2>
           <div class="deposer__form">
@@ -145,6 +215,12 @@
             <div class="deposer__summary">
               <div class="deposer__summary-title">{{ 'deposer.summary_title' | T }}</div>
               <div class="deposer__summary-row"><span>{{ 'deposer.summary_cat' | T }}</span><strong>{{ summaryCategory?.icon }} {{ ('cats.' + summaryCategory?.value) | T }}</strong></div>
+              @if (summarySubcategory) {
+                <div class="deposer__summary-row"><span>{{ 'deposer.summary_subcat' | T }}</span><strong>{{ ('subcats.' + summarySubcategory!.code) | T }}</strong></div>
+              }
+              @if (form.condition) {
+                <div class="deposer__summary-row"><span>{{ 'deposer.label_condition' | T }}</span><strong>{{ (form.condition === 'NEW' ? 'listing.condition_new' : 'listing.condition_used') | T }}</strong></div>
+              }
               <div class="deposer__summary-row"><span>{{ 'deposer.summary_listing_title' | T }}</span><strong>{{ form.title || '—' }}</strong></div>
               <div class="deposer__summary-row"><span>{{ 'deposer.summary_price' | T }}</span><strong>{{ form.price ? form.price + ' ' + form.currency : ('deposer.negotiate' | T) }}</strong></div>
               <div class="deposer__summary-row"><span>{{ 'deposer.summary_city' | T }}</span><strong>{{ form.city || '—' }}</strong></div>
@@ -160,7 +236,7 @@
       <!-- Navigation -->
       <div class="deposer__nav">
         @if (step > 0) {
-          <button class="btn-outline" (click)="step = step - 1" [disabled]="loading">{{ 'deposer.back' | T }}</button>
+          <button class="btn-outline" (click)="goBack()" [disabled]="loading">{{ 'deposer.back' | T }}</button>
         }
         <div style="flex:1"></div>
         @if (step < steps.length - 1) {

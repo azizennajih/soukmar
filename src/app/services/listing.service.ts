@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
-import { Listing } from '../models/listing.model';
+import { Listing, ListingAttributesPayload } from '../models/listing.model';
 
 export interface ListingsResponse {
   listings: Listing[];
@@ -13,11 +13,14 @@ export interface ListingsResponse {
 export interface ListingFilters {
   q?: string;
   category?: string;
+  subcategoryId?: string;
+  condition?: string;
   city?: string;
   minPrice?: string;
   maxPrice?: string;
   page?: string;
   limit?: string;
+  attrs?: Record<string, string>;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -25,7 +28,8 @@ export class ListingService {
   constructor(private api: ApiService) {}
 
   getAll(filters?: ListingFilters): Observable<ListingsResponse> {
-    return this.api.get<ListingsResponse>('/listings', filters as Record<string, string>);
+    const { attrs, ...rest } = filters ?? {};
+    return this.api.get<ListingsResponse>('/listings', { ...rest, ...attrs } as Record<string, string>);
   }
 
   getById(id: string): Observable<Listing> {
@@ -36,11 +40,11 @@ export class ListingService {
     return this.api.get<Listing[]>('/listings/user/mine');
   }
 
-  create(data: Partial<Listing>): Observable<Listing> {
+  create(data: Partial<Listing> & ListingAttributesPayload): Observable<Listing> {
     return this.api.post<Listing>('/listings', data);
   }
 
-  update(id: string, data: Partial<Listing>): Observable<Listing> {
+  update(id: string, data: Partial<Listing> & ListingAttributesPayload): Observable<Listing> {
     return this.api.put<Listing>(`/listings/${id}`, data);
   }
 

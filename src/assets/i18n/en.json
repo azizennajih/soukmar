@@ -51,7 +51,10 @@
     "empty": "No listings found",
     "empty_sub": "Try adjusting your filters",
     "reserved": "Reserved",
-    "mobile_filter": "Filters"
+    "mobile_filter": "Filters",
+    "subcategory": "Subcategory",
+    "all_subcats": "All subcategories",
+    "condition": "Condition"
   },
   "listing": {
     "loading": "Loading...",
@@ -84,7 +87,10 @@
     "details": "Details",
     "similar": "Similar listings",
     "premium_badge": "Premium",
-    "negotiate": "Price negotiable"
+    "negotiate": "Price negotiable",
+    "specs_title": "Specifications",
+    "condition_new": "New",
+    "condition_used": "Used"
   },
   "chat": {
     "title": "Messages",
@@ -146,7 +152,10 @@
     "HOME_GARDEN": "Home & Garden",
     "FASHION": "Fashion",
     "SERVICES": "Services",
-    "OTHER": "Other"
+    "OTHER": "Other",
+    "BABY_KIDS": "Baby & Kids",
+    "PETS": "Pets",
+    "SPORTS_LEISURE": "Sports & Leisure"
   },
   "footer": {
     "tagline": "Morocco's first classifieds platform. Simple, fast and secure.",
@@ -300,7 +309,12 @@
     "uploading": "Uploading...",
     "publishing": "Publishing...",
     "error_publish": "An error occurred. Please try again.",
-    "error_upload": "Error uploading images."
+    "error_upload": "Error uploading images.",
+    "step_subcategory": "Subcategory",
+    "subcat_title": "🗂️ Choose a subcategory",
+    "label_condition": "Condition",
+    "condition_default": "Choose a condition",
+    "summary_subcat": "Subcategory"
   },
   "mes_annonces": {
     "title": "My listings",
@@ -349,6 +363,8 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "edit": "Edit",
-    "close": "Close"
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No"
   }
 }

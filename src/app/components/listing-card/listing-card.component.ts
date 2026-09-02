@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, signal, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Listing, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.model';
+import { Listing, CATEGORIES, HIGHLIGHT_ATTR_CODES, formatPrice, timeAgo } from '../../models/listing.model';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
@@ -42,6 +42,20 @@ export class ListingCardComponent implements OnInit {
 
   get timeDisplay(): string {
     return timeAgo(this.listing.createdAt, this.i18n.lang());
+  }
+
+  get highlightAttr(): { code: string; display: string } | null {
+    const codes = HIGHLIGHT_ATTR_CODES[this.listing.category];
+    if (!codes || !this.listing.attributeValues?.length) return null;
+    for (const code of codes) {
+      const av = this.listing.attributeValues.find(v => v.attributeDefinition?.code === code);
+      const def = av?.attributeDefinition;
+      if (!av || !def || def.type === 'BOOLEAN') continue;
+      const display = def.type === 'SELECT' ? this.i18n.t('attrs.opts.' + av.valueText)
+        : def.type === 'NUMBER' ? String(av.valueNumber) : (av.valueText ?? '');
+      if (display) return { code, display };
+    }
+    return null;
   }
 
   toggleFav(e: Event) {

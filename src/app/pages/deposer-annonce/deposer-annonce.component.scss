@@ -17,6 +17,9 @@
   }
 
   &__success { background: #f0fdf4; border-color: #bbf7d0; }
+
+  &__attrs { display: grid; gap: 1rem; margin-top: .5rem; }
+  &__required { color: var(--primary); margin-left: .2rem; }
 }
 
 /* Stepper */

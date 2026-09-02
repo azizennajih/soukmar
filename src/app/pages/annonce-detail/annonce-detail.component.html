@@ -81,6 +81,21 @@
         <p class="detail__desc">{{ listing.description }}</p>
       </div>
 
+      <!-- Specs -->
+      @if (specAttrs.length) {
+        <div class="card detail__specs">
+          <h2 class="detail__desc-title">{{ 'listing.specs_title' | T }}</h2>
+          <div class="detail__specs-grid">
+            @for (av of specAttrs; track av.attributeDefinitionId) {
+              <div class="detail__specs-row">
+                <span>{{ ('attrs.' + av.attributeDefinition!.code) | T }}</span>
+                <strong>{{ formatAttrValue(av) }}</strong>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
       <!-- Safety -->
       <div class="detail__safety">
         <div class="detail__safety-title">🛡️ {{ 'listing.safety_title' | T }}</div>

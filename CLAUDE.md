@@ -69,20 +69,25 @@ Marokkanisches Kleinanzeigen-Portal (wie Avito/Leboncoin).
 .cat-purple  → Jobs           .cat-yellow  → Premium/Sonstiges
 .cat-emerald → Dienstleistungen .cat-pink  → Mode
 .cat-orange  → Fahrzeuge      .cat-gray    → Andere
+.cat-teal    → Baby & Kind    .cat-brown   → Haustiere
+.cat-indigo  → Sport & Freizeit
 ```
+
+### Dynamisches Attribut-System (EAV)
+Jede Kategorie hat Unterkategorien (`Subcategory`), jede Unterkategorie hat eigene `AttributeDefinition`-Felder (Text/Zahl/Auswahl/Ja-Nein, Pflicht-/Filter-Flag). Werte pro Anzeige liegen in `ListingAttributeValue` (typisierte Spalten `valueText`/`valueNumber`/`valueBoolean`). Labels kommen **nie aus der DB** — immer über i18n: `subcats.<code>`, `attrs.<code>`, `attrs.opts.<optionCode>`. Backend-Katalog-Endpunkte unter `/api/catalog/*`, Frontend-Zugriff über `CatalogService`. Suchfilter nutzen das Query-Schema `attr_<CODE>` (Auswahl/Bool) bzw. `attr_<CODE>_min`/`_max` (Zahl-Bereich).
 
 ---
 
 ## i18n — IMMER berücksichtigen
 
-- **3 Sprachen:** Französisch (`fr`), Englisch (`en`), Arabisch (`ar`)
+- **6 Sprachen:** Arabisch (`ar`), Deutsch (`de`), Englisch (`en`), Spanisch (`es`), Französisch (`fr`), Italienisch (`it`)
 - **Service:** `I18nService` (Signal-basiert) — injizieren mit `inject(I18nService)`
 - **Pipe:** `| T` (TranslatePipe, `pure: false`) — für alle UI-Texte im Template
-- **Übersetzungsdateien:** `src/assets/i18n/fr.json`, `en.json`, `ar.json`
+- **Übersetzungsdateien:** `src/assets/i18n/{ar,de,en,es,fr,it}.json`
 - **Keine hardcodierten Strings** in Templates oder Components — immer `| T` oder `this.i18n.t('key')`
 - **RTL:** Bei `ar` wird `document.documentElement.dir = 'rtl'` automatisch gesetzt
 - **Reaktiv:** `this.i18n.lang()` (Signal) lesen — Angular triggert Re-Render
-- Neue Übersetzungsschlüssel **immer in alle 3 JSON-Dateien** eintragen
+- Neue Übersetzungsschlüssel **immer in alle 6 JSON-Dateien** eintragen
 - Kategorien: `('cats.' + cat.value) | T` — nie `cat.label` direkt nutzen
 - Zeit/Preis: `timeAgo(date, lang)` und `formatPrice(price, currency, lang)` aus `listing.model.ts`
 
@@ -114,9 +119,8 @@ Marokkanisches Kleinanzeigen-Portal (wie Avito/Leboncoin).
 | Was | Pfad |
 |-----|------|
 | Global Styles | `src/styles.scss` |
-| i18n Französisch | `src/assets/i18n/fr.json` |
-| i18n Englisch | `src/assets/i18n/en.json` |
-| i18n Arabisch | `src/assets/i18n/ar.json` |
+| i18n (6 Sprachen) | `src/assets/i18n/{ar,de,en,es,fr,it}.json` |
+| Katalog-Daten (Seed) | `soukmar-backend/prisma/catalog-data.ts` |
 | i18n Service | `src/app/services/i18n.service.ts` |
 | TranslatePipe | `src/app/pipes/translate.pipe.ts` |
 | Listing Model | `src/app/models/listing.model.ts` |

@@ -112,6 +112,15 @@
     font-weight: 700;
   }
 
+  &__attr {
+    display: inline-flex;
+    align-items: center;
+    margin-left: .4rem;
+    font-size: .72rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
   &__footer {
     display: flex;
     justify-content: space-between;

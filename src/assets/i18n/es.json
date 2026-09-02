@@ -51,7 +51,10 @@
     "empty": "No se encontraron anuncios",
     "empty_sub": "Intenta ajustar tus filtros",
     "reserved": "Reservado",
-    "mobile_filter": "Filtros"
+    "mobile_filter": "Filtros",
+    "subcategory": "Subcategoría",
+    "all_subcats": "Todas las subcategorías",
+    "condition": "Estado"
   },
   "listing": {
     "loading": "Cargando...",
@@ -84,7 +87,10 @@
     "details": "Detalles",
     "similar": "Anuncios similares",
     "premium_badge": "Premium",
-    "negotiate": "Precio negociable"
+    "negotiate": "Precio negociable",
+    "specs_title": "Características",
+    "condition_new": "Nuevo",
+    "condition_used": "Usado"
   },
   "chat": {
     "title": "Mensajes",
@@ -146,7 +152,10 @@
     "HOME_GARDEN": "Hogar y Jardín",
     "FASHION": "Moda",
     "SERVICES": "Servicios",
-    "OTHER": "Otros"
+    "OTHER": "Otros",
+    "BABY_KIDS": "Bebé & Niños",
+    "PETS": "Mascotas",
+    "SPORTS_LEISURE": "Deporte & Ocio"
   },
   "footer": {
     "tagline": "La primera plataforma de anuncios clasificados de Marruecos. Simple, rápida y segura.",
@@ -175,7 +184,9 @@
     "cancel": "Cancelar",
     "delete": "Eliminar",
     "edit": "Editar",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "yes": "Sí",
+    "no": "No"
   },
   "premium": {
     "badge": "✨ Impulsa tus anuncios",
@@ -349,7 +360,12 @@
     "uploading": "Subiendo...",
     "publishing": "Publicando...",
     "error_publish": "Ha ocurrido un error. Por favor inténtalo de nuevo.",
-    "error_upload": "Error al subir las imágenes."
+    "error_upload": "Error al subir las imágenes.",
+    "step_subcategory": "Subcategoría",
+    "subcat_title": "🗂️ Elige una subcategoría",
+    "label_condition": "Estado",
+    "condition_default": "Elegir un estado",
+    "summary_subcat": "Subcategoría"
   },
   "annonces_status": {
     "ACTIVE": "Activo",

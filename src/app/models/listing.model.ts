@@ -1,8 +1,39 @@
 export type Category =
   | 'VEHICLES' | 'REAL_ESTATE' | 'JOBS' | 'ELECTRONICS'
-  | 'HOME_GARDEN' | 'FASHION' | 'SERVICES' | 'OTHER';
+  | 'HOME_GARDEN' | 'FASHION' | 'SERVICES' | 'OTHER'
+  | 'BABY_KIDS' | 'PETS' | 'SPORTS_LEISURE';
 
 export type ListingStatus = 'ACTIVE' | 'RESERVED' | 'SOLD' | 'PENDING' | 'REJECTED' | 'EXPIRED'; // updated
+
+export type AttributeType = 'TEXT' | 'NUMBER' | 'SELECT' | 'BOOLEAN';
+export type Condition = 'NEW' | 'USED';
+
+export interface Subcategory {
+  id: string;
+  category: Category;
+  code: string;
+  sortOrder: number;
+}
+
+export interface AttributeDefinition {
+  id: string;
+  subcategoryId: string;
+  code: string;
+  type: AttributeType;
+  required: boolean;
+  filterable: boolean;
+  sortOrder: number;
+  options: string[];
+}
+
+export interface ListingAttributeValue {
+  id: string;
+  attributeDefinitionId: string;
+  attributeDefinition?: AttributeDefinition;
+  valueText?: string | null;
+  valueNumber?: number | null;
+  valueBoolean?: boolean | null;
+}
 
 export interface User {
   id: string;
@@ -21,7 +52,9 @@ export interface Listing {
   price?: number;
   currency: string;
   category: Category;
-  subcategory?: string;
+  subcategoryId?: string;
+  subcategory?: Subcategory;
+  condition?: Condition;
   city: string;
   region?: string;
   images: string[];
@@ -33,7 +66,12 @@ export interface Listing {
   whatsapp?: string;
   userId: string;
   user?: User;
+  attributeValues?: ListingAttributeValue[];
   createdAt: Date;
+}
+
+export interface ListingAttributesPayload {
+  attributes?: Record<string, string | number | boolean>;
 }
 
 export interface CategoryConfig {
@@ -44,15 +82,28 @@ export interface CategoryConfig {
 }
 
 export const CATEGORIES: CategoryConfig[] = [
-  { value: 'VEHICLES',    label: 'Véhicules',       icon: '🚗', color: 'cat-blue' },
-  { value: 'REAL_ESTATE', label: 'Immobilier',       icon: '🏠', color: 'cat-green' },
-  { value: 'JOBS',        label: 'Emploi',           icon: '💼', color: 'cat-purple' },
-  { value: 'ELECTRONICS', label: 'Électronique',     icon: '📱', color: 'cat-yellow' },
-  { value: 'HOME_GARDEN', label: 'Maison & Jardin',  icon: '🌿', color: 'cat-emerald' },
-  { value: 'FASHION',     label: 'Mode',             icon: '👗', color: 'cat-pink' },
-  { value: 'SERVICES',    label: 'Services',         icon: '🔧', color: 'cat-orange' },
-  { value: 'OTHER',       label: 'Autres',           icon: '📦', color: 'cat-gray' },
+  { value: 'VEHICLES',       label: 'Véhicules',       icon: '🚗', color: 'cat-blue' },
+  { value: 'REAL_ESTATE',    label: 'Immobilier',       icon: '🏠', color: 'cat-green' },
+  { value: 'JOBS',           label: 'Emploi',           icon: '💼', color: 'cat-purple' },
+  { value: 'ELECTRONICS',    label: 'Électronique',     icon: '📱', color: 'cat-yellow' },
+  { value: 'HOME_GARDEN',    label: 'Maison & Jardin',  icon: '🌿', color: 'cat-emerald' },
+  { value: 'FASHION',        label: 'Mode',             icon: '👗', color: 'cat-pink' },
+  { value: 'SERVICES',       label: 'Services',         icon: '🔧', color: 'cat-orange' },
+  { value: 'OTHER',          label: 'Autres',           icon: '📦', color: 'cat-gray' },
+  { value: 'BABY_KIDS',      label: 'Bébé & Enfants',   icon: '🧸', color: 'cat-teal' },
+  { value: 'PETS',           label: 'Animaux',          icon: '🐾', color: 'cat-brown' },
+  { value: 'SPORTS_LEISURE', label: 'Sport & Loisirs',  icon: '⚽', color: 'cat-indigo' },
 ];
+
+export const CONDITION_CATEGORIES: Category[] = ['VEHICLES', 'ELECTRONICS', 'HOME_GARDEN', 'FASHION', 'BABY_KIDS', 'SPORTS_LEISURE'];
+
+export const HIGHLIGHT_ATTR_CODES: Partial<Record<Category, string[]>> = {
+  VEHICLES: ['MILEAGE', 'FUEL_TYPE'],
+  ELECTRONICS: ['STORAGE_CAPACITY', 'RAM'],
+  REAL_ESTATE: ['LIVING_AREA_SQM', 'ROOMS'],
+  FASHION: ['SIZE', 'SIZE_EU'],
+  HOME_GARDEN: ['FURNITURE_TYPE'],
+};
 
 export const MOROCCO_CITIES = [
   // Grand Casablanca-Settat
