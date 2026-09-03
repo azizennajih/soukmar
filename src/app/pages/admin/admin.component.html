@@ -93,7 +93,7 @@
             @for (cat of categoryStats; track cat.value) {
               @if (cat.count > 0) {
                 <div class="cat-row">
-                  <span class="cat-row__name">{{ cat.icon }} {{ cat.label }}</span>
+                  <span class="cat-row__name"><app-cat-icon [category]="cat.value" [size]="14" /> {{ cat.label }}</span>
                   <div class="cat-row__bar">
                     <div class="cat-row__fill" [style.width.%]="cat.pct" [style.background]="cat.color"></div>
                   </div>

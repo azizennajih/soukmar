@@ -9,12 +9,13 @@ import { I18nService, Lang } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CATEGORIES, MOROCCO_CITIES } from '../../models/listing.model';
 import { CitySelectComponent } from '../city-select/city-select.component';
+import { CatIconComponent } from '../cat-icon/cat-icon.component';
 import { GeocodeService, Coords } from '../../services/geocode.service';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink, FormsModule, CitySelectComponent, TranslatePipe],
+  imports: [CommonModule, RouterLink, FormsModule, CitySelectComponent, CatIconComponent, TranslatePipe],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })

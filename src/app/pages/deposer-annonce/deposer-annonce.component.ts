@@ -8,11 +8,12 @@ import { UploadService } from '../../services/upload.service';
 import { CatalogService } from '../../services/catalog.service';
 import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, Category, Subcategory, AttributeDefinition, Condition } from '../../models/listing.model';
 
 @Component({
   selector: 'app-deposer-annonce',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe],
+  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TranslatePipe],
   templateUrl: './deposer-annonce.component.html',
   styleUrl: './deposer-annonce.component.scss'
 })

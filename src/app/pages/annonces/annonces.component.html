@@ -26,7 +26,7 @@
             [queryParams]="{categorie: cat.value, q: filters.q || null, ville: filters.ville || null}"
             class="sidebar__cat-link"
             [class.active]="filters.categorie === cat.value"
-          >{{ cat.icon }} {{ ('cats.' + cat.value) | T }}</a>
+          ><app-cat-icon [category]="cat.value" [size]="15" /> {{ ('cats.' + cat.value) | T }}</a>
         }
       </div>
 

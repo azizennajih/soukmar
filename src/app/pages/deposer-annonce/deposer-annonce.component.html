@@ -46,7 +46,7 @@
                 [class.selected]="form.category === cat.value"
                 (click)="selectCategory(cat.value)"
               >
-                <span class="deposer__cat-icon">{{ cat.icon }}</span>
+                <span class="deposer__cat-icon"><app-cat-icon [category]="cat.value" [size]="26" /></span>
                 <span>{{ ('cats.' + cat.value) | T }}</span>
               </button>
             }

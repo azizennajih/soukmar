@@ -7,6 +7,7 @@ import { ListingService } from '../../services/listing.service';
 import { AuthService } from '../../services/auth.service';
 import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { Listing, CATEGORIES, formatPrice } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
 
@@ -27,7 +28,7 @@ type ListingFilter = 'ALL' | 'ACTIVE' | 'PENDING' | 'REJECTED' | 'SOLD' | 'RESER
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe],
+  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TranslatePipe],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })

@@ -1,0 +1,59 @@
+<svg [attr.width]="size" [attr.height]="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  @switch (category) {
+    @case ('VEHICLES') {
+      <path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11"/>
+      <rect x="3" y="11" width="18" height="6" rx="2"/>
+      <circle cx="7.5" cy="17" r="1.5"/>
+      <circle cx="16.5" cy="17" r="1.5"/>
+    }
+    @case ('REAL_ESTATE') {
+      <path d="M3 10.5 12 3l9 7.5"/>
+      <path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/>
+    }
+    @case ('JOBS') {
+      <rect x="2" y="7" width="20" height="13" rx="2"/>
+      <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+      <path d="M2 12h20"/>
+    }
+    @case ('ELECTRONICS') {
+      <rect x="6" y="2" width="12" height="20" rx="2"/>
+      <line x1="11" y1="18" x2="13" y2="18"/>
+    }
+    @case ('HOME_GARDEN') {
+      <path d="M12 3c-2 2-2 5 0 7 2-2 2-5 0-7z"/>
+      <path d="M12 10c-3-1-6 1-6 4h12c0-3-3-5-6-4z"/>
+      <line x1="12" y1="10" x2="12" y2="21"/>
+      <path d="M8 21h8"/>
+    }
+    @case ('FASHION') {
+      <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/>
+    }
+    @case ('SERVICES') {
+      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/>
+    }
+    @case ('OTHER') {
+      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+      <polyline points="3.29 7 12 12 20.71 7"/>
+      <line x1="12" y1="22" x2="12" y2="12"/>
+    }
+    @case ('BABY_KIDS') {
+      <path d="M10 2h4"/>
+      <path d="M12 2v3"/>
+      <path d="M9 8.5a3 3 0 0 1 6 0V19a2.5 2.5 0 0 1-2.5 2.5h-1A2.5 2.5 0 0 1 9 19z"/>
+      <line x1="9" y1="13" x2="15" y2="13"/>
+    }
+    @case ('PETS') {
+      <circle cx="7" cy="9" r="2"/>
+      <circle cx="12" cy="6.5" r="2"/>
+      <circle cx="17" cy="9" r="2"/>
+      <path d="M12 12c-3.5 0-6.5 2.5-6.5 5.8 0 2 1.7 3.2 3.6 2.6.9-.3 1.9-.4 2.9-.4s2 .1 2.9.4c1.9.6 3.6-.6 3.6-2.6 0-3.3-3-5.8-6.5-5.8z"/>
+    }
+    @case ('SPORTS_LEISURE') {
+      <line x1="6" y1="12" x2="18" y2="12"/>
+      <rect x="2" y="9" width="4" height="6" rx="1"/>
+      <rect x="18" y="9" width="4" height="6" rx="1"/>
+      <rect x="6" y="10.5" width="2" height="3" rx=".5"/>
+      <rect x="16" y="10.5" width="2" height="3" rx=".5"/>
+    }
+  }
+</svg>

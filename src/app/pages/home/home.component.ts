@@ -8,6 +8,7 @@ import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { CitySelectComponent } from '../../components/city-select/city-select.component';
+import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing } from '../../models/listing.model';
 import { GeocodeService, Coords } from '../../services/geocode.service';
 import { firstValueFrom } from 'rxjs';
@@ -15,7 +16,7 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, CitySelectComponent, TranslatePipe],
+  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, CitySelectComponent, CatIconComponent, TranslatePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -218,7 +218,7 @@
       <div class="navbar__mobile-cats">
         @for (cat of categories; track cat.value) {
           <a [routerLink]="['/annonces']" [queryParams]="{categorie: cat.value}" class="navbar__mobile-link" (click)="mobileOpen.set(false)">
-            <span class="navbar__mobile-icon">{{ cat.icon }}</span>
+            <span class="navbar__mobile-icon"><app-cat-icon [category]="cat.value" [size]="18" /></span>
             {{ ('cats.' + cat.value) | T }}
           </a>
         }

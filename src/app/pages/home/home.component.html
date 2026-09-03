@@ -85,7 +85,7 @@
       <div class="cat-grid">
         @for (cat of categories; track cat.value) {
           <a [routerLink]="['/annonces']" [queryParams]="{categorie: cat.value}" class="cat-item">
-            <div class="cat-icon" [ngClass]="cat.color">{{ cat.icon }}</div>
+            <div class="cat-icon" [ngClass]="cat.color"><app-cat-icon [category]="cat.value" [size]="24" /></div>
             <span>{{ ('cats.' + cat.value) | T }}</span>
           </a>
         }
