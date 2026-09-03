@@ -321,7 +321,11 @@
     "subcat_title": "🗂️ اختر فئة فرعية",
     "label_condition": "الحالة",
     "condition_default": "اختر الحالة",
-    "summary_subcat": "الفئة الفرعية"
+    "summary_subcat": "الفئة الفرعية",
+    "header_title_edit": "تعديل الإعلان",
+    "success_title_edit": "تم تحديث الإعلان!",
+    "success_sub_edit": "تغييراتك مرئية الآن.",
+    "publish_edit": "💾 حفظ التغييرات"
   },
   "mes_annonces": {
     "title": "إعلاناتي",

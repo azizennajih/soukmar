@@ -10,13 +10,15 @@
   } @else if (success) {
     <div class="deposer__success card">
       <div class="deposer__success-icon">✅</div>
-      <h2>{{ 'deposer.success_title' | T }}</h2>
-      <p>{{ 'deposer.success_sub' | T }}</p>
+      <h2>{{ (isEdit ? 'deposer.success_title_edit' : 'deposer.success_title') | T }}</h2>
+      <p>{{ (isEdit ? 'deposer.success_sub_edit' : 'deposer.success_sub') | T }}</p>
     </div>
+  } @else if (initLoading) {
+    <div class="deposer__loading" style="text-align:center;padding:4rem;color:var(--text-muted)">⏳</div>
   } @else {
 
     <div class="deposer__header">
-      <h1>{{ 'deposer.header_title' | T }}</h1>
+      <h1>{{ (isEdit ? 'deposer.header_title_edit' : 'deposer.header_title') | T }}</h1>
       <p>{{ 'deposer.header_sub' | T }}</p>
     </div>
 
@@ -181,12 +183,19 @@
             <input id="fileInput" type="file" multiple accept="image/*" (change)="onFilesSelected($event)" style="display:none" />
           </label>
 
-          @if (previews.length > 0) {
+          @if (existingImages.length > 0 || previews.length > 0) {
             <div class="deposer__previews">
+              @for (img of existingImages; track $index) {
+                <div class="deposer__preview">
+                  <img [src]="img" alt="preview" />
+                  @if ($index === 0) { <span class="deposer__preview-badge">{{ 'deposer.photo_main' | T }}</span> }
+                  <button class="deposer__preview-remove" (click)="removeExisting($index)">✕</button>
+                </div>
+              }
               @for (preview of previews; track $index) {
                 <div class="deposer__preview">
                   <img [src]="preview" alt="preview" />
-                  @if ($index === 0) { <span class="deposer__preview-badge">{{ 'deposer.photo_main' | T }}</span> }
+                  @if ($index === 0 && existingImages.length === 0) { <span class="deposer__preview-badge">{{ 'deposer.photo_main' | T }}</span> }
                   <button class="deposer__preview-remove" (click)="removeImage($index)">✕</button>
                 </div>
               }
@@ -245,7 +254,7 @@
           <button class="btn-primary deposer__publish" [disabled]="loading || !canNext" (click)="publish()">
             @if (uploading) { <span class="spinner-sm"></span> {{ 'deposer.uploading' | T }} }
             @else if (loading) { <span class="spinner-sm"></span> {{ 'deposer.publishing' | T }} }
-            @else { {{ 'deposer.publish' | T }} }
+            @else { {{ (isEdit ? 'deposer.publish_edit' : 'deposer.publish') | T }} }
           </button>
         }
       </div>

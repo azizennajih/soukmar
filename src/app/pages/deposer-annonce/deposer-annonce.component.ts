@@ -1,6 +1,6 @@
 import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, Router } from '@angular/router';
+import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ListingService } from '../../services/listing.service';
@@ -34,11 +34,15 @@ export class DeposerAnnonceComponent {
   success = false;
   error = '';
 
+  editId: string | null = null;
+  initLoading = false;
+
   subcategories: Subcategory[] = [];
   attributeDefs: AttributeDefinition[] = [];
 
   previews: string[] = [];
   selectedFiles: File[] = [];
+  existingImages: string[] = [];
 
   form = {
     category: '' as Category | '',
@@ -61,8 +65,71 @@ export class DeposerAnnonceComponent {
     private uploadService: UploadService,
     private catalog: CatalogService,
     private router: Router,
+    private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.editId = id;
+      this.loadForEdit(id);
+    }
+  }
+
+  get isEdit(): boolean { return !!this.editId; }
+
+  loadForEdit(id: string) {
+    this.initLoading = true;
+    this.ls.getById(id).subscribe({
+      next: listing => {
+        const me = this.auth.currentUser();
+        if (listing.userId !== me?.id && me?.role !== 'ADMIN') {
+          this.router.navigate(['/mes-annonces']);
+          return;
+        }
+        this.form.category = listing.category as Category;
+        this.form.subcategoryId = listing.subcategoryId || '';
+        this.form.condition = (listing.condition as Condition) || '';
+        this.form.title = listing.title;
+        this.form.description = listing.description;
+        this.form.price = listing.price != null ? String(listing.price) : '';
+        this.form.currency = listing.currency || 'MAD';
+        this.form.city = listing.city;
+        this.form.phone = listing.phone || '';
+        this.form.whatsapp = listing.whatsapp || '';
+        this.existingImages = [...(listing.images || [])];
+
+        const attrs: Record<string, string | number | boolean> = {};
+        (listing.attributeValues || []).forEach(av => {
+          const code = av.attributeDefinition?.code;
+          if (!code) return;
+          if (av.valueText != null) attrs[code] = av.valueText;
+          else if (av.valueNumber != null) attrs[code] = av.valueNumber;
+          else if (av.valueBoolean != null) attrs[code] = av.valueBoolean;
+        });
+        this.form.attributes = attrs;
+
+        if (this.form.category) {
+          this.loadingSubcats = true;
+          this.catalog.getSubcategories(this.form.category as Category).subscribe({
+            next: subs => { this.subcategories = subs; this.loadingSubcats = false; this.cdr.markForCheck(); },
+            error: () => { this.loadingSubcats = false; this.cdr.markForCheck(); }
+          });
+        }
+        if (this.form.subcategoryId) {
+          this.loadingAttrs = true;
+          this.catalog.getAttributes(this.form.subcategoryId).subscribe({
+            next: defs => { this.attributeDefs = defs; this.loadingAttrs = false; this.cdr.markForCheck(); },
+            error: () => { this.loadingAttrs = false; this.cdr.markForCheck(); }
+          });
+        }
+
+        this.step = 2;
+        this.initLoading = false;
+        this.cdr.markForCheck();
+      },
+      error: () => { this.initLoading = false; this.router.navigate(['/mes-annonces']); }
+    });
+  }
 
   get showCondition(): boolean {
     return !!this.form.category && CONDITION_CATEGORIES.includes(this.form.category as Category);
@@ -147,7 +214,10 @@ export class DeposerAnnonceComponent {
   removeImage(index: number) {
     this.selectedFiles.splice(index, 1);
     this.previews.splice(index, 1);
-    this.form.images.splice(index, 1);
+  }
+
+  removeExisting(index: number) {
+    this.existingImages.splice(index, 1);
   }
 
   async publish() {
@@ -156,18 +226,19 @@ export class DeposerAnnonceComponent {
     this.error = '';
 
     try {
-      // Upload images to Cloudinary first
+      // Upload newly selected images to Cloudinary first
+      let newUrls: string[] = [];
       if (this.selectedFiles.length > 0) {
         this.uploading = true;
         const result = await new Promise<{ urls: string[] }>((resolve, reject) => {
           this.uploadService.uploadImages(this.selectedFiles).subscribe({ next: resolve, error: reject });
         });
-        this.form.images = result.urls;
+        newUrls = result.urls;
         this.uploading = false;
       }
+      const images = [...this.existingImages, ...newUrls];
 
-      // Create listing with image URLs
-      this.ls.create({
+      const payload = {
         title: this.form.title,
         description: this.form.description,
         price: this.form.price ? +this.form.price : undefined,
@@ -176,11 +247,14 @@ export class DeposerAnnonceComponent {
         subcategoryId: this.form.subcategoryId || undefined,
         condition: this.form.condition || undefined,
         city: this.form.city,
-        images: this.form.images,
+        images,
         phone: this.form.phone,
         whatsapp: this.form.whatsapp,
         attributes: this.form.attributes,
-      }).subscribe({
+      };
+
+      const request$ = this.isEdit ? this.ls.update(this.editId!, payload) : this.ls.create(payload);
+      request$.subscribe({
         next: listing => {
           this.loading = false;
           this.success = true;

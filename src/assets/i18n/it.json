@@ -373,7 +373,11 @@
     "subcat_title": "🗂️ Scegli una sottocategoria",
     "label_condition": "Condizione",
     "condition_default": "Scegli una condizione",
-    "summary_subcat": "Sottocategoria"
+    "summary_subcat": "Sottocategoria",
+    "header_title_edit": "Modifica annuncio",
+    "success_title_edit": "Annuncio aggiornato!",
+    "success_sub_edit": "Le tue modifiche sono ora visibili.",
+    "publish_edit": "💾 Salva modifiche"
   },
   "annonces_status": {
     "ACTIVE": "Attivo",

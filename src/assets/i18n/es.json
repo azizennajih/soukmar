@@ -373,7 +373,11 @@
     "subcat_title": "🗂️ Elige una subcategoría",
     "label_condition": "Estado",
     "condition_default": "Elegir un estado",
-    "summary_subcat": "Subcategoría"
+    "summary_subcat": "Subcategoría",
+    "header_title_edit": "Editar anuncio",
+    "success_title_edit": "¡Anuncio actualizado!",
+    "success_sub_edit": "Tus cambios ya son visibles.",
+    "publish_edit": "💾 Guardar cambios"
   },
   "annonces_status": {
     "ACTIVE": "Activo",

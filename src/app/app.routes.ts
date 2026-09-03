@@ -19,6 +19,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/deposer-annonce/deposer-annonce.component').then(m => m.DeposerAnnonceComponent)
   },
   {
+    path: 'deposer-annonce/:id',
+    loadComponent: () => import('./pages/deposer-annonce/deposer-annonce.component').then(m => m.DeposerAnnonceComponent)
+  },
+  {
     path: 'auth/login',
     loadComponent: () => import('./pages/auth/login/login.component').then(m => m.LoginComponent)
   },

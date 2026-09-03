@@ -373,7 +373,11 @@
     "subcat_title": "🗂️ Unterkategorie wählen",
     "label_condition": "Zustand",
     "condition_default": "Zustand wählen",
-    "summary_subcat": "Unterkategorie"
+    "summary_subcat": "Unterkategorie",
+    "header_title_edit": "Anzeige bearbeiten",
+    "success_title_edit": "Anzeige aktualisiert!",
+    "success_sub_edit": "Deine Änderungen sind jetzt sichtbar.",
+    "publish_edit": "💾 Änderungen speichern"
   },
   "annonces_status": {
     "ACTIVE": "Aktiv",

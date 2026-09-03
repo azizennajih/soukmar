@@ -321,7 +321,11 @@
     "subcat_title": "🗂️ Choose a subcategory",
     "label_condition": "Condition",
     "condition_default": "Choose a condition",
-    "summary_subcat": "Subcategory"
+    "summary_subcat": "Subcategory",
+    "header_title_edit": "Edit listing",
+    "success_title_edit": "Listing updated!",
+    "success_sub_edit": "Your changes are now live.",
+    "publish_edit": "💾 Save changes"
   },
   "mes_annonces": {
     "title": "My listings",
