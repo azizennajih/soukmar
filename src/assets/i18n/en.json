@@ -302,6 +302,7 @@
     "upload_hint": "Click or drag your photos here",
     "upload_types": "JPG, PNG, WEBP · Max 10 MB per photo",
     "photo_main": "Main",
+    "drag_hint": "Drag photos to reorder — the first one is the main photo.",
     "skip_note": "You can continue without photos and add them later.",
     "contact_title": "📞 Contact details",
     "label_phone": "Phone",

@@ -354,6 +354,7 @@
     "upload_hint": "Haz clic o arrastra tus fotos aquí",
     "upload_types": "JPG, PNG, WEBP · Máx 10 MB por foto",
     "photo_main": "Principal",
+    "drag_hint": "Arrastra las fotos para reordenarlas — la primera es la foto principal.",
     "skip_note": "Puedes continuar sin fotos y añadirlas después.",
     "contact_title": "📞 Datos de contacto",
     "label_phone": "Teléfono",

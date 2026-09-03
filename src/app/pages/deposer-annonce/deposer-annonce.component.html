@@ -188,23 +188,25 @@
             <input id="fileInput" type="file" multiple accept="image/*" (change)="onFilesSelected($event)" style="display:none" />
           </label>
 
-          @if (existingImages.length > 0 || previews.length > 0) {
+          @if (photos.length > 0) {
             <div class="deposer__previews">
-              @for (img of existingImages; track $index) {
-                <div class="deposer__preview">
-                  <img [src]="img" alt="preview" />
-                  @if ($index === 0) { <span class="deposer__preview-badge">{{ 'deposer.photo_main' | T }}</span> }
-                  <button class="deposer__preview-remove" (click)="removeExisting($index)">✕</button>
-                </div>
-              }
-              @for (preview of previews; track $index) {
-                <div class="deposer__preview">
-                  <img [src]="preview" alt="preview" />
-                  @if ($index === 0 && existingImages.length === 0) { <span class="deposer__preview-badge">{{ 'deposer.photo_main' | T }}</span> }
-                  <button class="deposer__preview-remove" (click)="removeImage($index)">✕</button>
+              @for (photo of photos; track $index; let i = $index) {
+                <div
+                  class="deposer__preview"
+                  [class.deposer__preview--dragging]="dragIndex === i"
+                  draggable="true"
+                  (dragstart)="onDragStart(i)"
+                  (dragover)="onDragOver($event)"
+                  (drop)="onDrop(i)"
+                  (dragend)="onDragEnd()"
+                >
+                  <img [src]="photo.url" alt="preview" />
+                  @if (i === 0) { <span class="deposer__preview-badge">{{ 'deposer.photo_main' | T }}</span> }
+                  <button class="deposer__preview-remove" (click)="removePhoto(i)">✕</button>
                 </div>
               }
             </div>
+            <p class="deposer__drag-hint">🖐️ {{ 'deposer.drag_hint' | T }}</p>
           }
 
           <p class="deposer__skip-note">{{ 'deposer.skip_note' | T }}</p>

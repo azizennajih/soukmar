@@ -354,6 +354,7 @@
     "upload_hint": "Klicken oder Fotos hierher ziehen",
     "upload_types": "JPG, PNG, WEBP · Max 10 MB pro Foto",
     "photo_main": "Hauptfoto",
+    "drag_hint": "Fotos per Drag & Drop verschieben — das erste ist das Hauptfoto.",
     "skip_note": "Sie können ohne Fotos fortfahren und diese später hinzufügen.",
     "contact_title": "📞 Kontaktdaten",
     "label_phone": "Telefon",

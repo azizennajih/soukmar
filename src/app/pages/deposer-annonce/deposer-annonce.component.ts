@@ -11,6 +11,8 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, Category, Subcategory, AttributeDefinition, Condition } from '../../models/listing.model';
 
+interface PhotoItem { url: string; file?: File; }
+
 @Component({
   selector: 'app-deposer-annonce',
   imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TranslatePipe],
@@ -40,9 +42,8 @@ export class DeposerAnnonceComponent {
   subcategories: Subcategory[] = [];
   attributeDefs: AttributeDefinition[] = [];
 
-  previews: string[] = [];
-  selectedFiles: File[] = [];
-  existingImages: string[] = [];
+  photos: PhotoItem[] = [];
+  dragIndex: number | null = null;
   premium = false;
 
   get maxPhotos(): number { return this.premium ? 20 : 10; }
@@ -99,7 +100,7 @@ export class DeposerAnnonceComponent {
         this.form.city = listing.city;
         this.form.phone = listing.phone || '';
         this.form.whatsapp = listing.whatsapp || '';
-        this.existingImages = [...(listing.images || [])];
+        this.photos = (listing.images || []).map(url => ({ url }));
 
         const attrs: Record<string, string | number | boolean> = {};
         (listing.attributeValues || []).forEach(av => {
@@ -205,14 +206,13 @@ export class DeposerAnnonceComponent {
   onFilesSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files) return;
-    const newFiles = Array.from(input.files).slice(0, this.maxPhotos - this.existingImages.length - this.selectedFiles.length);
+    const newFiles = Array.from(input.files).slice(0, this.maxPhotos - this.photos.length);
     newFiles.forEach(file => {
-      this.selectedFiles.push(file);
       const reader = new FileReader();
       // FileReader's onload is a raw browser callback, invisible to zoneless
       // change detection — without markForCheck the preview never renders.
       reader.onload = e => {
-        this.previews.push(e.target?.result as string);
+        this.photos.push({ url: e.target?.result as string, file });
         this.cdr.markForCheck();
       };
       reader.readAsDataURL(file);
@@ -220,13 +220,28 @@ export class DeposerAnnonceComponent {
     input.value = '';
   }
 
-  removeImage(index: number) {
-    this.selectedFiles.splice(index, 1);
-    this.previews.splice(index, 1);
+  removePhoto(index: number) {
+    this.photos.splice(index, 1);
   }
 
-  removeExisting(index: number) {
-    this.existingImages.splice(index, 1);
+  onDragStart(index: number) {
+    this.dragIndex = index;
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+  }
+
+  onDrop(index: number) {
+    if (this.dragIndex === null || this.dragIndex === index) { this.dragIndex = null; return; }
+    const [moved] = this.photos.splice(this.dragIndex, 1);
+    this.photos.splice(index, 0, moved);
+    this.dragIndex = null;
+    this.cdr.markForCheck();
+  }
+
+  onDragEnd() {
+    this.dragIndex = null;
   }
 
   async publish() {
@@ -235,17 +250,21 @@ export class DeposerAnnonceComponent {
     this.error = '';
 
     try {
-      // Upload newly selected images to Cloudinary first
-      let newUrls: string[] = [];
-      if (this.selectedFiles.length > 0) {
+      // Upload newly selected images to Cloudinary first, then reassemble the
+      // final list in the order the user arranged via drag & drop — mixing
+      // already-uploaded URLs and freshly uploaded ones as needed.
+      const filesToUpload = this.photos.filter(p => p.file).map(p => p.file!);
+      let uploadedUrls: string[] = [];
+      if (filesToUpload.length > 0) {
         this.uploading = true;
         const result = await new Promise<{ urls: string[] }>((resolve, reject) => {
-          this.uploadService.uploadImages(this.selectedFiles).subscribe({ next: resolve, error: reject });
+          this.uploadService.uploadImages(filesToUpload).subscribe({ next: resolve, error: reject });
         });
-        newUrls = result.urls;
+        uploadedUrls = result.urls;
         this.uploading = false;
       }
-      const images = [...this.existingImages, ...newUrls];
+      let uploadIdx = 0;
+      const images = this.photos.map(p => p.file ? uploadedUrls[uploadIdx++]! : p.url);
 
       const payload = {
         title: this.form.title,

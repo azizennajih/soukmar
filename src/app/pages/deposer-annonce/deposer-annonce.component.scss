@@ -135,8 +135,12 @@ small { font-size: .75rem; color: #94a3b8; }
 .deposer__preview {
   position: relative; border-radius: .75rem; overflow: hidden;
   aspect-ratio: 1; border: 2px solid #e2e8f0;
+  cursor: grab; transition: opacity .15s, border-color .15s;
 
-  img { width: 100%; height: 100%; object-fit: cover; }
+  &--dragging { opacity: .4; border-color: #e63946; }
+  &:active { cursor: grabbing; }
+
+  img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 
   &-badge {
     position: absolute; top: .35rem; left: .35rem;
@@ -154,6 +158,8 @@ small { font-size: .75rem; color: #94a3b8; }
     &:hover { background: #e63946; }
   }
 }
+
+.deposer__drag-hint { text-align: center; font-size: .78rem; color: #94a3b8; margin-top: .6rem; }
 
 /* Summary */
 .deposer__summary {
