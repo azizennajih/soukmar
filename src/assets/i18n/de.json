@@ -59,7 +59,9 @@
     "gps_error": "Standort nicht verfügbar. Bitte Standortfreigabe prüfen.",
     "current_location": "Mein aktueller Standort",
     "radius": "Umkreis",
-    "whole_city": "Ganzer Ort"
+    "whole_city": "Ganzer Ort",
+    "gps_error_denied": "Standortzugriff verweigert. Bitte in den Website-Einstellungen (Schloss-/Info-Symbol neben der Adresse) erlauben.",
+    "gps_error_timeout": "Standortbestimmung dauert zu lange. Prüfen Sie, ob die Ortungsdienste aktiviert sind (Windows: Einstellungen > Datenschutz > Standort) und versuchen Sie es erneut."
   },
   "listing": {
     "loading": "Lädt...",

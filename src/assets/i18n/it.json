@@ -59,7 +59,9 @@
     "gps_error": "Posizione non disponibile. Controlla il permesso di localizzazione.",
     "current_location": "La mia posizione attuale",
     "radius": "Raggio",
-    "whole_city": "Tutta la città"
+    "whole_city": "Tutta la città",
+    "gps_error_denied": "Accesso alla posizione negato. Consentilo nelle impostazioni del sito (icona lucchetto/info accanto all'indirizzo).",
+    "gps_error_timeout": "La localizzazione richiede troppo tempo. Verifica che i servizi di localizzazione siano attivi (Windows: Impostazioni > Privacy > Posizione) e riprova."
   },
   "listing": {
     "loading": "Caricamento...",

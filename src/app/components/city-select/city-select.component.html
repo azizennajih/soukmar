@@ -32,7 +32,7 @@
   </div>
 
   @if (gpsError()) {
-    <div class="city-select__gps-error">{{ 'annonces.gps_error' | T }}</div>
+    <div class="city-select__gps-error">{{ gpsErrorKey() | T }}</div>
   }
 
   @if (open()) {

@@ -45,6 +45,7 @@ export class CitySelectComponent {
   panelStyle = signal<PanelStyle>({ top: '0px', left: '0px', width: '0px' });
   gpsLoading = signal(false);
   gpsError = signal(false);
+  gpsErrorKey = signal('annonces.gps_error');
 
   filtered = computed(() => {
     const q = normalize(this.query());
@@ -85,6 +86,16 @@ export class CitySelectComponent {
     this.open.set(false);
   }
 
+  /** Commits whatever the user typed as free text if they never explicitly picked a suggestion — mirrors a plain text input rather than silently discarding it. */
+  private commitTypedQuery() {
+    const q = this.query().trim();
+    if (q && q !== this.value) {
+      this.value = q;
+      this.valueChange.emit(q);
+    }
+    this.query.set('');
+  }
+
   clear(e: Event) {
     e.stopPropagation();
     this.value = '';
@@ -103,7 +114,13 @@ export class CitySelectComponent {
       this.gpsSelected.emit(coords);
       this.open.set(false);
       this.query.set('');
-    } catch {
+    } catch (err) {
+      const code = (err as GeolocationPositionError)?.code;
+      this.gpsErrorKey.set(
+        code === 1 ? 'annonces.gps_error_denied'
+        : code === 3 ? 'annonces.gps_error_timeout'
+        : 'annonces.gps_error'
+      );
       this.gpsError.set(true);
     } finally {
       this.gpsLoading.set(false);
@@ -124,8 +141,12 @@ export class CitySelectComponent {
       if (i >= 0 && i < list.length) {
         e.preventDefault();
         this.select(list[i]!);
+      } else {
+        // No dropdown item highlighted — commit whatever was typed, then let
+        // Enter bubble (e.g. submit an enclosing <form>).
+        this.commitTypedQuery();
+        this.open.set(false);
       }
-      // else: no dropdown item active — let Enter bubble (e.g. submit an enclosing <form>)
     } else if (e.key === 'Escape') {
       this.query.set('');
       this.open.set(false);
@@ -137,13 +158,13 @@ export class CitySelectComponent {
   onDocumentClick(e: MouseEvent) {
     if (!this.host.nativeElement.contains(e.target as Node)) {
       this.open.set(false);
-      this.query.set('');
+      this.commitTypedQuery();
     }
   }
 
   @HostListener('window:scroll')
   @HostListener('window:resize')
   onViewportChange() {
-    if (this.open()) { this.open.set(false); this.query.set(''); }
+    if (this.open()) { this.open.set(false); this.commitTypedQuery(); }
   }
 }

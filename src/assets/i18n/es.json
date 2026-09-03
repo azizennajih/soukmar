@@ -59,7 +59,9 @@
     "gps_error": "Ubicación no disponible. Comprueba el permiso de localización.",
     "current_location": "Mi ubicación actual",
     "radius": "Radio",
-    "whole_city": "Toda la ciudad"
+    "whole_city": "Toda la ciudad",
+    "gps_error_denied": "Acceso a la ubicación denegado. Actívalo en la configuración del sitio (icono de candado/info junto a la barra de direcciones).",
+    "gps_error_timeout": "La localización está tardando demasiado. Comprueba que los servicios de ubicación estén activados (Windows: Configuración > Privacidad > Ubicación) e inténtalo de nuevo."
   },
   "listing": {
     "loading": "Cargando...",
