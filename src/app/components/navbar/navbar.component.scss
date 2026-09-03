@@ -183,6 +183,10 @@
     text-decoration: none;
     transition: all .2s;
     &:hover { background: #f8fafc; color: #e63946; border-color: #e63946; }
+    // Redundant with the mobile menu's own Messages link, and the header
+    // runs out of room for it once the user is logged in (chat + avatar +
+    // post + burger no longer fit 375px without it).
+    @media (max-width: 480px) { display: none; }
   }
 
   &__chat-badge {
