@@ -47,6 +47,14 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/notifications/notifications.component').then(m => m.NotificationsComponent)
   },
   {
+    path: 'vendeur/:id',
+    loadComponent: () => import('./pages/seller-profile/seller-profile.component').then(m => m.SellerProfileComponent)
+  },
+  {
+    path: 'recherches-sauvegardees',
+    loadComponent: () => import('./pages/saved-searches/saved-searches.component').then(m => m.SavedSearchesComponent)
+  },
+  {
     path: 'profil',
     loadComponent: () => import('./pages/profil/profil.component').then(m => m.ProfilComponent)
   },

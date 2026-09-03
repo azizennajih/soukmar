@@ -1,0 +1,27 @@
+<div class="saved-searches container fade-in">
+  <h1>{{ 'saved_searches.title' | T }}</h1>
+
+  @if (!loading && searches.length === 0) {
+    <div class="empty-state">
+      <span>🔔</span>
+      <p>{{ 'saved_searches.empty' | T }}</p>
+      <small>{{ 'saved_searches.empty_sub' | T }}</small>
+    </div>
+  } @else {
+    <div class="saved-searches__list">
+      @for (s of searches; track s.id) {
+        <button type="button" class="search-row" (click)="open(s)">
+          <div class="search-row__body">
+            <span class="search-row__name">{{ s.name }}</span>
+            <span class="search-row__meta">
+              @if (category(s); as c) { {{ c.icon }} {{ ('cats.' + c.value) | T }} }
+              @if (s.city) { · 📍 {{ s.city }} }
+              @if (s.minPrice || s.maxPrice) { · {{ s.minPrice || 0 }}–{{ s.maxPrice || '∞' }} MAD }
+            </span>
+          </div>
+          <button type="button" class="search-row__remove" (click)="remove(s, $event)" [title]="'common.delete' | T">✕</button>
+        </button>
+      }
+    </div>
+  }
+</div>

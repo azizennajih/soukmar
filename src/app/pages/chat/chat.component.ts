@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { ChatService, ChatMessage, Conversation } from '../../services/chat.service';
 import { AuthService } from '../../services/auth.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { I18nService } from '../../services/i18n.service';
 
 @Component({
   selector: 'app-chat',
@@ -37,7 +38,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     public chatService: ChatService,
     private route: ActivatedRoute,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    public i18n: I18nService
   ) {}
 
   async ngOnInit() {
@@ -141,6 +143,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   onEnter(e: KeyboardEvent) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.sendMessage(); }
+  }
+
+  quickReplyKeys = ['chat.quick_available', 'chat.quick_last_price', 'chat.quick_still_interested', 'chat.quick_thanks'];
+
+  useQuickReply(key: string) {
+    this.messageText = this.i18n.t(key);
   }
 
   getPartnerId(): string {

@@ -15,7 +15,8 @@
     "logout": "Abmelden",
     "register": "Registrieren",
     "categories": "Kategorien",
-    "all": "Alle"
+    "all": "Alle",
+    "saved_searches": "Gespeicherte Suchen"
   },
   "home": {
     "hero_badge": "Über 50.000 aktive Anzeigen",
@@ -68,7 +69,10 @@
     "radius": "Umkreis",
     "whole_city": "Ganzer Ort",
     "gps_error_denied": "Standortzugriff blockiert. Bitte in den Browser-Einstellungen für diese Seite erlauben und erneut versuchen.",
-    "gps_error_timeout": "Standortbestimmung dauert zu lange. Prüfen Sie, ob die Ortungsdienste aktiviert sind (Windows: Einstellungen > Datenschutz > Standort) und versuchen Sie es erneut."
+    "gps_error_timeout": "Standortbestimmung dauert zu lange. Prüfen Sie, ob die Ortungsdienste aktiviert sind (Windows: Einstellungen > Datenschutz > Standort) und versuchen Sie es erneut.",
+    "save_search": "Diese Suche speichern",
+    "save_search_name": "Name der Suche",
+    "search_saved": "Suche gespeichert!"
   },
   "listing": {
     "loading": "Lädt...",
@@ -107,7 +111,13 @@
     "negotiate": "Preis verhandelbar",
     "specs_title": "Ausstattung",
     "condition_new": "Neu",
-    "condition_used": "Gebraucht"
+    "condition_used": "Gebraucht",
+    "price_below": "{pct}% günstiger als der Durchschnitt",
+    "price_above": "{pct}% teurer als der Durchschnitt",
+    "leave_review": "Bewertung abgeben",
+    "review_placeholder": "Teilen Sie Ihre Erfahrung mit (optional)",
+    "submit_review": "Bewertung absenden",
+    "review_thanks": "Danke für Ihre Bewertung!"
   },
   "chat": {
     "back": "Zurück",
@@ -133,7 +143,11 @@
     "offer_label": "Ihr Angebot:",
     "send_offer": "Angebot senden",
     "cancel": "Abbrechen",
-    "loading": "Lädt..."
+    "loading": "Lädt...",
+    "quick_available": "Noch verfügbar?",
+    "quick_last_price": "Letzter Preis?",
+    "quick_still_interested": "Noch interessiert?",
+    "quick_thanks": "Danke!"
   },
   "notifications": {
     "title": "Benachrichtigungen",
@@ -142,7 +156,11 @@
     "mark_all_read": "Alle als gelesen markieren",
     "new_inquiry": "Sie haben eine neue Anfrage von {name} erhalten.",
     "new_reply": "{name} hat auf Ihre Anfrage geantwortet.",
-    "new_message": "Sie haben eine neue Nachricht von {name} erhalten."
+    "new_message": "Sie haben eine neue Nachricht von {name} erhalten.",
+    "new_review": "{name} hat Ihnen eine Bewertung hinterlassen.",
+    "saved_search_match": "Neue Anzeige für Ihre Suche „{name}“.",
+    "enable_push": "Aktivieren Sie Push-Benachrichtigungen, um nichts zu verpassen.",
+    "enable_push_btn": "Aktivieren"
   },
   "auth": {
     "login_title": "Willkommen zurück!",
@@ -322,7 +340,11 @@
     "see": "Anzeigen",
     "confirm_delete": "Diese Anzeige löschen?",
     "reserve": "Als reserviert markieren",
-    "unreserve": "Reservierung aufheben"
+    "unreserve": "Reservierung aufheben",
+    "bump": "Anzeige nach oben schieben",
+    "bump_cooldown": "Einmal täglich verfügbar",
+    "stats": "Statistiken",
+    "stats_title": "Aufrufe der letzten 14 Tage"
   },
   "mes_favoris": {
     "title": "Meine Favoriten",
@@ -842,5 +864,22 @@
       "CITY": "Cityrad",
       "KIDS": "Kinder"
     }
+  },
+  "seller": {
+    "not_found": "Benutzer nicht gefunden.",
+    "member_since": "Mitglied seit",
+    "no_reviews": "Keine Bewertungen",
+    "no_reviews_yet": "Noch keine Bewertungen.",
+    "responds_minutes": "Antwortet innerhalb von Minuten",
+    "responds_hours": "Antwortet meist innerhalb von {hours} Std.",
+    "responds_days": "Antwortet meist innerhalb von {days} Tagen",
+    "listings_title": "Anzeigen",
+    "no_listings": "Keine aktiven Anzeigen.",
+    "reviews_title": "Bewertungen"
+  },
+  "saved_searches": {
+    "title": "Gespeicherte Suchen",
+    "empty": "Keine gespeicherten Suchen",
+    "empty_sub": "Speichern Sie eine Suche, um über neue passende Anzeigen informiert zu werden."
   }
 }

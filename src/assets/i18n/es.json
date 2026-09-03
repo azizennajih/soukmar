@@ -15,7 +15,8 @@
     "logout": "Cerrar sesión",
     "register": "Registrarse",
     "categories": "Categorías",
-    "all": "Todos"
+    "all": "Todos",
+    "saved_searches": "Búsquedas guardadas"
   },
   "home": {
     "hero_badge": "Más de 50.000 anuncios activos",
@@ -68,7 +69,10 @@
     "radius": "Radio",
     "whole_city": "Toda la ciudad",
     "gps_error_denied": "Acceso a la ubicación bloqueado. Actívalo en la configuración de tu navegador para este sitio y vuelve a intentarlo.",
-    "gps_error_timeout": "La localización está tardando demasiado. Comprueba que los servicios de ubicación estén activados (Windows: Configuración > Privacidad > Ubicación) e inténtalo de nuevo."
+    "gps_error_timeout": "La localización está tardando demasiado. Comprueba que los servicios de ubicación estén activados (Windows: Configuración > Privacidad > Ubicación) e inténtalo de nuevo.",
+    "save_search": "Guardar esta búsqueda",
+    "save_search_name": "Nombre de la búsqueda",
+    "search_saved": "¡Búsqueda guardada!"
   },
   "listing": {
     "loading": "Cargando...",
@@ -107,7 +111,13 @@
     "negotiate": "Precio negociable",
     "specs_title": "Características",
     "condition_new": "Nuevo",
-    "condition_used": "Usado"
+    "condition_used": "Usado",
+    "price_below": "{pct}% más barato que la media",
+    "price_above": "{pct}% más caro que la media",
+    "leave_review": "Dejar una reseña",
+    "review_placeholder": "Comparte tu experiencia (opcional)",
+    "submit_review": "Enviar reseña",
+    "review_thanks": "¡Gracias por tu reseña!"
   },
   "chat": {
     "back": "Atrás",
@@ -133,7 +143,11 @@
     "offer_label": "Tu oferta:",
     "send_offer": "Enviar oferta",
     "cancel": "Cancelar",
-    "loading": "Cargando..."
+    "loading": "Cargando...",
+    "quick_available": "¿Todavía disponible?",
+    "quick_last_price": "¿Último precio?",
+    "quick_still_interested": "¿Sigues interesado/a?",
+    "quick_thanks": "¡Gracias!"
   },
   "notifications": {
     "title": "Notificaciones",
@@ -142,7 +156,11 @@
     "mark_all_read": "Marcar todo como leído",
     "new_inquiry": "Has recibido una nueva solicitud de {name}.",
     "new_reply": "{name} respondió a tu solicitud.",
-    "new_message": "Has recibido un nuevo mensaje de {name}."
+    "new_message": "Has recibido un nuevo mensaje de {name}.",
+    "new_review": "{name} te ha dejado una reseña.",
+    "saved_search_match": "Nuevo anuncio para tu búsqueda «{name}».",
+    "enable_push": "Activa las notificaciones push para no perderte nada.",
+    "enable_push_btn": "Activar"
   },
   "auth": {
     "login_title": "¡Bienvenido de vuelta!",
@@ -322,7 +340,11 @@
     "see": "Ver",
     "confirm_delete": "¿Eliminar este anuncio?",
     "reserve": "Marcar como reservado",
-    "unreserve": "Cancelar reserva"
+    "unreserve": "Cancelar reserva",
+    "bump": "Destacar anuncio",
+    "bump_cooldown": "Disponible una vez al día",
+    "stats": "Estadísticas",
+    "stats_title": "Visitas de los últimos 14 días"
   },
   "mes_favoris": {
     "title": "Mis favoritos",
@@ -842,5 +864,22 @@
       "CITY": "Urbana",
       "KIDS": "Infantil"
     }
+  },
+  "seller": {
+    "not_found": "Usuario no encontrado.",
+    "member_since": "Miembro desde",
+    "no_reviews": "Sin reseñas",
+    "no_reviews_yet": "Todavía no hay reseñas.",
+    "responds_minutes": "Responde en cuestión de minutos",
+    "responds_hours": "Suele responder en {hours} h",
+    "responds_days": "Suele responder en {days} días",
+    "listings_title": "Anuncios",
+    "no_listings": "Sin anuncios activos.",
+    "reviews_title": "Reseñas"
+  },
+  "saved_searches": {
+    "title": "Búsquedas guardadas",
+    "empty": "No hay búsquedas guardadas",
+    "empty_sub": "Guarda una búsqueda para recibir avisos de nuevos anuncios coincidentes."
   }
 }

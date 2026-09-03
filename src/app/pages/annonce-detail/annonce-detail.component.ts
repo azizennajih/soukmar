@@ -9,6 +9,7 @@ import { Listing, ListingAttributeValue, CATEGORIES, formatPrice, timeAgo } from
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
+import { ReviewService, CanReviewResponse } from '../../services/review.service';
 
 @Component({
   selector: 'app-annonce-detail',
@@ -29,6 +30,14 @@ export class AnnonceDetailComponent implements OnInit {
   shareCopied = signal(false);
   shareMenuOpen = signal(false);
 
+  canReviewInfo: CanReviewResponse | null = null;
+  showReviewForm = signal(false);
+  reviewRating = 5;
+  reviewComment = '';
+  reviewSubmitting = false;
+  reviewSubmitted = false;
+  stars = [1, 2, 3, 4, 5];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -36,7 +45,8 @@ export class AnnonceDetailComponent implements OnInit {
     private api: ApiService,
     public auth: AuthService,
     private cdr: ChangeDetectorRef,
-    public i18n: I18nService
+    public i18n: I18nService,
+    private reviewService: ReviewService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -53,10 +63,42 @@ export class AnnonceDetailComponent implements OnInit {
         this.listing = listing;
         this.loading = false;
         this.cdr.markForCheck();
-        if (this.auth.isLoggedIn) this.checkFavorite();
+        if (this.auth.isLoggedIn) { this.checkFavorite(); this.checkCanReview(id); }
       },
       error: (e) => { console.error('Detail error:', e); this.loading = false; this.loadError = true; this.cdr.markForCheck(); }
     });
+  }
+
+  checkCanReview(listingId: string) {
+    this.reviewService.canReview(listingId).subscribe({
+      next: r => { this.canReviewInfo = r; this.cdr.markForCheck(); },
+      error: () => {}
+    });
+  }
+
+  submitReview() {
+    if (!this.canReviewInfo?.revieweeId || !this.listing) return;
+    this.reviewSubmitting = true;
+    this.reviewService.submit({
+      listingId: this.listing.id,
+      revieweeId: this.canReviewInfo.revieweeId,
+      rating: this.reviewRating,
+      comment: this.reviewComment.trim() || undefined
+    }).subscribe({
+      next: () => {
+        this.reviewSubmitted = true;
+        this.reviewSubmitting = false;
+        this.showReviewForm.set(false);
+        if (this.canReviewInfo) this.canReviewInfo.canReview = false;
+        this.cdr.markForCheck();
+      },
+      error: () => { this.reviewSubmitting = false; this.cdr.markForCheck(); }
+    });
+  }
+
+  get priceComparisonPct(): number | null {
+    if (!this.listing?.price || !this.listing?.avgPrice) return null;
+    return Math.round(((this.listing.price - this.listing.avgPrice) / this.listing.avgPrice) * 100);
   }
 
   async checkFavorite() {

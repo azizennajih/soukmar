@@ -11,6 +11,7 @@
     "profile": "Mon profil",
     "my_listings": "Mes annonces",
     "my_favorites": "Mes favoris",
+    "saved_searches": "Recherches sauvegardées",
     "admin": "Dashboard Admin",
     "logout": "Se déconnecter",
     "register": "S'inscrire",
@@ -68,7 +69,10 @@
     "whole_city": "Ville entière",
     "subcategory": "Sous-catégorie",
     "all_subcats": "Toutes sous-catégories",
-    "condition": "État"
+    "condition": "État",
+    "save_search": "Enregistrer cette recherche",
+    "save_search_name": "Nom de la recherche",
+    "search_saved": "Recherche enregistrée !"
   },
   "listing": {
     "loading": "Chargement...",
@@ -107,7 +111,13 @@
     "details": "Détails",
     "similar": "Annonces similaires",
     "premium_badge": "Premium",
-    "negotiate": "Prix à négocier"
+    "negotiate": "Prix à négocier",
+    "price_below": "{pct}% moins cher que la moyenne",
+    "price_above": "{pct}% plus cher que la moyenne",
+    "leave_review": "Laisser un avis",
+    "review_placeholder": "Partagez votre expérience (facultatif)",
+    "submit_review": "Envoyer l'évaluation",
+    "review_thanks": "Merci pour votre évaluation !"
   },
   "chat": {
     "back": "Retour",
@@ -133,7 +143,11 @@
     "offer_label": "Votre offre :",
     "send_offer": "Envoyer l'offre",
     "cancel": "Annuler",
-    "loading": "Chargement..."
+    "loading": "Chargement...",
+    "quick_available": "Toujours disponible ?",
+    "quick_last_price": "Dernier prix ?",
+    "quick_still_interested": "Toujours intéressé(e) ?",
+    "quick_thanks": "Merci !"
   },
   "notifications": {
     "title": "Notifications",
@@ -142,7 +156,11 @@
     "mark_all_read": "Tout marquer comme lu",
     "new_inquiry": "Vous avez reçu une nouvelle demande de {name}.",
     "new_reply": "{name} a répondu à votre demande.",
-    "new_message": "Vous avez reçu un nouveau message de {name}."
+    "new_message": "Vous avez reçu un nouveau message de {name}.",
+    "new_review": "{name} vous a laissé une évaluation.",
+    "saved_search_match": "Nouvelle annonce pour votre recherche « {name} ».",
+    "enable_push": "Activez les notifications push pour ne rien manquer.",
+    "enable_push_btn": "Activer"
   },
   "auth": {
     "login_title": "Bon retour !",
@@ -620,7 +638,11 @@
     "see": "Voir",
     "confirm_delete": "Supprimer cette annonce ?",
     "reserve": "Marquer comme réservée",
-    "unreserve": "Annuler la réservation"
+    "unreserve": "Annuler la réservation",
+    "bump": "Remonter l'annonce",
+    "bump_cooldown": "Disponible une fois par jour",
+    "stats": "Statistiques",
+    "stats_title": "Vues sur les 14 derniers jours"
   },
   "mes_favoris": {
     "title": "Mes favoris",
@@ -645,5 +667,22 @@
     "stats_listings": "Annonces",
     "stats_views": "Vues totales",
     "stats_favorites": "Favoris reçus"
+  },
+  "seller": {
+    "not_found": "Utilisateur introuvable.",
+    "member_since": "Membre depuis",
+    "no_reviews": "Aucune évaluation",
+    "no_reviews_yet": "Aucune évaluation pour le moment.",
+    "responds_minutes": "Répond en quelques minutes",
+    "responds_hours": "Répond généralement en {hours} h",
+    "responds_days": "Répond généralement en {days} j",
+    "listings_title": "Annonces",
+    "no_listings": "Aucune annonce active.",
+    "reviews_title": "Évaluations"
+  },
+  "saved_searches": {
+    "title": "Recherches sauvegardées",
+    "empty": "Aucune recherche sauvegardée",
+    "empty_sub": "Enregistrez une recherche pour être averti des nouvelles annonces correspondantes."
   }
 }

@@ -1,0 +1,74 @@
+<div class="seller-profile container fade-in">
+  @if (notFound) {
+    <div class="empty-state">
+      <p>{{ 'seller.not_found' | T }}</p>
+    </div>
+  } @else if (profile) {
+    <div class="seller-profile__header card">
+      <div class="seller-profile__avatar">{{ profile.name[0]?.toUpperCase() }}</div>
+      <div class="seller-profile__info">
+        <h1>{{ profile.name }}</h1>
+        <div class="seller-profile__meta">
+          @if (profile.city) { <span>📍 {{ profile.city }}</span> }
+          <span>{{ 'seller.member_since' | T }} {{ memberSince(profile.createdAt) }}</span>
+        </div>
+        <div class="seller-profile__badges">
+          @if (profile.avgRating) {
+            <span class="seller-profile__rating">
+              @for (s of stars; track s) {
+                <span [class.filled]="s <= roundedRating">★</span>
+              }
+              {{ profile.avgRating | number:'1.1-1' }} ({{ profile.reviewCount }})
+            </span>
+          } @else {
+            <span class="seller-profile__no-reviews">{{ 'seller.no_reviews' | T }}</span>
+          }
+          @if (responseLabel(profile.avgResponseHours); as label) {
+            <span class="seller-profile__response">⚡ {{ label }}</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <section class="seller-profile__section">
+      <h2>{{ 'seller.listings_title' | T }} ({{ profile.activeListingsCount }})</h2>
+      @if (listings.length) {
+        <div class="grid-4">
+          @for (l of listings; track l.id) {
+            <app-listing-card [listing]="l" />
+          }
+        </div>
+      } @else {
+        <p class="seller-profile__empty">{{ 'seller.no_listings' | T }}</p>
+      }
+    </section>
+
+    <section class="seller-profile__section">
+      <h2>{{ 'seller.reviews_title' | T }} ({{ reviews.length }})</h2>
+      @if (reviews.length) {
+        <div class="seller-profile__reviews">
+          @for (r of reviews; track r.id) {
+            <div class="review-row">
+              <div class="review-row__avatar">{{ r.reviewer?.name?.[0]?.toUpperCase() || '?' }}</div>
+              <div class="review-row__body">
+                <div class="review-row__top">
+                  <span class="review-row__name">{{ r.reviewer?.name }}</span>
+                  <span class="review-row__stars">
+                    @for (s of stars; track s) { <span [class.filled]="s <= r.rating">★</span> }
+                  </span>
+                </div>
+                @if (r.comment) { <p class="review-row__comment">{{ r.comment }}</p> }
+                <span class="review-row__meta">
+                  @if (r.listing) { 📌 {{ r.listing.title }} · }
+                  {{ reviewTime(r.createdAt) }}
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="seller-profile__empty">{{ 'seller.no_reviews_yet' | T }}</p>
+      }
+    </section>
+  }
+</div>

@@ -93,6 +93,17 @@
         </div>
 
         <div class="detail__price">{{ priceDisplay }}</div>
+        @if (priceComparisonPct; as pct) {
+          @if (pct < 0) {
+            <div class="detail__price-indicator detail__price-indicator--good">
+              📉 {{ 'listing.price_below' | T:{pct: (-pct).toString()} }}
+            </div>
+          } @else {
+            <div class="detail__price-indicator" [class.detail__price-indicator--high]="pct > 10">
+              📈 {{ 'listing.price_above' | T:{pct: pct.toString()} }}
+            </div>
+          }
+        }
 
         @if (category) {
           <span class="badge" [ngClass]="category.color">{{ category.icon }} {{ ('cats.' + listing.category) | T }}</span>
@@ -174,10 +185,35 @@
             }
           </div>
         </div>
-        <a [routerLink]="['/annonces']" [queryParams]="{q: listing.user?.name}" class="btn-outline" style="width:100%;justify-content:center;margin-top:.75rem;font-size:.85rem">
+        <a [routerLink]="['/vendeur', listing.userId]" class="btn-outline" style="width:100%;justify-content:center;margin-top:.75rem;font-size:.85rem">
           {{ 'listing.seller_listings' | T }}
         </a>
       </div>
+
+      <!-- Review -->
+      @if (canReviewInfo?.canReview) {
+        <div class="card detail__review-box">
+          @if (!showReviewForm()) {
+            <button class="btn-outline" style="width:100%;justify-content:center" (click)="showReviewForm.set(true)">
+              ⭐ {{ 'listing.leave_review' | T }}
+            </button>
+          } @else {
+            <h3>{{ 'listing.leave_review' | T }}</h3>
+            <div class="detail__review-stars">
+              @for (s of stars; track s) {
+                <button type="button" [class.filled]="s <= reviewRating" (click)="reviewRating = s">★</button>
+              }
+            </div>
+            <textarea [(ngModel)]="reviewComment" rows="3" [placeholder]="'listing.review_placeholder' | T"></textarea>
+            <button class="btn-primary" style="width:100%;justify-content:center;margin-top:.5rem" [disabled]="reviewSubmitting" (click)="submitReview()">
+              {{ 'listing.submit_review' | T }}
+            </button>
+          }
+        </div>
+      }
+      @if (reviewSubmitted) {
+        <div class="detail__review-thanks">✅ {{ 'listing.review_thanks' | T }}</div>
+      }
 
       <!-- Report -->
       <button class="detail__report">🚩 {{ 'listing.report' | T }}</button>

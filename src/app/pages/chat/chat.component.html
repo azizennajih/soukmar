@@ -130,6 +130,13 @@
         </div>
       }
 
+      <!-- Quick replies -->
+      <div class="chat__quick-replies">
+        @for (key of quickReplyKeys; track key) {
+          <button type="button" (click)="useQuickReply(key)">{{ key | T }}</button>
+        }
+      </div>
+
       <!-- Input bar -->
       <div class="chat__input-bar">
         <button class="chat__offer-btn" (click)="showOfferInput=!showOfferInput" [title]="'listing.offer' | T">💰</button>

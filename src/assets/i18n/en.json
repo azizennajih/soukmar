@@ -15,7 +15,8 @@
     "logout": "Sign out",
     "register": "Sign up",
     "categories": "Categories",
-    "all": "All"
+    "all": "All",
+    "saved_searches": "Saved Searches"
   },
   "home": {
     "hero_badge": "Over 50,000 active listings",
@@ -68,7 +69,10 @@
     "radius": "Radius",
     "whole_city": "Whole city",
     "gps_error_denied": "Location access blocked. Please allow it in your browser settings for this site and try again.",
-    "gps_error_timeout": "Locating is taking too long. Check that location services are enabled on your device (Windows: Settings > Privacy > Location), then try again."
+    "gps_error_timeout": "Locating is taking too long. Check that location services are enabled on your device (Windows: Settings > Privacy > Location), then try again.",
+    "save_search": "Save this search",
+    "save_search_name": "Search name",
+    "search_saved": "Search saved!"
   },
   "listing": {
     "loading": "Loading...",
@@ -107,7 +111,13 @@
     "negotiate": "Price negotiable",
     "specs_title": "Specifications",
     "condition_new": "New",
-    "condition_used": "Used"
+    "condition_used": "Used",
+    "price_below": "{pct}% cheaper than average",
+    "price_above": "{pct}% more expensive than average",
+    "leave_review": "Leave a review",
+    "review_placeholder": "Share your experience (optional)",
+    "submit_review": "Submit review",
+    "review_thanks": "Thanks for your review!"
   },
   "chat": {
     "back": "Back",
@@ -133,7 +143,11 @@
     "offer_label": "Your offer:",
     "send_offer": "Send offer",
     "cancel": "Cancel",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "quick_available": "Still available?",
+    "quick_last_price": "Best price?",
+    "quick_still_interested": "Still interested?",
+    "quick_thanks": "Thanks!"
   },
   "notifications": {
     "title": "Notifications",
@@ -142,7 +156,11 @@
     "mark_all_read": "Mark all as read",
     "new_inquiry": "You've received a new inquiry from {name}.",
     "new_reply": "{name} replied to your inquiry.",
-    "new_message": "You've received a new message from {name}."
+    "new_message": "You've received a new message from {name}.",
+    "new_review": "{name} left you a review.",
+    "saved_search_match": "New listing for your search \"{name}\".",
+    "enable_push": "Enable push notifications so you never miss anything.",
+    "enable_push_btn": "Enable"
   },
   "auth": {
     "login_title": "Welcome back!",
@@ -361,7 +379,11 @@
     "see": "View",
     "confirm_delete": "Delete this listing?",
     "reserve": "Mark as reserved",
-    "unreserve": "Cancel reservation"
+    "unreserve": "Cancel reservation",
+    "bump": "Bump listing",
+    "bump_cooldown": "Available once a day",
+    "stats": "Statistics",
+    "stats_title": "Views over the last 14 days"
   },
   "mes_favoris": {
     "title": "My favorites",
@@ -834,5 +856,22 @@
       "CITY": "City",
       "KIDS": "Kids"
     }
+  },
+  "seller": {
+    "not_found": "User not found.",
+    "member_since": "Member since",
+    "no_reviews": "No reviews",
+    "no_reviews_yet": "No reviews yet.",
+    "responds_minutes": "Responds within minutes",
+    "responds_hours": "Usually responds within {hours}h",
+    "responds_days": "Usually responds within {days} days",
+    "listings_title": "Listings",
+    "no_listings": "No active listings.",
+    "reviews_title": "Reviews"
+  },
+  "saved_searches": {
+    "title": "Saved Searches",
+    "empty": "No saved searches",
+    "empty_sub": "Save a search to get notified about new matching listings."
   }
 }

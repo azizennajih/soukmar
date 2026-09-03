@@ -9,6 +9,13 @@
     }
   </div>
 
+  @if (pushService.supported && !pushService.subscribed()) {
+    <div class="notifications__push-banner">
+      <span>🔔 {{ 'notifications.enable_push' | T }}</span>
+      <button class="btn-primary" (click)="enablePush()">{{ 'notifications.enable_push_btn' | T }}</button>
+    </div>
+  }
+
   @if (notifications.length === 0) {
     <div class="notifications__empty">
       <span>🔔</span>

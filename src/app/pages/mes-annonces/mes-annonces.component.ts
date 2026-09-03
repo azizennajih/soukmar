@@ -17,6 +17,9 @@ export class MesAnnoncesComponent implements OnInit {
   i18n = inject(I18nService);
   listings: Listing[] = [];
   loading = false;
+  bumping: Record<string, boolean> = {};
+  statsOpenId: string | null = null;
+  statsData: Record<string, { date: string; count: number }[]> = {};
 
   get statusConfig(): Record<string, { label: string; cls: string }> {
     const t = (k: string) => this.i18n.t(k);
@@ -61,4 +64,37 @@ export class MesAnnoncesComponent implements OnInit {
   getCategory(val: string) { return CATEGORIES.find(c => c.value === val); }
   price(l: Listing) { return l.price != null ? formatPrice(l.price, l.currency) : 'À négocier'; }
   time(l: Listing)  { return timeAgo(l.createdAt); }
+
+  canBump(listing: Listing): boolean {
+    if (!listing.bumpedAt) return true;
+    return Date.now() - new Date(listing.bumpedAt).getTime() >= 24 * 3_600_000;
+  }
+
+  bump(listing: Listing) {
+    if (this.bumping[listing.id] || !this.canBump(listing)) return;
+    this.bumping[listing.id] = true;
+    this.ls.bump(listing.id).subscribe({
+      next: updated => { listing.bumpedAt = updated.bumpedAt; this.bumping[listing.id] = false; this.cdr.markForCheck(); },
+      error: () => { this.bumping[listing.id] = false; this.cdr.markForCheck(); }
+    });
+  }
+
+  toggleStats(listing: Listing) {
+    this.statsOpenId = this.statsOpenId === listing.id ? null : listing.id;
+    if (this.statsOpenId && !this.statsData[listing.id]) {
+      this.ls.getViewStats(listing.id).subscribe({
+        next: res => { this.statsData[listing.id] = res.days; this.cdr.markForCheck(); },
+        error: () => {}
+      });
+    }
+  }
+
+  maxCount(listing: Listing): number {
+    const days = this.statsData[listing.id] || [];
+    return Math.max(1, ...days.map(d => d.count));
+  }
+
+  barHeight(listing: Listing, count: number): number {
+    return Math.max(4, Math.round((count / this.maxCount(listing)) * 40));
+  }
 }

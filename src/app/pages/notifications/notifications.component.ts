@@ -6,6 +6,7 @@ import { NotificationService, AppNotification } from '../../services/notificatio
 import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { timeAgo } from '../../models/listing.model';
+import { PushService } from '../../services/push.service';
 
 @Component({
   selector: 'app-notifications',
@@ -23,8 +24,14 @@ export class NotificationsComponent implements OnInit {
     private notifService: NotificationService,
     public i18n: I18nService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    public pushService: PushService
   ) {}
+
+  async enablePush() {
+    await this.pushService.subscribe();
+    this.cdr.markForCheck();
+  }
 
   ngOnInit() {
     if (!this.auth.isLoggedIn) { this.router.navigate(['/auth/login']); return; }
@@ -43,6 +50,8 @@ export class NotificationsComponent implements OnInit {
   text(n: AppNotification): string {
     const key = n.type === 'NEW_INQUIRY' ? 'notifications.new_inquiry'
       : n.type === 'NEW_REPLY' ? 'notifications.new_reply'
+      : n.type === 'NEW_REVIEW' ? 'notifications.new_review'
+      : n.type === 'SAVED_SEARCH_MATCH' ? 'notifications.saved_search_match'
       : 'notifications.new_message';
     return this.i18n.t(key, { name: n.actorName || '' });
   }
@@ -57,6 +66,8 @@ export class NotificationsComponent implements OnInit {
       this.cdr.markForCheck();
       this.notifService.markRead(n.id);
     }
+    if (n.type === 'NEW_REVIEW') { this.router.navigate(['/profil'], { queryParams: { tab: 'reviews' } }); return; }
+    if (n.type === 'SAVED_SEARCH_MATCH' && n.listingId) { this.router.navigate(['/annonces', n.listingId]); return; }
     if (n.listingId) this.router.navigate(['/chat'], { queryParams: { listing: n.listingId } });
   }
 

@@ -57,6 +57,33 @@
 
     @media (max-width: 480px) { label { display: none; } }
   }
+
+  &__save-search {
+    margin-bottom: 1.25rem;
+  }
+
+  &__save-search-btn {
+    background: none; border: 1.5px solid var(--border); border-radius: .65rem;
+    padding: .5rem .9rem; font-size: .82rem; font-weight: 600; color: var(--text);
+    cursor: pointer; transition: border-color .15s, color .15s;
+    &:hover { border-color: var(--primary); color: var(--primary); }
+  }
+
+  &__save-search-ok {
+    font-size: .82rem; font-weight: 600; color: #16a34a;
+  }
+
+  &__save-search-form {
+    display: flex; gap: .5rem; align-items: center; flex-wrap: wrap;
+
+    input {
+      flex: 1; min-width: 180px;
+      padding: .5rem .75rem; border: 1.5px solid var(--border); border-radius: .65rem;
+      font-size: .85rem;
+      &:focus { border-color: var(--primary); }
+    }
+    .btn-primary, .btn-outline { padding: .5rem 1rem; font-size: .82rem; }
+  }
 }
 
 /* Sidebar */

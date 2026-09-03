@@ -67,11 +67,51 @@ export interface Listing {
   userId: string;
   user?: User;
   attributeValues?: ListingAttributeValue[];
+  avgPrice?: number | null;
+  bumpedAt?: Date;
   createdAt: Date;
 }
 
 export interface ListingAttributesPayload {
   attributes?: Record<string, string | number | boolean>;
+}
+
+export interface Review {
+  id: string;
+  listingId: string;
+  reviewerId: string;
+  revieweeId: string;
+  rating: number;
+  comment?: string | null;
+  createdAt: Date;
+  reviewer?: { id: string; name: string; image?: string | null };
+  listing?: { id: string; title: string };
+}
+
+export interface SellerProfile {
+  id: string;
+  name: string;
+  city?: string | null;
+  image?: string | null;
+  createdAt: Date;
+  avgRating: number | null;
+  reviewCount: number;
+  activeListingsCount: number;
+  avgResponseHours: number | null;
+}
+
+export interface SavedSearch {
+  id: string;
+  name: string;
+  category?: Category;
+  subcategoryId?: string;
+  q?: string;
+  city?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  condition?: Condition;
+  attrs?: Record<string, string[]>;
+  createdAt: Date;
 }
 
 export interface CategoryConfig {

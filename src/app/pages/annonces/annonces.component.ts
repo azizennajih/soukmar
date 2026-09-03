@@ -14,6 +14,7 @@ import { MultiSelectComponent } from '../../components/multi-select/multi-select
 import { CATEGORIES, MOROCCO_CITIES, Listing, Category, AttributeDefinition } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { SavedSearchService } from '../../services/saved-search.service';
 
 interface SubcategoryOption { id: string; code: string; }
 
@@ -40,6 +41,11 @@ export class AnnoncesComponent implements OnInit {
 
   filters = { q: '', categorie: '', souscategorie: '', ville: '', minPrix: '', maxPrix: '', condition: '', tri: '', radius: '', lat: '', lng: '' };
 
+  showSaveSearchForm = false;
+  newSearchName = '';
+  searchSaved = false;
+  savingSearch = false;
+
   constructor(
     private listingService: ListingService,
     private catalog: CatalogService,
@@ -47,8 +53,9 @@ export class AnnoncesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private api: ApiService,
-    private auth: AuthService,
-    private cdr: ChangeDetectorRef
+    public auth: AuthService,
+    private cdr: ChangeDetectorRef,
+    private savedSearchService: SavedSearchService
   ) {}
 
   ngOnInit() {
@@ -220,5 +227,37 @@ export class AnnoncesComponent implements OnInit {
 
   get activeCategory() {
     return this.categories.find(c => c.value === this.filters.categorie);
+  }
+
+  saveSearch() {
+    if (!this.newSearchName.trim() || this.savingSearch) return;
+    const attrs: Record<string, string[]> = {};
+    for (const [key, val] of Object.entries(this.attrFilters)) {
+      if (!val || key.endsWith('_min') || key.endsWith('_max')) continue;
+      const code = key.replace(/^attr_/, '');
+      attrs[code] = val.split(',').filter(Boolean);
+    }
+    this.savingSearch = true;
+    this.savedSearchService.create({
+      name: this.newSearchName.trim(),
+      category: (this.filters.categorie || undefined) as Category | undefined,
+      subcategoryId: this.filters.souscategorie || undefined,
+      q: this.filters.q || undefined,
+      city: this.filters.ville || undefined,
+      minPrice: this.filters.minPrix ? parseFloat(this.filters.minPrix) : undefined,
+      maxPrice: this.filters.maxPrix ? parseFloat(this.filters.maxPrix) : undefined,
+      condition: (this.filters.condition || undefined) as any,
+      attrs: Object.keys(attrs).length ? attrs : undefined
+    }).subscribe({
+      next: () => {
+        this.savingSearch = false;
+        this.showSaveSearchForm = false;
+        this.newSearchName = '';
+        this.searchSaved = true;
+        this.cdr.markForCheck();
+        setTimeout(() => { this.searchSaved = false; this.cdr.markForCheck(); }, 3000);
+      },
+      error: () => { this.savingSearch = false; this.cdr.markForCheck(); }
+    });
   }
 }

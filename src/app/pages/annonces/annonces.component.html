@@ -161,6 +161,24 @@
         </div>
       </div>
 
+      @if (auth.isLoggedIn) {
+        <div class="annonces__save-search">
+          @if (searchSaved) {
+            <span class="annonces__save-search-ok">✅ {{ 'annonces.search_saved' | T }}</span>
+          } @else if (!showSaveSearchForm) {
+            <button class="annonces__save-search-btn" (click)="showSaveSearchForm = true">
+              🔔 {{ 'annonces.save_search' | T }}
+            </button>
+          } @else {
+            <div class="annonces__save-search-form">
+              <input type="text" [(ngModel)]="newSearchName" [placeholder]="'annonces.save_search_name' | T" />
+              <button class="btn-primary" [disabled]="!newSearchName.trim() || savingSearch" (click)="saveSearch()">{{ 'common.save' | T }}</button>
+              <button class="btn-outline" (click)="showSaveSearchForm = false">{{ 'chat.cancel' | T }}</button>
+            </div>
+          }
+        </div>
+      }
+
       @if (listings.length > 0) {
         <div class="grid-3">
           @for (listing of listings; track listing.id) {

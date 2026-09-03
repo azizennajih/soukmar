@@ -15,7 +15,8 @@
     "logout": "تسجيل الخروج",
     "register": "إنشاء حساب",
     "categories": "الفئات",
-    "all": "الكل"
+    "all": "الكل",
+    "saved_searches": "عمليات البحث المحفوظة"
   },
   "home": {
     "hero_badge": "أكثر من 50,000 إعلان نشط",
@@ -68,7 +69,10 @@
     "radius": "نطاق البحث",
     "whole_city": "المدينة بأكملها",
     "gps_error_denied": "تم حظر الوصول إلى الموقع. يرجى السماح به من إعدادات المتصفح لهذا الموقع، ثم أعد المحاولة.",
-    "gps_error_timeout": "يستغرق تحديد الموقع وقتًا طويلاً. تحقق من تفعيل خدمات الموقع في جهازك (ويندوز: الإعدادات > الخصوصية > الموقع) ثم أعد المحاولة."
+    "gps_error_timeout": "يستغرق تحديد الموقع وقتًا طويلاً. تحقق من تفعيل خدمات الموقع في جهازك (ويندوز: الإعدادات > الخصوصية > الموقع) ثم أعد المحاولة.",
+    "save_search": "حفظ هذا البحث",
+    "save_search_name": "اسم البحث",
+    "search_saved": "تم حفظ البحث!"
   },
   "listing": {
     "loading": "جارٍ التحميل...",
@@ -107,7 +111,13 @@
     "negotiate": "السعر قابل للتفاوض",
     "specs_title": "المواصفات",
     "condition_new": "جديد",
-    "condition_used": "مستعمل"
+    "condition_used": "مستعمل",
+    "price_below": "أرخص بنسبة {pct}% من المتوسط",
+    "price_above": "أغلى بنسبة {pct}% من المتوسط",
+    "leave_review": "أضف تقييمًا",
+    "review_placeholder": "شارك تجربتك (اختياري)",
+    "submit_review": "إرسال التقييم",
+    "review_thanks": "شكرًا على تقييمك!"
   },
   "chat": {
     "back": "رجوع",
@@ -133,7 +143,11 @@
     "offer_label": "عرضك:",
     "send_offer": "إرسال العرض",
     "cancel": "إلغاء",
-    "loading": "جارٍ التحميل..."
+    "loading": "جارٍ التحميل...",
+    "quick_available": "لا يزال متاحًا؟",
+    "quick_last_price": "آخر سعر؟",
+    "quick_still_interested": "لا يزال مهتمًا؟",
+    "quick_thanks": "شكرًا!"
   },
   "notifications": {
     "title": "الإشعارات",
@@ -142,7 +156,11 @@
     "mark_all_read": "تعليم الكل كمقروء",
     "new_inquiry": "لقد تلقيت طلبًا جديدًا من {name}.",
     "new_reply": "قام {name} بالرد على طلبك.",
-    "new_message": "لقد تلقيت رسالة جديدة من {name}."
+    "new_message": "لقد تلقيت رسالة جديدة من {name}.",
+    "new_review": "ترك لك {name} تقييمًا.",
+    "saved_search_match": "إعلان جديد لبحثك «{name}».",
+    "enable_push": "فعّل إشعارات Push حتى لا يفوتك أي شيء.",
+    "enable_push_btn": "تفعيل"
   },
   "auth": {
     "login_title": "مرحبًا بعودتك!",
@@ -361,7 +379,11 @@
     "see": "عرض",
     "confirm_delete": "حذف هذا الإعلان؟",
     "reserve": "وضع علامة محجوز",
-    "unreserve": "إلغاء الحجز"
+    "unreserve": "إلغاء الحجز",
+    "bump": "رفع الإعلان",
+    "bump_cooldown": "متاح مرة واحدة يوميًا",
+    "stats": "الإحصائيات",
+    "stats_title": "المشاهدات خلال آخر 14 يومًا"
   },
   "mes_favoris": {
     "title": "المفضلة",
@@ -834,5 +856,22 @@
       "CITY": "مدينة",
       "KIDS": "أطفال"
     }
+  },
+  "seller": {
+    "not_found": "المستخدم غير موجود.",
+    "member_since": "عضو منذ",
+    "no_reviews": "لا توجد تقييمات",
+    "no_reviews_yet": "لا توجد تقييمات بعد.",
+    "responds_minutes": "يرد خلال دقائق",
+    "responds_hours": "يرد عادة خلال {hours} ساعة",
+    "responds_days": "يرد عادة خلال {days} أيام",
+    "listings_title": "الإعلانات",
+    "no_listings": "لا توجد إعلانات نشطة.",
+    "reviews_title": "التقييمات"
+  },
+  "saved_searches": {
+    "title": "عمليات البحث المحفوظة",
+    "empty": "لا توجد عمليات بحث محفوظة",
+    "empty_sub": "احفظ بحثًا لتصلك إشعارات بالإعلانات الجديدة المطابقة."
   }
 }

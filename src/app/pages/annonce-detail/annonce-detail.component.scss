@@ -225,6 +225,42 @@
     transition: color .15s; padding: 0;
     &:hover { color: #e63946; }
   }
+
+  &__price-indicator {
+    display: inline-flex; align-items: center; gap: .3rem;
+    font-size: .8rem; font-weight: 700; margin: .5rem 0 0;
+    padding: .3rem .7rem; border-radius: 999px;
+    background: #fef3c7; color: #92400e;
+
+    &--good { background: #f0fdf4; color: #16a34a; }
+    &--high { background: #fef2f2; color: #dc2626; }
+  }
+
+  &__review-box {
+    padding: 1.25rem;
+    h3 { font-weight: 800; color: #0f172a; margin-bottom: .75rem; font-size: .95rem; }
+
+    textarea {
+      width: 100%; margin-top: .6rem; padding: .6rem .75rem;
+      border: 1.5px solid var(--border); border-radius: .6rem;
+      font-family: inherit; font-size: .85rem; resize: vertical;
+    }
+  }
+
+  &__review-stars {
+    display: flex; gap: .25rem;
+    button {
+      background: none; border: none; cursor: pointer;
+      font-size: 1.5rem; color: #e2e8f0; padding: 0; line-height: 1;
+      &.filled { color: var(--gold); }
+    }
+  }
+
+  &__review-thanks {
+    text-align: center; padding: .9rem;
+    background: #f0fdf4; color: #16a34a; border-radius: .75rem;
+    font-weight: 600; font-size: .87rem;
+  }
 }
 
 .breadcrumb {

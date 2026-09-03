@@ -55,4 +55,12 @@ export class ListingService {
   delete(id: string): Observable<{ success: boolean }> {
     return this.api.delete<{ success: boolean }>(`/listings/${id}`);
   }
+
+  bump(id: string): Observable<Listing> {
+    return this.api.post<Listing>(`/listings/${id}/bump`, {});
+  }
+
+  getViewStats(id: string): Observable<{ days: { date: string; count: number }[]; total: number }> {
+    return this.api.get(`/listings/${id}/view-stats`);
+  }
 }
