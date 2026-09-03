@@ -1,4 +1,4 @@
-<a [routerLink]="['/annonces', listing.id]" class="listing-card" [class.listing-card--featured]="featured">
+<a [routerLink]="['/annonces', listing.id]" class="listing-card" [class.listing-card--featured]="featured" [class.listing-card--reserved]="listing.status === 'RESERVED'">
   <!-- Image -->
   <div class="listing-card__image">
     @if (listing.images[0]) {

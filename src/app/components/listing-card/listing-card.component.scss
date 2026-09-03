@@ -23,6 +23,19 @@
     box-shadow: 0 0 0 2px rgba(201,148,26,.12), var(--shadow);
   }
 
+  &--reserved {
+    filter: grayscale(1) opacity(.65);
+
+    &:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: #e2e8f0;
+
+      .listing-card__title { color: #111827; }
+      .listing-card__image img { transform: none; }
+    }
+  }
+
   &__image {
     position: relative;
     aspect-ratio: 4/3;
@@ -56,7 +69,7 @@
     backdrop-filter: blur(4px);
     box-shadow: 0 1px 4px rgba(0,0,0,.15);
 
-    &--reserved { background: rgba(201,148,26,.1); color: #A07314; border: 1px solid rgba(201,148,26,.3); }
+    &--reserved { background: rgba(17,24,39,.85); color: #fff; border: 1px solid rgba(255,255,255,.2); }
     &--premium  { background: rgba(201,148,26,.12); color: #A07314; border: 1px solid rgba(201,148,26,.3); }
     &--pro      { background: #f3e8ff; color: #6b21a8; }
   }
