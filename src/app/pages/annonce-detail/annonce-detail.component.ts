@@ -26,6 +26,7 @@ export class AnnonceDetailComponent implements OnInit {
   loadError = false;
   favorited = signal(false);
   favLoading = signal(false);
+  shareCopied = signal(false);
 
   constructor(
     private route: ActivatedRoute,
@@ -70,6 +71,20 @@ export class AnnonceDetailComponent implements OnInit {
       error: () => { this.favorited.set(wasFav); this.favLoading.set(false); },
       complete: () => this.favLoading.set(false)
     });
+  }
+
+  async share() {
+    if (!this.listing) return;
+    const url = window.location.href;
+    if (navigator.share) {
+      try { await navigator.share({ title: this.listing.title, url }); } catch { /* user cancelled the native sheet */ }
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      this.shareCopied.set(true);
+      setTimeout(() => this.shareCopied.set(false), 2000);
+    } catch { /* clipboard blocked — nothing we can do without a permission prompt */ }
   }
 
   get category() { return CATEGORIES.find(c => c.value === this.listing?.category); }

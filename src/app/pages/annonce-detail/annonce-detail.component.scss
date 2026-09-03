@@ -1,3 +1,8 @@
+@keyframes detail-toast-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .detail {
   padding: 2rem 1.25rem;
 
@@ -80,6 +85,17 @@
     transition: all .15s;
     &:hover { border-color: #e63946; color: #e63946; background: #fff5f5; }
     &--fav { border-color: #e63946; color: #e63946; background: #fff5f5; }
+  }
+
+  &__share-wrap { position: relative; }
+
+  &__share-toast {
+    position: absolute; top: calc(100% + .4rem); right: 0;
+    background: var(--text); color: #fff;
+    font-size: .75rem; font-weight: 600; white-space: nowrap;
+    padding: .35rem .65rem; border-radius: .5rem;
+    box-shadow: var(--shadow-md); z-index: 10;
+    animation: detail-toast-in .15s ease-out;
   }
 
   &__price {
