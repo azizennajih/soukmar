@@ -171,7 +171,12 @@
       @if (step === 3) {
         <div class="deposer__step">
           <h2 class="deposer__step-title">{{ 'deposer.photos_title' | T }}</h2>
-          <p class="deposer__step-sub">{{ 'deposer.photos_sub' | T }}</p>
+          <p class="deposer__step-sub">{{ 'deposer.photos_sub_prefix' | T }} {{ maxPhotos }} {{ 'deposer.photos_sub_suffix' | T }}</p>
+
+          <label class="deposer__premium-toggle">
+            <input type="checkbox" [(ngModel)]="premium" name="premium" />
+            🌟 {{ 'deposer.premium_toggle' | T }}
+          </label>
 
           <label class="deposer__upload" for="fileInput">
             <svg class="deposer__upload-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">

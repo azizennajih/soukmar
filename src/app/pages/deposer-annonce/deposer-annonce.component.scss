@@ -99,6 +99,16 @@ textarea { resize: vertical; min-height: 120px; font-family: inherit; }
 
 small { font-size: .75rem; color: #94a3b8; }
 
+.deposer__premium-toggle {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .65rem .9rem; margin-bottom: 1rem;
+  background: var(--gold-light); border: 1.5px solid var(--gold);
+  border-radius: .75rem; font-size: .85rem; font-weight: 600; color: var(--gold);
+  cursor: pointer;
+
+  input[type="checkbox"] { accent-color: var(--gold); width: 1rem; height: 1rem; cursor: pointer; }
+}
+
 /* Upload */
 .deposer__upload {
   display: block;

@@ -43,6 +43,9 @@ export class DeposerAnnonceComponent {
   previews: string[] = [];
   selectedFiles: File[] = [];
   existingImages: string[] = [];
+  premium = false;
+
+  get maxPhotos(): number { return this.premium ? 20 : 10; }
 
   form = {
     category: '' as Category | '',
@@ -202,7 +205,7 @@ export class DeposerAnnonceComponent {
   onFilesSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files) return;
-    const newFiles = Array.from(input.files).slice(0, 10 - this.selectedFiles.length);
+    const newFiles = Array.from(input.files).slice(0, this.maxPhotos - this.existingImages.length - this.selectedFiles.length);
     newFiles.forEach(file => {
       this.selectedFiles.push(file);
       const reader = new FileReader();
