@@ -9,6 +9,7 @@ import { AuthService } from '../../services/auth.service';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { CitySelectComponent } from '../../components/city-select/city-select.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing } from '../../models/listing.model';
+import { GeocodeService, Coords } from '../../services/geocode.service';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 
@@ -27,7 +28,9 @@ export class HomeComponent implements OnInit {
   latest: Listing[] = [];
   searchQuery = '';
   selectedCity = '';
-  gpsCoords: { lat: number; lng: number } | null = null;
+  gpsCoords: Coords | null = null;
+  radius = '';
+  radiusOptions = ['5', '10', '20', '30', '50', '100', '150', '200'];
   favoriteIds = new Set<string>();
 
   stats = [
@@ -49,7 +52,8 @@ export class HomeComponent implements OnInit {
     private api: ApiService,
     private auth: AuthService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private geocodeService: GeocodeService
   ) {}
 
   ngOnInit() {
@@ -78,19 +82,29 @@ export class HomeComponent implements OnInit {
     this.gpsCoords = null;
   }
 
-  onGpsSelected(coords: { lat: number; lng: number }) {
+  onGpsSelected(coords: Coords) {
     this.gpsCoords = coords;
+    if (!this.radius) this.radius = '10';
   }
 
-  search() {
+  async search() {
     const params: Record<string, string> = {};
-    if (this.searchQuery.trim()) params['q'] = this.searchQuery;
-    if (this.selectedCity) params['ville'] = this.selectedCity;
+    if (this.searchQuery.trim()) params['q'] = this.searchQuery.trim();
+    if (this.selectedCity.trim()) params['ville'] = this.selectedCity.trim();
+
     if (this.gpsCoords) {
       params['lat'] = String(this.gpsCoords.lat);
       params['lng'] = String(this.gpsCoords.lng);
-      params['radius'] = '10';
+      params['radius'] = this.radius || '10';
+    } else if (this.radius && this.selectedCity.trim()) {
+      try {
+        const coords = await firstValueFrom(this.geocodeService.geocode(this.selectedCity.trim()));
+        params['lat'] = String(coords.lat);
+        params['lng'] = String(coords.lng);
+        params['radius'] = this.radius;
+      } catch { /* geocoding failed — fall back to plain city-text search */ }
     }
+
     this.router.navigate(['/annonces'], { queryParams: params });
   }
 

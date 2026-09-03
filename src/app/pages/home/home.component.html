@@ -40,6 +40,14 @@
             [bare]="true"
           />
         </div>
+        <div class="hero__search-radius">
+          <select [(ngModel)]="radius" name="radius" class="hero__search-radius-select" [title]="'annonces.radius' | T">
+            <option value="">{{ 'annonces.whole_city' | T }}</option>
+            @for (r of radiusOptions; track r) {
+              <option [value]="r">+{{ r }} km</option>
+            }
+          </select>
+        </div>
         <button type="submit" class="hero__search-btn">{{ 'home.search_btn' | T }}</button>
       </form>
 
