@@ -235,11 +235,13 @@
 
 .chat__bubble-wrap {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: .4rem;
   max-width: 72%;
 
-  &.mine { align-self: flex-end; align-items: flex-end; }
+  &.mine { align-self: flex-end; }
+  &:not(.mine) { align-self: flex-start; }
 }
 
 .chat__bubble {
@@ -258,7 +260,12 @@
   }
 }
 
-.chat__time { font-size: .68rem; color: #94a3b8; margin-top: .2rem; }
+.chat__time {
+  font-size: .68rem; color: #94a3b8;
+  white-space: nowrap; flex-shrink: 0;
+  padding-bottom: .3rem;
+  display: flex; flex-direction: column; align-items: flex-start; line-height: 1.25;
+}
 
 /* Offer card */
 .chat__offer {
