@@ -30,6 +30,8 @@ export class CitySelectComponent {
   @Input() showGps = false;
   /** Strips the field's own border/background so it blends into a parent chrome (e.g. the navbar search pill). */
   @Input() bare = false;
+  /** Centers the field's label/input text instead of left-aligning it. */
+  @Input() center = false;
   @Output() valueChange = new EventEmitter<string>();
   @Output() gpsSelected = new EventEmitter<Coords>();
 

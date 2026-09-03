@@ -25,6 +25,10 @@
       box-shadow: none !important;
     }
 
+    &--center input {
+      text-align: center;
+    }
+
     input {
       flex: 1;
       min-width: 0;
