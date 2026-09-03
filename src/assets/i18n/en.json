@@ -60,7 +60,7 @@
     "current_location": "My current location",
     "radius": "Radius",
     "whole_city": "Whole city",
-    "gps_error_denied": "Location access denied. Please allow it in the site settings (lock/info icon next to the address bar).",
+    "gps_error_denied": "Location access blocked. Please allow it in your browser settings for this site and try again.",
     "gps_error_timeout": "Locating is taking too long. Check that location services are enabled on your device (Windows: Settings > Privacy > Location), then try again."
   },
   "listing": {

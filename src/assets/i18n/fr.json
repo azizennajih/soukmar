@@ -54,7 +54,7 @@
     "mobile_filter": "Filtres",
     "use_gps": "Utiliser ma position",
     "gps_error": "Position indisponible. Vérifiez l'autorisation de localisation.",
-    "gps_error_denied": "Localisation refusée. Autorisez l'accès à la position dans les réglages du site (icône cadenas/info à côté de l'adresse).",
+    "gps_error_denied": "Accès à la position bloqué. Autorisez-le dans les paramètres de votre navigateur pour ce site, puis réessayez.",
     "gps_error_timeout": "La localisation prend trop de temps. Vérifiez que la localisation est activée sur votre appareil (Windows : Paramètres > Confidentialité > Localisation), puis réessayez.",
     "current_location": "Ma position actuelle",
     "radius": "Rayon",

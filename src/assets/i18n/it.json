@@ -60,7 +60,7 @@
     "current_location": "La mia posizione attuale",
     "radius": "Raggio",
     "whole_city": "Tutta la città",
-    "gps_error_denied": "Accesso alla posizione negato. Consentilo nelle impostazioni del sito (icona lucchetto/info accanto all'indirizzo).",
+    "gps_error_denied": "Accesso alla posizione bloccato. Attivalo nelle impostazioni del browser per questo sito e riprova.",
     "gps_error_timeout": "La localizzazione richiede troppo tempo. Verifica che i servizi di localizzazione siano attivi (Windows: Impostazioni > Privacy > Posizione) e riprova."
   },
   "listing": {
