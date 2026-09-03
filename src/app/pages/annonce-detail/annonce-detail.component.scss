@@ -117,7 +117,7 @@
   }
 
   &__price {
-    font-size: 1.6rem; font-weight: 700; color: #111827;
+    font-size: 1.4rem; font-weight: 700; color: #111827;
     letter-spacing: -.02em; margin-bottom: 1rem;
   }
 
@@ -161,14 +161,14 @@
   &__contact-card { padding: 1.25rem; }
 
   &__contact-price {
-    font-size: 1.6rem; font-weight: 700; color: #111827;
+    font-size: 1.4rem; font-weight: 700; color: #111827;
     letter-spacing: -.02em; margin-bottom: 1rem;
   }
 
   &__contact-btn {
     display: flex; align-items: center; justify-content: center;
-    width: 100%; padding: .85rem; border-radius: .75rem;
-    font-weight: 700; font-size: .95rem; text-decoration: none;
+    width: 100%; padding: .7rem; border-radius: .75rem;
+    font-weight: 700; font-size: .85rem; text-decoration: none;
     margin-bottom: .6rem; transition: opacity .2s;
     &:hover { opacity: .88; }
 
@@ -180,9 +180,9 @@
 
   &__reserved-badge {
     display: flex; align-items: center; justify-content: center;
-    width: 100%; padding: .7rem; border-radius: .75rem;
+    width: 100%; padding: .6rem; border-radius: .75rem;
     background: #fef3c7; color: #92400e;
-    font-weight: 700; font-size: .95rem;
+    font-weight: 700; font-size: .85rem;
     border: 2px solid #fcd34d; margin-bottom: .6rem;
   }
 
