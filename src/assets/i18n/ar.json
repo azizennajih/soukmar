@@ -16,7 +16,8 @@
     "register": "إنشاء حساب",
     "categories": "الفئات",
     "all": "الكل",
-    "saved_searches": "عمليات البحث المحفوظة"
+    "saved_searches": "عمليات البحث المحفوظة",
+    "city_placeholder_short": "المدينة"
   },
   "home": {
     "hero_badge": "أكثر من 50,000 إعلان نشط",

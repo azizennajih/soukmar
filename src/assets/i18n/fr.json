@@ -2,6 +2,7 @@
   "nav": {
     "search_placeholder": "Que cherchez-vous ?",
     "city_placeholder": "Ville ou région",
+    "city_placeholder_short": "Ville",
     "search_btn": "Chercher",
     "post_btn": "Déposer",
     "post_full": "Déposer une annonce",

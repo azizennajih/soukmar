@@ -16,7 +16,8 @@
     "register": "Registrati",
     "categories": "Categorie",
     "all": "Tutti",
-    "saved_searches": "Ricerche salvate"
+    "saved_searches": "Ricerche salvate",
+    "city_placeholder_short": "Città"
   },
   "home": {
     "hero_badge": "Oltre 50.000 annunci attivi",

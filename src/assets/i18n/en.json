@@ -16,7 +16,8 @@
     "register": "Sign up",
     "categories": "Categories",
     "all": "All",
-    "saved_searches": "Saved Searches"
+    "saved_searches": "Saved Searches",
+    "city_placeholder_short": "City"
   },
   "home": {
     "hero_badge": "Over 50,000 active listings",
