@@ -108,6 +108,7 @@
     "condition_used": "Used"
   },
   "chat": {
+    "back": "Back",
     "title": "Messages",
     "no_conv": "No conversations",
     "no_conv_sub": "Contact a seller from a listing",

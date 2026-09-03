@@ -1,4 +1,4 @@
-<div class="chat fade-in">
+<div class="chat fade-in" [class.chat--conv-open]="!!activeConv">
 
   <!-- Sidebar: conversation list -->
   <aside class="chat__sidebar">
@@ -51,6 +51,9 @@
 
       <!-- Header -->
       <div class="chat__header">
+        <button type="button" class="chat__back-btn" (click)="closeConversation()" [attr.aria-label]="'chat.back' | T">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
         <div class="chat__header-avatar">{{ getPartnerName()[0] }}</div>
         <div class="chat__header-info">
           <div class="chat__header-name">{{ getPartnerName() }}</div>

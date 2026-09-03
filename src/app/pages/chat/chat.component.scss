@@ -19,6 +19,14 @@
     height: calc(100vh - 130px);
     margin: 0;
     border-radius: 0;
+
+    // A 1-column grid just stacks both panes — show one at a time instead,
+    // toggled by whether a conversation is open, with a back button to return.
+    .chat__main { display: none; }
+    &.chat--conv-open {
+      .chat__sidebar { display: none; }
+      .chat__main { display: flex; }
+    }
   }
 }
 
@@ -136,6 +144,24 @@
 }
 
 /* Header */
+.chat__back-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  flex-shrink: 0;
+  border: none;
+  border-radius: .65rem;
+  background: transparent;
+  color: #374151;
+  cursor: pointer;
+  transition: background .15s;
+  &:hover { background: #f8fafc; }
+
+  @media (max-width: 768px) { display: flex; }
+}
+
 .chat__header {
   padding: 1rem 1.5rem;
   border-bottom: 1px solid #e2e8f0;

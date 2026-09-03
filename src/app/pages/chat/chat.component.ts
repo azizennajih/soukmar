@@ -97,6 +97,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.cdr.markForCheck();
   }
 
+  closeConversation() {
+    this.activeConv = undefined;
+    this.cdr.markForCheck();
+  }
+
   cancelReservation() {
     if (!this.activeConv) return;
     if (!confirm('Réservation annuler? L\'annonce redevient active.')) return;

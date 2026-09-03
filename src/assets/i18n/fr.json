@@ -108,6 +108,7 @@
     "negotiate": "Prix à négocier"
   },
   "chat": {
+    "back": "Retour",
     "title": "Messages",
     "no_conv": "Aucune conversation",
     "no_conv_sub": "Contactez un vendeur depuis une annonce",

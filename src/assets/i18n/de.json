@@ -108,6 +108,7 @@
     "condition_used": "Gebraucht"
   },
   "chat": {
+    "back": "Zurück",
     "title": "Nachrichten",
     "no_conv": "Keine Unterhaltungen",
     "no_conv_sub": "Kontaktieren Sie einen Verkäufer über eine Anzeige",
