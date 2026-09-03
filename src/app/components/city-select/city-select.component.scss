@@ -25,8 +25,12 @@
       box-shadow: none !important;
     }
 
-    &--center input {
-      text-align: center;
+    &--center {
+      input { text-align: center; }
+      // Mirrors the GPS button's width on the left so the input's flex box
+      // (and its centered text) sits in the true visual middle of the field,
+      // not just the middle of whatever space is left after the icon.
+      .city-select__icon-wrap { flex: 0 0 1.75rem; }
     }
 
     input {
@@ -44,6 +48,7 @@
     }
   }
 
+  &__icon-wrap { display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   &__icon { color: var(--text-muted); flex-shrink: 0; }
 
   &__clear {
