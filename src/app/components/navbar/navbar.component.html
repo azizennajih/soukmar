@@ -48,6 +48,17 @@
             [bare]="true"
           />
         </div>
+        <!-- Divider -->
+        <div class="navbar__search-sep"></div>
+        <!-- Radius -->
+        <div class="navbar__search-field navbar__search-field--radius">
+          <select [(ngModel)]="radius" name="radius" class="navbar__search-input navbar__search-radius-select" [title]="'annonces.radius' | T">
+            <option value="">{{ 'annonces.whole_city' | T }}</option>
+            @for (r of radiusOptions; track r) {
+              <option [value]="r">+{{ r }} km</option>
+            }
+          </select>
+        </div>
         <!-- Button -->
         <button type="submit" class="navbar__search-btn">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>

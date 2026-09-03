@@ -9,7 +9,8 @@ import { I18nService, Lang } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CATEGORIES, MOROCCO_CITIES } from '../../models/listing.model';
 import { CitySelectComponent } from '../city-select/city-select.component';
-import { Coords } from '../../services/geocode.service';
+import { GeocodeService, Coords } from '../../services/geocode.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -24,6 +25,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   selectedCity = '';
   selectedCategory = '';
   gpsCoords: Coords | null = null;
+  radius = '';
+  radiusOptions = ['5', '10', '20', '30', '50', '100', '150', '200'];
   mobileOpen = signal(false);
   userMenuOpen = signal(false);
   unreadCount = signal(0);
@@ -40,7 +43,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   langMenuOpen = signal(false);
 
-  constructor(public auth: AuthService, private api: ApiService, private router: Router, public i18n: I18nService) {}
+  constructor(public auth: AuthService, private api: ApiService, private router: Router, public i18n: I18nService, private geocodeService: GeocodeService) {}
 
   ngOnInit() {
     if (this.auth.isLoggedIn) this.startPolling();
@@ -82,19 +85,27 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   onGpsSelected(coords: Coords) {
     this.gpsCoords = coords;
+    if (!this.radius) this.radius = '10';
   }
 
-  search() {
+  async search() {
     const params: Record<string, string> = {};
     if (this.searchQuery.trim()) params['q'] = this.searchQuery.trim();
+    if (this.selectedCity.trim()) params['ville'] = this.selectedCity.trim();
+
     if (this.gpsCoords) {
-      params['ville'] = this.selectedCity.trim();
       params['lat'] = String(this.gpsCoords.lat);
       params['lng'] = String(this.gpsCoords.lng);
-      params['radius'] = '10';
-    } else if (this.selectedCity.trim()) {
-      params['ville'] = this.selectedCity.trim();
+      params['radius'] = this.radius || '10';
+    } else if (this.radius && this.selectedCity.trim()) {
+      try {
+        const coords = await firstValueFrom(this.geocodeService.geocode(this.selectedCity.trim()));
+        params['lat'] = String(coords.lat);
+        params['lng'] = String(coords.lng);
+        params['radius'] = this.radius;
+      } catch { /* geocoding failed — fall back to plain city-text search */ }
     }
+
     this.router.navigate(['/annonces'], { queryParams: params });
   }
 

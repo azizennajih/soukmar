@@ -94,6 +94,12 @@
         border-left: 1.5px solid #e2e8f0;
         @media (max-width: 900px) { flex: 0 0 130px; }
       }
+
+      &--radius {
+        flex: 0 0 108px;
+        border-left: 1.5px solid #e2e8f0;
+        @media (max-width: 900px) { display: none; }
+      }
     }
 
     &-icon {
@@ -121,6 +127,18 @@
       width: 100%;
       &:focus { border-color: transparent; box-shadow: none; }
       &--location { font-size: .85rem; }
+    }
+
+    &-radius-select {
+      padding: 0 .5rem;
+      font-size: .8rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='3'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right .5rem center;
+      padding-right: 1.35rem;
     }
 
     &-btn {
