@@ -1,11 +1,11 @@
 @if (loading) {
-  <div class="container" style="min-height:70vh;padding:4rem;text-align:center;font-size:1.1rem;color:var(--text-muted)">
+  <div class="container" style="min-height:100vh;padding:4rem;text-align:center;font-size:1.1rem;color:var(--text-muted)">
     ⏳ {{ 'listing.loading' | T }}
   </div>
 }
 
 @if (loadError) {
-  <div class="container" style="min-height:70vh;padding:4rem;text-align:center">
+  <div class="container" style="min-height:100vh;padding:4rem;text-align:center">
     <p>❌ {{ 'listing.not_found' | T }}</p>
     <a routerLink="/annonces" class="btn-primary">{{ 'listing.back' | T }}</a>
   </div>
