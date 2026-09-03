@@ -34,6 +34,7 @@
       font-family: inherit;
       color: var(--text);
       background: transparent;
+      text-overflow: ellipsis;
 
       &::placeholder { color: var(--text-muted); }
     }
