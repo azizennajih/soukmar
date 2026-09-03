@@ -37,6 +37,11 @@ export class ProfilComponent implements OnInit {
 
   form = { name: '', phone: '', city: '' };
 
+  pwForm = { currentPassword: '', newPassword: '', confirmPassword: '' };
+  pwSaving = signal(false);
+  pwSuccessMsg = '';
+  pwErrorMsg = '';
+
   constructor(
     private api: ApiService,
     private auth: AuthService,
@@ -106,6 +111,28 @@ export class ProfilComponent implements OnInit {
       this.errorMsg = 'Erreur lors du téléchargement de la photo.';
     } finally {
       this.uploadingImage.set(false);
+    }
+  }
+
+  async changePassword() {
+    this.pwSuccessMsg = '';
+    this.pwErrorMsg = '';
+    if (this.pwForm.newPassword.length < 6) { this.pwErrorMsg = this.i18n.t('profil.password_too_short'); return; }
+    if (this.pwForm.newPassword !== this.pwForm.confirmPassword) { this.pwErrorMsg = this.i18n.t('profil.password_mismatch'); return; }
+
+    this.pwSaving.set(true);
+    try {
+      await firstValueFrom(this.api.put('/auth/change-password', {
+        currentPassword: this.pwForm.currentPassword,
+        newPassword: this.pwForm.newPassword,
+      }));
+      this.pwSuccessMsg = this.i18n.t('profil.password_changed');
+      this.pwForm = { currentPassword: '', newPassword: '', confirmPassword: '' };
+    } catch (e) {
+      const err = e as { error?: { error?: string } };
+      this.pwErrorMsg = err?.error?.error || this.i18n.t('profil.password_change_error');
+    } finally {
+      this.pwSaving.set(false);
     }
   }
 

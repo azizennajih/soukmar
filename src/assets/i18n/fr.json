@@ -187,7 +187,22 @@
     "verify_resend_ok": "Email renvoyé !",
     "verified_success": "Email confirmé ! Vous pouvez maintenant vous connecter.",
     "unverified_error": "Compte non vérifié. Vérifiez votre email.",
-    "unverified_resend": "Renvoyer l'email de confirmation"
+    "unverified_resend": "Renvoyer l'email de confirmation",
+    "forgot_title": "Mot de passe oublié ?",
+    "forgot_sub": "Entrez votre email, nous vous enverrons un lien de réinitialisation.",
+    "forgot_btn": "Envoyer le lien",
+    "forgot_sent": "Si un compte existe pour {email}, un email avec un lien de réinitialisation vient d'être envoyé.",
+    "back_to_login": "Retour à la connexion",
+    "reset_title": "Réinitialiser le mot de passe",
+    "reset_sub": "Choisissez un nouveau mot de passe.",
+    "reset_new_password": "Nouveau mot de passe",
+    "reset_confirm_password": "Confirmer le mot de passe",
+    "reset_btn": "Réinitialiser le mot de passe",
+    "reset_success": "Mot de passe réinitialisé ! Redirection vers la connexion...",
+    "reset_mismatch": "Les mots de passe ne correspondent pas.",
+    "reset_too_short": "Le mot de passe doit contenir au moins 6 caractères.",
+    "reset_invalid_title": "Lien invalide",
+    "reset_invalid_sub": "Ce lien de réinitialisation est invalide ou a expiré. Demandez-en un nouveau."
   },
   "cats": {
     "VEHICLES": "Véhicules",
@@ -666,7 +681,16 @@
     "my_listings": "Mes annonces",
     "stats_listings": "Annonces",
     "stats_views": "Vues totales",
-    "stats_favorites": "Favoris reçus"
+    "stats_favorites": "Favoris reçus",
+    "change_password_title": "Changer le mot de passe",
+    "current_password": "Mot de passe actuel",
+    "new_password": "Nouveau mot de passe",
+    "confirm_password": "Confirmer le mot de passe",
+    "change_password_btn": "Changer le mot de passe",
+    "password_changed": "Mot de passe modifié avec succès !",
+    "password_mismatch": "Les mots de passe ne correspondent pas.",
+    "password_too_short": "Le mot de passe doit contenir au moins 6 caractères.",
+    "password_change_error": "Erreur lors du changement de mot de passe."
   },
   "seller": {
     "not_found": "Utilisateur introuvable.",

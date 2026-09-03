@@ -187,7 +187,22 @@
     "verify_resend_ok": "Email resent!",
     "verified_success": "Email confirmed! You can now sign in.",
     "unverified_error": "Account not verified. Please check your email.",
-    "unverified_resend": "Resend confirmation email"
+    "unverified_resend": "Resend confirmation email",
+    "forgot_title": "Forgot your password?",
+    "forgot_sub": "Enter your email and we'll send you a reset link.",
+    "forgot_btn": "Send reset link",
+    "forgot_sent": "If an account exists for {email}, a password reset email has just been sent.",
+    "back_to_login": "Back to login",
+    "reset_title": "Reset password",
+    "reset_sub": "Choose a new password.",
+    "reset_new_password": "New password",
+    "reset_confirm_password": "Confirm password",
+    "reset_btn": "Reset password",
+    "reset_success": "Password reset! Redirecting to login...",
+    "reset_mismatch": "Passwords do not match.",
+    "reset_too_short": "Password must be at least 6 characters.",
+    "reset_invalid_title": "Invalid link",
+    "reset_invalid_sub": "This reset link is invalid or has expired. Request a new one."
   },
   "cats": {
     "VEHICLES": "Vehicles",
@@ -407,7 +422,16 @@
     "my_listings": "My listings",
     "stats_listings": "Listings",
     "stats_views": "Total views",
-    "stats_favorites": "Favourites received"
+    "stats_favorites": "Favourites received",
+    "change_password_title": "Change password",
+    "current_password": "Current password",
+    "new_password": "New password",
+    "confirm_password": "Confirm password",
+    "change_password_btn": "Change password",
+    "password_changed": "Password changed successfully!",
+    "password_mismatch": "Passwords do not match.",
+    "password_too_short": "Password must be at least 6 characters.",
+    "password_change_error": "Error changing password."
   },
   "common": {
     "mad": "MAD",

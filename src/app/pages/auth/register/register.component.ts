@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -14,6 +14,7 @@ import { TranslatePipe } from '../../../pipes/translate.pipe';
 })
 export class RegisterComponent {
   private auth = inject(AuthService);
+  private cdr = inject(ChangeDetectorRef);
   i18n = inject(I18nService);
 
   form = { name: '', email: '', phone: '', city: '', password: '', confirm: '' };
@@ -49,6 +50,7 @@ export class RegisterComponent {
       this.error = 'Une erreur inattendue est survenue.';
     } finally {
       this.loading = false;
+      this.cdr.markForCheck();
     }
   }
 
@@ -59,5 +61,6 @@ export class RegisterComponent {
     const result = await this.auth.resendVerification(this.registeredEmail);
     this.resendLoading = false;
     if (result.ok) this.resendOk = true;
+    this.cdr.markForCheck();
   }
 }

@@ -68,6 +68,24 @@ export class AuthService {
       });
   }
 
+  forgotPassword(email: string): Promise<{ ok: boolean; error?: string }> {
+    return this.postJson<{ message: string }>('/auth/forgot-password', { email })
+      .then(() => ({ ok: true }))
+      .catch(e => {
+        const err = e as Record<string, unknown>;
+        return { ok: false, error: typeof err['error'] === 'string' ? err['error'] : 'Erreur.' };
+      });
+  }
+
+  resetPassword(token: string, password: string): Promise<{ ok: boolean; error?: string }> {
+    return this.postJson<{ message: string }>('/auth/reset-password', { token, password })
+      .then(() => ({ ok: true }))
+      .catch(e => {
+        const err = e as Record<string, unknown>;
+        return { ok: false, error: typeof err['error'] === 'string' ? err['error'] : 'Erreur.' };
+      });
+  }
+
   private postJson<T>(path: string, body: unknown): Promise<T> {
     return fetch(`${BASE}${path}`, {
       method: 'POST',

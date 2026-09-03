@@ -187,7 +187,22 @@
     "verify_resend_ok": "E-Mail erneut gesendet!",
     "verified_success": "E-Mail bestätigt! Sie können sich jetzt anmelden.",
     "unverified_error": "Konto nicht verifiziert. Bitte prüfen Sie Ihre E-Mail.",
-    "unverified_resend": "Bestätigungs-E-Mail erneut senden"
+    "unverified_resend": "Bestätigungs-E-Mail erneut senden",
+    "forgot_title": "Passwort vergessen?",
+    "forgot_sub": "Geben Sie Ihre E-Mail-Adresse ein, wir senden Ihnen einen Link zum Zurücksetzen.",
+    "forgot_btn": "Link senden",
+    "forgot_sent": "Falls ein Konto für {email} existiert, wurde soeben eine E-Mail mit einem Link zum Zurücksetzen gesendet.",
+    "back_to_login": "Zurück zur Anmeldung",
+    "reset_title": "Passwort zurücksetzen",
+    "reset_sub": "Wählen Sie ein neues Passwort.",
+    "reset_new_password": "Neues Passwort",
+    "reset_confirm_password": "Passwort bestätigen",
+    "reset_btn": "Passwort zurücksetzen",
+    "reset_success": "Passwort zurückgesetzt! Weiterleitung zur Anmeldung...",
+    "reset_mismatch": "Die Passwörter stimmen nicht überein.",
+    "reset_too_short": "Das Passwort muss mindestens 6 Zeichen lang sein.",
+    "reset_invalid_title": "Ungültiger Link",
+    "reset_invalid_sub": "Dieser Link zum Zurücksetzen ist ungültig oder abgelaufen. Fordern Sie einen neuen an."
   },
   "cats": {
     "VEHICLES": "Fahrzeuge",
@@ -368,7 +383,16 @@
     "my_listings": "Meine Anzeigen",
     "stats_listings": "Anzeigen",
     "stats_views": "Gesamtaufrufe",
-    "stats_favorites": "Erhaltene Favoriten"
+    "stats_favorites": "Erhaltene Favoriten",
+    "change_password_title": "Passwort ändern",
+    "current_password": "Aktuelles Passwort",
+    "new_password": "Neues Passwort",
+    "confirm_password": "Passwort bestätigen",
+    "change_password_btn": "Passwort ändern",
+    "password_changed": "Passwort erfolgreich geändert!",
+    "password_mismatch": "Die Passwörter stimmen nicht überein.",
+    "password_too_short": "Das Passwort muss mindestens 6 Zeichen lang sein.",
+    "password_change_error": "Fehler beim Ändern des Passworts."
   },
   "deposer": {
     "gate_title": "Anmeldung erforderlich",

@@ -32,6 +32,7 @@
       </div>
 
       <!-- Right: Edit form -->
+      <div class="profil__main">
       <div class="card profil__form-card">
         <h2 class="profil__form-title">{{ 'profil.edit_title' | T }}</h2>
 
@@ -67,6 +68,40 @@
             @if (saving()) { {{ 'profil.saving' | T }} } @else { {{ 'profil.save' | T }} }
           </button>
         </form>
+      </div>
+
+      <!-- Change password -->
+      <div class="card profil__form-card">
+        <h2 class="profil__form-title">{{ 'profil.change_password_title' | T }}</h2>
+
+        @if (pwSuccessMsg) {
+          <div class="profil__alert profil__alert--success">✅ {{ pwSuccessMsg }}</div>
+        }
+        @if (pwErrorMsg) {
+          <div class="profil__alert profil__alert--error">❌ {{ pwErrorMsg }}</div>
+        }
+
+        <form (ngSubmit)="changePassword()" class="profil__form">
+          <div class="form-group">
+            <label class="form-label">{{ 'profil.current_password' | T }}</label>
+            <input type="password" [(ngModel)]="pwForm.currentPassword" name="currentPassword" class="form-input" placeholder="••••••••" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ 'profil.new_password' | T }}</label>
+            <input type="password" [(ngModel)]="pwForm.newPassword" name="newPassword" class="form-input" placeholder="••••••••" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ 'profil.confirm_password' | T }}</label>
+            <input type="password" [(ngModel)]="pwForm.confirmPassword" name="confirmPassword" class="form-input" placeholder="••••••••" required />
+          </div>
+
+          <button type="submit" class="btn-primary profil__save-btn" [disabled]="pwSaving()">
+            @if (pwSaving()) { {{ 'profil.saving' | T }} } @else { {{ 'profil.change_password_btn' | T }} }
+          </button>
+        </form>
+      </div>
       </div>
     </div>
   }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   private auth = inject(AuthService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private cdr = inject(ChangeDetectorRef);
   i18n = inject(I18nService);
 
   email = '';
@@ -53,6 +54,7 @@ export class LoginComponent implements OnInit {
       this.error = 'Une erreur inattendue est survenue.';
     } finally {
       this.loading = false;
+      this.cdr.markForCheck();
     }
   }
 
@@ -63,5 +65,6 @@ export class LoginComponent implements OnInit {
     const result = await this.auth.resendVerification(this.unverifiedEmail);
     this.resendLoading = false;
     if (result.ok) this.resendOk = true;
+    this.cdr.markForCheck();
   }
 }
