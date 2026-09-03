@@ -71,14 +71,13 @@
               <label class="sidebar__label">{{ ('attrs.' + def.code) | T }}</label>
               @switch (def.type) {
                 @case ('SELECT') {
-                  <div class="sidebar__checkboxes">
-                    @for (opt of def.options; track opt) {
-                      <label class="sidebar__checkbox">
-                        <input type="checkbox" [checked]="isOptionChecked(def.code, opt)" (change)="selectOptionValue(def.code, opt, $any($event.target).checked)" />
-                        {{ ('attrs.opts.' + opt) | T }}
-                      </label>
-                    }
-                  </div>
+                  <app-multi-select
+                    [options]="def.options"
+                    [selected]="selectedOptions(def.code)"
+                    (selectedChange)="setOptionValues(def.code, $event)"
+                    labelPrefix="attrs.opts."
+                    [placeholder]="'nav.all' | T"
+                  />
                 }
                 @case ('BOOLEAN') {
                   <label class="sidebar__checkbox">

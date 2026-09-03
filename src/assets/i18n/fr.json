@@ -437,7 +437,9 @@
     "close": "Fermer",
     "yes": "Oui",
     "no": "Non",
-    "no_results": "Aucun résultat"
+    "no_results": "Aucun résultat",
+    "search": "Rechercher...",
+    "selected": "sélectionnés"
   },
   "premium": {
     "badge": "✨ Boostez vos annonces",

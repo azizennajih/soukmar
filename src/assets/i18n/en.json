@@ -383,7 +383,9 @@
     "close": "Close",
     "yes": "Yes",
     "no": "No",
-    "no_results": "No results"
+    "no_results": "No results",
+    "search": "Search...",
+    "selected": "selected"
   },
   "subcats": {
     "AUTO": "Car",

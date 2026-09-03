@@ -1,0 +1,33 @@
+<div class="multi-select">
+  <button type="button" class="multi-select__field" #fieldWrap [class.multi-select__field--open]="open()" [class.multi-select__field--active]="selected.length" (click)="toggle()">
+    <span class="multi-select__summary">{{ summary }}</span>
+    @if (selected.length) {
+      <span class="multi-select__clear" (click)="clear($event)" aria-label="Effacer">✕</span>
+    }
+    <svg class="multi-select__chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+  </button>
+
+  @if (open()) {
+    <div class="multi-select__panel" [style.top]="panelStyle().top" [style.left]="panelStyle().left" [style.width]="panelStyle().width">
+      @if (options.length > 8) {
+        <input
+          type="text"
+          class="multi-select__search"
+          [ngModel]="query()"
+          (ngModelChange)="query.set($event)"
+          [placeholder]="'common.search' | T"
+        />
+      }
+      <div class="multi-select__list">
+        @for (opt of filtered(); track opt) {
+          <label class="multi-select__option">
+            <input type="checkbox" [checked]="isChecked(opt)" (change)="toggleOption(opt, $any($event.target).checked)" />
+            {{ (labelPrefix + opt) | T }}
+          </label>
+        } @empty {
+          <div class="multi-select__empty">{{ 'common.no_results' | T }}</div>
+        }
+      </div>
+    </div>
+  }
+</div>

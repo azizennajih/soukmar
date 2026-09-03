@@ -197,7 +197,9 @@
     "close": "Chiudi",
     "yes": "Sì",
     "no": "No",
-    "no_results": "Nessun risultato"
+    "no_results": "Nessun risultato",
+    "search": "Cerca...",
+    "selected": "selezionati"
   },
   "premium": {
     "badge": "✨ Potenzia i tuoi annunci",

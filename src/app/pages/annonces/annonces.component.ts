@@ -10,6 +10,7 @@ import { GeocodeService, Coords } from '../../services/geocode.service';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { CitySelectComponent } from '../../components/city-select/city-select.component';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
+import { MultiSelectComponent } from '../../components/multi-select/multi-select.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing, Category, AttributeDefinition } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
@@ -18,7 +19,7 @@ interface SubcategoryOption { id: string; code: string; }
 
 @Component({
   selector: 'app-annonces',
-  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, CitySelectComponent, CatIconComponent, TranslatePipe],
+  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, CitySelectComponent, CatIconComponent, MultiSelectComponent, TranslatePipe],
   templateUrl: './annonces.component.html',
   styleUrl: './annonces.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -156,6 +157,16 @@ export class AnnoncesComponent implements OnInit {
 
   isOptionChecked(code: string, option: string): boolean {
     return (this.attrFilters[`attr_${code}`] ?? '').split(',').includes(option);
+  }
+
+  selectedOptions(code: string): string[] {
+    return (this.attrFilters[`attr_${code}`] ?? '').split(',').filter(Boolean);
+  }
+
+  setOptionValues(code: string, values: string[]) {
+    const key = `attr_${code}`;
+    if (values.length) this.attrFilters[key] = values.join(',');
+    else delete this.attrFilters[key];
   }
 
   setBoolFilter(code: string, checked: boolean) {

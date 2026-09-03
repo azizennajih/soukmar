@@ -383,7 +383,9 @@
     "close": "إغلاق",
     "yes": "نعم",
     "no": "لا",
-    "no_results": "لا توجد نتائج"
+    "no_results": "لا توجد نتائج",
+    "search": "بحث...",
+    "selected": "محدد"
   },
   "subcats": {
     "AUTO": "سيارة",

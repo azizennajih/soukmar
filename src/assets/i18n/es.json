@@ -197,7 +197,9 @@
     "close": "Cerrar",
     "yes": "Sí",
     "no": "No",
-    "no_results": "Sin resultados"
+    "no_results": "Sin resultados",
+    "search": "Buscar...",
+    "selected": "seleccionados"
   },
   "premium": {
     "badge": "✨ Impulsa tus anuncios",
