@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, signal, ChangeDetectorRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -27,6 +27,7 @@ export class AnnonceDetailComponent implements OnInit {
   favorited = signal(false);
   favLoading = signal(false);
   shareCopied = signal(false);
+  shareMenuOpen = signal(false);
 
   constructor(
     private route: ActivatedRoute,
@@ -37,6 +38,13 @@ export class AnnonceDetailComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     public i18n: I18nService
   ) {}
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(e: MouseEvent) {
+    if (this.shareMenuOpen() && !(e.target as HTMLElement).closest('.detail__share-wrap')) {
+      this.shareMenuOpen.set(false);
+    }
+  }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id')!;
@@ -73,18 +81,40 @@ export class AnnonceDetailComponent implements OnInit {
     });
   }
 
-  async share() {
+  async share(e: Event) {
+    e.stopPropagation();
     if (!this.listing) return;
-    const url = window.location.href;
+    // Native OS share sheet on mobile; a menu with WhatsApp/Email/Copy on desktop,
+    // where navigator.share is usually unavailable.
     if (navigator.share) {
-      try { await navigator.share({ title: this.listing.title, url }); } catch { /* user cancelled the native sheet */ }
+      try { await navigator.share({ title: this.listing.title, url: window.location.href }); } catch { /* user cancelled the native sheet */ }
       return;
     }
+    this.shareMenuOpen.update(v => !v);
+  }
+
+  shareWhatsapp() {
+    if (!this.listing) return;
+    const text = `${this.listing.title} — ${window.location.href}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    this.shareMenuOpen.set(false);
+  }
+
+  shareEmail() {
+    if (!this.listing) return;
+    const subject = this.listing.title;
+    const body = window.location.href;
+    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    this.shareMenuOpen.set(false);
+  }
+
+  async copyLink() {
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(window.location.href);
       this.shareCopied.set(true);
       setTimeout(() => this.shareCopied.set(false), 2000);
     } catch { /* clipboard blocked — nothing we can do without a permission prompt */ }
+    this.shareMenuOpen.set(false);
   }
 
   get category() { return CATEGORIES.find(c => c.value === this.listing?.category); }
