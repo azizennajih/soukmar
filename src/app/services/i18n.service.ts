@@ -45,7 +45,7 @@ export class I18nService {
 
   setLang(l: Lang) { this.lang.set(l); }
 
-  t(key: string): string {
+  t(key: string, params?: Record<string, string>): string {
     const dict = this._dict();
     const parts = key.split('.');
     let obj: unknown = dict;
@@ -53,6 +53,8 @@ export class I18nService {
       if (obj && typeof obj === 'object') obj = (obj as Record<string, unknown>)[part];
       else return key;
     }
-    return typeof obj === 'string' ? obj : key;
+    const str = typeof obj === 'string' ? obj : key;
+    if (!params) return str;
+    return str.replace(/\{(\w+)\}/g, (match, k) => params[k] ?? match);
   }
 }

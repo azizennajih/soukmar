@@ -1,0 +1,32 @@
+<div class="notifications container fade-in">
+
+  <div class="notifications__header">
+    <div>
+      <h1>{{ 'notifications.title' | T }}</h1>
+    </div>
+    @if (hasUnread) {
+      <button class="btn-outline" (click)="markAllRead()">{{ 'notifications.mark_all_read' | T }}</button>
+    }
+  </div>
+
+  @if (notifications.length === 0) {
+    <div class="notifications__empty">
+      <span>🔔</span>
+      <p>{{ 'notifications.empty' | T }}</p>
+      <small>{{ 'notifications.empty_sub' | T }}</small>
+    </div>
+  } @else {
+    <div class="notifications__list">
+      @for (n of notifications; track n.id) {
+        <button type="button" class="notif-row" [class.notif-row--unread]="!n.isRead" (click)="open(n)">
+          @if (!n.isRead) { <span class="notif-row__dot"></span> }
+          <div class="notif-row__body">
+            <p class="notif-row__text">{{ text(n) }}</p>
+            @if (n.listingTitle) { <p class="notif-row__listing">📌 {{ n.listingTitle }}</p> }
+            <span class="notif-row__time">{{ time(n) }}</span>
+          </div>
+        </button>
+      }
+    </div>
+  }
+</div>

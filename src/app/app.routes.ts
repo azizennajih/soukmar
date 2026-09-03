@@ -43,6 +43,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/chat/chat.component').then(m => m.ChatComponent)
   },
   {
+    path: 'notifications',
+    loadComponent: () => import('./pages/notifications/notifications.component').then(m => m.NotificationsComponent)
+  },
+  {
     path: 'profil',
     loadComponent: () => import('./pages/profil/profil.component').then(m => m.ProfilComponent)
   },

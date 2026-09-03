@@ -7,6 +7,7 @@
     "post_full": "Déposer une annonce",
     "login": "Connexion",
     "messages": "Messages",
+    "notifications": "Notifications",
     "profile": "Mon profil",
     "my_listings": "Mes annonces",
     "my_favorites": "Mes favoris",
@@ -133,6 +134,15 @@
     "send_offer": "Envoyer l'offre",
     "cancel": "Annuler",
     "loading": "Chargement..."
+  },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "Aucune notification",
+    "empty_sub": "Vous serez averti ici dès qu'il se passe quelque chose.",
+    "mark_all_read": "Tout marquer comme lu",
+    "new_inquiry": "Vous avez reçu une nouvelle demande de {name}.",
+    "new_reply": "{name} a répondu à votre demande.",
+    "new_message": "Vous avez reçu un nouveau message de {name}."
   },
   "auth": {
     "login_title": "Bon retour !",

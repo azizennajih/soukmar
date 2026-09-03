@@ -7,6 +7,7 @@
     "post_full": "Anzeige aufgeben",
     "login": "Anmelden",
     "messages": "Nachrichten",
+    "notifications": "Benachrichtigungen",
     "profile": "Mein Profil",
     "my_listings": "Meine Anzeigen",
     "my_favorites": "Meine Favoriten",
@@ -133,6 +134,15 @@
     "send_offer": "Angebot senden",
     "cancel": "Abbrechen",
     "loading": "Lädt..."
+  },
+  "notifications": {
+    "title": "Benachrichtigungen",
+    "empty": "Keine Benachrichtigungen",
+    "empty_sub": "Sie werden hier benachrichtigt, sobald etwas Neues passiert.",
+    "mark_all_read": "Alle als gelesen markieren",
+    "new_inquiry": "Sie haben eine neue Anfrage von {name} erhalten.",
+    "new_reply": "{name} hat auf Ihre Anfrage geantwortet.",
+    "new_message": "Sie haben eine neue Nachricht von {name} erhalten."
   },
   "auth": {
     "login_title": "Willkommen zurück!",

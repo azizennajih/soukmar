@@ -1,0 +1,40 @@
+.notifications {
+  padding: 2.5rem 1.25rem;
+  max-width: 720px;
+
+  &__header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 1.5rem;
+    h1 { font-size: 1.6rem; font-weight: 800; color: var(--text); letter-spacing: -.02em; }
+  }
+
+  &__empty {
+    text-align: center; padding: 5rem 1rem;
+    span  { font-size: 4rem; display: block; margin-bottom: 1rem; }
+    p     { font-size: 1.2rem; font-weight: 700; color: #374151; margin-bottom: .4rem; }
+    small { display: block; color: #94a3b8; }
+  }
+
+  &__list { display: flex; flex-direction: column; gap: .6rem; }
+}
+
+.notif-row {
+  display: flex; align-items: flex-start; gap: .75rem;
+  width: 100%; padding: 1rem 1.1rem;
+  background: var(--white); border: 1.5px solid var(--border); border-radius: .875rem;
+  text-align: left; cursor: pointer; transition: border-color .15s, background .15s;
+
+  &:hover { border-color: #cbd5e1; background: var(--bg); }
+
+  &--unread { border-color: var(--primary-light); background: var(--primary-light); }
+
+  &__dot {
+    flex-shrink: 0; width: .55rem; height: .55rem; border-radius: 50%;
+    background: var(--primary); margin-top: .4rem;
+  }
+
+  &__body { flex: 1; min-width: 0; }
+  &__text { font-size: .9rem; font-weight: 600; color: var(--text); line-height: 1.5; }
+  &__listing { font-size: .8rem; color: var(--text-muted); margin-top: .25rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  &__time { display: block; font-size: .75rem; color: var(--text-muted); margin-top: .35rem; }
+}

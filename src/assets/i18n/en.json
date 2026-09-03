@@ -7,6 +7,7 @@
     "post_full": "Post an ad",
     "login": "Login",
     "messages": "Messages",
+    "notifications": "Notifications",
     "profile": "My profile",
     "my_listings": "My listings",
     "my_favorites": "My favorites",
@@ -133,6 +134,15 @@
     "send_offer": "Send offer",
     "cancel": "Cancel",
     "loading": "Loading..."
+  },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "No notifications",
+    "empty_sub": "You'll be notified here as soon as something happens.",
+    "mark_all_read": "Mark all as read",
+    "new_inquiry": "You've received a new inquiry from {name}.",
+    "new_reply": "{name} replied to your inquiry.",
+    "new_message": "You've received a new message from {name}."
   },
   "auth": {
     "login_title": "Welcome back!",

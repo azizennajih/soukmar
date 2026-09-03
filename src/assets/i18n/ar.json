@@ -7,6 +7,7 @@
     "post_full": "نشر إعلان",
     "login": "تسجيل الدخول",
     "messages": "الرسائل",
+    "notifications": "الإشعارات",
     "profile": "ملفي الشخصي",
     "my_listings": "إعلاناتي",
     "my_favorites": "المفضلة",
@@ -133,6 +134,15 @@
     "send_offer": "إرسال العرض",
     "cancel": "إلغاء",
     "loading": "جارٍ التحميل..."
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "empty": "لا توجد إشعارات",
+    "empty_sub": "سيتم إعلامك هنا فور حدوث أي جديد.",
+    "mark_all_read": "تعليم الكل كمقروء",
+    "new_inquiry": "لقد تلقيت طلبًا جديدًا من {name}.",
+    "new_reply": "قام {name} بالرد على طلبك.",
+    "new_message": "لقد تلقيت رسالة جديدة من {name}."
   },
   "auth": {
     "login_title": "مرحبًا بعودتك!",

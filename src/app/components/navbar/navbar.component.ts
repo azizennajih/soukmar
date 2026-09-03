@@ -11,6 +11,7 @@ import { CATEGORIES, MOROCCO_CITIES } from '../../models/listing.model';
 import { CitySelectComponent } from '../city-select/city-select.component';
 import { CatIconComponent } from '../cat-icon/cat-icon.component';
 import { GeocodeService, Coords } from '../../services/geocode.service';
+import { NotificationService } from '../../services/notification.service';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -44,7 +45,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   langMenuOpen = signal(false);
 
-  constructor(public auth: AuthService, private api: ApiService, private router: Router, public i18n: I18nService, private geocodeService: GeocodeService) {}
+  constructor(public auth: AuthService, private api: ApiService, private router: Router, public i18n: I18nService, private geocodeService: GeocodeService, public notifService: NotificationService) {}
 
   ngOnInit() {
     if (this.auth.isLoggedIn) this.startPolling();
@@ -65,6 +66,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       next: res => this.unreadCount.set(res.count),
       error: () => {}
     });
+    this.notifService.refreshUnreadCount();
   }
 
   @HostListener('document:click', ['$event'])
