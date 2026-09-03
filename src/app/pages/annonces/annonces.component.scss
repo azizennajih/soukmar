@@ -39,6 +39,24 @@
 
   &__title { font-size: 1.1rem; font-weight: 700; color: #111827; letter-spacing: -.01em; }
   &__count { font-size: .82rem; color: #64748b; margin-top: .2rem; }
+
+  &__sort {
+    display: flex; align-items: center; gap: .5rem; flex-shrink: 0;
+
+    label { font-size: .8rem; color: var(--text-muted); white-space: nowrap; }
+
+    select {
+      padding: .5rem .75rem; border: 1.5px solid var(--border); border-radius: .65rem;
+      background: var(--white); font-size: .85rem; color: var(--text); cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='3'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right .6rem center;
+      padding-right: 1.6rem;
+      &:focus { border-color: var(--primary); }
+    }
+
+    @media (max-width: 480px) { label { display: none; } }
+  }
 }
 
 /* Sidebar */

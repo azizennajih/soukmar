@@ -133,19 +133,6 @@
         </div>
       </div>
 
-      <!-- Sort -->
-      <div class="sidebar__section">
-        <label class="sidebar__label">{{ 'annonces.sort' | T }}</label>
-        <select [(ngModel)]="filters.tri" class="sidebar__select">
-          <option value="">{{ 'annonces.newest' | T }}</option>
-          <option value="prix_asc">{{ 'annonces.price_asc' | T }}</option>
-          <option value="prix_desc">{{ 'annonces.price_desc' | T }}</option>
-          @if (filters.lat) {
-            <option value="distance">{{ 'annonces.distance' | T }}</option>
-          }
-        </select>
-      </div>
-
       <button class="btn-primary sidebar__apply" (click)="applyFilters()">{{ 'annonces.apply' | T }}</button>
       <button class="btn-outline sidebar__reset" (click)="resetFilters()">{{ 'annonces.reset' | T }}</button>
     </aside>
@@ -160,6 +147,17 @@
             @else { {{ 'annonces.title' | T }} }
           </h1>
           <p class="annonces__count">{{ listings.length }} {{ 'annonces.found' | T }}</p>
+        </div>
+        <div class="annonces__sort">
+          <label for="annonces-sort">{{ 'annonces.sort' | T }}</label>
+          <select id="annonces-sort" [(ngModel)]="filters.tri" (change)="applyFilters()">
+            <option value="">{{ 'annonces.newest' | T }}</option>
+            <option value="prix_asc">{{ 'annonces.price_asc' | T }}</option>
+            <option value="prix_desc">{{ 'annonces.price_desc' | T }}</option>
+            @if (filters.lat) {
+              <option value="distance">{{ 'annonces.distance' | T }}</option>
+            }
+          </select>
         </div>
       </div>
 
