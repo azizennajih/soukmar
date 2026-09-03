@@ -10,7 +10,7 @@
   } @else {
     <div class="saved-searches__list">
       @for (s of searches; track s.id) {
-        <button type="button" class="search-row" (click)="open(s)">
+        <div class="search-row" role="button" tabindex="0" (click)="open(s)" (keydown.enter)="open(s)">
           <div class="search-row__body">
             <span class="search-row__name">{{ s.name }}</span>
             <span class="search-row__meta">
@@ -20,7 +20,7 @@
             </span>
           </div>
           <button type="button" class="search-row__remove" (click)="remove(s, $event)" [title]="'common.delete' | T">✕</button>
-        </button>
+        </div>
       }
     </div>
   }
