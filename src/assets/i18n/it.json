@@ -310,7 +310,9 @@
     "edit": "Modifica",
     "delete": "Elimina",
     "see": "Visualizza",
-    "confirm_delete": "Eliminare questo annuncio?"
+    "confirm_delete": "Eliminare questo annuncio?",
+    "reserve": "Segna come riservato",
+    "unreserve": "Annulla prenotazione"
   },
   "mes_favoris": {
     "title": "I miei preferiti",

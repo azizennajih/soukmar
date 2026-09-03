@@ -310,7 +310,9 @@
     "edit": "Bearbeiten",
     "delete": "Löschen",
     "see": "Anzeigen",
-    "confirm_delete": "Diese Anzeige löschen?"
+    "confirm_delete": "Diese Anzeige löschen?",
+    "reserve": "Als reserviert markieren",
+    "unreserve": "Reservierung aufheben"
   },
   "mes_favoris": {
     "title": "Meine Favoriten",

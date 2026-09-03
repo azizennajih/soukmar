@@ -22,6 +22,7 @@ export class MesAnnoncesComponent implements OnInit {
     const t = (k: string) => this.i18n.t(k);
     return {
       ACTIVE:   { label: t('annonces.active') || 'Active',       cls: 'badge-active'   },
+      RESERVED: { label: t('annonces.reserved') || 'Réservée',   cls: 'badge-pending'  },
       SOLD:     { label: t('annonces.sold') || 'Vendue',         cls: 'badge-sold'     },
       PENDING:  { label: t('annonces.pending') || 'En attente',  cls: 'badge-pending'  },
       REJECTED: { label: t('annonces.rejected') || 'Rejetée',    cls: 'badge-rejected' },
@@ -44,6 +45,16 @@ export class MesAnnoncesComponent implements OnInit {
     if (!confirm(this.i18n.t('mes_annonces.confirm_delete'))) return;
     this.ls.delete(id).subscribe(() => {
       this.listings = this.listings.filter(l => l.id !== id);
+    });
+  }
+
+  toggleReserve(listing: Listing) {
+    const nextStatus = listing.status === 'RESERVED' ? 'ACTIVE' : 'RESERVED';
+    const prevStatus = listing.status;
+    listing.status = nextStatus;
+    this.cdr.markForCheck();
+    this.ls.update(listing.id, { status: nextStatus }).subscribe({
+      error: () => { listing.status = prevStatus; this.cdr.markForCheck(); }
     });
   }
 

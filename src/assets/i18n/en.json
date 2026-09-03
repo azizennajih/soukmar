@@ -349,7 +349,9 @@
     "edit": "Edit",
     "delete": "Delete",
     "see": "View",
-    "confirm_delete": "Delete this listing?"
+    "confirm_delete": "Delete this listing?",
+    "reserve": "Mark as reserved",
+    "unreserve": "Cancel reservation"
   },
   "mes_favoris": {
     "title": "My favorites",

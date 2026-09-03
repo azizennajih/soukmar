@@ -608,7 +608,9 @@
     "edit": "Modifier",
     "delete": "Supprimer",
     "see": "Voir",
-    "confirm_delete": "Supprimer cette annonce ?"
+    "confirm_delete": "Supprimer cette annonce ?",
+    "reserve": "Marquer comme réservée",
+    "unreserve": "Annuler la réservation"
   },
   "mes_favoris": {
     "title": "Mes favoris",

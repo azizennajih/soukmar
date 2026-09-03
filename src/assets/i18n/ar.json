@@ -349,7 +349,9 @@
     "edit": "تعديل",
     "delete": "حذف",
     "see": "عرض",
-    "confirm_delete": "حذف هذا الإعلان؟"
+    "confirm_delete": "حذف هذا الإعلان؟",
+    "reserve": "وضع علامة محجوز",
+    "unreserve": "إلغاء الحجز"
   },
   "mes_favoris": {
     "title": "المفضلة",
