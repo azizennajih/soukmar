@@ -223,12 +223,6 @@
   &__seller-name { font-weight: 700; color: #0f172a; }
   &__seller-city { font-size: .8rem; color: #64748b; margin-top: .15rem; }
 
-  &__report {
-    background: none; border: none; cursor: pointer;
-    font-size: .82rem; color: #94a3b8;
-    transition: color .15s; padding: 0;
-    &:hover { color: #e63946; }
-  }
 
   &__price-indicator {
     display: inline-flex; align-items: center; gap: .3rem;

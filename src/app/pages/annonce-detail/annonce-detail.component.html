@@ -228,7 +228,9 @@
       }
 
       <!-- Report -->
-      <button class="detail__report">🚩 {{ 'listing.report' | T }}</button>
+      @if (auth.isLoggedIn && auth.currentUser()?.id !== listing.userId) {
+        <app-report-button [reportedId]="listing.userId" [listingId]="listing.id" />
+      }
     </div>
   </div>
 </div>

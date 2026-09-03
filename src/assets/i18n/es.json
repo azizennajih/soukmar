@@ -161,7 +161,8 @@
     "new_review": "{name} te ha dejado una reseña.",
     "saved_search_match": "Nuevo anuncio para tu búsqueda «{name}».",
     "enable_push": "Activa las notificaciones push para no perderte nada.",
-    "enable_push_btn": "Activar"
+    "enable_push_btn": "Activar",
+    "report_resolved": "Tu denuncia ha sido revisada por nuestro equipo."
   },
   "auth": {
     "login_title": "¡Bienvenido de vuelta!",
@@ -343,7 +344,18 @@
     "revenue_pct": "% del total",
     "revenue_monthly_avg": "Ingresos mensuales medios",
     "revenue_12m": "En 12 meses",
-    "revenue_chart": "💰 Ingresos Premium por mes (MAD)"
+    "revenue_chart": "💰 Ingresos Premium por mes (MAD)",
+    "tab_reports": "Denuncias",
+    "reports_title": "Denuncias",
+    "reports_empty": "Aún no hay denuncias.",
+    "reports_reporter": "Denunciado por",
+    "reports_reported": "Usuario denunciado",
+    "reports_resolve": "✅ Resolver",
+    "reports_dismiss": "❌ Rechazar",
+    "reports_status_pending": "Pendiente",
+    "reports_status_resolved": "Resuelto",
+    "reports_status_dismissed": "Rechazado",
+    "reports_note_prompt": "Nota interna (opcional):"
   },
   "mes_annonces": {
     "title": "Mis anuncios",
@@ -908,5 +920,14 @@
     "title": "Búsquedas guardadas",
     "empty": "No hay búsquedas guardadas",
     "empty_sub": "Guarda una búsqueda para recibir avisos de nuevos anuncios coincidentes."
+  },
+  "report": {
+    "button": "Denunciar por fraude",
+    "form_title": "Describe la situación",
+    "placeholder": "¿Qué pasó? Sé lo más preciso posible...",
+    "submit": "Enviar denuncia",
+    "thanks": "Denuncia enviada. Nuestro equipo la revisará.",
+    "error_too_short": "Describe la situación con más detalle (mínimo 10 caracteres).",
+    "error_generic": "Ha ocurrido un error. Inténtalo de nuevo."
   }
 }

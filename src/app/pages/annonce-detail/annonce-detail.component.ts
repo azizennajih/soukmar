@@ -10,10 +10,11 @@ import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
 import { ReviewService, CanReviewResponse } from '../../services/review.service';
+import { ReportButtonComponent } from '../../components/report-button/report-button.component';
 
 @Component({
   selector: 'app-annonce-detail',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, ReportButtonComponent],
   templateUrl: './annonce-detail.component.html',
   styleUrl: './annonce-detail.component.scss'
 })

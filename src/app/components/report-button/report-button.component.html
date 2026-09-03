@@ -1,0 +1,21 @@
+@if (submitted()) {
+  <div class="report-btn__thanks" [class.report-btn--compact]="compact">✅ {{ 'report.thanks' | T }}</div>
+} @else if (!open()) {
+  <button type="button" class="report-btn__toggle" [class.report-btn--compact]="compact" (click)="open.set(true)">
+    🚩 {{ 'report.button' | T }}
+  </button>
+} @else {
+  <div class="report-btn__form" [class.report-btn--compact]="compact">
+    <label>{{ 'report.form_title' | T }}</label>
+    <textarea [(ngModel)]="reason" rows="3" [placeholder]="'report.placeholder' | T"></textarea>
+    @if (error()) {
+      <div class="report-btn__error">{{ error() }}</div>
+    }
+    <div class="report-btn__actions">
+      <button type="button" class="btn-outline" (click)="cancel()">{{ 'chat.cancel' | T }}</button>
+      <button type="button" class="btn-primary" [disabled]="submitting()" (click)="submit()">
+        {{ submitting() ? ('profil.saving' | T) : ('report.submit' | T) }}
+      </button>
+    </div>
+  </div>
+}

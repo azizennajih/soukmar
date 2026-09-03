@@ -32,6 +32,12 @@
     <button class="admin-tab" [class.active]="tab() === 'revenue'" (click)="setTab('revenue')">
       💰 {{ 'admin.tab_revenue' | T }}
     </button>
+    <button class="admin-tab" [class.active]="tab() === 'reports'" (click)="setTab('reports')">
+      🚩 {{ 'admin.tab_reports' | T }}
+      @if (pendingReportsCount > 0) {
+        <span class="tab-badge">{{ pendingReportsCount }}</span>
+      }
+    </button>
   </nav>
 
   <!-- ══════════════ OVERVIEW ══════════════ -->
@@ -375,6 +381,76 @@
         </div>
       }
     </div>
+  }
+
+  <!-- ══════════════ REPORTS ══════════════ -->
+  @if (tab() === 'reports') {
+    <div class="section-header">
+      <h2 class="section-title">{{ 'admin.reports_title' | T }}</h2>
+      <span class="section-count">{{ filteredReports.length }}</span>
+    </div>
+
+    <div class="filter-bar">
+      @for (f of ['PENDING', 'RESOLVED', 'DISMISSED', 'ALL']; track f) {
+        <button class="filter-pill" [class.active]="reportFilter() === f"
+                (click)="setReportFilter($any(f))">
+          {{ f === 'ALL' ? ('admin.filter_all' | T) : ('admin.reports_status_' + f.toLowerCase()) | T }}
+          <span class="filter-pill__count">
+            {{ f === 'ALL' ? reports.length : reports.filter(r => r.status === f).length }}
+          </span>
+        </button>
+      }
+    </div>
+
+    @if (reportsLoading()) {
+      <div class="admin-loading">{{ 'admin.loading' | T }}</div>
+    } @else if (filteredReports.length === 0) {
+      <div class="empty-state">
+        <span>🚩</span><p>{{ 'admin.reports_empty' | T }}</p>
+      </div>
+    } @else {
+      <div class="report-list">
+        @for (report of filteredReports; track report.id) {
+          <div class="report-card card" [class.report-card--pending]="report.status === 'PENDING'">
+            <div class="report-card__top">
+              <span class="badge" [ngClass]="report.status === 'PENDING' ? 'badge-pending' : report.status === 'RESOLVED' ? 'badge-active' : 'badge-rejected'">
+                {{ ('admin.reports_status_' + report.status.toLowerCase()) | T }}
+              </span>
+              <span class="report-card__date">{{ timeAgo(report.createdAt) }}</span>
+            </div>
+            <div class="report-card__parties">
+              <div>
+                <span class="report-card__label">{{ 'admin.reports_reporter' | T }}</span>
+                <strong>{{ report.reporter?.name || '—' }}</strong>
+                <span class="table-user-email">{{ report.reporter?.email }}</span>
+              </div>
+              <div>
+                <span class="report-card__label">{{ 'admin.reports_reported' | T }}</span>
+                <strong>{{ report.reported?.name || '—' }}</strong>
+                <span class="table-user-email">{{ report.reported?.email }}</span>
+              </div>
+            </div>
+            @if (report.listing) {
+              <a [routerLink]="['/annonces', report.listing.id]" class="report-card__listing">📌 {{ report.listing.title }}</a>
+            }
+            <p class="report-card__reason">{{ report.reason }}</p>
+            @if (report.adminNote) {
+              <p class="report-card__note">📝 {{ report.adminNote }}</p>
+            }
+            @if (report.status === 'PENDING') {
+              <div class="report-card__actions">
+                <button class="btn-primary" [disabled]="isActionLoading(report.id)" (click)="resolveReport(report, 'RESOLVED')">
+                  {{ 'admin.reports_resolve' | T }}
+                </button>
+                <button class="btn-outline" [disabled]="isActionLoading(report.id)" (click)="resolveReport(report, 'DISMISSED')">
+                  {{ 'admin.reports_dismiss' | T }}
+                </button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
   }
 
 </div>

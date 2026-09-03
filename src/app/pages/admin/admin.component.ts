@@ -8,7 +8,9 @@ import { AuthService } from '../../services/auth.service';
 import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
-import { Listing, CATEGORIES, formatPrice } from '../../models/listing.model';
+import { Listing, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.model';
+import { Report } from '../../models/report.model';
+import { ReportService } from '../../services/report.service';
 import { firstValueFrom } from 'rxjs';
 
 export interface AdminUser {
@@ -23,7 +25,7 @@ export interface AdminUser {
   banned?: boolean;
 }
 
-type Tab = 'overview' | 'listings' | 'users' | 'revenue';
+type Tab = 'overview' | 'listings' | 'users' | 'revenue' | 'reports';
 type ListingFilter = 'ALL' | 'ACTIVE' | 'PENDING' | 'REJECTED' | 'SOLD' | 'RESERVED';
 
 @Component({
@@ -35,6 +37,7 @@ type ListingFilter = 'ALL' | 'ACTIVE' | 'PENDING' | 'REJECTED' | 'SOLD' | 'RESER
 export class AdminComponent implements OnInit {
   private api = inject(ApiService);
   private ls = inject(ListingService);
+  private reportService = inject(ReportService);
   public auth = inject(AuthService);
   public i18n = inject(I18nService);
   private cdr = inject(ChangeDetectorRef);
@@ -45,6 +48,9 @@ export class AdminComponent implements OnInit {
 
   allListings: Listing[] = [];
   users: AdminUser[] = [];
+  reports: Report[] = [];
+  reportsLoading = signal(false);
+  reportFilter = signal<'ALL' | 'PENDING' | 'RESOLVED' | 'DISMISSED'>('PENDING');
   listingFilter = signal<ListingFilter>('ALL');
   userSearch = '';
 
@@ -63,6 +69,15 @@ export class AdminComponent implements OnInit {
   get filteredUsers(): AdminUser[] {
     const q = this.userSearch.toLowerCase();
     return q ? this.users.filter(u => u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q)) : this.users;
+  }
+
+  get filteredReports(): Report[] {
+    const f = this.reportFilter();
+    return f === 'ALL' ? this.reports : this.reports.filter(r => r.status === f);
+  }
+
+  get pendingReportsCount(): number {
+    return this.reports.filter(r => r.status === 'PENDING').length;
   }
 
   get stats() {
@@ -111,10 +126,35 @@ export class AdminComponent implements OnInit {
   }
 
   formatPrice = (p: number) => formatPrice(p, 'MAD', 'fr');
+  timeAgo = (d: Date) => timeAgo(d, this.i18n.lang());
 
   ngOnInit() {
     this.loadListings();
     this.loadUsers();
+    this.loadReports();
+  }
+
+  private async loadReports() {
+    this.reportsLoading.set(true);
+    try {
+      this.reports = await firstValueFrom(this.reportService.adminList());
+    } catch { this.reports = []; }
+    this.reportsLoading.set(false);
+    this.cdr.markForCheck();
+  }
+
+  async resolveReport(report: Report, status: 'RESOLVED' | 'DISMISSED') {
+    if (this.actionLoading.has(report.id)) return;
+    this.actionLoading.add(report.id);
+    try {
+      const note = prompt(this.i18n.t('admin.reports_note_prompt')) ?? undefined;
+      const updated = await firstValueFrom(this.reportService.adminUpdate(report.id, { status, adminNote: note }));
+      report.status = updated.status;
+      report.adminNote = updated.adminNote;
+      report.resolvedAt = updated.resolvedAt;
+    } catch { alert('Erreur.'); }
+    this.actionLoading.delete(report.id);
+    this.cdr.markForCheck();
   }
 
   private async loadListings() {
@@ -157,6 +197,7 @@ export class AdminComponent implements OnInit {
 
   setTab(t: Tab) { this.tab.set(t); }
   setListingFilter(f: ListingFilter) { this.listingFilter.set(f); }
+  setReportFilter(f: 'ALL' | 'PENDING' | 'RESOLVED' | 'DISMISSED') { this.reportFilter.set(f); }
 
   isActionLoading(id: string) { return this.actionLoading.has(id); }
 

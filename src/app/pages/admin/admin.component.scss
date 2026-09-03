@@ -539,6 +539,55 @@
   font-size: .9rem;
 }
 
+.report-list { display: flex; flex-direction: column; gap: .75rem; }
+
+.report-card {
+  padding: 1.1rem 1.25rem;
+  border-left: 3px solid transparent;
+
+  &--pending { border-left-color: #d97706; }
+
+  &__top {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: .75rem;
+  }
+
+  &__date { font-size: .78rem; color: var(--text-muted); }
+
+  &__parties {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    margin-bottom: .75rem;
+    > div { display: flex; flex-direction: column; gap: .1rem; }
+  }
+
+  &__label {
+    font-size: .7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .03em; color: var(--text-muted);
+  }
+
+  &__listing {
+    display: inline-block; font-size: .8rem; color: var(--primary, #D93D4A);
+    text-decoration: none; margin-bottom: .5rem;
+    &:hover { text-decoration: underline; }
+  }
+
+  &__reason {
+    font-size: .87rem; color: var(--text); line-height: 1.5;
+    background: var(--bg, #F8F7F5); border-radius: .6rem;
+    padding: .7rem .85rem; margin: 0 0 .5rem;
+  }
+
+  &__note {
+    font-size: .82rem; color: var(--text-muted); font-style: italic;
+    margin: 0 0 .5rem;
+  }
+
+  &__actions {
+    display: flex; gap: .6rem;
+    .btn-primary, .btn-outline { padding: .45rem 1.1rem; font-size: .82rem; }
+  }
+}
+
 /* CSS var shims (global vars may differ) */
 :host {
   --text: #0f172a;

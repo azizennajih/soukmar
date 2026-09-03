@@ -5,7 +5,7 @@ import { ApiService } from './api.service';
 export interface AppNotification {
   id: string;
   userId: string;
-  type: 'NEW_INQUIRY' | 'NEW_REPLY' | 'NEW_MESSAGE' | 'NEW_REVIEW' | 'SAVED_SEARCH_MATCH';
+  type: 'NEW_INQUIRY' | 'NEW_REPLY' | 'NEW_MESSAGE' | 'NEW_REVIEW' | 'SAVED_SEARCH_MATCH' | 'REPORT_RESOLVED';
   actorName: string | null;
   listingId: string | null;
   listingTitle: string | null;

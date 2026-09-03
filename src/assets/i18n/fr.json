@@ -161,7 +161,8 @@
     "new_review": "{name} vous a laissé une évaluation.",
     "saved_search_match": "Nouvelle annonce pour votre recherche « {name} ».",
     "enable_push": "Activez les notifications push pour ne rien manquer.",
-    "enable_push_btn": "Activer"
+    "enable_push_btn": "Activer",
+    "report_resolved": "Votre signalement a été examiné par notre équipe."
   },
   "auth": {
     "login_title": "Bon retour !",
@@ -546,6 +547,7 @@
     "tab_listings": "Annonces",
     "tab_users": "Utilisateurs",
     "tab_revenue": "Revenus",
+    "tab_reports": "Signalements",
     "loading": "⏳ Chargement des données...",
     "kpi_total": "Annonces totales",
     "kpi_active": "actives",
@@ -564,6 +566,16 @@
     "listings_title": "Gestion des annonces",
     "users_title": "Gestion des utilisateurs",
     "revenue_title": "Revenus",
+    "reports_title": "Signalements",
+    "reports_empty": "Aucun signalement pour le moment.",
+    "reports_reporter": "Signalé par",
+    "reports_reported": "Utilisateur signalé",
+    "reports_resolve": "✅ Résoudre",
+    "reports_dismiss": "❌ Rejeter",
+    "reports_status_pending": "En attente",
+    "reports_status_resolved": "Résolu",
+    "reports_status_dismissed": "Rejeté",
+    "reports_note_prompt": "Note interne (optionnel) :",
     "filter_all": "Toutes",
     "col_listing": "Annonce",
     "col_seller": "Vendeur",
@@ -711,5 +723,14 @@
     "title": "Recherches sauvegardées",
     "empty": "Aucune recherche sauvegardée",
     "empty_sub": "Enregistrez une recherche pour être averti des nouvelles annonces correspondantes."
+  },
+  "report": {
+    "button": "Signaler pour fraude",
+    "form_title": "Décrivez la situation",
+    "placeholder": "Que s'est-il passé ? Soyez aussi précis que possible...",
+    "submit": "Envoyer le signalement",
+    "thanks": "Signalement envoyé. Notre équipe va l'examiner.",
+    "error_too_short": "Merci de décrire la situation plus précisément (10 caractères minimum).",
+    "error_generic": "Une erreur est survenue. Veuillez réessayer."
   }
 }

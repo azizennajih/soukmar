@@ -190,6 +190,20 @@
   }
 }
 
+.chat__header-report {
+  position: relative;
+  flex-shrink: 0;
+  margin-left: auto;
+
+  ::ng-deep .report-btn__form {
+    position: absolute;
+    top: calc(100% + .5rem);
+    right: 0;
+    z-index: 10;
+    box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  }
+}
+
 .chat__typing {
   margin-left: auto;
   font-size: .78rem;

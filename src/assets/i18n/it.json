@@ -161,7 +161,8 @@
     "new_review": "{name} ti ha lasciato una recensione.",
     "saved_search_match": "Nuovo annuncio per la tua ricerca \"{name}\".",
     "enable_push": "Attiva le notifiche push per non perdere nulla.",
-    "enable_push_btn": "Attiva"
+    "enable_push_btn": "Attiva",
+    "report_resolved": "La tua segnalazione è stata esaminata dal nostro team."
   },
   "auth": {
     "login_title": "Bentornato!",
@@ -343,7 +344,18 @@
     "revenue_pct": "% del totale",
     "revenue_monthly_avg": "Entrate mensili medie",
     "revenue_12m": "In 12 mesi",
-    "revenue_chart": "💰 Entrate Premium al mese (MAD)"
+    "revenue_chart": "💰 Entrate Premium al mese (MAD)",
+    "tab_reports": "Segnalazioni",
+    "reports_title": "Segnalazioni",
+    "reports_empty": "Nessuna segnalazione per ora.",
+    "reports_reporter": "Segnalato da",
+    "reports_reported": "Utente segnalato",
+    "reports_resolve": "✅ Risolvi",
+    "reports_dismiss": "❌ Rifiuta",
+    "reports_status_pending": "In attesa",
+    "reports_status_resolved": "Risolto",
+    "reports_status_dismissed": "Rifiutato",
+    "reports_note_prompt": "Nota interna (facoltativa):"
   },
   "mes_annonces": {
     "title": "I miei annunci",
@@ -908,5 +920,14 @@
     "title": "Ricerche salvate",
     "empty": "Nessuna ricerca salvata",
     "empty_sub": "Salva una ricerca per essere avvisato di nuovi annunci corrispondenti."
+  },
+  "report": {
+    "button": "Segnala per frode",
+    "form_title": "Descrivi la situazione",
+    "placeholder": "Cosa è successo? Sii il più preciso possibile...",
+    "submit": "Invia segnalazione",
+    "thanks": "Segnalazione inviata. Il nostro team la esaminerà.",
+    "error_too_short": "Descrivi la situazione in modo più dettagliato (minimo 10 caratteri).",
+    "error_generic": "Si è verificato un errore. Riprova."
   }
 }

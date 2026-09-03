@@ -161,7 +161,8 @@
     "new_review": "ترك لك {name} تقييمًا.",
     "saved_search_match": "إعلان جديد لبحثك «{name}».",
     "enable_push": "فعّل إشعارات Push حتى لا يفوتك أي شيء.",
-    "enable_push_btn": "تفعيل"
+    "enable_push_btn": "تفعيل",
+    "report_resolved": "تمت مراجعة بلاغك من قبل فريقنا."
   },
   "auth": {
     "login_title": "مرحبًا بعودتك!",
@@ -324,7 +325,18 @@
     "revenue_pct": "% من الإجمالي",
     "revenue_monthly_avg": "متوسط الإيرادات الشهرية",
     "revenue_12m": "على مدى 12 شهراً",
-    "revenue_chart": "💰 إيرادات Premium شهرياً (درهم)"
+    "revenue_chart": "💰 إيرادات Premium شهرياً (درهم)",
+    "tab_reports": "البلاغات",
+    "reports_title": "البلاغات",
+    "reports_empty": "لا توجد بلاغات حتى الآن.",
+    "reports_reporter": "المُبلِغ",
+    "reports_reported": "المستخدم المُبلَّغ عنه",
+    "reports_resolve": "✅ حل",
+    "reports_dismiss": "❌ رفض",
+    "reports_status_pending": "قيد الانتظار",
+    "reports_status_resolved": "تم الحل",
+    "reports_status_dismissed": "مرفوض",
+    "reports_note_prompt": "ملاحظة داخلية (اختياري):"
   },
   "deposer": {
     "gate_title": "يجب تسجيل الدخول",
@@ -900,5 +912,14 @@
     "title": "عمليات البحث المحفوظة",
     "empty": "لا توجد عمليات بحث محفوظة",
     "empty_sub": "احفظ بحثًا لتصلك إشعارات بالإعلانات الجديدة المطابقة."
+  },
+  "report": {
+    "button": "الإبلاغ عن احتيال",
+    "form_title": "صف الموقف",
+    "placeholder": "ماذا حدث؟ يرجى أن تكون دقيقًا قدر الإمكان...",
+    "submit": "إرسال البلاغ",
+    "thanks": "تم إرسال البلاغ. سيقوم فريقنا بمراجعته.",
+    "error_too_short": "يرجى وصف الموقف بمزيد من التفصيل (10 أحرف على الأقل).",
+    "error_generic": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
   }
 }

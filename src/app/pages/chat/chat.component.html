@@ -67,6 +67,9 @@
         @if (partnerTyping) {
           <div class="chat__typing">{{ 'chat.typing' | T }}</div>
         }
+        <div class="chat__header-report">
+          <app-report-button [reportedId]="getPartnerId()" [listingId]="activeConv.listingId" />
+        </div>
       </div>
 
       <!-- Messages -->

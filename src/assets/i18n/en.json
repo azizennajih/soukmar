@@ -161,7 +161,8 @@
     "new_review": "{name} left you a review.",
     "saved_search_match": "New listing for your search \"{name}\".",
     "enable_push": "Enable push notifications so you never miss anything.",
-    "enable_push_btn": "Enable"
+    "enable_push_btn": "Enable",
+    "report_resolved": "Your report has been reviewed by our team."
   },
   "auth": {
     "login_title": "Welcome back!",
@@ -324,7 +325,18 @@
     "revenue_pct": "% of total",
     "revenue_monthly_avg": "Average monthly revenue",
     "revenue_12m": "Over 12 months",
-    "revenue_chart": "💰 Premium revenue by month (MAD)"
+    "revenue_chart": "💰 Premium revenue by month (MAD)",
+    "tab_reports": "Reports",
+    "reports_title": "Reports",
+    "reports_empty": "No reports yet.",
+    "reports_reporter": "Reported by",
+    "reports_reported": "Reported user",
+    "reports_resolve": "✅ Resolve",
+    "reports_dismiss": "❌ Dismiss",
+    "reports_status_pending": "Pending",
+    "reports_status_resolved": "Resolved",
+    "reports_status_dismissed": "Dismissed",
+    "reports_note_prompt": "Internal note (optional):"
   },
   "deposer": {
     "gate_title": "Login required",
@@ -900,5 +912,14 @@
     "title": "Saved Searches",
     "empty": "No saved searches",
     "empty_sub": "Save a search to get notified about new matching listings."
+  },
+  "report": {
+    "button": "Report for fraud",
+    "form_title": "Describe the situation",
+    "placeholder": "What happened? Please be as specific as possible...",
+    "submit": "Send report",
+    "thanks": "Report sent. Our team will review it.",
+    "error_too_short": "Please describe the situation in more detail (10 characters minimum).",
+    "error_generic": "Something went wrong. Please try again."
   }
 }

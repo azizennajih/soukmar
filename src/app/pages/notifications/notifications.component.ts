@@ -52,6 +52,7 @@ export class NotificationsComponent implements OnInit {
       : n.type === 'NEW_REPLY' ? 'notifications.new_reply'
       : n.type === 'NEW_REVIEW' ? 'notifications.new_review'
       : n.type === 'SAVED_SEARCH_MATCH' ? 'notifications.saved_search_match'
+      : n.type === 'REPORT_RESOLVED' ? 'notifications.report_resolved'
       : 'notifications.new_message';
     return this.i18n.t(key, { name: n.actorName || '' });
   }
@@ -67,6 +68,7 @@ export class NotificationsComponent implements OnInit {
       this.notifService.markRead(n.id);
     }
     if (n.type === 'NEW_REVIEW') { this.router.navigate(['/profil'], { queryParams: { tab: 'reviews' } }); return; }
+    if (n.type === 'REPORT_RESOLVED') { return; }
     if (n.type === 'SAVED_SEARCH_MATCH' && n.listingId) { this.router.navigate(['/annonces', n.listingId]); return; }
     if (n.listingId) this.router.navigate(['/chat'], { queryParams: { listing: n.listingId } });
   }

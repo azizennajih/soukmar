@@ -1,0 +1,54 @@
+.report-btn {
+  &__toggle {
+    background: none; border: none; cursor: pointer;
+    font-size: .82rem; color: #94a3b8; padding: 0;
+    transition: color .15s;
+    &:hover { color: #e63946; }
+
+    &.report-btn--compact {
+      font-size: .78rem;
+      color: rgba(255,255,255,.75);
+      &:hover { color: #fff; }
+    }
+  }
+
+  &__thanks {
+    font-size: .82rem; font-weight: 600; color: #16a34a;
+  }
+
+  &__form {
+    background: var(--white, #fff);
+    border: 1.5px solid var(--border, #e5e9ee);
+    border-radius: .75rem;
+    padding: .9rem 1rem;
+    display: flex; flex-direction: column; gap: .5rem;
+    max-width: 320px;
+
+    label {
+      font-size: .82rem; font-weight: 700; color: var(--text, #111827);
+    }
+
+    textarea {
+      width: 100%;
+      padding: .55rem .7rem;
+      border: 1.5px solid var(--border, #e5e9ee);
+      border-radius: .6rem;
+      font-family: inherit;
+      font-size: .82rem;
+      resize: vertical;
+      &:focus { outline: none; border-color: var(--primary, #D93D4A); }
+    }
+  }
+
+  &__error {
+    font-size: .78rem; color: #dc2626;
+  }
+
+  &__actions {
+    display: flex; gap: .5rem; justify-content: flex-end;
+
+    .btn-outline, .btn-primary {
+      padding: .4rem .9rem; font-size: .8rem;
+    }
+  }
+}
