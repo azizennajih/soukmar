@@ -8,10 +8,12 @@ import { ApiService } from '../../services/api.service';
 import { I18nService, Lang } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CATEGORIES, MOROCCO_CITIES } from '../../models/listing.model';
+import { CitySelectComponent } from '../city-select/city-select.component';
+import { Coords } from '../../services/geocode.service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe],
+  imports: [CommonModule, RouterLink, FormsModule, CitySelectComponent, TranslatePipe],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -21,6 +23,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   searchQuery = '';
   selectedCity = '';
   selectedCategory = '';
+  gpsCoords: Coords | null = null;
   mobileOpen = signal(false);
   userMenuOpen = signal(false);
   unreadCount = signal(0);
@@ -72,10 +75,26 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   get activeLang() { return this.langs.find(l => l.code === this.i18n.lang())!; }
 
+  onCityChange(value: string) {
+    this.selectedCity = value;
+    this.gpsCoords = null;
+  }
+
+  onGpsSelected(coords: Coords) {
+    this.gpsCoords = coords;
+  }
+
   search() {
     const params: Record<string, string> = {};
     if (this.searchQuery.trim()) params['q'] = this.searchQuery.trim();
-    if (this.selectedCity.trim()) params['ville'] = this.selectedCity.trim();
+    if (this.gpsCoords) {
+      params['ville'] = this.selectedCity.trim();
+      params['lat'] = String(this.gpsCoords.lat);
+      params['lng'] = String(this.gpsCoords.lng);
+      params['radius'] = '10';
+    } else if (this.selectedCity.trim()) {
+      params['ville'] = this.selectedCity.trim();
+    }
     this.router.navigate(['/annonces'], { queryParams: params });
   }
 

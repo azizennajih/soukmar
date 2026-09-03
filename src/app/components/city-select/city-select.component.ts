@@ -28,6 +28,8 @@ export class CitySelectComponent {
   @Input() placeholder = '';
   @Input() value = '';
   @Input() showGps = false;
+  /** Strips the field's own border/background so it blends into a parent chrome (e.g. the navbar search pill). */
+  @Input() bare = false;
   @Output() valueChange = new EventEmitter<string>();
   @Output() gpsSelected = new EventEmitter<Coords>();
 
@@ -118,9 +120,12 @@ export class CitySelectComponent {
       e.preventDefault();
       this.activeIndex.set(Math.max(this.activeIndex() - 1, 0));
     } else if (e.key === 'Enter') {
-      e.preventDefault();
       const i = this.activeIndex();
-      if (i >= 0 && i < list.length) this.select(list[i]!);
+      if (i >= 0 && i < list.length) {
+        e.preventDefault();
+        this.select(list[i]!);
+      }
+      // else: no dropdown item active — let Enter bubble (e.g. submit an enclosing <form>)
     } else if (e.key === 'Escape') {
       this.query.set('');
       this.open.set(false);

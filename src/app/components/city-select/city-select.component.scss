@@ -1,4 +1,4 @@
-:host { display: block; }
+:host { display: block; width: 100%; height: 100%; }
 
 .city-select {
   &__field {
@@ -14,6 +14,15 @@
     &--open {
       border-color: var(--primary);
       box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    &--bare {
+      height: 100%;
+      padding: 0 .5rem;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none !important;
     }
 
     input {
