@@ -104,7 +104,25 @@
       <!-- City -->
       <div class="sidebar__section">
         <label class="sidebar__label">{{ 'annonces.city' | T }}</label>
-        <app-city-select [cities]="cities" [(value)]="filters.ville" [placeholder]="'nav.city_placeholder' | T" />
+        <app-city-select
+          [cities]="cities"
+          [value]="filters.ville"
+          (valueChange)="onCityChange($event)"
+          [showGps]="true"
+          (gpsSelected)="onGpsSelected($event)"
+          [placeholder]="'nav.city_placeholder' | T"
+        />
+      </div>
+
+      <!-- Radius -->
+      <div class="sidebar__section">
+        <label class="sidebar__label">{{ 'annonces.radius' | T }}</label>
+        <select [(ngModel)]="filters.radius" class="sidebar__select">
+          <option value="">{{ 'annonces.whole_city' | T }}</option>
+          @for (r of radiusOptions; track r) {
+            <option [value]="r">+{{ r }} km</option>
+          }
+        </select>
       </div>
 
       <!-- Price -->

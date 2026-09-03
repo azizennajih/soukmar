@@ -54,7 +54,12 @@
     "mobile_filter": "Filter",
     "subcategory": "Unterkategorie",
     "all_subcats": "Alle Unterkategorien",
-    "condition": "Zustand"
+    "condition": "Zustand",
+    "use_gps": "Meinen Standort verwenden",
+    "gps_error": "Standort nicht verfügbar. Bitte Standortfreigabe prüfen.",
+    "current_location": "Mein aktueller Standort",
+    "radius": "Umkreis",
+    "whole_city": "Ganzer Ort"
   },
   "listing": {
     "loading": "Lädt...",

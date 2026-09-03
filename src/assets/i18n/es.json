@@ -54,7 +54,12 @@
     "mobile_filter": "Filtros",
     "subcategory": "Subcategoría",
     "all_subcats": "Todas las subcategorías",
-    "condition": "Estado"
+    "condition": "Estado",
+    "use_gps": "Usar mi ubicación",
+    "gps_error": "Ubicación no disponible. Comprueba el permiso de localización.",
+    "current_location": "Mi ubicación actual",
+    "radius": "Radio",
+    "whole_city": "Toda la ciudad"
   },
   "listing": {
     "loading": "Cargando...",

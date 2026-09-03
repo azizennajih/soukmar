@@ -52,6 +52,11 @@
     "empty_sub": "Essayez de modifier vos filtres",
     "reserved": "Réservé",
     "mobile_filter": "Filtres",
+    "use_gps": "Utiliser ma position",
+    "gps_error": "Position indisponible. Vérifiez l'autorisation de localisation.",
+    "current_location": "Ma position actuelle",
+    "radius": "Rayon",
+    "whole_city": "Ville entière",
     "subcategory": "Sous-catégorie",
     "all_subcats": "Toutes sous-catégories",
     "condition": "État"

@@ -2,6 +2,8 @@ import { Component, ElementRef, HostListener, Input, Output, EventEmitter, ViewC
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { GeocodeService, Coords } from '../../services/geocode.service';
+import { I18nService } from '../../services/i18n.service';
 
 const DIACRITICS = /[̀-ͯ]/g;
 
@@ -25,16 +27,22 @@ export class CitySelectComponent {
   @Input() cities: string[] = [];
   @Input() placeholder = '';
   @Input() value = '';
+  @Input() showGps = false;
   @Output() valueChange = new EventEmitter<string>();
+  @Output() gpsSelected = new EventEmitter<Coords>();
 
   @ViewChild('fieldWrap') fieldWrap!: ElementRef<HTMLElement>;
 
   private host = inject(ElementRef<HTMLElement>);
+  private geocodeService = inject(GeocodeService);
+  private i18n = inject(I18nService);
 
   open = signal(false);
   query = signal('');
   activeIndex = signal(-1);
   panelStyle = signal<PanelStyle>({ top: '0px', left: '0px', width: '0px' });
+  gpsLoading = signal(false);
+  gpsError = signal(false);
 
   filtered = computed(() => {
     const q = normalize(this.query());
@@ -80,6 +88,24 @@ export class CitySelectComponent {
     this.value = '';
     this.valueChange.emit('');
     this.query.set('');
+  }
+
+  async useGps(e: Event) {
+    e.stopPropagation();
+    this.gpsError.set(false);
+    this.gpsLoading.set(true);
+    try {
+      const coords = await this.geocodeService.getCurrentPosition();
+      this.value = this.i18n.t('annonces.current_location');
+      this.valueChange.emit(this.value);
+      this.gpsSelected.emit(coords);
+      this.open.set(false);
+      this.query.set('');
+    } catch {
+      this.gpsError.set(true);
+    } finally {
+      this.gpsLoading.set(false);
+    }
   }
 
   onKeydown(e: KeyboardEvent) {

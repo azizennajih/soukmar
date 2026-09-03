@@ -13,7 +13,27 @@
     @if (value) {
       <button type="button" class="city-select__clear" (click)="clear($event)" aria-label="Effacer">✕</button>
     }
+    @if (showGps) {
+      <button
+        type="button"
+        class="city-select__gps"
+        [class.city-select__gps--loading]="gpsLoading()"
+        (click)="useGps($event)"
+        [attr.aria-label]="'annonces.use_gps' | T"
+        [title]="'annonces.use_gps' | T"
+      >
+        @if (gpsLoading()) {
+          <span class="city-select__spinner"></span>
+        } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+        }
+      </button>
+    }
   </div>
+
+  @if (gpsError()) {
+    <div class="city-select__gps-error">{{ 'annonces.gps_error' | T }}</div>
+  }
 
   @if (open()) {
     <div class="city-select__panel" [style.top]="panelStyle().top" [style.left]="panelStyle().left" [style.width]="panelStyle().width">

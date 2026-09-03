@@ -54,7 +54,12 @@
     "mobile_filter": "الفلاتر",
     "subcategory": "الفئة الفرعية",
     "all_subcats": "جميع الفئات الفرعية",
-    "condition": "الحالة"
+    "condition": "الحالة",
+    "use_gps": "استخدام موقعي",
+    "gps_error": "الموقع غير متاح. يرجى التحقق من إذن الموقع.",
+    "current_location": "موقعي الحالي",
+    "radius": "نطاق البحث",
+    "whole_city": "المدينة بأكملها"
   },
   "listing": {
     "loading": "جارٍ التحميل...",

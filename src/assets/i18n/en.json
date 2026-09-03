@@ -54,7 +54,12 @@
     "mobile_filter": "Filters",
     "subcategory": "Subcategory",
     "all_subcats": "All subcategories",
-    "condition": "Condition"
+    "condition": "Condition",
+    "use_gps": "Use my location",
+    "gps_error": "Location unavailable. Please check location permission.",
+    "current_location": "My current location",
+    "radius": "Radius",
+    "whole_city": "Whole city"
   },
   "listing": {
     "loading": "Loading...",

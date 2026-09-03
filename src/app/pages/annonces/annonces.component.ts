@@ -6,6 +6,7 @@ import { ListingService } from '../../services/listing.service';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { CatalogService } from '../../services/catalog.service';
+import { GeocodeService, Coords } from '../../services/geocode.service';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { CitySelectComponent } from '../../components/city-select/city-select.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing, Category, AttributeDefinition } from '../../models/listing.model';
@@ -24,6 +25,7 @@ interface SubcategoryOption { id: string; code: string; }
 export class AnnoncesComponent implements OnInit {
   categories = CATEGORIES;
   cities = MOROCCO_CITIES;
+  radiusOptions = ['5', '10', '20', '30', '50', '100', '150', '200'];
   listings: Listing[] = [];
   filterOpen = false;
   total = 0;
@@ -34,11 +36,12 @@ export class AnnoncesComponent implements OnInit {
   attributeFilterDefs: AttributeDefinition[] = [];
   attrFilters: Record<string, string> = {};
 
-  filters = { q: '', categorie: '', souscategorie: '', ville: '', minPrix: '', maxPrix: '', condition: '', tri: '' };
+  filters = { q: '', categorie: '', souscategorie: '', ville: '', minPrix: '', maxPrix: '', condition: '', tri: '', radius: '', lat: '', lng: '' };
 
   constructor(
     private listingService: ListingService,
     private catalog: CatalogService,
+    private geocodeService: GeocodeService,
     private route: ActivatedRoute,
     private router: Router,
     private api: ApiService,
@@ -56,6 +59,9 @@ export class AnnoncesComponent implements OnInit {
       this.filters.maxPrix       = params['maxPrix']       || '';
       this.filters.condition     = params['condition']     || '';
       this.filters.tri           = params['tri']           || '';
+      this.filters.radius        = params['radius']        || '';
+      this.filters.lat           = params['lat']            || '';
+      this.filters.lng           = params['lng']            || '';
       this.attrFilters = {};
       for (const key of Object.keys(params)) {
         if (key.startsWith('attr_')) this.attrFilters[key] = params[key];
@@ -104,6 +110,9 @@ export class AnnoncesComponent implements OnInit {
       city:          this.filters.ville         || undefined,
       minPrice:      this.filters.minPrix       || undefined,
       maxPrice:      this.filters.maxPrix       || undefined,
+      lat:           this.filters.lat           || undefined,
+      lng:           this.filters.lng           || undefined,
+      radius:        this.filters.radius        || undefined,
       attrs:         this.attrFilters,
     }).subscribe({
       next: res => {
@@ -122,6 +131,18 @@ export class AnnoncesComponent implements OnInit {
 
   isFav(listing: Listing): boolean {
     return this.favoriteIds.has(listing.id);
+  }
+
+  onCityChange(value: string) {
+    this.filters.ville = value;
+    this.filters.lat = '';
+    this.filters.lng = '';
+  }
+
+  onGpsSelected(coords: Coords) {
+    this.filters.lat = String(coords.lat);
+    this.filters.lng = String(coords.lng);
+    if (!this.filters.radius) this.filters.radius = '10';
   }
 
   selectOptionValue(code: string, option: string, checked: boolean) {
@@ -154,7 +175,7 @@ export class AnnoncesComponent implements OnInit {
     else delete this.attrFilters[key];
   }
 
-  applyFilters() {
+  async applyFilters() {
     const qp: Record<string, string> = {};
     if (this.filters.q)             qp['q']             = this.filters.q;
     if (this.filters.categorie)     qp['categorie']     = this.filters.categorie;
@@ -164,12 +185,26 @@ export class AnnoncesComponent implements OnInit {
     if (this.filters.maxPrix)       qp['maxPrix']       = this.filters.maxPrix;
     if (this.filters.condition)     qp['condition']     = this.filters.condition;
     if (this.filters.tri)           qp['tri']           = this.filters.tri;
+
+    if (this.filters.lat && this.filters.lng) {
+      qp['lat'] = this.filters.lat;
+      qp['lng'] = this.filters.lng;
+      qp['radius'] = this.filters.radius || '10';
+    } else if (this.filters.radius && this.filters.ville) {
+      try {
+        const coords = await firstValueFrom(this.geocodeService.geocode(this.filters.ville));
+        qp['lat'] = String(coords.lat);
+        qp['lng'] = String(coords.lng);
+        qp['radius'] = this.filters.radius;
+      } catch { /* geocoding failed — fall back to plain city-text search */ }
+    }
+
     for (const [k, v] of Object.entries(this.attrFilters)) { if (v) qp[k] = v; }
     this.router.navigate([], { queryParams: qp });
   }
 
   resetFilters() {
-    this.filters = { q: '', categorie: '', souscategorie: '', ville: '', minPrix: '', maxPrix: '', condition: '', tri: '' };
+    this.filters = { q: '', categorie: '', souscategorie: '', ville: '', minPrix: '', maxPrix: '', condition: '', tri: '', radius: '', lat: '', lng: '' };
     this.attrFilters = {};
     this.router.navigate([], { queryParams: {} });
   }

@@ -18,6 +18,9 @@ export interface ListingFilters {
   city?: string;
   minPrice?: string;
   maxPrice?: string;
+  lat?: string;
+  lng?: string;
+  radius?: string;
   page?: string;
   limit?: string;
   attrs?: Record<string, string>;

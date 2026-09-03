@@ -50,6 +50,40 @@
     &:hover { background: var(--primary-light); color: var(--primary); }
   }
 
+  &__gps {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background .15s, color .15s;
+
+    &:hover { background: var(--primary-light); color: var(--primary); }
+    &--loading { color: var(--primary); pointer-events: none; }
+  }
+
+  &__gps-error {
+    margin-top: .35rem;
+    font-size: .78rem;
+    color: var(--primary);
+  }
+
+  &__spinner {
+    width: .85rem; height: .85rem;
+    border: 2px solid var(--primary-light);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: city-select-spin .7s linear infinite;
+  }
+
+  @keyframes city-select-spin { to { transform: rotate(360deg); } }
+
   &__panel {
     position: fixed;
     z-index: 1000;
