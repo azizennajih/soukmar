@@ -51,10 +51,6 @@ export class MultiSelectComponent {
     return `${this.selected.length} ${this.i18n.t('common.selected')}`;
   }
 
-  toggle() {
-    this.open() ? this.close() : this.openPanel();
-  }
-
   private openPanel() {
     const rect = this.fieldWrap.nativeElement.getBoundingClientRect();
     this.panelStyle.set({
@@ -62,12 +58,22 @@ export class MultiSelectComponent {
       left: `${rect.left}px`,
       width: `${rect.width}px`,
     });
-    this.query.set('');
     this.open.set(true);
   }
 
   close() {
     this.open.set(false);
+    this.query.set('');
+  }
+
+  onFocus() {
+    this.query.set('');
+    this.openPanel();
+  }
+
+  onInput(value: string) {
+    this.query.set(value);
+    if (!this.open()) this.openPanel();
   }
 
   isChecked(opt: string): boolean {
