@@ -135,9 +135,15 @@ small { font-size: .75rem; color: #94a3b8; }
 .deposer__preview {
   position: relative; border-radius: .75rem; overflow: hidden;
   aspect-ratio: 1; border: 2px solid #e2e8f0;
-  cursor: grab; transition: opacity .15s, border-color .15s;
+  cursor: grab; transition: opacity .15s, border-color .15s, transform .1s;
+  // Without this, touch input scrolls the page instead of reaching
+  // pointermove — the whole reason native HTML5 DnD never worked here.
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 
   &--dragging { opacity: .4; border-color: #e63946; }
+  &--drag-over { border-color: #e63946; transform: scale(1.03); }
   &:active { cursor: grabbing; }
 
   img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }

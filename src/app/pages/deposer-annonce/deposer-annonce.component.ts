@@ -224,24 +224,51 @@ export class DeposerAnnonceComponent {
     this.photos.splice(index, 1);
   }
 
-  onDragStart(index: number) {
+  // Pointer Events instead of the native HTML5 Drag & Drop API: draggable/
+  // dragstart/dragover/drop only fire for mouse input — iOS Safari and
+  // Android Chrome never dispatch them for touch, so the reorder feature
+  // was silently dead on every real phone. Pointer events unify mouse,
+  // touch and pen through one code path.
+  hoverIndex: number | null = null;
+  private dragging = false;
+  private dragStartX = 0;
+  private dragStartY = 0;
+
+  onPointerDown(e: PointerEvent, index: number) {
+    if ((e.target as HTMLElement).closest('.deposer__preview-remove')) return;
     this.dragIndex = index;
+    this.dragStartX = e.clientX;
+    this.dragStartY = e.clientY;
+    this.dragging = false;
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   }
 
-  onDragOver(event: DragEvent) {
-    event.preventDefault();
+  onPointerMove(e: PointerEvent) {
+    if (this.dragIndex === null) return;
+    if (!this.dragging) {
+      const moved = Math.hypot(e.clientX - this.dragStartX, e.clientY - this.dragStartY);
+      if (moved < 6) return;
+      this.dragging = true;
+    }
+    e.preventDefault();
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    const tile = el?.closest('[data-photo-index]') as HTMLElement | null;
+    const idx = tile ? Number(tile.dataset['photoIndex']) : null;
+    if (idx !== null && !Number.isNaN(idx) && idx !== this.hoverIndex) {
+      this.hoverIndex = idx;
+      this.cdr.markForCheck();
+    }
   }
 
-  onDrop(index: number) {
-    if (this.dragIndex === null || this.dragIndex === index) { this.dragIndex = null; return; }
-    const [moved] = this.photos.splice(this.dragIndex, 1);
-    this.photos.splice(index, 0, moved);
+  onPointerUp() {
+    if (this.dragging && this.dragIndex !== null && this.hoverIndex !== null && this.hoverIndex !== this.dragIndex) {
+      const [moved] = this.photos.splice(this.dragIndex, 1);
+      this.photos.splice(this.hoverIndex, 0, moved);
+    }
     this.dragIndex = null;
+    this.hoverIndex = null;
+    this.dragging = false;
     this.cdr.markForCheck();
-  }
-
-  onDragEnd() {
-    this.dragIndex = null;
   }
 
   async publish() {

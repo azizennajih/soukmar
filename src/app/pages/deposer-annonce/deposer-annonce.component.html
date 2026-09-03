@@ -194,11 +194,12 @@
                 <div
                   class="deposer__preview"
                   [class.deposer__preview--dragging]="dragIndex === i"
-                  draggable="true"
-                  (dragstart)="onDragStart(i)"
-                  (dragover)="onDragOver($event)"
-                  (drop)="onDrop(i)"
-                  (dragend)="onDragEnd()"
+                  [class.deposer__preview--drag-over]="hoverIndex === i && dragIndex !== i"
+                  [attr.data-photo-index]="i"
+                  (pointerdown)="onPointerDown($event, i)"
+                  (pointermove)="onPointerMove($event)"
+                  (pointerup)="onPointerUp()"
+                  (pointercancel)="onPointerUp()"
                 >
                   <img [src]="photo.url" alt="preview" />
                   @if (i === 0) { <span class="deposer__preview-badge">{{ 'deposer.photo_main' | T }}</span> }
