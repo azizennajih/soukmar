@@ -47,7 +47,8 @@
     font-size: .8rem; color: #64748b;
   }
 
-  &__price { font-weight: 600; color: #111827; font-size: .9rem; }
+  &__price { font-weight: 600; color: #111827; font-size: .85rem; }
+  &__currency { font-size: .68rem; font-weight: 500; color: #94a3b8; }
 
   &__actions { display: flex; gap: .4rem; flex-shrink: 0; }
 

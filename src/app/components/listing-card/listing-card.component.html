@@ -32,7 +32,13 @@
   <div class="listing-card__content">
     <h3 class="listing-card__title">{{ listing.title }}</h3>
 
-    <div class="listing-card__price">{{ priceDisplay }}</div>
+    <div class="listing-card__price">
+      @if (priceParts; as p) {
+        {{ p.amount }} <span class="listing-card__currency">{{ p.currency }}</span>
+      } @else {
+        {{ negotiateLabel }}
+      }
+    </div>
 
     <div class="listing-card__meta">
       <span class="listing-card__cat" [ngClass]="category?.color">

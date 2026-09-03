@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ListingService } from '../../services/listing.service';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
-import { Listing, ListingAttributeValue, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.model';
+import { Listing, ListingAttributeValue, CATEGORIES, formatPriceParts, timeAgo } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
@@ -160,11 +160,13 @@ export class AnnonceDetailComponent implements OnInit {
   }
 
   get category() { return CATEGORIES.find(c => c.value === this.listing?.category); }
-  get priceDisplay() {
-    const lang = this.i18n.lang();
-    return this.listing?.price != null
-      ? formatPrice(this.listing.price, this.listing.currency, lang)
-      : this.i18n.t('listing.negotiate');
+  get priceParts(): { amount: string; currency: string } | null {
+    if (this.listing?.price == null) return null;
+    return formatPriceParts(this.listing.price, this.listing.currency, this.i18n.lang());
+  }
+
+  get negotiateLabel(): string {
+    return this.i18n.t('listing.negotiate');
   }
   get timeDisplay() { return this.listing ? timeAgo(this.listing.createdAt, this.i18n.lang()) : ''; }
 

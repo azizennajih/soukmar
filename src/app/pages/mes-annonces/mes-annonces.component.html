@@ -40,7 +40,13 @@
               </span>
             </div>
             <div class="listing-row__meta">
-              <span class="listing-row__price">{{ price(listing) }}</span>
+              <span class="listing-row__price">
+                @if (priceParts(listing); as p) {
+                  {{ p.amount }} <span class="listing-row__currency">{{ p.currency }}</span>
+                } @else {
+                  À négocier
+                }
+              </span>
               <span>👁 {{ listing.views }} vues</span>
               <span>🕐 {{ time(listing) }}</span>
               <span>📍 {{ listing.city }}</span>

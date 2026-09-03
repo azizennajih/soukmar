@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, signal, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Listing, CATEGORIES, HIGHLIGHT_ATTR_CODES, formatPrice, timeAgo } from '../../models/listing.model';
+import { Listing, CATEGORIES, HIGHLIGHT_ATTR_CODES, formatPriceParts, timeAgo } from '../../models/listing.model';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
@@ -33,11 +33,13 @@ export class ListingCardComponent implements OnInit {
     return CATEGORIES.find(c => c.value === this.listing.category);
   }
 
-  get priceDisplay(): string {
-    const lang = this.i18n.lang();
-    return this.listing.price != null
-      ? formatPrice(this.listing.price, this.listing.currency, lang)
-      : this.i18n.t('listing.negotiate');
+  get priceParts(): { amount: string; currency: string } | null {
+    if (this.listing.price == null) return null;
+    return formatPriceParts(this.listing.price, this.listing.currency, this.i18n.lang());
+  }
+
+  get negotiateLabel(): string {
+    return this.i18n.t('listing.negotiate');
   }
 
   get timeDisplay(): string {

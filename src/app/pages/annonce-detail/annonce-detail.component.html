@@ -92,7 +92,13 @@
           </div>
         </div>
 
-        <div class="detail__price">{{ priceDisplay }}</div>
+        <div class="detail__price">
+          @if (priceParts; as p) {
+            {{ p.amount }} <span class="detail__currency">{{ p.currency }}</span>
+          } @else {
+            {{ negotiateLabel }}
+          }
+        </div>
         @if (priceComparisonPct; as pct) {
           @if (pct < 0) {
             <div class="detail__price-indicator detail__price-indicator--good">
@@ -145,7 +151,13 @@
 
       <!-- Price + Contact -->
       <div class="card detail__contact-card">
-        <div class="detail__contact-price">{{ priceDisplay }}</div>
+        <div class="detail__contact-price">
+          @if (priceParts; as p) {
+            {{ p.amount }} <span class="detail__currency">{{ p.currency }}</span>
+          } @else {
+            {{ negotiateLabel }}
+          }
+        </div>
 
         @if (auth.isLoggedIn) {
           @if (listing.phone) {

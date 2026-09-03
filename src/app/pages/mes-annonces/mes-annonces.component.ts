@@ -5,7 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { ListingService } from '../../services/listing.service';
 import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
-import { Listing, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.model';
+import { Listing, CATEGORIES, formatPriceParts, timeAgo } from '../../models/listing.model';
 
 @Component({
   selector: 'app-mes-annonces',
@@ -62,7 +62,7 @@ export class MesAnnoncesComponent implements OnInit {
   }
 
   getCategory(val: string) { return CATEGORIES.find(c => c.value === val); }
-  price(l: Listing) { return l.price != null ? formatPrice(l.price, l.currency) : 'À négocier'; }
+  priceParts(l: Listing) { return l.price != null ? formatPriceParts(l.price, l.currency) : null; }
   time(l: Listing)  { return timeAgo(l.createdAt); }
 
   canBump(listing: Listing): boolean {

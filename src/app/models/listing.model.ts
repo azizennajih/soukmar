@@ -263,6 +263,21 @@ export function formatPrice(price: number, currency = 'MAD', lang = 'fr'): strin
   }).format(price);
 }
 
+/** Splits a formatted price into its numeric amount and currency label, so the
+ * currency can be rendered smaller/lighter than the amount in the UI. */
+export function formatPriceParts(price: number, currency = 'MAD', lang = 'fr'): { amount: string; currency: string } {
+  const locale = lang === 'ar' ? 'ar-MA' : lang === 'en' ? 'en-US' : 'fr-MA';
+  const curr = currency === 'MAD' ? 'MAD' : currency === 'EUR' ? 'EUR' : currency;
+  const parts = new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: curr,
+    minimumFractionDigits: 0,
+  }).formatToParts(price);
+  const amount = parts.filter(p => p.type !== 'currency').map(p => p.value).join('').trim();
+  const currencyLabel = parts.find(p => p.type === 'currency')?.value || curr;
+  return { amount, currency: currencyLabel };
+}
+
 export function timeAgo(date: Date, lang = 'fr'): string {
   const seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000);
   const rtf = new Intl.RelativeTimeFormat(lang, { numeric: 'auto' });

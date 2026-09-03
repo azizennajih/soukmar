@@ -259,7 +259,8 @@
   &.offer-rejected { border-color: #fca5a5; background: #fff5f5; opacity: .75; }
 
   &-label  { font-size: .75rem; color: #64748b; margin-bottom: .35rem; }
-  &-amount { font-size: 1.5rem; font-weight: 900; color: #0f172a; }
+  &-amount { font-size: 1.25rem; font-weight: 800; color: #0f172a; }
+  &-currency { font-size: .7rem; font-weight: 600; color: #64748b; }
   &-status { margin-top: .5rem; }
   &-actions {
     display: flex;
