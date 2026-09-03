@@ -43,33 +43,41 @@ export class CitySelectComponent {
   query = signal('');
   activeIndex = signal(-1);
   panelStyle = signal<PanelStyle>({ top: '0px', left: '0px', width: '0px' });
+  errorStyle = signal<PanelStyle>({ top: '0px', left: '0px', width: '0px' });
   gpsLoading = signal(false);
   gpsError = signal(false);
   gpsErrorKey = signal('annonces.gps_error');
 
   filtered = computed(() => {
     const q = normalize(this.query());
-    const list = q ? this.cities.filter(c => normalize(c).includes(q)) : this.cities;
-    return list.slice(0, 50);
+    // No cap: the panel scrolls (max-height + overflow-y), and capping the
+    // unfiltered browse-all list broke it — the city list is alphabetical,
+    // so a fixed slice only ever showed cities starting with "A".
+    return q ? this.cities.filter(c => normalize(c).includes(q)) : this.cities;
   });
 
   get displayValue(): string {
     return this.open() ? this.query() : this.value;
   }
 
-  private openPanel() {
+  private anchorStyle(): PanelStyle {
     const rect = this.fieldWrap.nativeElement.getBoundingClientRect();
-    this.panelStyle.set({
+    return {
       top: `${rect.bottom + 6}px`,
       left: `${rect.left}px`,
       width: `${rect.width}px`,
-    });
+    };
+  }
+
+  private openPanel() {
+    this.panelStyle.set(this.anchorStyle());
     this.open.set(true);
   }
 
   onFocus() {
     this.query.set('');
     this.activeIndex.set(-1);
+    this.gpsError.set(false);
     this.openPanel();
   }
 
@@ -121,6 +129,7 @@ export class CitySelectComponent {
         : code === 3 ? 'annonces.gps_error_timeout'
         : 'annonces.gps_error'
       );
+      this.errorStyle.set(this.anchorStyle());
       this.gpsError.set(true);
     } finally {
       this.gpsLoading.set(false);
@@ -158,6 +167,7 @@ export class CitySelectComponent {
   onDocumentClick(e: MouseEvent) {
     if (!this.host.nativeElement.contains(e.target as Node)) {
       this.open.set(false);
+      this.gpsError.set(false);
       this.commitTypedQuery();
     }
   }

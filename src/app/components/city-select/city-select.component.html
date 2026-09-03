@@ -32,7 +32,10 @@
   </div>
 
   @if (gpsError()) {
-    <div class="city-select__gps-error">{{ gpsErrorKey() | T }}</div>
+    <div class="city-select__gps-error" [style.top]="errorStyle().top" [style.left]="errorStyle().left">
+      {{ gpsErrorKey() | T }}
+      <button type="button" class="city-select__gps-error-close" (click)="gpsError.set(false)" aria-label="Fermer">✕</button>
+    </div>
   }
 
   @if (open()) {
