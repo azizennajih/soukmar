@@ -158,18 +158,6 @@
     </form>
   </div>
 
-  <!-- Categories bar -->
-  <div class="navbar__cats">
-    <div class="container navbar__cats-inner">
-      <a routerLink="/annonces" class="navbar__cat-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{ 'nav.all' | T }}</a>
-      @for (cat of categories; track cat.value) {
-        <a [routerLink]="['/annonces']" [queryParams]="{categorie: cat.value}" class="navbar__cat-link">
-          {{ cat.icon }} {{ ('cats.' + cat.value) | T }}
-        </a>
-      }
-    </div>
-  </div>
-
   <!-- Mobile menu -->
   @if (mobileOpen()) {
     <div class="navbar__mobile">

@@ -353,42 +353,6 @@
     @media (max-width: 768px) { display: flex; }
   }
 
-  &__cats {
-    border-top: 1px solid #f1f5f9;
-    background: #fff;
-
-    @media (max-width: 768px) { display: none; }
-
-    &-inner {
-      display: flex;
-      gap: 0;
-      overflow-x: auto;
-      padding: .5rem 1.25rem;
-      scrollbar-width: none;
-      &::-webkit-scrollbar { display: none; }
-      // Fallback fade for unusually narrow windows where all 11 categories
-      // still don't fit even at the compact size below — signals "scroll
-      // for more" instead of a hard mid-word clip. Sizing is tuned so this
-      // shouldn't be visible on typical desktop widths (~1200px+).
-      mask-image: linear-gradient(to right, transparent, black 1.25rem, black calc(100% - 1.25rem), transparent);
-      -webkit-mask-image: linear-gradient(to right, transparent, black 1.25rem, black calc(100% - 1.25rem), transparent);
-    }
-  }
-
-  &__cat-link {
-    flex-shrink: 0;
-    padding: .3rem .4rem;
-    border-radius: .5rem;
-    font-size: .68rem;
-    font-weight: 500;
-    color: #475569;
-    white-space: nowrap;
-    transition: background .15s, color .15s;
-    text-decoration: none;
-
-    &:hover, &.active { background: #fee2e2; color: #e63946; }
-  }
-
   &__mobile-search {
     display: none;
     padding: .5rem 1rem .6rem;
