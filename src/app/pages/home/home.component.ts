@@ -7,13 +7,14 @@ import { ListingService } from '../../services/listing.service';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
+import { CitySelectComponent } from '../../components/city-select/city-select.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, TranslatePipe],
+  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, CitySelectComponent, TranslatePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -21,10 +22,12 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 export class HomeComponent implements OnInit {
   categories = CATEGORIES;
   cities = MOROCCO_CITIES.slice(0, 12);
+  allCities = MOROCCO_CITIES;
   featured: Listing[] = [];
   latest: Listing[] = [];
   searchQuery = '';
   selectedCity = '';
+  gpsCoords: { lat: number; lng: number } | null = null;
   favoriteIds = new Set<string>();
 
   stats = [
@@ -70,10 +73,24 @@ export class HomeComponent implements OnInit {
     return this.favoriteIds.has(listing.id);
   }
 
+  onCityChange(value: string) {
+    this.selectedCity = value;
+    this.gpsCoords = null;
+  }
+
+  onGpsSelected(coords: { lat: number; lng: number }) {
+    this.gpsCoords = coords;
+  }
+
   search() {
     const params: Record<string, string> = {};
     if (this.searchQuery.trim()) params['q'] = this.searchQuery;
     if (this.selectedCity) params['ville'] = this.selectedCity;
+    if (this.gpsCoords) {
+      params['lat'] = String(this.gpsCoords.lat);
+      params['lng'] = String(this.gpsCoords.lng);
+      params['radius'] = '10';
+    }
     this.router.navigate(['/annonces'], { queryParams: params });
   }
 

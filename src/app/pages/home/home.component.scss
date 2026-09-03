@@ -49,33 +49,32 @@
   }
 
   &__search {
-    display: flex; gap: 0; max-width: 680px; margin-bottom: 1.2rem;
+    display: flex; align-items: stretch; gap: 0; max-width: 680px; margin-bottom: 1.2rem;
+    background: #fff; border-radius: .875rem; overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,.2);
 
-    @media (max-width: 640px) { flex-direction: column; gap: .5rem; }
+    @media (max-width: 640px) { flex-direction: column; border-radius: .875rem; box-shadow: none; gap: .5rem; background: transparent; overflow: visible; }
   }
 
   &__search-input {
-    flex: 1; border-radius: .875rem 0 0 .875rem; border: none;
+    flex: 1; min-width: 0; border: none; border-radius: 0;
     font-size: 1rem; padding: 1rem 1.2rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,.2);
-    @media (max-width: 640px) { border-radius: .875rem; }
+    @media (max-width: 640px) { border-radius: .875rem; box-shadow: 0 4px 20px rgba(0,0,0,.2); }
   }
 
   &__search-city {
-    width: 170px; border-radius: 0; border: none; border-left: 1px solid #e2e8f0;
-    font-size: .875rem; padding: 0 .8rem; cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0,0,0,.15);
-    @media (max-width: 640px) { width: 100%; border-radius: .875rem; border-left: none; }
+    flex: 0 0 200px; border-left: 1px solid #e2e8f0;
+    @media (max-width: 640px) { flex: 1; border-left: none; border-radius: .875rem; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,.15); overflow: hidden; }
   }
 
   &__search-btn {
+    flex-shrink: 0;
     padding: 0 2rem; background: #fde047; color: #0f172a;
-    border: none; border-radius: 0 .875rem .875rem 0;
+    border: none; border-radius: 0;
     font-weight: 800; font-size: 1rem; cursor: pointer;
     transition: background .2s; white-space: nowrap;
-    box-shadow: 0 4px 20px rgba(0,0,0,.2);
     &:hover { background: #facc15; }
-    @media (max-width: 640px) { border-radius: .875rem; padding: .9rem; }
+    @media (max-width: 640px) { border-radius: .875rem; padding: .9rem; box-shadow: 0 4px 20px rgba(0,0,0,.2); }
   }
 
   &__tags {

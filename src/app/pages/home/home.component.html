@@ -29,12 +29,17 @@
           [placeholder]="'home.search_placeholder' | T"
           class="hero__search-input"
         />
-        <select [(ngModel)]="selectedCity" name="ville" class="hero__search-city">
-          <option value="">{{ 'home.all_cities' | T }}</option>
-          @for (city of cities; track city) {
-            <option [value]="city">{{ city }}</option>
-          }
-        </select>
+        <div class="hero__search-city">
+          <app-city-select
+            [cities]="allCities"
+            [value]="selectedCity"
+            (valueChange)="onCityChange($event)"
+            [showGps]="true"
+            (gpsSelected)="onGpsSelected($event)"
+            [placeholder]="'home.all_cities' | T"
+            [bare]="true"
+          />
+        </div>
         <button type="submit" class="hero__search-btn">{{ 'home.search_btn' | T }}</button>
       </form>
 
