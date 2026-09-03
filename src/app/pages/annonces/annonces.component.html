@@ -140,6 +140,9 @@
           <option value="">{{ 'annonces.newest' | T }}</option>
           <option value="prix_asc">{{ 'annonces.price_asc' | T }}</option>
           <option value="prix_desc">{{ 'annonces.price_desc' | T }}</option>
+          @if (filters.lat) {
+            <option value="distance">{{ 'annonces.distance' | T }}</option>
+          }
         </select>
       </div>
 

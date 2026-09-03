@@ -46,6 +46,7 @@
     "oldest": "Oldest",
     "price_asc": "Price: lowest",
     "price_desc": "Price: highest",
+    "distance": "Distance",
     "apply": "Apply",
     "reset": "Reset",
     "empty": "No listings found",

@@ -21,6 +21,7 @@ export interface ListingFilters {
   lat?: string;
   lng?: string;
   radius?: string;
+  tri?: string;
   page?: string;
   limit?: string;
   attrs?: Record<string, string>;

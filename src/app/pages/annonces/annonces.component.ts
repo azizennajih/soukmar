@@ -115,15 +115,12 @@ export class AnnoncesComponent implements OnInit {
       lat:           this.filters.lat           || undefined,
       lng:           this.filters.lng           || undefined,
       radius:        this.filters.radius        || undefined,
+      tri:           this.filters.tri           || undefined,
       attrs:         this.attrFilters,
     }).subscribe({
       next: res => {
         this.listings = res.listings;
         this.total = res.total;
-        if (this.filters.tri === 'prix_asc')
-          this.listings.sort((a, b) => (a.price ?? 0) - (b.price ?? 0));
-        else if (this.filters.tri === 'prix_desc')
-          this.listings.sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
         this.loading = false;
         this.cdr.markForCheck();
       },
