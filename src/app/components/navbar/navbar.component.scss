@@ -91,9 +91,9 @@
       min-width: 0;
 
       &--location {
-        flex: 0 0 230px;
+        flex: 0 0 150px;
         border-left: 1.5px solid #e2e8f0;
-        @media (max-width: 900px) { flex: 0 0 160px; }
+        @media (max-width: 900px) { flex: 0 0 120px; }
       }
 
       &--radius {
