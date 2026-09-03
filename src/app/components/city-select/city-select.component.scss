@@ -90,6 +90,7 @@
   &__gps-error {
     position: fixed;
     z-index: 1000;
+    transform: translateX(-50%);
     min-width: 240px;
     max-width: 320px;
     padding: .6rem 1.75rem .6rem .75rem;

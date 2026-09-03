@@ -71,6 +71,16 @@ export class CitySelectComponent {
     };
   }
 
+  /** Centers the (variable-width) error box under the field instead of left-aligning it to it. */
+  private anchorStyleCentered(): PanelStyle {
+    const rect = this.fieldWrap.nativeElement.getBoundingClientRect();
+    return {
+      top: `${rect.bottom + 6}px`,
+      left: `${rect.left + rect.width / 2}px`,
+      width: `${rect.width}px`,
+    };
+  }
+
   private openPanel() {
     this.panelStyle.set(this.anchorStyle());
     this.open.set(true);
@@ -131,7 +141,7 @@ export class CitySelectComponent {
         : code === 3 ? 'annonces.gps_error_timeout'
         : 'annonces.gps_error'
       );
-      this.errorStyle.set(this.anchorStyle());
+      this.errorStyle.set(this.anchorStyleCentered());
       this.gpsError.set(true);
     } finally {
       this.gpsLoading.set(false);
