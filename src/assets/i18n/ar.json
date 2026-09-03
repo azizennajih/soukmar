@@ -381,7 +381,9 @@
     "header_title_edit": "تعديل الإعلان",
     "success_title_edit": "تم تحديث الإعلان!",
     "success_sub_edit": "تغييراتك مرئية الآن.",
-    "publish_edit": "💾 حفظ التغييرات"
+    "publish_edit": "💾 حفظ التغييرات",
+    "show_phone_toggle": "إظهار رقم هاتفي في الإعلان",
+    "show_phone_hint": "إذا تم التعطيل، لن يتمكن المشترون من التواصل معك إلا عبر الدردشة."
   },
   "mes_annonces": {
     "title": "إعلاناتي",

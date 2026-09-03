@@ -228,6 +228,12 @@
               <input type="tel" [(ngModel)]="form.whatsapp" placeholder="+212 6 00 00 00 00" />
             </div>
 
+            <label class="deposer__premium-toggle">
+              <input type="checkbox" [(ngModel)]="form.showPhone" name="showPhone" />
+              📞 {{ 'deposer.show_phone_toggle' | T }}
+            </label>
+            <p class="deposer__step-sub">{{ 'deposer.show_phone_hint' | T }}</p>
+
             <!-- Summary -->
             <div class="deposer__summary">
               <div class="deposer__summary-title">{{ 'deposer.summary_title' | T }}</div>

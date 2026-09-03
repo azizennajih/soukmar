@@ -59,6 +59,7 @@ export class DeposerAnnonceComponent {
     city: '',
     phone: '',
     whatsapp: '',
+    showPhone: true,
     images: [] as string[],
     attributes: {} as Record<string, string | number | boolean>,
   };
@@ -100,6 +101,7 @@ export class DeposerAnnonceComponent {
         this.form.city = listing.city;
         this.form.phone = listing.phone || '';
         this.form.whatsapp = listing.whatsapp || '';
+        this.form.showPhone = listing.showPhone !== false;
         this.photos = (listing.images || []).map(url => ({ url }));
 
         const attrs: Record<string, string | number | boolean> = {};
@@ -305,6 +307,7 @@ export class DeposerAnnonceComponent {
         images,
         phone: this.form.phone,
         whatsapp: this.form.whatsapp,
+        showPhone: this.form.showPhone,
         attributes: this.form.attributes,
       };
 

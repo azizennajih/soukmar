@@ -624,6 +624,8 @@
     "contact_title": "📞 Coordonnées de contact",
     "label_phone": "Téléphone",
     "label_whatsapp": "WhatsApp",
+    "show_phone_toggle": "Afficher mon téléphone sur l'annonce",
+    "show_phone_hint": "Si désactivé, les acheteurs ne pourront vous contacter que par chat.",
     "summary_title": "📋 Récapitulatif",
     "summary_cat": "Catégorie",
     "summary_listing_title": "Titre",

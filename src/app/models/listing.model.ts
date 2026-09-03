@@ -64,6 +64,7 @@ export interface Listing {
   views: number;
   phone?: string;
   whatsapp?: string;
+  showPhone?: boolean;
   userId: string;
   user?: User;
   attributeValues?: ListingAttributeValue[];

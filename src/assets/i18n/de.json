@@ -450,7 +450,9 @@
     "header_title_edit": "Anzeige bearbeiten",
     "success_title_edit": "Anzeige aktualisiert!",
     "success_sub_edit": "Deine Änderungen sind jetzt sichtbar.",
-    "publish_edit": "💾 Änderungen speichern"
+    "publish_edit": "💾 Änderungen speichern",
+    "show_phone_toggle": "Meine Telefonnummer in der Anzeige anzeigen",
+    "show_phone_hint": "Wenn deaktiviert, können Käufer Sie nur über den Chat kontaktieren."
   },
   "annonces_status": {
     "ACTIVE": "Aktiv",
