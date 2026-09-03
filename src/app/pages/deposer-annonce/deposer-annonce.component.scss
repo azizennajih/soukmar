@@ -101,6 +101,7 @@ small { font-size: .75rem; color: #94a3b8; }
 
 /* Upload */
 .deposer__upload {
+  display: block;
   border: 2px dashed #cbd5e1; border-radius: 1.25rem;
   padding: 3rem 1.5rem; text-align: center;
   cursor: pointer; transition: border-color .2s;

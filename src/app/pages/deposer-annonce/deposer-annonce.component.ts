@@ -206,9 +206,15 @@ export class DeposerAnnonceComponent {
     newFiles.forEach(file => {
       this.selectedFiles.push(file);
       const reader = new FileReader();
-      reader.onload = e => this.previews.push(e.target?.result as string);
+      // FileReader's onload is a raw browser callback, invisible to zoneless
+      // change detection — without markForCheck the preview never renders.
+      reader.onload = e => {
+        this.previews.push(e.target?.result as string);
+        this.cdr.markForCheck();
+      };
       reader.readAsDataURL(file);
     });
+    input.value = '';
   }
 
   removeImage(index: number) {
