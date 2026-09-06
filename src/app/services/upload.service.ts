@@ -8,19 +8,21 @@ const BASE_URL = 'http://localhost:3000/api';
 export class UploadService {
   constructor(private http: HttpClient) {}
 
-  uploadImages(files: File[]): Observable<{ urls: string[] }> {
+  uploadImages(files: File[], type: 'listing' | 'avatar' = 'listing'): Observable<{ urls: string[] }> {
     const token = localStorage.getItem('soukmar_token');
     const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : new HttpHeaders();
     const form = new FormData();
     files.forEach(f => form.append('images', f));
+    form.append('type', type);
     return this.http.post<{ urls: string[] }>(`${BASE_URL}/upload`, form, { headers });
   }
 
-  uploadFile(file: File): Observable<string> {
+  uploadFile(file: File, type: 'listing' | 'avatar' = 'avatar'): Observable<string> {
     const token = localStorage.getItem('soukmar_token');
     const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : new HttpHeaders();
     const form = new FormData();
     form.append('images', file);
+    form.append('type', type);
     return new Observable(observer => {
       this.http.post<{ urls: string[] }>(`${BASE_URL}/upload`, form, { headers }).subscribe({
         next: res => { observer.next(res.urls[0]); observer.complete(); },

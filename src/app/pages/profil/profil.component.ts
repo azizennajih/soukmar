@@ -8,6 +8,7 @@ import { UploadService } from '../../services/upload.service';
 import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { firstValueFrom } from 'rxjs';
+import { compressAvatar } from '../../utils/image-compression';
 
 interface ProfileData {
   id: string;
@@ -103,7 +104,8 @@ export class ProfilComponent implements OnInit {
     this.uploadingImage.set(true);
     this.errorMsg = '';
     try {
-      const url = await firstValueFrom(this.upload.uploadFile(file));
+      const compressed = await compressAvatar(file);
+      const url = await firstValueFrom(this.upload.uploadFile(compressed));
       const updated = await firstValueFrom(this.api.put<ProfileData>('/auth/profile', { image: url }));
       this.profile = { ...this.profile!, image: updated.image };
       this.successMsg = 'Photo de profil mise à jour !';

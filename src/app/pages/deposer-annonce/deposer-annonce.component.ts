@@ -10,6 +10,7 @@ import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, Category, Subcategory, AttributeDefinition, Condition } from '../../models/listing.model';
+import { compressListingPhoto } from '../../utils/image-compression';
 
 interface PhotoItem { url: string; file?: File; }
 
@@ -205,11 +206,13 @@ export class DeposerAnnonceComponent {
     return this.subcategories.find(s => s.id === this.form.subcategoryId);
   }
 
-  onFilesSelected(event: Event) {
+  async onFilesSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files) return;
     const newFiles = Array.from(input.files).slice(0, this.maxPhotos - this.photos.length);
-    newFiles.forEach(file => {
+    input.value = '';
+    for (const rawFile of newFiles) {
+      const file = await compressListingPhoto(rawFile);
       const reader = new FileReader();
       // FileReader's onload is a raw browser callback, invisible to zoneless
       // change detection — without markForCheck the preview never renders.
@@ -218,8 +221,7 @@ export class DeposerAnnonceComponent {
         this.cdr.markForCheck();
       };
       reader.readAsDataURL(file);
-    });
-    input.value = '';
+    }
   }
 
   removePhoto(index: number) {
