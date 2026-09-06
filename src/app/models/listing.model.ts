@@ -148,11 +148,12 @@ export const HIGHLIGHT_ATTR_CODES: Partial<Record<Category, string[]>> = {
 
 export const MOROCCO_CITIES = [
   // Grand Casablanca-Settat
-  'Casablanca', 'Mohammedia', 'El Jadida', 'Settat', 'Berrechid', 'Benslimane',
-  'Médiouna', 'Nouaceur', 'Bouskoura', 'Dar Bouazza', 'Oulad Teima',
-  'Azemmour', 'Haouzia', 'Sidi Bennour', 'Khémis Zemamra', 'Oulad Frej',
-  'Bir Jdid', 'Lqliaa', 'Sidi Smail', 'Oulad Amrane', 'Had Soualem',
-  'Echemmaia', 'Sidi Rahhal', 'Bouznika', 'Benhmed', 'Oulad Abbou',
+  'Casablanca', 'Mohammedia', 'El Jadida', 'Settat', 'Berrechid',
+  'Benslimane', 'Médiouna', 'Nouaceur', 'Bouskoura', 'Dar Bouazza',
+  'Oulad Teima', 'Azemmour', 'Haouzia', 'Sidi Bennour', 'Khémis Zemamra',
+  'Oulad Frej', 'Bir Jdid', 'Lqliaa', 'Sidi Smail', 'Oulad Amrane',
+  'Had Soualem', 'Echemmaia', 'Sidi Rahhal', 'Bouznika', 'Benhmed',
+  'Oulad Abbou',
 
   // Rabat-Salé-Kénitra
   'Rabat', 'Salé', 'Kénitra', 'Khémisset', 'Sidi Kacem', 'Sidi Slimane',
@@ -161,98 +162,80 @@ export const MOROCCO_CITIES = [
   'Souk el Arbaa', 'Moulay Bousselham', 'Sidi Allal Tazi', 'Arbaoua',
 
   // Fès-Meknès
-  'Fès', 'Meknès', 'Taza', 'Ifrane', 'Azrou', 'Moulay Yacoub',
-  'El Hajeb', 'Aïn Taoujdate', 'Missour', 'Boulemane', 'Guercif',
-  'Sefrou', 'Imouzzer Kandar', 'Almis Marmoucha', 'Aïn Leuh',
-  'Boulmane du Dadès', 'Tahla', 'Ain Bni Mathar', 'Itzer', 'Rich',
+  'Fès', 'Meknès', 'Taza', 'Ifrane', 'Azrou', 'Moulay Yacoub', 'El Hajeb',
+  'Aïn Taoujdate', 'Missour', 'Boulemane', 'Guercif', 'Sefrou',
+  'Imouzzer Kandar', 'Almis Marmoucha', 'Aïn Leuh', 'Boulmane du Dadès',
+  'Tahla', 'Ain Bni Mathar', 'Itzer', 'Rich',
 
   // Marrakech-Safi
   'Marrakech', 'Safi', 'Essaouira', 'Kelaa des Sraghna', 'Chichaoua',
-  'Youssoufia', 'Rehamna', 'Ben Guerir', 'Tamansourt', 'Ait Ourir',
-  'Amizmiz', 'Tahannaout', 'Tahnaout', 'Asni', 'Tighedouine',
-  'Ouarzazate', 'Kelaa M\'Gouna', 'Skoura', 'Agdz', 'Zagora', 'M\'Hamid',
-  'Tinzouline', 'Tamegroute', 'Taroudant', 'Aoulouz', 'Oulad Teima',
-  'Biougra', 'Aït Baha', 'Massa', 'Imintanoute', 'Imi n\'Tlit',
+  'Youssoufia', 'Rehamna', 'Ben Guerir', 'Tamansourt', 'Ait Ourir', 'Amizmiz',
+  'Tahannaout', 'Tahnaout', 'Asni', 'Tighedouine', 'Ouarzazate',
+  'Kelaa M\'Gouna', 'Skoura', 'Agdz', 'Zagora', 'M\'Hamid', 'Tinzouline',
+  'Tamegroute', 'Taroudant', 'Aoulouz', 'Biougra', 'Aït Baha', 'Massa',
+  'Imintanoute', 'Imi n\'Tlit',
 
   // Souss-Massa
-  'Agadir', 'Inezgane', 'Aït Melloul', 'Tiznit', 'Taroudant', 'Chtouka Aït Baha',
-  'Bensergao', 'Drarga', 'Lqliaa', 'Biougra', 'Aoulouz', 'Tafraout',
-  'Sidi Ifni', 'Guelmim', 'Tan-Tan', 'Sidi Bibi', 'Sebt Aït Ahmed',
-  'Oulad Dahou', 'Aït Iaazza', 'Aït Amira', 'Dcheira El Jihadia',
+  'Agadir', 'Inezgane', 'Aït Melloul', 'Tiznit', 'Chtouka Aït Baha',
+  'Bensergao', 'Drarga', 'Tafraout', 'Sidi Ifni', 'Guelmim', 'Tan-Tan',
+  'Sidi Bibi', 'Sebt Aït Ahmed', 'Oulad Dahou', 'Aït Iaazza', 'Aït Amira',
+  'Dcheira El Jihadia',
 
   // Tanger-Tétouan-Al Hoceïma
   'Tanger', 'Tétouan', 'Al Hoceïma', 'Chefchaouen', 'Larache', 'Asilah',
-  'Fnideq', 'Martil', 'Mdiq', 'Oued Laou', 'Bab Berred', 'Brikcha',
-  'Jebha', 'Targuist', 'Imzouren', 'Bni Bouayach', 'Rif',
-  'Ksar El Kébir', 'Souk El Arbaa du Rharb', 'Zouada', 'Ain Defali',
+  'Fnideq', 'Martil', 'Mdiq', 'Oued Laou', 'Bab Berred', 'Brikcha', 'Jebha',
+  'Targuist', 'Imzouren', 'Bni Bouayach', 'Rif', 'Ksar El Kébir',
+  'Souk El Arbaa du Rharb', 'Zouada', 'Ain Defali',
 
   // Oriental
-  'Oujda', 'Nador', 'Berkane', 'Taourirt', 'Jerada', 'Figuig',
-  'Bouarfa', 'Aïn Bni Mathar', 'Ras El Ma', 'Debdou', 'Aïn Sfa',
-  'Zaïo', 'Selouane', 'Ben Taïeb', 'Saidia', 'Aklim', 'Boudnib',
-  'Guenfouda', 'Ahfir', 'Garéat Ben Ouali', 'Touissit',
+  'Oujda', 'Nador', 'Berkane', 'Taourirt', 'Jerada', 'Figuig', 'Bouarfa',
+  'Aïn Bni Mathar', 'Ras El Ma', 'Debdou', 'Aïn Sfa', 'Zaïo', 'Selouane',
+  'Ben Taïeb', 'Saidia', 'Aklim', 'Boudnib', 'Guenfouda', 'Ahfir',
+  'Garéat Ben Ouali', 'Touissit',
 
   // Béni Mellal-Khénifra
   'Béni Mellal', 'Khouribga', 'Fquih Ben Salah', 'Azilal', 'Kasba Tadla',
-  'Oued Zem', 'Boujad', 'El Ksiba', 'Demnate', 'Aït Attab',
-  'Bzou', 'Rahhal', 'Souk Sebt Oulad Nemma', 'El Brouj',
-  'Oulad Ayad', 'Afourer', 'Bni Ayat', 'Timoulilt',
+  'Oued Zem', 'Boujad', 'El Ksiba', 'Demnate', 'Aït Attab', 'Bzou', 'Rahhal',
+  'Souk Sebt Oulad Nemma', 'El Brouj', 'Oulad Ayad', 'Afourer', 'Bni Ayat',
+  'Timoulilt',
 
   // Drâa-Tafilalet
-  'Errachidia', 'Ouarzazate', 'Zagora', 'Tinghir', 'Midelt',
-  'Er-Rich', 'Goulmima', 'Erfoud', 'Rissani', 'Merzouga',
-  'Aoufous', 'Arfoud', 'Jorf', 'Ksar Souk', 'Alnif', 'Ghris',
-  'Tinjdad', 'Tinejdad', 'Boudnib', 'Iknioun',
+  'Errachidia', 'Tinghir', 'Midelt', 'Er-Rich', 'Goulmima', 'Erfoud',
+  'Rissani', 'Merzouga', 'Aoufous', 'Arfoud', 'Jorf', 'Ksar Souk', 'Alnif',
+  'Ghris', 'Tinjdad', 'Tinejdad', 'Iknioun',
 
   // Laâyoune-Sakia El Hamra
-  'Laâyoune', 'Boujdour', 'Smara', 'Tarfaya', 'Foum El Oued',
-  'Dakhla',
+  'Laâyoune', 'Boujdour', 'Smara', 'Tarfaya', 'Foum El Oued', 'Dakhla',
 
   // Guelmim-Oued Noun
-  'Guelmim', 'Tan-Tan', 'Sidi Ifni', 'Assa', 'Zag', 'Tata',
-  'Akka', 'Foum Zguid', 'Tissint',
+  'Assa', 'Zag', 'Tata', 'Akka', 'Foum Zguid', 'Tissint',
 
   // Eddakhla-Oued Dahab
-  'Dakhla', 'Aousserd', 'Bir Gandouz',
+  'Aousserd', 'Bir Gandouz',
 
   // Villes supplémentaires et communes
   'Ouled Teima', 'Aïn Harrouda', 'Mansouria', 'Aïn Chock', 'Hay Hassani',
   'Ben Msik', 'Sidi Bernoussi', 'Aïn Sebaâ', 'Sidi Moumen', 'Ain Chock',
-  'Oulfa', 'Bel Air', 'Anfa', 'Maarif', 'Gauthier',
-  'Agdal', 'Hassan', 'Souissi', 'Hay Riad', 'Yacoub El Mansour',
-  'Temara', 'Aïn Atiq', 'Skhirat', 'Harhoura',
-  'Aouinet Torkoz', 'Aoulouz', 'Taghazout', 'Aglou', 'Mirleft',
-  'Legzira', 'Souss', 'Tasila', 'Imi Mqorn',
-  'Imsouane', 'Tamraght', 'Aourir', 'Taghazout',
-  'Tiznit', 'Sidi Ifni', 'Belfaa', 'Ait Baamrane',
-  'Warzazat', 'Tazzarine', 'Nkob', 'Mhamid El Ghizlane',
-  'Tata', 'Tissint', 'Akka Ighane', 'Icht',
-  'Bou Izakarn', 'Ifrane Anti-Atlas', 'Aït Herbil',
-  'Souk El Had', 'Had Hrara', 'Aït Baha', 'Drarga',
-  'Tamzaourt', 'Tikki', 'Imourane', 'Aourir',
-  'Oued Souss', 'Tikiouine', 'Tassila',
-  'Aït Melloul', 'Dcheira', 'Lqliaa', 'Sebt Gzoula',
-  'Sebt Jahjouh', 'Sidi L\'Mokhtar', 'Jemâa Shaïm',
-  'Abda', 'Ounagha', 'Ida Ougnidif', 'Chiadma',
-  'Chemaia', 'Lalla Fatna', 'Khémis Zemamra',
-  'Sidi Aïssa Ben Slimane', 'Sebt Gzoula', 'Tlat Hanchane',
-  'Oulad Berhil', 'Tassaout', 'Aït Ourirr',
-  'Tnine Chtouka', 'Tnine Aït Ourir', 'Tnine Sidi Yamani',
-  'Moulay Abdallah', 'Moulay Brahim', 'Moulay Idriss Zerhoun',
-  'Sidi Harazem', 'Sidi Bettache', 'Sidi Bouknadel',
-  'Sidi Yahia el Gharb', 'Sidi Allal Bahraoui', 'Sidi Allal Tazi',
-  'Sidi Mohamed Ben Abdallah', 'Sidi Taibi', 'Sidi Yahia Zaer',
-  'Aïn El Aouda', 'Aïn Taoujdate', 'Aïn Cheggag',
-  'Missour', 'Boudnib', 'Aoufous', 'Aït Oumghar',
-  'Zaïda', 'Mrirt', 'Khenifra', 'Midelt', 'Aït Ishaq',
-  'El Kbab', 'Itzer', 'Timahdite', 'Aïn Leuh',
-  'Azrou', 'Ain Aicha', 'Taounate', 'Ghafsai', 'Rhafsai',
-  'Aïn Mediouna', 'Galaz', 'Arbala', 'Zoumi',
-  'Chefchaouen', 'Bab Berred', 'Derdara', 'Bab Taza',
-  'Oulad Amrane', 'Brikcha', 'Dar Chaoui', 'Ain Bahja',
-  'Tlat Taghramt', 'Zoumi', 'Ametrasse',
-  'Fifi', 'Irherm', 'Askaoun', 'Imi N\'Tlit',
-  'Aït Oujane', 'Aït Benhaddou',
+  'Oulfa', 'Bel Air', 'Anfa', 'Maarif', 'Gauthier', 'Agdal', 'Hassan',
+  'Souissi', 'Hay Riad', 'Yacoub El Mansour', 'Temara', 'Aïn Atiq', 'Skhirat',
+  'Harhoura', 'Aouinet Torkoz', 'Taghazout', 'Aglou', 'Mirleft', 'Legzira',
+  'Souss', 'Tasila', 'Imi Mqorn', 'Imsouane', 'Tamraght', 'Aourir', 'Belfaa',
+  'Ait Baamrane', 'Warzazat', 'Tazzarine', 'Nkob', 'Mhamid El Ghizlane',
+  'Akka Ighane', 'Icht', 'Bou Izakarn', 'Ifrane Anti-Atlas', 'Aït Herbil',
+  'Souk El Had', 'Had Hrara', 'Tamzaourt', 'Tikki', 'Imourane', 'Oued Souss',
+  'Tikiouine', 'Tassila', 'Dcheira', 'Sebt Gzoula', 'Sebt Jahjouh',
+  'Sidi L\'Mokhtar', 'Jemâa Shaïm', 'Abda', 'Ounagha', 'Ida Ougnidif',
+  'Chiadma', 'Chemaia', 'Lalla Fatna', 'Sidi Aïssa Ben Slimane',
+  'Tlat Hanchane', 'Oulad Berhil', 'Tassaout', 'Aït Ourirr', 'Tnine Chtouka',
+  'Tnine Aït Ourir', 'Tnine Sidi Yamani', 'Moulay Abdallah', 'Moulay Brahim',
+  'Moulay Idriss Zerhoun', 'Sidi Harazem', 'Sidi Bettache', 'Sidi Bouknadel',
+  'Sidi Yahia el Gharb', 'Sidi Allal Bahraoui', 'Sidi Mohamed Ben Abdallah',
+  'Sidi Taibi', 'Sidi Yahia Zaer', 'Aïn El Aouda', 'Aïn Cheggag',
+  'Aït Oumghar', 'Zaïda', 'Mrirt', 'Khenifra', 'Aït Ishaq', 'El Kbab',
+  'Timahdite', 'Ain Aicha', 'Taounate', 'Ghafsai', 'Rhafsai', 'Aïn Mediouna',
+  'Galaz', 'Arbala', 'Zoumi', 'Derdara', 'Bab Taza', 'Dar Chaoui',
+  'Ain Bahja', 'Tlat Taghramt', 'Ametrasse', 'Fifi', 'Irherm', 'Askaoun',
+  'Imi N\'Tlit', 'Aït Oujane', 'Aït Benhaddou',
 ].sort();
 
 export function formatPrice(price: number, currency = 'MAD', lang = 'fr'): string {
@@ -277,6 +260,24 @@ export function formatPriceParts(price: number, currency = 'MAD', lang = 'fr'): 
   const amount = parts.filter(p => p.type !== 'currency').map(p => p.value).join('').trim();
   const currencyLabel = parts.find(p => p.type === 'currency')?.value || curr;
   return { amount, currency: currencyLabel };
+}
+
+/** True for the first `hours` (default 24) after creation — drives the "NEU"/"Nouveau"
+ * badge on listing cards and the detail page, mirroring mobile.de's freshness badge. */
+export function isNewListing(date: Date, hours = 24): boolean {
+  const ms = Date.now() - new Date(date).getTime();
+  return ms >= 0 && ms < hours * 3600 * 1000;
+}
+
+/** Precise localized date+time, e.g. "6 sept. 2026, 14:32" — mirrors mobile.de's
+ * "Inserat online seit ..." timestamp. Shown alongside the relative timeAgo() label
+ * on the listing detail page, where there's room for it (timeAgo() alone stays the
+ * compact default everywhere else — chat, notifications, listing cards, etc.). */
+export function exactDateTime(date: Date, lang = 'fr'): string {
+  const locale = lang === 'ar' ? 'ar-MA' : lang === 'en' ? 'en-US' : lang;
+  return new Intl.DateTimeFormat(locale, {
+    day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+  }).format(new Date(date));
 }
 
 export function timeAgo(date: Date, lang = 'fr'): string {

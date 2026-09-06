@@ -64,7 +64,12 @@ export class LoginComponent implements OnInit {
     this.resendOk = false;
     const result = await this.auth.resendVerification(this.unverifiedEmail);
     this.resendLoading = false;
-    if (result.ok) this.resendOk = true;
+    if (result.ok) {
+      this.resendOk = true;
+      this.error = '';
+    } else {
+      this.error = result.error || this.i18n.t('auth.verify_resend_error');
+    }
     this.cdr.markForCheck();
   }
 }

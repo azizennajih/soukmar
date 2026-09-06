@@ -49,7 +49,7 @@ export class AuthService {
 
   register(name: string, email: string, password: string, phone?: string, city?: string): Promise<{ ok: boolean; emailSent?: boolean; error?: string }> {
     return this.postJson<{ message: string; emailSent: boolean }>('/auth/register', { name, email, password, phone, city })
-      .then(() => ({ ok: true, emailSent: true }))
+      .then(res => ({ ok: true, emailSent: res.emailSent }))
       .catch(e => {
         const err = e as Record<string, unknown>;
         return {

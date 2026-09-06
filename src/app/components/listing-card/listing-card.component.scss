@@ -70,6 +70,7 @@
     box-shadow: 0 1px 4px rgba(0,0,0,.15);
 
     &--reserved { background: rgba(17,24,39,.85); color: #fff; border: 1px solid rgba(255,255,255,.2); }
+    &--new      { background: #dcfce7; color: #15803d; }
     &--premium  { background: rgba(201,148,26,.12); color: #A07314; border: 1px solid rgba(201,148,26,.3); }
     &--pro      { background: #f3e8ff; color: #6b21a8; }
   }

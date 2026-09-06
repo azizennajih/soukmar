@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, signal, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, signal, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Listing, CATEGORIES, HIGHLIGHT_ATTR_CODES, formatPriceParts, timeAgo } from '../../models/listing.model';
+import { Listing, CATEGORIES, HIGHLIGHT_ATTR_CODES, formatPriceParts, timeAgo, isNewListing } from '../../models/listing.model';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
@@ -17,6 +17,8 @@ export class ListingCardComponent implements OnInit {
   @Input() listing!: Listing;
   @Input() featured = false;
   @Input() initialFav = false;
+
+  @Output() favChange = new EventEmitter<boolean>();
 
   private api = inject(ApiService);
   private auth = inject(AuthService);
@@ -44,6 +46,10 @@ export class ListingCardComponent implements OnInit {
 
   get timeDisplay(): string {
     return timeAgo(this.listing.createdAt, this.i18n.lang());
+  }
+
+  get isNew(): boolean {
+    return isNewListing(this.listing.createdAt);
   }
 
   get highlightAttr(): { code: string; display: string } | null {
@@ -76,7 +82,7 @@ export class ListingCardComponent implements OnInit {
       : this.api.post(`/favorites/${this.listing.id}`, {});
     req$.subscribe({
       error: () => { this.favorited.set(wasFav); this.favLoading.set(false); },
-      complete: () => this.favLoading.set(false)
+      complete: () => { this.favLoading.set(false); this.favChange.emit(!wasFav); }
     });
   }
 }

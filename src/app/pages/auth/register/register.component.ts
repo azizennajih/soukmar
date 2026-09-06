@@ -22,16 +22,17 @@ export class RegisterComponent {
   loading = false;
   error = '';
   emailSent = false;
+  emailSendFailed = false;
   registeredEmail = '';
   resendLoading = false;
   resendOk = false;
 
   async submit() {
     if (this.form.password !== this.form.confirm) {
-      this.error = this.i18n.t('deposer.error_required'); return;
+      this.error = this.i18n.t('auth.reset_mismatch'); return;
     }
     if (this.form.password.length < 6) {
-      this.error = this.i18n.t('deposer.error_required'); return;
+      this.error = this.i18n.t('auth.reset_too_short'); return;
     }
     this.loading = true;
     this.error = '';
@@ -40,9 +41,10 @@ export class RegisterComponent {
         this.form.name, this.form.email, this.form.password,
         this.form.phone, this.form.city
       );
-      if (result.ok && result.emailSent) {
+      if (result.ok) {
         this.registeredEmail = this.form.email;
         this.emailSent = true;
+        this.emailSendFailed = !result.emailSent;
       } else {
         this.error = result.error || 'Une erreur est survenue.';
       }

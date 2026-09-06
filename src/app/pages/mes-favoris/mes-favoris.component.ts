@@ -32,4 +32,10 @@ export class MesFavorisComponent implements OnInit {
       this.cdr.markForCheck();
     }
   }
+
+  onFavChange(listingId: string, isFav: boolean) {
+    if (isFav) return;
+    this.listings = this.listings.filter(l => l.id !== listingId);
+    this.cdr.markForCheck();
+  }
 }

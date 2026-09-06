@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ListingService } from '../../services/listing.service';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
-import { Listing, ListingAttributeValue, CATEGORIES, formatPriceParts, timeAgo } from '../../models/listing.model';
+import { Listing, ListingAttributeValue, CATEGORIES, formatPriceParts, timeAgo, isNewListing, exactDateTime } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
@@ -170,6 +170,8 @@ export class AnnonceDetailComponent implements OnInit {
     return this.i18n.t('listing.negotiate');
   }
   get timeDisplay() { return this.listing ? timeAgo(this.listing.createdAt, this.i18n.lang()) : ''; }
+  get exactTime() { return this.listing ? exactDateTime(this.listing.createdAt, this.i18n.lang()) : ''; }
+  get isNew(): boolean { return this.listing ? isNewListing(this.listing.createdAt) : false; }
 
   get specAttrs(): ListingAttributeValue[] {
     return [...(this.listing?.attributeValues ?? [])]

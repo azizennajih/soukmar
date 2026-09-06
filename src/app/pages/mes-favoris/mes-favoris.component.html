@@ -19,7 +19,7 @@
   } @else {
     <div class="grid-3">
       @for (listing of listings; track listing.id) {
-        <app-listing-card [listing]="listing" [initialFav]="true" />
+        <app-listing-card [listing]="listing" [initialFav]="true" (favChange)="onFavChange(listing.id, $event)" />
       }
     </div>
   }

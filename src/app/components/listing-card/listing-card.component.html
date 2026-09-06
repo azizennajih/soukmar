@@ -12,6 +12,9 @@
       @if (listing.status === 'RESERVED') {
         <span class="listing-card__badge listing-card__badge--reserved">🔒 {{ 'annonces.reserved' | T }}</span>
       }
+      @if (isNew && listing.status !== 'RESERVED') {
+        <span class="listing-card__badge listing-card__badge--new">{{ 'listing.new_badge' | T }}</span>
+      }
       @if (listing.isFeatured) {
         <span class="listing-card__badge listing-card__badge--premium">⭐ {{ 'listing.premium_badge' | T }}</span>
       }

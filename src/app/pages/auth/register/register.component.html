@@ -8,10 +8,12 @@
 
     @if (emailSent) {
       <div class="verify-sent">
-        <div class="verify-sent__icon">✉️</div>
-        <h1 class="auth-title">{{ 'auth.verify_email_title' | T }}</h1>
-        <p class="auth-sub">{{ 'auth.verify_email_sub' | T }} <strong>{{ registeredEmail }}</strong></p>
-        <p class="verify-sent__hint">{{ 'auth.verify_email_hint' | T }}</p>
+        <div class="verify-sent__icon">{{ emailSendFailed ? '⚠️' : '✉️' }}</div>
+        <h1 class="auth-title">{{ (emailSendFailed ? 'auth.verify_email_failed_title' : 'auth.verify_email_title') | T }}</h1>
+        <p class="auth-sub">{{ (emailSendFailed ? 'auth.verify_email_failed_sub' : 'auth.verify_email_sub') | T }} <strong>{{ registeredEmail }}</strong></p>
+        @if (!emailSendFailed) {
+          <p class="verify-sent__hint">{{ 'auth.verify_email_hint' | T }}</p>
+        }
 
         @if (resendOk) {
           <div class="auth-success">{{ 'auth.verify_resend_ok' | T }}</div>
