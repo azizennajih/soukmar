@@ -133,7 +133,7 @@
       @if (showOfferInput) {
         <div class="chat__offer-panel">
           <span>💰 {{ 'chat.offer_label' | T }}</span>
-          <input type="number" [(ngModel)]="offerAmount" placeholder="Montant en MAD" min="1" />
+          <input type="number" [(ngModel)]="offerAmount" [placeholder]="'chat.amount_placeholder' | T" min="1" />
           <button class="btn-primary" (click)="sendOffer()">{{ 'chat.send_offer' | T }}</button>
           <button class="btn-outline" (click)="showOfferInput=false">{{ 'chat.cancel' | T }}</button>
         </div>

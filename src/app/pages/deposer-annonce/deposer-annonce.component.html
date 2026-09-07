@@ -248,6 +248,10 @@
               <div class="deposer__summary-row"><span>{{ 'deposer.summary_price' | T }}</span><strong>{{ form.price ? form.price + ' ' + form.currency : ('deposer.negotiate' | T) }}</strong></div>
               <div class="deposer__summary-row"><span>{{ 'deposer.summary_city' | T }}</span><strong>{{ form.city || '—' }}</strong></div>
             </div>
+
+            @if (!editId) {
+              <app-turnstile (verified)="captchaToken = $event" />
+            }
           </div>
         </div>
       }

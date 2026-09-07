@@ -107,7 +107,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   cancelReservation() {
     if (!this.activeConv) return;
-    if (!confirm('Réservation annuler? L\'annonce redevient active.')) return;
+    if (!confirm(this.i18n.t('chat.confirm_cancel_reservation'))) return;
     this.chatService.cancelReservation(this.activeConv.id, this.activeConv.listingId);
     this.listingStatus = 'ACTIVE';
     this.cdr.markForCheck();
@@ -183,7 +183,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   cancelOffer(msg: ChatMessage) {
     if (!this.activeConv) return;
-    if (!confirm('Annuler votre offre ?')) return;
+    if (!confirm(this.i18n.t('chat.confirm_cancel_offer'))) return;
     this.chatService.cancelOffer(msg.id, this.activeConv.id, this.activeConv.listingId);
   }
 
@@ -194,8 +194,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   getLastMessage(conv: Conversation): string {
     const last = conv.messages[0];
-    if (!last) return 'Aucun message';
-    if (last.type === 'OFFER') return `Offre: ${last.offerAmount} MAD`;
+    if (!last) return this.i18n.t('chat.no_message');
+    if (last.type === 'OFFER') return this.i18n.t('chat.offer_short', { amount: String(last.offerAmount) });
     return last.content.slice(0, 40);
   }
 

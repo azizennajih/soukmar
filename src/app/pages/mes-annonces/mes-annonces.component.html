@@ -44,10 +44,10 @@
                 @if (priceParts(listing); as p) {
                   {{ p.amount }} <span class="listing-row__currency">{{ p.currency }}</span>
                 } @else {
-                  À négocier
+                  {{ 'listing.negotiate' | T }}
                 }
               </span>
-              <span>👁 {{ listing.views }} vues</span>
+              <span>👁 {{ listing.views }} {{ 'listing.views' | T }}</span>
               <span>🕐 {{ time(listing) }}</span>
               <span>📍 {{ listing.city }}</span>
             </div>
@@ -55,7 +55,7 @@
 
           <!-- Actions -->
           <div class="listing-row__actions">
-            <a [routerLink]="['/annonces', listing.id]" class="row-btn" title="Voir">
+            <a [routerLink]="['/annonces', listing.id]" class="row-btn" [title]="'common.view' | T">
               <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </a>
             @if (listing.status === 'ACTIVE' || listing.status === 'RESERVED') {
@@ -72,7 +72,7 @@
                 }
               </button>
             }
-            <a [routerLink]="['/deposer-annonce', listing.id]" class="row-btn" title="Modifier">
+            <a [routerLink]="['/deposer-annonce', listing.id]" class="row-btn" [title]="'common.edit' | T">
               <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </a>
             @if (listing.status === 'ACTIVE' || listing.status === 'RESERVED') {
@@ -83,7 +83,7 @@
             <button class="row-btn" [class.row-btn--active]="statsOpenId === listing.id" [title]="'mes_annonces.stats' | T" (click)="toggleStats(listing)">
               <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
             </button>
-            <button class="row-btn row-btn--danger" title="Supprimer" (click)="delete(listing.id)">
+            <button class="row-btn row-btn--danger" [title]="'common.delete' | T" (click)="delete(listing.id)">
               <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
             </button>
           </div>

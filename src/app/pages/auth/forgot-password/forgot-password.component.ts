@@ -29,7 +29,7 @@ export class ForgotPasswordComponent {
     const result = await this.auth.forgotPassword(this.email.trim());
     this.loading = false;
     if (result.ok) this.sent = true;
-    else this.error = result.error || 'Une erreur est survenue.';
+    else this.error = result.error || this.i18n.t('auth.generic_error_retry');
     this.cdr.markForCheck();
   }
 }

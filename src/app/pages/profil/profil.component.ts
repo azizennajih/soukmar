@@ -63,7 +63,7 @@ export class ProfilComponent implements OnInit {
       this.form.phone = this.profile.phone || '';
       this.form.city = this.profile.city || '';
     } catch {
-      this.errorMsg = 'Impossible de charger le profil.';
+      this.errorMsg = this.i18n.t('profil.load_error');
     } finally {
       this.loading = false;
       this.cdr.markForCheck();
@@ -71,7 +71,7 @@ export class ProfilComponent implements OnInit {
   }
 
   async saveProfile() {
-    if (!this.form.name.trim()) { this.errorMsg = 'Le nom est requis.'; return; }
+    if (!this.form.name.trim()) { this.errorMsg = this.i18n.t('profil.name_required'); return; }
     this.saving.set(true);
     this.successMsg = '';
     this.errorMsg = '';
@@ -91,7 +91,7 @@ export class ProfilComponent implements OnInit {
       }
       this.successMsg = this.i18n.t('profil.saved');
     } catch {
-      this.errorMsg = 'Erreur lors de la mise à jour.';
+      this.errorMsg = this.i18n.t('profil.update_error');
     } finally {
       this.saving.set(false);
     }
@@ -108,9 +108,9 @@ export class ProfilComponent implements OnInit {
       const url = await firstValueFrom(this.upload.uploadFile(compressed));
       const updated = await firstValueFrom(this.api.put<ProfileData>('/auth/profile', { image: url }));
       this.profile = { ...this.profile!, image: updated.image };
-      this.successMsg = 'Photo de profil mise à jour !';
+      this.successMsg = this.i18n.t('profil.photo_updated');
     } catch {
-      this.errorMsg = 'Erreur lors du téléchargement de la photo.';
+      this.errorMsg = this.i18n.t('profil.photo_upload_error');
     } finally {
       this.uploadingImage.set(false);
     }
@@ -144,6 +144,8 @@ export class ProfilComponent implements OnInit {
 
   get memberSince(): string {
     if (!this.profile?.createdAt) return '';
-    return new Date(this.profile.createdAt).toLocaleDateString('fr-MA', { year: 'numeric', month: 'long' });
+    const lang = this.i18n.lang();
+    const locale = lang === 'ar' ? 'ar-MA' : lang === 'en' ? 'en-US' : lang;
+    return new Date(this.profile.createdAt).toLocaleDateString(locale, { year: 'numeric', month: 'long' });
   }
 }

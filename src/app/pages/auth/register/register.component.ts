@@ -5,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { I18nService } from '../../../services/i18n.service';
 import { TranslatePipe } from '../../../pipes/translate.pipe';
+import { TurnstileComponent } from '../../../components/turnstile/turnstile.component';
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, TurnstileComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
@@ -26,6 +27,7 @@ export class RegisterComponent {
   registeredEmail = '';
   resendLoading = false;
   resendOk = false;
+  captchaToken = '';
 
   async submit() {
     if (this.form.password !== this.form.confirm) {
@@ -34,22 +36,25 @@ export class RegisterComponent {
     if (this.form.password.length < 6) {
       this.error = this.i18n.t('auth.reset_too_short'); return;
     }
+    if (!this.captchaToken) {
+      this.error = this.i18n.t('auth.captcha_required'); return;
+    }
     this.loading = true;
     this.error = '';
     try {
       const result = await this.auth.register(
         this.form.name, this.form.email, this.form.password,
-        this.form.phone, this.form.city
+        this.form.phone, this.form.city, this.captchaToken
       );
       if (result.ok) {
         this.registeredEmail = this.form.email;
         this.emailSent = true;
         this.emailSendFailed = !result.emailSent;
       } else {
-        this.error = result.error || 'Une erreur est survenue.';
+        this.error = result.error || this.i18n.t('auth.generic_error_retry');
       }
     } catch {
-      this.error = 'Une erreur inattendue est survenue.';
+      this.error = this.i18n.t('auth.unexpected_error');
     } finally {
       this.loading = false;
       this.cdr.markForCheck();

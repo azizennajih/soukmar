@@ -35,17 +35,17 @@ export class HomeComponent implements OnInit {
   favoriteIds = new Set<string>();
 
   stats = [
-    { label: 'Annonces actives', value: '50K+' },
-    { label: 'Utilisateurs inscrits', value: '120K+' },
-    { label: 'Villes couvertes', value: '50+' },
-    { label: 'Annonces / mois', value: '5K+' },
+    { labelKey: 'home.stat_active_listings', value: '50K+' },
+    { labelKey: 'home.stat_registered_users', value: '120K+' },
+    { labelKey: 'home.stat_cities_covered', value: '50+' },
+    { labelKey: 'home.stat_monthly_listings', value: '5K+' },
   ];
 
   features = [
-    { icon: '⚡', title: 'Rapide & Simple', desc: 'Publiez votre annonce en moins de 2 minutes', bg: '#fef9c3', color: '#a16207' },
-    { icon: '🛡️', title: '100% Sécurisé', desc: 'Toutes les annonces sont vérifiées par notre équipe', bg: '#dcfce7', color: '#15803d' },
-    { icon: '👥', title: 'Grande communauté', desc: 'Plus de 120,000 acheteurs et vendeurs actifs', bg: '#dbeafe', color: '#1d4ed8' },
-    { icon: '📈', title: 'Boostez vos ventes', desc: 'Options premium pour maximiser la visibilité', bg: '#f3e8ff', color: '#7e22ce' },
+    { icon: '⚡', titleKey: 'home.feature_fast_title', descKey: 'home.feature_fast_desc', bg: '#fef9c3', color: '#a16207' },
+    { icon: '🛡️', titleKey: 'home.feature_secure_title', descKey: 'home.feature_secure_desc', bg: '#dcfce7', color: '#15803d' },
+    { icon: '👥', titleKey: 'home.feature_community_title', descKey: 'home.feature_community_desc', bg: '#dbeafe', color: '#1d4ed8' },
+    { icon: '📈', titleKey: 'home.feature_boost_title', descKey: 'home.feature_boost_desc', bg: '#f3e8ff', color: '#7e22ce' },
   ];
 
   constructor(

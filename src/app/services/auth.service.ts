@@ -1,5 +1,6 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { I18nService } from './i18n.service';
 
 const BASE = 'http://127.0.0.1:3000/api';
 
@@ -17,6 +18,7 @@ const TOKEN_KEY = 'soukmar_token';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private i18n = inject(I18nService);
   currentUser = signal<AuthUser | null>(null);
 
   constructor(private router: Router) {
@@ -42,19 +44,19 @@ export class AuthService {
         return {
           ok: false,
           unverified: err['unverified'] === true,
-          error: typeof err['error'] === 'string' ? err['error'] : 'Email ou mot de passe incorrect.'
+          error: typeof err['error'] === 'string' ? err['error'] : this.i18n.t('auth.invalid_credentials')
         };
       });
   }
 
-  register(name: string, email: string, password: string, phone?: string, city?: string): Promise<{ ok: boolean; emailSent?: boolean; error?: string }> {
-    return this.postJson<{ message: string; emailSent: boolean }>('/auth/register', { name, email, password, phone, city })
+  register(name: string, email: string, password: string, phone?: string, city?: string, captchaToken?: string): Promise<{ ok: boolean; emailSent?: boolean; error?: string }> {
+    return this.postJson<{ message: string; emailSent: boolean }>('/auth/register', { name, email, password, phone, city, captchaToken })
       .then(res => ({ ok: true, emailSent: res.emailSent }))
       .catch(e => {
         const err = e as Record<string, unknown>;
         return {
           ok: false,
-          error: typeof err['error'] === 'string' ? err['error'] : 'Une erreur est survenue. Veuillez réessayer.'
+          error: typeof err['error'] === 'string' ? err['error'] : this.i18n.t('auth.generic_error_retry')
         };
       });
   }
@@ -64,7 +66,7 @@ export class AuthService {
       .then(() => ({ ok: true }))
       .catch(e => {
         const err = e as Record<string, unknown>;
-        return { ok: false, error: typeof err['error'] === 'string' ? err['error'] : 'Erreur.' };
+        return { ok: false, error: typeof err['error'] === 'string' ? err['error'] : this.i18n.t('auth.generic_error') };
       });
   }
 
@@ -73,7 +75,7 @@ export class AuthService {
       .then(() => ({ ok: true }))
       .catch(e => {
         const err = e as Record<string, unknown>;
-        return { ok: false, error: typeof err['error'] === 'string' ? err['error'] : 'Erreur.' };
+        return { ok: false, error: typeof err['error'] === 'string' ? err['error'] : this.i18n.t('auth.generic_error') };
       });
   }
 
@@ -82,7 +84,7 @@ export class AuthService {
       .then(() => ({ ok: true }))
       .catch(e => {
         const err = e as Record<string, unknown>;
-        return { ok: false, error: typeof err['error'] === 'string' ? err['error'] : 'Erreur.' };
+        return { ok: false, error: typeof err['error'] === 'string' ? err['error'] : this.i18n.t('auth.generic_error') };
       });
   }
 

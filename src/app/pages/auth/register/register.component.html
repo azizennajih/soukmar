@@ -41,7 +41,7 @@
         </div>
         <div class="form-group">
           <label>{{ 'auth.email' | T }}</label>
-          <input type="email" [(ngModel)]="form.email" name="email" placeholder="votre&#64;email.com" required />
+          <input type="email" [(ngModel)]="form.email" name="email" [placeholder]="'auth.email_placeholder' | T" required />
         </div>
         <div class="form-group">
           <label>{{ 'auth.phone' | T }}</label>
@@ -50,7 +50,7 @@
         <div class="form-group">
           <label>{{ 'auth.password' | T }}</label>
           <div class="input-icon-wrap">
-            <input [type]="showPass ? 'text' : 'password'" [(ngModel)]="form.password" name="password" placeholder="Minimum 6 caractères" required style="padding-right:2.8rem" />
+            <input [type]="showPass ? 'text' : 'password'" [(ngModel)]="form.password" name="password" [placeholder]="'auth.password_min_placeholder' | T" required style="padding-right:2.8rem" />
             <button type="button" class="input-eye" (click)="showPass=!showPass">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
@@ -60,6 +60,8 @@
           <label>{{ 'auth.password' | T }}</label>
           <input type="password" [(ngModel)]="form.confirm" name="confirm" placeholder="••••••••" required />
         </div>
+
+        <app-turnstile (verified)="captchaToken = $event" />
 
         <button type="submit" class="btn-primary auth-submit" [disabled]="loading">
           @if (loading) { <span class="spinner"></span> }

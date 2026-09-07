@@ -44,7 +44,7 @@ export class ResetPasswordComponent implements OnInit {
       this.success = true;
       setTimeout(() => this.router.navigate(['/auth/login']), 2500);
     } else {
-      this.error = result.error || 'Une erreur est survenue.';
+      this.error = result.error || this.i18n.t('auth.generic_error_retry');
     }
     this.cdr.markForCheck();
   }

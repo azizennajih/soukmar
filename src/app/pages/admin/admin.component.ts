@@ -25,8 +25,19 @@ export interface AdminUser {
   banned?: boolean;
 }
 
-type Tab = 'overview' | 'listings' | 'users' | 'revenue' | 'reports';
+type Tab = 'overview' | 'listings' | 'users' | 'revenue' | 'reports' | 'security';
 type ListingFilter = 'ALL' | 'ACTIVE' | 'PENDING' | 'REJECTED' | 'SOLD' | 'RESERVED';
+
+export interface SecurityEvent {
+  id: string;
+  type: string;
+  severity: 'LOW' | 'MEDIUM' | 'HIGH';
+  ip: string | null;
+  userId: string | null;
+  detail: string | null;
+  createdAt: Date;
+  user: { id: string; name: string; email: string } | null;
+}
 
 @Component({
   selector: 'app-admin',
@@ -51,6 +62,10 @@ export class AdminComponent implements OnInit {
   reports: Report[] = [];
   reportsLoading = signal(false);
   reportFilter = signal<'ALL' | 'PENDING' | 'RESOLVED' | 'DISMISSED'>('PENDING');
+
+  securityEvents: SecurityEvent[] = [];
+  securityLoading = signal(false);
+  securitySeverityFilter = signal<'ALL' | 'HIGH' | 'MEDIUM' | 'LOW'>('ALL');
   listingFilter = signal<ListingFilter>('ALL');
   userSearch = '';
 
@@ -59,7 +74,12 @@ export class AdminComponent implements OnInit {
   readonly CATEGORIES = CATEGORIES;
   readonly filterOptions: ListingFilter[] = ['ALL','ACTIVE','PENDING','REJECTED','SOLD','RESERVED'];
 
-  readonly monthLabels = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+  get monthLabels(): string[] {
+    const lang = this.i18n.lang();
+    const locale = lang === 'ar' ? 'ar-MA' : lang === 'en' ? 'en-US' : lang;
+    const fmt = new Intl.DateTimeFormat(locale, { month: 'short' });
+    return Array.from({ length: 12 }, (_, m) => fmt.format(new Date(2000, m, 1)));
+  }
 
   get filteredListings(): Listing[] {
     const f = this.listingFilter();
@@ -78,6 +98,15 @@ export class AdminComponent implements OnInit {
 
   get pendingReportsCount(): number {
     return this.reports.filter(r => r.status === 'PENDING').length;
+  }
+
+  get filteredSecurityEvents(): SecurityEvent[] {
+    const f = this.securitySeverityFilter();
+    return f === 'ALL' ? this.securityEvents : this.securityEvents.filter(e => e.severity === f);
+  }
+
+  get highSeverityEventCount(): number {
+    return this.securityEvents.filter(e => e.severity === 'HIGH').length;
   }
 
   get stats() {
@@ -125,13 +154,23 @@ export class AdminComponent implements OnInit {
     return Math.max(...this.revenueMonthly, 1);
   }
 
-  formatPrice = (p: number) => formatPrice(p, 'MAD', 'fr');
+  formatPrice = (p: number) => formatPrice(p, 'MAD', this.i18n.lang());
   timeAgo = (d: Date) => timeAgo(d, this.i18n.lang());
 
   ngOnInit() {
     this.loadListings();
     this.loadUsers();
     this.loadReports();
+    this.loadSecurityEvents();
+  }
+
+  private async loadSecurityEvents() {
+    this.securityLoading.set(true);
+    try {
+      this.securityEvents = await firstValueFrom(this.api.get<SecurityEvent[]>('/admin/security-events'));
+    } catch { this.securityEvents = []; }
+    this.securityLoading.set(false);
+    this.cdr.markForCheck();
   }
 
   private async loadReports() {
@@ -152,7 +191,7 @@ export class AdminComponent implements OnInit {
       report.status = updated.status;
       report.adminNote = updated.adminNote;
       report.resolvedAt = updated.resolvedAt;
-    } catch { alert('Erreur.'); }
+    } catch { alert(this.i18n.t('auth.generic_error')); }
     this.actionLoading.delete(report.id);
     this.cdr.markForCheck();
   }
@@ -198,6 +237,25 @@ export class AdminComponent implements OnInit {
   setTab(t: Tab) { this.tab.set(t); }
   setListingFilter(f: ListingFilter) { this.listingFilter.set(f); }
   setReportFilter(f: 'ALL' | 'PENDING' | 'RESOLVED' | 'DISMISSED') { this.reportFilter.set(f); }
+  setSecuritySeverityFilter(f: 'ALL' | 'HIGH' | 'MEDIUM' | 'LOW') { this.securitySeverityFilter.set(f); }
+
+  securityEventLabel(type: string): string {
+    const map: Record<string, string> = {
+      LOGIN_FAILED: 'admin.sec_login_failed',
+      RATE_LIMITED: 'admin.sec_rate_limited',
+      CHAT_ACCESS_DENIED: 'admin.sec_chat_denied',
+      OFFER_ACCESS_DENIED: 'admin.sec_offer_denied',
+      LISTING_STATUS_DENIED: 'admin.sec_status_denied',
+      UPLOAD_REJECTED: 'admin.sec_upload_rejected',
+      CAPTCHA_FAILED: 'admin.sec_captcha_failed',
+    };
+    const key = map[type];
+    return key ? this.i18n.t(key) : type;
+  }
+
+  severityClass(s: string): string {
+    return s === 'HIGH' ? 'badge-rejected' : s === 'MEDIUM' ? 'badge-pending' : 'badge-active';
+  }
 
   isActionLoading(id: string) { return this.actionLoading.has(id); }
 
@@ -205,9 +263,9 @@ export class AdminComponent implements OnInit {
     if (this.actionLoading.has(listing.id)) return;
     this.actionLoading.add(listing.id);
     try {
-      await firstValueFrom(this.api.patch(`/listings/${listing.id}`, { status }));
+      await firstValueFrom(this.api.put(`/listings/${listing.id}`, { status }));
       listing.status = status as any;
-    } catch { alert('Erreur lors de la mise à jour.'); }
+    } catch { alert(this.i18n.t('admin.update_error')); }
     this.actionLoading.delete(listing.id);
     this.cdr.markForCheck();
   }
@@ -216,20 +274,20 @@ export class AdminComponent implements OnInit {
     if (this.actionLoading.has(listing.id)) return;
     this.actionLoading.add(listing.id);
     try {
-      await firstValueFrom(this.api.patch(`/listings/${listing.id}`, { isPremium: !listing.isPremium }));
+      await firstValueFrom(this.api.put(`/listings/${listing.id}`, { isPremium: !listing.isPremium }));
       listing.isPremium = !listing.isPremium;
-    } catch { alert('Erreur.'); }
+    } catch { alert(this.i18n.t('auth.generic_error')); }
     this.actionLoading.delete(listing.id);
     this.cdr.markForCheck();
   }
 
   async deleteListing(listing: Listing) {
-    if (!confirm(`Supprimer "${listing.title}" ?`)) return;
+    if (!confirm(this.i18n.t('admin.confirm_delete_listing', { title: listing.title }))) return;
     this.actionLoading.add(listing.id);
     try {
       await firstValueFrom(this.ls.delete(listing.id));
       this.allListings = this.allListings.filter(l => l.id !== listing.id);
-    } catch { alert('Erreur lors de la suppression.'); }
+    } catch { alert(this.i18n.t('admin.delete_error')); }
     this.actionLoading.delete(listing.id);
     this.cdr.markForCheck();
   }
@@ -238,7 +296,7 @@ export class AdminComponent implements OnInit {
     try {
       await firstValueFrom(this.api.patch(`/admin/users/${user.id}`, { role }));
       user.role = role as any;
-    } catch { alert('Erreur.'); }
+    } catch { alert(this.i18n.t('auth.generic_error')); }
     this.cdr.markForCheck();
   }
 
@@ -246,10 +304,11 @@ export class AdminComponent implements OnInit {
 
   statusLabel(s: string) {
     const map: Record<string, string> = {
-      ACTIVE: 'Actif', PENDING: 'En attente', REJECTED: 'Rejeté',
-      SOLD: 'Vendu', RESERVED: 'Réservé', EXPIRED: 'Expiré'
+      ACTIVE: 'annonces.active', PENDING: 'annonces.pending', REJECTED: 'annonces.rejected',
+      SOLD: 'annonces.sold', RESERVED: 'annonces.reserved', EXPIRED: 'annonces.expired'
     };
-    return map[s] ?? s;
+    const key = map[s];
+    return key ? this.i18n.t(key) : s;
   }
   statusClass(s: string) {
     const map: Record<string, string> = {

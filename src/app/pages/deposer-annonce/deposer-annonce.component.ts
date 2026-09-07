@@ -11,12 +11,13 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, Category, Subcategory, AttributeDefinition, Condition } from '../../models/listing.model';
 import { compressListingPhoto } from '../../utils/image-compression';
+import { TurnstileComponent } from '../../components/turnstile/turnstile.component';
 
 interface PhotoItem { url: string; file?: File; }
 
 @Component({
   selector: 'app-deposer-annonce',
-  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TranslatePipe],
+  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TranslatePipe, TurnstileComponent],
   templateUrl: './deposer-annonce.component.html',
   styleUrl: './deposer-annonce.component.scss'
 })
@@ -36,6 +37,7 @@ export class DeposerAnnonceComponent {
   loadingAttrs = false;
   success = false;
   error = '';
+  captchaToken = '';
 
   editId: string | null = null;
   initLoading = false;
@@ -277,6 +279,7 @@ export class DeposerAnnonceComponent {
 
   async publish() {
     if (!this.auth.isLoggedIn) { this.router.navigate(['/auth/login']); return; }
+    if (!this.isEdit && !this.captchaToken) { this.error = this.i18n.t('auth.captcha_required'); return; }
     this.loading = true;
     this.error = '';
 
@@ -311,6 +314,7 @@ export class DeposerAnnonceComponent {
         whatsapp: this.form.whatsapp,
         showPhone: this.form.showPhone,
         attributes: this.form.attributes,
+        captchaToken: this.captchaToken,
       };
 
       const request$ = this.isEdit ? this.ls.update(this.editId!, payload) : this.ls.create(payload);

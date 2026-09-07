@@ -13,7 +13,7 @@
       autocomplete="off"
     />
     @if (value) {
-      <button type="button" class="city-select__clear" (click)="clear($event)" aria-label="Effacer">✕</button>
+      <button type="button" class="city-select__clear" (click)="clear($event)" [attr.aria-label]="'common.clear' | T">✕</button>
     }
     @if (showGps) {
       <button
@@ -36,7 +36,7 @@
   @if (gpsError()) {
     <div class="city-select__gps-error" [style.top]="errorStyle().top" [style.left]="errorStyle().left">
       {{ gpsErrorKey() | T }}
-      <button type="button" class="city-select__gps-error-close" (click)="gpsError.set(false)" aria-label="Fermer">✕</button>
+      <button type="button" class="city-select__gps-error-close" (click)="gpsError.set(false)" [attr.aria-label]="'common.close' | T">✕</button>
     </div>
   }
 

@@ -38,6 +38,12 @@
         <span class="tab-badge">{{ pendingReportsCount }}</span>
       }
     </button>
+    <button class="admin-tab" [class.active]="tab() === 'security'" (click)="setTab('security')">
+      🛡️ {{ 'admin.tab_security' | T }}
+      @if (highSeverityEventCount > 0) {
+        <span class="tab-badge">{{ highSeverityEventCount }}</span>
+      }
+    </button>
   </nav>
 
   <!-- ══════════════ OVERVIEW ══════════════ -->
@@ -99,7 +105,7 @@
             @for (cat of categoryStats; track cat.value) {
               @if (cat.count > 0) {
                 <div class="cat-row">
-                  <span class="cat-row__name"><app-cat-icon [category]="cat.value" [size]="14" /> {{ cat.label }}</span>
+                  <span class="cat-row__name"><app-cat-icon [category]="cat.value" [size]="14" /> {{ ('cats.' + cat.value) | T }}</span>
                   <div class="cat-row__bar">
                     <div class="cat-row__fill" [style.width.%]="cat.pct" [style.background]="cat.color"></div>
                   </div>
@@ -194,12 +200,12 @@
                 <div class="table-listing-title">{{ listing.title }}</div>
                 <div class="table-listing-meta">
                   <span class="badge" [ngClass]="getCategory(listing.category)?.color">
-                    {{ getCategory(listing.category)?.icon }} {{ getCategory(listing.category)?.label }}
+                    {{ getCategory(listing.category)?.icon }} {{ ('cats.' + listing.category) | T }}
                   </span>
                   <span class="table-listing-city">📍 {{ listing.city }}</span>
                 </div>
                 @if (listing.isPremium) {
-                  <span class="badge badge-premium" style="margin-top:.25rem">⭐ Premium</span>
+                  <span class="badge badge-premium" style="margin-top:.25rem">⭐ {{ 'listing.premium_badge' | T }}</span>
                 }
               </div>
             </div>
@@ -225,24 +231,24 @@
             </div>
             <!-- Actions -->
             <div class="table-cell-actions">
-              <a [routerLink]="['/annonces', listing.id]" class="action-btn action-btn--view" title="Voir">👁</a>
+              <a [routerLink]="['/annonces', listing.id]" class="action-btn action-btn--view" [title]="'common.view' | T">👁</a>
               @if (listing.status === 'PENDING') {
-                <button class="action-btn action-btn--approve" title="Approuver"
+                <button class="action-btn action-btn--approve" [title]="'common.approve' | T"
                         [disabled]="isActionLoading(listing.id)"
                         (click)="updateListingStatus(listing, 'ACTIVE')">✅</button>
-                <button class="action-btn action-btn--reject" title="Rejeter"
+                <button class="action-btn action-btn--reject" [title]="'common.reject' | T"
                         [disabled]="isActionLoading(listing.id)"
                         (click)="updateListingStatus(listing, 'REJECTED')">❌</button>
               }
               @if (listing.status === 'ACTIVE') {
-                <button class="action-btn action-btn--reject" title="Désactiver"
+                <button class="action-btn action-btn--reject" [title]="'common.deactivate' | T"
                         [disabled]="isActionLoading(listing.id)"
                         (click)="updateListingStatus(listing, 'REJECTED')">⏸</button>
               }
               <button class="action-btn" [class.action-btn--gold]="listing.isPremium"
-                      title="Toggle Premium" [disabled]="isActionLoading(listing.id)"
+                      [title]="'common.toggle_premium' | T" [disabled]="isActionLoading(listing.id)"
                       (click)="togglePremium(listing)">⭐</button>
-              <button class="action-btn action-btn--delete" title="Supprimer"
+              <button class="action-btn action-btn--delete" [title]="'common.delete' | T"
                       [disabled]="isActionLoading(listing.id)"
                       (click)="deleteListing(listing)">🗑</button>
             </div>
@@ -267,7 +273,7 @@
     </div>
 
     @if (usersLoading()) {
-      <div class="admin-loading">⏳ Chargement...</div>
+      <div class="admin-loading">{{ 'admin.loading' | T }}</div>
     } @else if (filteredUsers.length === 0) {
       <div class="empty-state"><span>👥</span><p>{{ 'admin.empty_users' | T }}</p></div>
     } @else {
@@ -356,11 +362,11 @@
     <!-- Premium listings table -->
     <div class="card" style="margin-top:1.25rem">
       <div class="pending-card__header">
-        <span>⭐ Annonces Premium</span>
+        <span>⭐ {{ 'admin.kpi_premium' | T }}</span>
         <span class="badge badge-premium">{{ stats.premium }}</span>
       </div>
       @if (stats.premium === 0) {
-        <div class="empty-state"><span>⭐</span><p>Aucune annonce premium</p></div>
+        <div class="empty-state"><span>⭐</span><p>{{ 'admin.empty_premium' | T }}</p></div>
       } @else {
         <div class="data-table">
           <div class="data-table__head">
@@ -447,6 +453,65 @@
                 </button>
               </div>
             }
+          </div>
+        }
+      </div>
+    }
+  }
+
+  <!-- ══════════════ SECURITY ══════════════ -->
+  @if (tab() === 'security') {
+    <div class="section-header">
+      <h2 class="section-title">{{ 'admin.security_title' | T }}</h2>
+      <span class="section-count">{{ filteredSecurityEvents.length }}</span>
+    </div>
+    <p class="admin-header__sub" style="margin-bottom:1rem">{{ 'admin.security_sub' | T }}</p>
+
+    <div class="filter-bar">
+      @for (f of ['ALL', 'HIGH', 'MEDIUM', 'LOW']; track f) {
+        <button class="filter-pill" [class.active]="securitySeverityFilter() === f"
+                (click)="setSecuritySeverityFilter($any(f))">
+          {{ f === 'ALL' ? ('admin.filter_all' | T) : f }}
+          <span class="filter-pill__count">
+            {{ f === 'ALL' ? securityEvents.length : securityEvents.filter(e => e.severity === f).length }}
+          </span>
+        </button>
+      }
+    </div>
+
+    @if (securityLoading()) {
+      <div class="admin-loading">{{ 'admin.loading' | T }}</div>
+    } @else if (filteredSecurityEvents.length === 0) {
+      <div class="empty-state">
+        <span>🛡️</span><p>{{ 'admin.security_empty' | T }}</p>
+      </div>
+    } @else {
+      <div class="report-list">
+        @for (event of filteredSecurityEvents; track event.id) {
+          <div class="report-card card" [class.report-card--pending]="event.severity === 'HIGH'">
+            <div class="report-card__top">
+              <span class="badge" [ngClass]="severityClass(event.severity)">{{ event.severity }}</span>
+              <span class="report-card__date">{{ timeAgo(event.createdAt) }}</span>
+            </div>
+            <p class="report-card__reason"><strong>{{ securityEventLabel(event.type) }}</strong></p>
+            @if (event.detail) {
+              <p class="report-card__note">📝 {{ event.detail }}</p>
+            }
+            <div class="report-card__parties">
+              @if (event.user) {
+                <div>
+                  <span class="report-card__label">{{ 'admin.security_user' | T }}</span>
+                  <strong>{{ event.user.name }}</strong>
+                  <span class="table-user-email">{{ event.user.email }}</span>
+                </div>
+              }
+              @if (event.ip) {
+                <div>
+                  <span class="report-card__label">IP</span>
+                  <strong>{{ event.ip }}</strong>
+                </div>
+              }
+            </div>
           </div>
         }
       </div>

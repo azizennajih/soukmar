@@ -61,10 +61,10 @@
     <!-- Stats bar -->
     <div class="hero__stats">
       <div class="container hero__stats-inner">
-        @for (stat of stats; track stat.label) {
+        @for (stat of stats; track stat.labelKey) {
           <div class="hero__stat">
             <div class="hero__stat-value">{{ stat.value }}</div>
-            <div class="hero__stat-label">{{ stat.label }}</div>
+            <div class="hero__stat-label">{{ stat.labelKey | T }}</div>
           </div>
         }
       </div>
@@ -155,11 +155,11 @@
   <section class="section">
     <div class="container">
       <div class="grid-4">
-        @for (f of features; track f.title) {
+        @for (f of features; track f.titleKey) {
           <div class="feature-card">
             <div class="feature-icon" [style.background]="f.bg" [style.color]="f.color">{{ f.icon }}</div>
-            <h3>{{ f.title }}</h3>
-            <p>{{ f.desc }}</p>
+            <h3>{{ f.titleKey | T }}</h3>
+            <p>{{ f.descKey | T }}</p>
           </div>
         }
       </div>
@@ -171,7 +171,7 @@
     <div class="container cta-inner">
       <div class="cta-btns">
         <a routerLink="/deposer-annonce" class="cta-btn cta-btn--white">{{ 'nav.post_full' | T }}</a>
-        <a routerLink="/premium" class="cta-btn cta-btn--yellow">Premium ✨</a>
+        <a routerLink="/premium" class="cta-btn cta-btn--yellow">{{ 'home.premium_cta' | T }}</a>
       </div>
     </div>
   </section>

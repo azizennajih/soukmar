@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   async submit() {
-    if (!this.email || !this.password) { this.error = 'Veuillez remplir tous les champs.'; return; }
+    if (!this.email || !this.password) { this.error = this.i18n.t('auth.fill_all_fields'); return; }
     this.loading = true;
     this.error = '';
     this.unverifiedEmail = '';
@@ -48,10 +48,10 @@ export class LoginComponent implements OnInit {
         this.unverifiedEmail = this.email;
         this.error = result.error || this.i18n.t('auth.unverified_error');
       } else {
-        this.error = result.error || 'Email ou mot de passe incorrect.';
+        this.error = result.error || this.i18n.t('auth.invalid_credentials');
       }
     } catch {
-      this.error = 'Une erreur inattendue est survenue.';
+      this.error = this.i18n.t('auth.unexpected_error');
     } finally {
       this.loading = false;
       this.cdr.markForCheck();
