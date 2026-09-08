@@ -73,6 +73,11 @@
     font-size: .82rem; font-weight: 600; color: #16a34a;
   }
 
+  &__save-search-edit-label {
+    font-size: .82rem; font-weight: 600; color: var(--primary);
+    width: 100%;
+  }
+
   &__save-search-form {
     display: flex; gap: .5rem; align-items: center; flex-wrap: wrap;
 

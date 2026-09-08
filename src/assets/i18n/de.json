@@ -87,7 +87,9 @@
     "gps_error_timeout": "Standortbestimmung dauert zu lange. Prüfen Sie, ob die Ortungsdienste aktiviert sind (Windows: Einstellungen > Datenschutz > Standort) und versuchen Sie es erneut.",
     "save_search": "Diese Suche speichern",
     "save_search_name": "Name der Suche",
-    "search_saved": "Suche gespeichert!"
+    "search_saved": "Suche gespeichert!",
+    "edit_search_title": "Suche bearbeiten",
+    "update_search": "Aktualisieren"
   },
   "listing": {
     "loading": "Lädt...",

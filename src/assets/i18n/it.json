@@ -87,7 +87,9 @@
     "gps_error_timeout": "La localizzazione richiede troppo tempo. Verifica che i servizi di localizzazione siano attivi (Windows: Impostazioni > Privacy > Posizione) e riprova.",
     "save_search": "Salva questa ricerca",
     "save_search_name": "Nome della ricerca",
-    "search_saved": "Ricerca salvata!"
+    "search_saved": "Ricerca salvata!",
+    "edit_search_title": "Modifica ricerca",
+    "update_search": "Aggiorna"
   },
   "listing": {
     "loading": "Caricamento...",

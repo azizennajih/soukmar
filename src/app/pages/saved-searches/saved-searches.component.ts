@@ -35,7 +35,7 @@ export class SavedSearchesComponent implements OnInit {
     return this.categories.find(c => c.value === s.category);
   }
 
-  open(s: SavedSearch) {
+  private filterParams(s: SavedSearch): Record<string, string> {
     const qp: Record<string, string> = {};
     if (s.category) qp['categorie'] = s.category;
     if (s.subcategoryId) qp['souscategorie'] = s.subcategoryId;
@@ -45,7 +45,18 @@ export class SavedSearchesComponent implements OnInit {
     if (s.maxPrice != null) qp['maxPrix'] = String(s.maxPrice);
     if (s.condition) qp['condition'] = s.condition;
     if (s.attrs) for (const [code, vals] of Object.entries(s.attrs)) qp[`attr_${code}`] = vals.join(',');
-    this.router.navigate(['/annonces'], { queryParams: qp });
+    return qp;
+  }
+
+  open(s: SavedSearch) {
+    this.router.navigate(['/annonces'], { queryParams: this.filterParams(s) });
+  }
+
+  edit(s: SavedSearch, e: Event) {
+    e.stopPropagation();
+    this.router.navigate(['/annonces'], {
+      queryParams: { ...this.filterParams(s), editSearch: s.id, editSearchName: s.name }
+    });
   }
 
   remove(s: SavedSearch, e: Event) {

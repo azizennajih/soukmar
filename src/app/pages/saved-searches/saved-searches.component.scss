@@ -19,10 +19,13 @@
   &__name { font-size: .9rem; font-weight: 700; color: var(--text); }
   &__meta { font-size: .8rem; color: var(--text-muted); }
 
-  &__remove {
+  &__actions { display: flex; align-items: center; gap: .25rem; flex-shrink: 0; }
+
+  &__edit, &__remove {
     flex-shrink: 0; width: 1.8rem; height: 1.8rem; border-radius: 50%;
     background: none; border: none; cursor: pointer; color: #94a3b8; font-size: .9rem;
     display: flex; align-items: center; justify-content: center;
-    &:hover { background: #fef2f2; color: #e63946; }
   }
+  &__edit:hover { background: var(--primary-light); color: var(--primary); }
+  &__remove:hover { background: #fef2f2; color: #e63946; }
 }

@@ -19,7 +19,10 @@
               @if (s.minPrice || s.maxPrice) { · {{ s.minPrice || 0 }}–{{ s.maxPrice || '∞' }} MAD }
             </span>
           </div>
-          <button type="button" class="search-row__remove" (click)="remove(s, $event)" [title]="'common.delete' | T">✕</button>
+          <div class="search-row__actions">
+            <button type="button" class="search-row__edit" (click)="edit(s, $event)" [title]="'common.edit' | T">✏️</button>
+            <button type="button" class="search-row__remove" (click)="remove(s, $event)" [title]="'common.delete' | T">✕</button>
+          </div>
         </div>
       }
     </div>

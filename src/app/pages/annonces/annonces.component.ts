@@ -45,6 +45,7 @@ export class AnnoncesComponent implements OnInit {
   newSearchName = '';
   searchSaved = false;
   savingSearch = false;
+  editSearchId: string | null = null;
 
   constructor(
     private listingService: ListingService,
@@ -74,6 +75,11 @@ export class AnnoncesComponent implements OnInit {
       this.attrFilters = {};
       for (const key of Object.keys(params)) {
         if (key.startsWith('attr_')) this.attrFilters[key] = params[key];
+      }
+      if (params['editSearch']) {
+        this.editSearchId = params['editSearch'];
+        this.newSearchName = params['editSearchName'] || '';
+        this.showSaveSearchForm = true;
       }
       this.loadCatalogForCategory();
       this.loadListings();
@@ -237,8 +243,7 @@ export class AnnoncesComponent implements OnInit {
       const code = key.replace(/^attr_/, '');
       attrs[code] = val.split(',').filter(Boolean);
     }
-    this.savingSearch = true;
-    this.savedSearchService.create({
+    const data = {
       name: this.newSearchName.trim(),
       category: (this.filters.categorie || undefined) as Category | undefined,
       subcategoryId: this.filters.souscategorie || undefined,
@@ -248,16 +253,28 @@ export class AnnoncesComponent implements OnInit {
       maxPrice: this.filters.maxPrix ? parseFloat(this.filters.maxPrix) : undefined,
       condition: (this.filters.condition || undefined) as any,
       attrs: Object.keys(attrs).length ? attrs : undefined
-    }).subscribe({
+    };
+    this.savingSearch = true;
+    const req$ = this.editSearchId ? this.savedSearchService.update(this.editSearchId, data) : this.savedSearchService.create(data);
+    req$.subscribe({
       next: () => {
         this.savingSearch = false;
         this.showSaveSearchForm = false;
         this.newSearchName = '';
+        if (this.editSearchId) {
+          this.router.navigate(['/recherches-sauvegardees']);
+          return;
+        }
         this.searchSaved = true;
         this.cdr.markForCheck();
         setTimeout(() => { this.searchSaved = false; this.cdr.markForCheck(); }, 3000);
       },
       error: () => { this.savingSearch = false; this.cdr.markForCheck(); }
     });
+  }
+
+  cancelSaveSearch() {
+    if (this.editSearchId) { this.router.navigate(['/recherches-sauvegardees']); return; }
+    this.showSaveSearchForm = false;
   }
 }

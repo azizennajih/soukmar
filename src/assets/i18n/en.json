@@ -87,7 +87,9 @@
     "gps_error_timeout": "Locating is taking too long. Check that location services are enabled on your device (Windows: Settings > Privacy > Location), then try again.",
     "save_search": "Save this search",
     "save_search_name": "Search name",
-    "search_saved": "Search saved!"
+    "search_saved": "Search saved!",
+    "edit_search_title": "Edit search",
+    "update_search": "Update"
   },
   "listing": {
     "loading": "Loading...",

@@ -15,6 +15,10 @@ export class SavedSearchService {
     return this.api.post<SavedSearch>('/saved-searches', data);
   }
 
+  update(id: string, data: Partial<SavedSearch>): Observable<SavedSearch> {
+    return this.api.patch<SavedSearch>(`/saved-searches/${id}`, data);
+  }
+
   delete(id: string): Observable<{ success: boolean }> {
     return this.api.delete<{ success: boolean }>(`/saved-searches/${id}`);
   }
