@@ -1,0 +1,26 @@
+.parametres {
+  padding: 2.5rem 1.25rem;
+  max-width: 720px;
+
+  &__back { display: inline-block; font-size: .85rem; color: var(--text-muted); text-decoration: none; margin-bottom: 1rem; }
+  &__back:hover { color: var(--primary); }
+
+  &__title { font-size: 1.6rem; font-weight: 800; color: var(--text); margin-bottom: 1.5rem; letter-spacing: -.02em; }
+
+  &__list { display: flex; flex-direction: column; gap: .6rem; }
+}
+
+.settings-row {
+  display: flex; align-items: center; gap: .9rem;
+  width: 100%; padding: 1rem 1.1rem;
+  background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius);
+  text-align: left; cursor: pointer; text-decoration: none;
+  transition: border-color .15s, background .15s;
+
+  &:hover { border-color: #cbd5e1; background: var(--bg); }
+
+  &__icon { font-size: 1.35rem; flex-shrink: 0; width: 1.8rem; text-align: center; }
+  &__body { display: flex; flex-direction: column; gap: .2rem; min-width: 0; flex: 1; }
+  &__name { font-size: .95rem; font-weight: 700; color: var(--text); }
+  &__chevron { font-size: 1.3rem; color: #cbd5e1; flex-shrink: 0; }
+}

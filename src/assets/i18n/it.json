@@ -18,7 +18,8 @@
     "categories": "Categorie",
     "all": "Tutti",
     "saved_searches": "Ricerche salvate",
-    "city_placeholder_short": "Città"
+    "city_placeholder_short": "Città",
+    "settings": "Impostazioni"
   },
   "home": {
     "hero_badge": "Oltre 50.000 annunci attivi",
@@ -468,6 +469,42 @@
     "password_mismatch": "Le password non corrispondono.",
     "password_too_short": "La password deve contenere almeno 6 caratteri.",
     "password_change_error": "Errore durante la modifica della password."
+  },
+  "parametres": {
+    "title": "Impostazioni",
+    "profile_account": "Profilo e account",
+    "profile_account_sub": "Nome, telefono, città, foto profilo, password",
+    "premium": "Premium",
+    "premium_sub": "Metti in evidenza i tuoi annunci, scopri i vantaggi",
+    "notifications": "Notifiche",
+    "notifications_sub": "Gestisci le notifiche push",
+    "legal": "Privacy e legale",
+    "legal_sub": "Informativa sulla privacy · Termini di utilizzo · Diritto di recesso",
+    "help": "Aiuto e feedback",
+    "help_sub": "Contatto, supporto, invia un feedback",
+    "delete_account": "Elimina account",
+    "delete_account_sub": "Disattiva l'account e anonimizza i dati"
+  },
+  "legal": {
+    "privacy_title": "Informativa sulla privacy",
+    "terms_title": "Termini di utilizzo",
+    "withdrawal_title": "Diritto di recesso",
+    "coming_soon": "Questa pagina sarà disponibile a breve."
+  },
+  "aide": {
+    "contact_title": "Contatto",
+    "feedback_title": "Invia un feedback",
+    "feedback_text": "Hai un suggerimento o hai trovato un errore? Scrivici!",
+    "feedback_btn": "Invia feedback via email"
+  },
+  "delete_account": {
+    "title": "Elimina account",
+    "warning": "Questa azione non può essere annullata. Il tuo account verrà disattivato, il tuo nome sostituito con \"Utente eliminato\" e i tuoi dati personali (email, telefono, foto) rimossi. I tuoi annunci attivi verranno chiusi. Chat e recensioni già scambiate con altri utenti restano, ma anonimizzate.",
+    "password_label": "Password di conferma",
+    "confirm_checkbox": "Capisco che questa azione è definitiva.",
+    "submit_btn": "Elimina definitivamente il mio account",
+    "success": "Il tuo account è stato eliminato. Disconnessione in corso…",
+    "error_generic": "Qualcosa è andato storto. Riprova."
   },
   "deposer": {
     "gate_title": "Accesso richiesto",

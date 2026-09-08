@@ -1,0 +1,30 @@
+<div class="parametres container fade-in">
+  <a routerLink="/parametres" class="parametres__back">← {{ 'parametres.title' | T }}</a>
+  <h1 class="parametres__title">{{ 'parametres.legal' | T }}</h1>
+
+  <div class="parametres__list">
+    <a routerLink="/politique-confidentialite" class="settings-row">
+      <span class="settings-row__icon">🔒</span>
+      <span class="settings-row__body">
+        <span class="settings-row__name">{{ 'legal.privacy_title' | T }}</span>
+      </span>
+      <span class="settings-row__chevron">›</span>
+    </a>
+
+    <a routerLink="/conditions-utilisation" class="settings-row">
+      <span class="settings-row__icon">📄</span>
+      <span class="settings-row__body">
+        <span class="settings-row__name">{{ 'legal.terms_title' | T }}</span>
+      </span>
+      <span class="settings-row__chevron">›</span>
+    </a>
+
+    <a routerLink="/droit-retractation" class="settings-row">
+      <span class="settings-row__icon">↩️</span>
+      <span class="settings-row__body">
+        <span class="settings-row__name">{{ 'legal.withdrawal_title' | T }}</span>
+      </span>
+      <span class="settings-row__chevron">›</span>
+    </a>
+  </div>
+</div>

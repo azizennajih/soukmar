@@ -1,0 +1,67 @@
+<div class="parametres container fade-in">
+  <h1 class="parametres__title">{{ 'parametres.title' | T }}</h1>
+
+  <div class="parametres__list">
+    <a routerLink="/profil" class="settings-row">
+      <span class="settings-row__icon">👤</span>
+      <span class="settings-row__body">
+        <span class="settings-row__name">{{ 'parametres.profile_account' | T }}</span>
+        <span class="settings-row__sub">{{ 'parametres.profile_account_sub' | T }}</span>
+      </span>
+      <span class="settings-row__chevron">›</span>
+    </a>
+
+    <a routerLink="/premium" class="settings-row">
+      <span class="settings-row__icon">⭐</span>
+      <span class="settings-row__body">
+        <span class="settings-row__name">{{ 'parametres.premium' | T }}</span>
+        <span class="settings-row__sub">{{ 'parametres.premium_sub' | T }}</span>
+      </span>
+      <span class="settings-row__chevron">›</span>
+    </a>
+
+    <a routerLink="/notifications" class="settings-row">
+      <span class="settings-row__icon">🔔</span>
+      <span class="settings-row__body">
+        <span class="settings-row__name">{{ 'parametres.notifications' | T }}</span>
+        <span class="settings-row__sub">{{ 'parametres.notifications_sub' | T }}</span>
+      </span>
+      <span class="settings-row__chevron">›</span>
+    </a>
+
+    <a routerLink="/mentions-legales" class="settings-row">
+      <span class="settings-row__icon">🔒</span>
+      <span class="settings-row__body">
+        <span class="settings-row__name">{{ 'parametres.legal' | T }}</span>
+        <span class="settings-row__sub">{{ 'parametres.legal_sub' | T }}</span>
+      </span>
+      <span class="settings-row__chevron">›</span>
+    </a>
+
+    <a routerLink="/aide" class="settings-row">
+      <span class="settings-row__icon">🆘</span>
+      <span class="settings-row__body">
+        <span class="settings-row__name">{{ 'parametres.help' | T }}</span>
+        <span class="settings-row__sub">{{ 'parametres.help_sub' | T }}</span>
+      </span>
+      <span class="settings-row__chevron">›</span>
+    </a>
+
+    <a routerLink="/supprimer-compte" class="settings-row settings-row--danger">
+      <span class="settings-row__icon">⚠️</span>
+      <span class="settings-row__body">
+        <span class="settings-row__name">{{ 'parametres.delete_account' | T }}</span>
+        <span class="settings-row__sub">{{ 'parametres.delete_account_sub' | T }}</span>
+      </span>
+      <span class="settings-row__chevron">›</span>
+    </a>
+  </div>
+
+  <button type="button" class="settings-row settings-row--logout" (click)="logout()">
+    <span class="settings-row__icon">🚪</span>
+    <span class="settings-row__body">
+      <span class="settings-row__name">{{ 'nav.logout' | T }}</span>
+      <span class="settings-row__sub">{{ auth.currentUser()?.email }}</span>
+    </span>
+  </button>
+</div>

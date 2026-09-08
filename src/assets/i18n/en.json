@@ -18,7 +18,8 @@
     "categories": "Categories",
     "all": "All",
     "saved_searches": "Saved Searches",
-    "city_placeholder_short": "City"
+    "city_placeholder_short": "City",
+    "settings": "Settings"
   },
   "home": {
     "hero_badge": "Over 50,000 active listings",
@@ -503,6 +504,42 @@
     "password_mismatch": "Passwords do not match.",
     "password_too_short": "Password must be at least 6 characters.",
     "password_change_error": "Error changing password."
+  },
+  "parametres": {
+    "title": "Settings",
+    "profile_account": "Profile & Account",
+    "profile_account_sub": "Name, phone number, city, profile picture, password",
+    "premium": "Premium",
+    "premium_sub": "Highlight your listings, discover the benefits",
+    "notifications": "Notifications",
+    "notifications_sub": "Manage push notifications",
+    "legal": "Privacy & Legal",
+    "legal_sub": "Privacy policy · Terms of use · Right of withdrawal",
+    "help": "Help & Feedback",
+    "help_sub": "Contact, support, send feedback",
+    "delete_account": "Delete account",
+    "delete_account_sub": "Deactivate your account and anonymize your data"
+  },
+  "legal": {
+    "privacy_title": "Privacy Policy",
+    "terms_title": "Terms of Use",
+    "withdrawal_title": "Right of Withdrawal",
+    "coming_soon": "This page is being finalized and will be available soon."
+  },
+  "aide": {
+    "contact_title": "Contact",
+    "feedback_title": "Send Feedback",
+    "feedback_text": "Found a bug or have a suggestion? Let us know!",
+    "feedback_btn": "Send feedback by email"
+  },
+  "delete_account": {
+    "title": "Delete account",
+    "warning": "This action cannot be undone. Your account will be deactivated, your name replaced with \"Deleted user\", and your personal data (email, phone, profile picture) removed. Your active listings will be closed. Chats and reviews already exchanged with other users remain, but anonymized.",
+    "password_label": "Password to confirm",
+    "confirm_checkbox": "I understand this action is final.",
+    "submit_btn": "Permanently delete my account",
+    "success": "Your account has been deleted. You're being signed out…",
+    "error_generic": "Something went wrong. Please try again."
   },
   "common": {
     "mad": "MAD",

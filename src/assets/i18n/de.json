@@ -18,7 +18,8 @@
     "categories": "Kategorien",
     "all": "Alle",
     "saved_searches": "Gespeicherte Suchen",
-    "city_placeholder_short": "Stadt"
+    "city_placeholder_short": "Stadt",
+    "settings": "Einstellungen"
   },
   "home": {
     "hero_badge": "Über 50.000 aktive Anzeigen",
@@ -468,6 +469,42 @@
     "password_mismatch": "Die Passwörter stimmen nicht überein.",
     "password_too_short": "Das Passwort muss mindestens 6 Zeichen lang sein.",
     "password_change_error": "Fehler beim Ändern des Passworts."
+  },
+  "parametres": {
+    "title": "Einstellungen",
+    "profile_account": "Profil & Konto",
+    "profile_account_sub": "Name, Telefonnummer, Stadt, Profilbild, Passwort",
+    "premium": "Premium",
+    "premium_sub": "Anzeigen hervorheben, Vorteile entdecken",
+    "notifications": "Benachrichtigungen",
+    "notifications_sub": "Push-Benachrichtigungen verwalten",
+    "legal": "Datenschutz & Recht",
+    "legal_sub": "Datenschutzerklärung · Nutzungsbedingungen · Widerrufsrecht",
+    "help": "Hilfe & Feedback",
+    "help_sub": "Kontakt, Support, Feedback geben",
+    "delete_account": "Nutzerkonto löschen",
+    "delete_account_sub": "Konto deaktivieren und Daten anonymisieren"
+  },
+  "legal": {
+    "privacy_title": "Datenschutzerklärung",
+    "terms_title": "Nutzungsbedingungen",
+    "withdrawal_title": "Widerrufsrecht",
+    "coming_soon": "Diese Seite wird in Kürze vervollständigt."
+  },
+  "aide": {
+    "contact_title": "Kontakt",
+    "feedback_title": "Feedback geben",
+    "feedback_text": "Hast du einen Verbesserungsvorschlag oder einen Fehler gefunden? Schreib uns!",
+    "feedback_btn": "Feedback per E-Mail senden"
+  },
+  "delete_account": {
+    "title": "Nutzerkonto löschen",
+    "warning": "Diese Aktion kann nicht rückgängig gemacht werden. Dein Konto wird deaktiviert, dein Name durch „Gelöschter Nutzer\" ersetzt und deine persönlichen Daten (E-Mail, Telefon, Profilbild) entfernt. Deine aktiven Anzeigen werden beendet. Bereits geführte Chats und Bewertungen bleiben anonymisiert bestehen.",
+    "password_label": "Passwort zur Bestätigung",
+    "confirm_checkbox": "Ich verstehe, dass diese Aktion endgültig ist.",
+    "submit_btn": "Konto endgültig löschen",
+    "success": "Dein Konto wurde gelöscht. Du wirst abgemeldet…",
+    "error_generic": "Etwas ist schiefgelaufen. Bitte versuche es erneut."
   },
   "deposer": {
     "gate_title": "Anmeldung erforderlich",

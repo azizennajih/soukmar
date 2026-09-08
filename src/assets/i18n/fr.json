@@ -14,6 +14,7 @@
     "my_listings": "Mes annonces",
     "my_favorites": "Mes favoris",
     "saved_searches": "Recherches sauvegardées",
+    "settings": "Paramètres",
     "admin": "Dashboard Admin",
     "logout": "Se déconnecter",
     "register": "S'inscrire",
@@ -768,6 +769,42 @@
     "password_mismatch": "Les mots de passe ne correspondent pas.",
     "password_too_short": "Le mot de passe doit contenir au moins 6 caractères.",
     "password_change_error": "Erreur lors du changement de mot de passe."
+  },
+  "parametres": {
+    "title": "Paramètres",
+    "profile_account": "Profil & Compte",
+    "profile_account_sub": "Nom, téléphone, ville, photo de profil, mot de passe",
+    "premium": "Premium",
+    "premium_sub": "Mettez vos annonces en avant, découvrez les avantages",
+    "notifications": "Notifications",
+    "notifications_sub": "Gérer les notifications push",
+    "legal": "Confidentialité & Mentions légales",
+    "legal_sub": "Politique de confidentialité · Conditions d'utilisation · Droit de rétractation",
+    "help": "Aide & Feedback",
+    "help_sub": "Contact, support, donner un avis",
+    "delete_account": "Supprimer le compte",
+    "delete_account_sub": "Désactiver le compte et anonymiser les données"
+  },
+  "legal": {
+    "privacy_title": "Politique de confidentialité",
+    "terms_title": "Conditions d'utilisation",
+    "withdrawal_title": "Droit de rétractation",
+    "coming_soon": "Cette page sera bientôt disponible."
+  },
+  "aide": {
+    "contact_title": "Contact",
+    "feedback_title": "Donner un avis",
+    "feedback_text": "Une suggestion ou un bug à signaler ? Écrivez-nous !",
+    "feedback_btn": "Envoyer un avis par email"
+  },
+  "delete_account": {
+    "title": "Supprimer le compte",
+    "warning": "Cette action est irréversible. Votre compte sera désactivé, votre nom remplacé par « Utilisateur supprimé » et vos données personnelles (email, téléphone, photo) supprimées. Vos annonces actives seront clôturées. Les discussions et avis déjà échangés avec d'autres utilisateurs restent visibles mais anonymisés.",
+    "password_label": "Mot de passe de confirmation",
+    "confirm_checkbox": "Je comprends que cette action est définitive.",
+    "submit_btn": "Supprimer définitivement mon compte",
+    "success": "Votre compte a été supprimé. Déconnexion en cours…",
+    "error_generic": "Une erreur est survenue. Veuillez réessayer."
   },
   "seller": {
     "not_found": "Utilisateur introuvable.",

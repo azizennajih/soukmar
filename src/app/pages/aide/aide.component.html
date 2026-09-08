@@ -1,0 +1,18 @@
+<div class="aide container fade-in">
+  <a routerLink="/parametres" class="aide__back">← {{ 'parametres.title' | T }}</a>
+  <h1 class="aide__title">{{ 'parametres.help' | T }}</h1>
+
+  <div class="card aide__card">
+    <h2 class="aide__card-title">{{ 'aide.contact_title' | T }}</h2>
+    <a href="mailto:contact@soukmar.ma" class="aide__contact-link">📧 contact&#64;soukmar.ma</a>
+    <a href="tel:+212522000000" class="aide__contact-link">📞 +212 5 22 00 00 00</a>
+  </div>
+
+  <div class="card aide__card">
+    <h2 class="aide__card-title">{{ 'aide.feedback_title' | T }}</h2>
+    <p class="aide__feedback-text">{{ 'aide.feedback_text' | T }}</p>
+    <a href="mailto:contact@soukmar.ma?subject=Feedback%20SouqMar24" class="btn-primary aide__feedback-btn">
+      {{ 'aide.feedback_btn' | T }}
+    </a>
+  </div>
+</div>

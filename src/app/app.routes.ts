@@ -76,6 +76,37 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/premium/premium.component').then(m => m.PremiumComponent)
   },
   {
+    path: 'parametres',
+    loadComponent: () => import('./pages/parametres/parametres.component').then(m => m.ParametresComponent)
+  },
+  {
+    path: 'mentions-legales',
+    loadComponent: () => import('./pages/mentions-legales/mentions-legales.component').then(m => m.MentionsLegalesComponent)
+  },
+  {
+    path: 'aide',
+    loadComponent: () => import('./pages/aide/aide.component').then(m => m.AideComponent)
+  },
+  {
+    path: 'supprimer-compte',
+    loadComponent: () => import('./pages/supprimer-compte/supprimer-compte.component').then(m => m.SupprimerCompteComponent)
+  },
+  {
+    path: 'politique-confidentialite',
+    data: { titleKey: 'legal.privacy_title' },
+    loadComponent: () => import('./pages/page-placeholder/page-placeholder.component').then(m => m.PagePlaceholderComponent)
+  },
+  {
+    path: 'conditions-utilisation',
+    data: { titleKey: 'legal.terms_title' },
+    loadComponent: () => import('./pages/page-placeholder/page-placeholder.component').then(m => m.PagePlaceholderComponent)
+  },
+  {
+    path: 'droit-retractation',
+    data: { titleKey: 'legal.withdrawal_title' },
+    loadComponent: () => import('./pages/page-placeholder/page-placeholder.component').then(m => m.PagePlaceholderComponent)
+  },
+  {
     path: '**',
     redirectTo: ''
   }

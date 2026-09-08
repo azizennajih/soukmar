@@ -1,0 +1,34 @@
+<div class="supprimer container fade-in">
+  <a routerLink="/parametres" class="supprimer__back">← {{ 'parametres.title' | T }}</a>
+  <h1 class="supprimer__title">{{ 'delete_account.title' | T }}</h1>
+
+  @if (done()) {
+    <div class="card supprimer__card">
+      <div class="supprimer__alert supprimer__alert--success">✅ {{ 'delete_account.success' | T }}</div>
+    </div>
+  } @else {
+    <div class="card supprimer__card">
+      <p class="supprimer__warning">⚠️ {{ 'delete_account.warning' | T }}</p>
+
+      @if (errorMsg) {
+        <div class="supprimer__alert supprimer__alert--error">❌ {{ errorMsg }}</div>
+      }
+
+      <form (ngSubmit)="deleteAccount()" class="supprimer__form">
+        <div class="form-group">
+          <label class="form-label">{{ 'delete_account.password_label' | T }}</label>
+          <input type="password" [(ngModel)]="password" name="password" class="form-input" placeholder="••••••••" required />
+        </div>
+
+        <label class="supprimer__checkbox">
+          <input type="checkbox" [(ngModel)]="confirmed" name="confirmed" />
+          {{ 'delete_account.confirm_checkbox' | T }}
+        </label>
+
+        <button type="submit" class="btn-primary supprimer__submit-btn" [disabled]="deleting()">
+          @if (deleting()) { {{ 'profil.saving' | T }} } @else { {{ 'delete_account.submit_btn' | T }} }
+        </button>
+      </form>
+    </div>
+  }
+</div>

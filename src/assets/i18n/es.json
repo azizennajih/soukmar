@@ -18,7 +18,8 @@
     "categories": "Categorías",
     "all": "Todos",
     "saved_searches": "Búsquedas guardadas",
-    "city_placeholder_short": "Ciudad"
+    "city_placeholder_short": "Ciudad",
+    "settings": "Ajustes"
   },
   "home": {
     "hero_badge": "Más de 50.000 anuncios activos",
@@ -468,6 +469,42 @@
     "password_mismatch": "Las contraseñas no coinciden.",
     "password_too_short": "La contraseña debe tener al menos 6 caracteres.",
     "password_change_error": "Error al cambiar la contraseña."
+  },
+  "parametres": {
+    "title": "Ajustes",
+    "profile_account": "Perfil y cuenta",
+    "profile_account_sub": "Nombre, teléfono, ciudad, foto de perfil, contraseña",
+    "premium": "Premium",
+    "premium_sub": "Destaca tus anuncios, descubre las ventajas",
+    "notifications": "Notificaciones",
+    "notifications_sub": "Gestionar notificaciones push",
+    "legal": "Privacidad y legal",
+    "legal_sub": "Política de privacidad · Términos de uso · Derecho de desistimiento",
+    "help": "Ayuda y comentarios",
+    "help_sub": "Contacto, soporte, enviar comentarios",
+    "delete_account": "Eliminar cuenta",
+    "delete_account_sub": "Desactivar la cuenta y anonimizar los datos"
+  },
+  "legal": {
+    "privacy_title": "Política de privacidad",
+    "terms_title": "Términos de uso",
+    "withdrawal_title": "Derecho de desistimiento",
+    "coming_soon": "Esta página estará disponible próximamente."
+  },
+  "aide": {
+    "contact_title": "Contacto",
+    "feedback_title": "Enviar comentarios",
+    "feedback_text": "¿Tienes una sugerencia o encontraste un error? ¡Escríbenos!",
+    "feedback_btn": "Enviar comentarios por email"
+  },
+  "delete_account": {
+    "title": "Eliminar cuenta",
+    "warning": "Esta acción no se puede deshacer. Tu cuenta será desactivada, tu nombre sustituido por «Usuario eliminado» y tus datos personales (email, teléfono, foto) eliminados. Tus anuncios activos se cerrarán. Los chats y valoraciones ya intercambiados con otros usuarios permanecen, pero anonimizados.",
+    "password_label": "Contraseña de confirmación",
+    "confirm_checkbox": "Entiendo que esta acción es definitiva.",
+    "submit_btn": "Eliminar mi cuenta definitivamente",
+    "success": "Tu cuenta ha sido eliminada. Cerrando sesión…",
+    "error_generic": "Algo salió mal. Inténtalo de nuevo."
   },
   "deposer": {
     "gate_title": "Inicio de sesión requerido",
