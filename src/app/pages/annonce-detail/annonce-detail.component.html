@@ -236,5 +236,17 @@
       }
     </div>
   </div>
+
+  <!-- Similar listings -->
+  @if (similarListings.length) {
+    <div class="detail__similar">
+      <h2 class="detail__desc-title">{{ 'listing.similar' | T }}</h2>
+      <div class="grid-4">
+        @for (item of similarListings; track item.id) {
+          <app-listing-card [listing]="item" />
+        }
+      </div>
+    </div>
+  }
 </div>
 }

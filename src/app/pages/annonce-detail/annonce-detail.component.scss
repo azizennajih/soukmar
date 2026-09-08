@@ -147,6 +147,14 @@
     white-space: pre-line;
   }
 
+  &__similar {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+
+    .detail__desc-title { font-size: 1.15rem; margin: 0 0 1.25rem; }
+  }
+
   /* Specs */
   &__specs { margin-top: 1.25rem; padding: 1.25rem; }
 

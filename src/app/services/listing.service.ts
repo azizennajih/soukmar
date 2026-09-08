@@ -63,4 +63,8 @@ export class ListingService {
   getViewStats(id: string): Observable<{ days: { date: string; count: number }[]; total: number }> {
     return this.api.get(`/listings/${id}/view-stats`);
   }
+
+  getSimilar(id: string): Observable<Listing[]> {
+    return this.api.get<Listing[]>(`/listings/${id}/similar`);
+  }
 }

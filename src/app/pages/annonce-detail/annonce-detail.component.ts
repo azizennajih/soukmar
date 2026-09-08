@@ -11,10 +11,11 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
 import { ReviewService, CanReviewResponse } from '../../services/review.service';
 import { ReportButtonComponent } from '../../components/report-button/report-button.component';
+import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 
 @Component({
   selector: 'app-annonce-detail',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, ReportButtonComponent],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, ReportButtonComponent, ListingCardComponent],
   templateUrl: './annonce-detail.component.html',
   styleUrl: './annonce-detail.component.scss'
 })
@@ -58,15 +59,37 @@ export class AnnonceDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id')!;
-    this.ls.getById(id).subscribe({
-      next: listing => {
-        this.listing = listing;
-        this.loading = false;
-        this.cdr.markForCheck();
-        if (this.auth.isLoggedIn) { this.checkFavorite(); this.checkCanReview(id); }
-      },
-      error: (e) => { console.error('Detail error:', e); this.loading = false; this.loadError = true; this.cdr.markForCheck(); }
+    // A route-to-route navigation between two listing detail pages (e.g.
+    // clicking a "you might also like" card below) reuses this component
+    // instead of recreating it, so ngOnInit only runs once — subscribing to
+    // paramMap (rather than reading route.snapshot once) is what makes the
+    // page actually reload when just the :id changes.
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id')!;
+      this.loading = true;
+      this.loadError = false;
+      this.similarListings = [];
+      this.selectedImage = 0;
+      this.cdr.markForCheck();
+      this.ls.getById(id).subscribe({
+        next: listing => {
+          this.listing = listing;
+          this.loading = false;
+          this.cdr.markForCheck();
+          if (this.auth.isLoggedIn) { this.checkFavorite(); this.checkCanReview(id); }
+          this.loadSimilar(id);
+        },
+        error: (e) => { console.error('Detail error:', e); this.loading = false; this.loadError = true; this.cdr.markForCheck(); }
+      });
+    });
+  }
+
+  similarListings: Listing[] = [];
+
+  loadSimilar(id: string) {
+    this.ls.getSimilar(id).subscribe({
+      next: listings => { this.similarListings = listings; this.cdr.markForCheck(); },
+      error: () => { /* non-essential section — fail silently */ }
     });
   }
 
