@@ -1100,11 +1100,12 @@
     "CARE_WORKER": "Operatore/trice socio-sanitario/a", "DISABILITY_SUPPORT": "Assistenza alla disabilità",
     "FAMILY_SUPPORT": "Aiuto familiare",
 
-    "MECHANICAL_ENGINEERING": "Ingegneria meccanica", "ELECTRICAL_ENGINEERING": "Ingegneria elettrica",
+    "MECHANICAL_ENGINEERING": "Ingegneria meccanica", "ELECTRICAL_ENGINEERING": "Ingegneria elettrica", "CIVIL_ENGINEERING": "Ingegneria civile",
     "INDUSTRIAL_ENGINEERING": "Ingegneria gestionale", "CHEMISTRY": "Chimica", "BIOLOGY": "Biologia", "PHYSICS": "Fisica",
+    "MECHATRONICS": "Meccatronica",
 
     "FOOTBALL_COACH": "Allenatore/trice di calcio", "SPORTS_TEACHER": "Insegnante di educazione fisica",
-    "FITNESS_TRAINER": "Personal trainer", "SPORTS_MANAGEMENT": "Management sportivo",
+    "FITNESS_TRAINER": "Personal trainer", "PHYSIOTHERAPY": "Fisioterapia", "SPORTS_MANAGEMENT": "Management sportivo",
     "SPORTS_CLUB": "Società sportiva / Accademia"
   },
   "seller": {

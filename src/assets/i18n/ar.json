@@ -1092,11 +1092,12 @@
     "CHILDCARE": "رعاية الأطفال", "SOCIAL_WORKER": "أخصائي/ة اجتماعي/ة", "ELDERLY_CARE": "رعاية المسنين",
     "CARE_WORKER": "عامل/ة رعاية", "DISABILITY_SUPPORT": "دعم ذوي الإعاقة", "FAMILY_SUPPORT": "مساعدة أسرية",
 
-    "MECHANICAL_ENGINEERING": "هندسة ميكانيكية", "ELECTRICAL_ENGINEERING": "هندسة كهربائية",
+    "MECHANICAL_ENGINEERING": "هندسة ميكانيكية", "ELECTRICAL_ENGINEERING": "هندسة كهربائية", "CIVIL_ENGINEERING": "الهندسة المدنية",
     "INDUSTRIAL_ENGINEERING": "هندسة صناعية", "CHEMISTRY": "كيمياء", "BIOLOGY": "أحياء", "PHYSICS": "فيزياء",
+    "MECHATRONICS": "الميكاترونكس",
 
     "FOOTBALL_COACH": "مدرب/ة كرة قدم", "SPORTS_TEACHER": "مدرس/ة رياضة", "FITNESS_TRAINER": "مدرب/ة لياقة بدنية",
-    "SPORTS_MANAGEMENT": "إدارة رياضية", "SPORTS_CLUB": "نادي رياضي / أكاديمية"
+    "PHYSIOTHERAPY": "العلاج الطبيعي", "SPORTS_MANAGEMENT": "إدارة رياضية", "SPORTS_CLUB": "نادي رياضي / أكاديمية"
   },
   "seller": {
     "not_found": "المستخدم غير موجود.",

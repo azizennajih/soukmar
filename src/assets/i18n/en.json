@@ -1092,11 +1092,12 @@
     "CHILDCARE": "Childcare", "SOCIAL_WORKER": "Social Worker", "ELDERLY_CARE": "Elderly Care",
     "CARE_WORKER": "Care Worker", "DISABILITY_SUPPORT": "Disability Support", "FAMILY_SUPPORT": "Family Support",
 
-    "MECHANICAL_ENGINEERING": "Mechanical Engineering", "ELECTRICAL_ENGINEERING": "Electrical Engineering",
+    "MECHANICAL_ENGINEERING": "Mechanical Engineering", "ELECTRICAL_ENGINEERING": "Electrical Engineering", "CIVIL_ENGINEERING": "Civil Engineering",
     "INDUSTRIAL_ENGINEERING": "Industrial Engineering", "CHEMISTRY": "Chemistry", "BIOLOGY": "Biology", "PHYSICS": "Physics",
+    "MECHATRONICS": "Mechatronics",
 
     "FOOTBALL_COACH": "Football Coach", "SPORTS_TEACHER": "Sports Teacher", "FITNESS_TRAINER": "Fitness Trainer",
-    "SPORTS_MANAGEMENT": "Sports Management", "SPORTS_CLUB": "Sports Club / Academy"
+    "PHYSIOTHERAPY": "Physiotherapy", "SPORTS_MANAGEMENT": "Sports Management", "SPORTS_CLUB": "Sports Club / Academy"
   },
   "seller": {
     "not_found": "User not found.",

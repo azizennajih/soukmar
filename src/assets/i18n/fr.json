@@ -593,11 +593,12 @@
     "CHILDCARE": "Garde d'enfants", "SOCIAL_WORKER": "Travailleur/euse social/e", "ELDERLY_CARE": "Soins aux personnes âgées",
     "CARE_WORKER": "Aide-soignant/e", "DISABILITY_SUPPORT": "Aide aux personnes handicapées", "FAMILY_SUPPORT": "Aide familiale",
 
-    "MECHANICAL_ENGINEERING": "Génie mécanique", "ELECTRICAL_ENGINEERING": "Génie électrique",
+    "MECHANICAL_ENGINEERING": "Génie mécanique", "ELECTRICAL_ENGINEERING": "Génie électrique", "CIVIL_ENGINEERING": "Génie civil",
     "INDUSTRIAL_ENGINEERING": "Génie industriel", "CHEMISTRY": "Chimie", "BIOLOGY": "Biologie", "PHYSICS": "Physique",
+    "MECHATRONICS": "Mécatronique",
 
     "FOOTBALL_COACH": "Entraîneur/euse de football", "SPORTS_TEACHER": "Professeur/e de sport",
-    "FITNESS_TRAINER": "Coach fitness", "SPORTS_MANAGEMENT": "Management sportif", "SPORTS_CLUB": "Club de sport / Académie"
+    "FITNESS_TRAINER": "Coach fitness", "PHYSIOTHERAPY": "Kinésithérapie", "SPORTS_MANAGEMENT": "Management sportif", "SPORTS_CLUB": "Club de sport / Académie"
   },
   "footer": {
     "tagline": "La première plateforme de petites annonces au Maroc. Simple, rapide et sécurisée.",

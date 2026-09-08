@@ -1095,11 +1095,12 @@
     "CHILDCARE": "Kinderbetreuung", "SOCIAL_WORKER": "Sozialarbeiter/in", "ELDERLY_CARE": "Altenpflege",
     "CARE_WORKER": "Betreuungskraft", "DISABILITY_SUPPORT": "Behindertenhilfe", "FAMILY_SUPPORT": "Familienhilfe",
 
-    "MECHANICAL_ENGINEERING": "Maschinenbau", "ELECTRICAL_ENGINEERING": "Elektrotechnik",
+    "MECHANICAL_ENGINEERING": "Maschinenbau", "ELECTRICAL_ENGINEERING": "Elektrotechnik", "CIVIL_ENGINEERING": "Bauingenieurwesen",
     "INDUSTRIAL_ENGINEERING": "Wirtschaftsingenieurwesen", "CHEMISTRY": "Chemie", "BIOLOGY": "Biologie", "PHYSICS": "Physik",
+    "MECHATRONICS": "Mechatronik",
 
     "FOOTBALL_COACH": "Fußballtrainer/in", "SPORTS_TEACHER": "Sportlehrer/in", "FITNESS_TRAINER": "Fitnesstrainer/in",
-    "SPORTS_MANAGEMENT": "Sportmanagement", "SPORTS_CLUB": "Sportverein / Akademie"
+    "PHYSIOTHERAPY": "Physiotherapie", "SPORTS_MANAGEMENT": "Sportmanagement", "SPORTS_CLUB": "Sportverein / Akademie"
   },
   "seller": {
     "not_found": "Benutzer nicht gefunden.",
