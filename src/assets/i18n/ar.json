@@ -259,7 +259,8 @@
     "OTHER": "أخرى",
     "BABY_KIDS": "طفل ورضيع",
     "PETS": "حيوانات أليفة",
-    "SPORTS_LEISURE": "رياضة وترفيه"
+    "SPORTS_LEISURE": "رياضة وترفيه",
+    "LESSONS_COURSES": "دروس ودورات"
   },
   "footer": {
     "tagline": "أول منصة إعلانات مبوبة في المغرب. بسيطة، سريعة وآمنة.",
@@ -620,7 +621,19 @@
     "PETS_ACCESSORIES": "مستلزمات الحيوانات",
     "PETS_FOOD": "أغذية الحيوانات",
     "SPORTS_EQUIPMENT": "معدات رياضية",
-    "BICYCLES": "دراجات هوائية"
+    "BICYCLES": "دراجات هوائية",
+    "BEAUTY_HEALTH": "الجمال والصحة",
+    "COMPUTER_COURSES": "دورات الحاسوب",
+    "ESOTERIC_SPIRITUAL": "الروحانيات والباطنية",
+    "COOKING_BAKING": "الطبخ والخبز",
+    "ART_DESIGN": "الفن والتصميم",
+    "MUSIC_SINGING": "الموسيقى والغناء",
+    "TUTORING_LESSONS": "دروس خصوصية",
+    "SPORTS_COURSES": "دورات رياضية",
+    "LANGUAGE_COURSES": "دورات اللغات",
+    "DANCE_COURSES": "دورات الرقص",
+    "CONTINUING_EDUCATION": "التكوين المستمر",
+    "OTHER_LESSONS": "دروس ودورات أخرى"
   },
   "attrs": {
     "BRAND": "العلامة التجارية",

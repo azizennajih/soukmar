@@ -71,6 +71,7 @@ Marokkanisches Kleinanzeigen-Portal (wie Avito/Leboncoin).
 .cat-orange  → Fahrzeuge      .cat-gray    → Andere
 .cat-teal    → Baby & Kind    .cat-brown   → Haustiere
 .cat-indigo  → Sport & Freizeit
+.cat-cyan    → Unterricht & Kurse
 ```
 
 ### Dynamisches Attribut-System (EAV)

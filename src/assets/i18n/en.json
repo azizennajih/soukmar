@@ -259,7 +259,8 @@
     "OTHER": "Other",
     "BABY_KIDS": "Baby & Kids",
     "PETS": "Pets",
-    "SPORTS_LEISURE": "Sports & Leisure"
+    "SPORTS_LEISURE": "Sports & Leisure",
+    "LESSONS_COURSES": "Lessons & Courses"
   },
   "footer": {
     "tagline": "Morocco's first classifieds platform. Simple, fast and secure.",
@@ -620,7 +621,19 @@
     "PETS_ACCESSORIES": "Pet accessories",
     "PETS_FOOD": "Pet food",
     "SPORTS_EQUIPMENT": "Sports equipment",
-    "BICYCLES": "Bicycles"
+    "BICYCLES": "Bicycles",
+    "BEAUTY_HEALTH": "Beauty & Health",
+    "COMPUTER_COURSES": "Computer Courses",
+    "ESOTERIC_SPIRITUAL": "Esoteric & Spiritual",
+    "COOKING_BAKING": "Cooking & Baking",
+    "ART_DESIGN": "Art & Design",
+    "MUSIC_SINGING": "Music & Singing",
+    "TUTORING_LESSONS": "Tutoring",
+    "SPORTS_COURSES": "Sports Courses",
+    "LANGUAGE_COURSES": "Language Courses",
+    "DANCE_COURSES": "Dance Courses",
+    "CONTINUING_EDUCATION": "Continuing Education",
+    "OTHER_LESSONS": "Other Lessons & Courses"
   },
   "attrs": {
     "BRAND": "Brand",

@@ -259,7 +259,8 @@
     "OTHER": "Sonstiges",
     "BABY_KIDS": "Baby & Kind",
     "PETS": "Haustiere",
-    "SPORTS_LEISURE": "Sport & Freizeit"
+    "SPORTS_LEISURE": "Sport & Freizeit",
+    "LESSONS_COURSES": "Unterricht & Kurse"
   },
   "footer": {
     "tagline": "Marokkos erste Kleinanzeigen-Plattform. Einfach, schnell und sicher.",
@@ -620,7 +621,19 @@
     "PETS_ACCESSORIES": "Tierzubehör",
     "PETS_FOOD": "Tiernahrung",
     "SPORTS_EQUIPMENT": "Sportausrüstung",
-    "BICYCLES": "Fahrräder"
+    "BICYCLES": "Fahrräder",
+    "BEAUTY_HEALTH": "Beauty & Gesundheit",
+    "COMPUTER_COURSES": "Computerkurse",
+    "ESOTERIC_SPIRITUAL": "Esoterik & Spirituelles",
+    "COOKING_BAKING": "Kochen & Backen",
+    "ART_DESIGN": "Kunst & Gestaltung",
+    "MUSIC_SINGING": "Musik & Gesang",
+    "TUTORING_LESSONS": "Nachhilfe",
+    "SPORTS_COURSES": "Sportkurse",
+    "LANGUAGE_COURSES": "Sprachkurse",
+    "DANCE_COURSES": "Tanzkurse",
+    "CONTINUING_EDUCATION": "Weiterbildung",
+    "OTHER_LESSONS": "Weitere Unterricht & Kurse"
   },
   "attrs": {
     "BRAND": "Marke",

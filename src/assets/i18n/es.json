@@ -259,7 +259,8 @@
     "OTHER": "Otros",
     "BABY_KIDS": "Bebé & Niños",
     "PETS": "Mascotas",
-    "SPORTS_LEISURE": "Deporte & Ocio"
+    "SPORTS_LEISURE": "Deporte & Ocio",
+    "LESSONS_COURSES": "Clases & Cursos"
   },
   "footer": {
     "tagline": "La primera plataforma de anuncios clasificados de Marruecos. Simple, rápida y segura.",
@@ -620,7 +621,19 @@
     "PETS_ACCESSORIES": "Accesorios para mascotas",
     "PETS_FOOD": "Alimento para mascotas",
     "SPORTS_EQUIPMENT": "Equipo deportivo",
-    "BICYCLES": "Bicicletas"
+    "BICYCLES": "Bicicletas",
+    "BEAUTY_HEALTH": "Belleza & Salud",
+    "COMPUTER_COURSES": "Cursos de informática",
+    "ESOTERIC_SPIRITUAL": "Esoterismo & Espiritualidad",
+    "COOKING_BAKING": "Cocina & Repostería",
+    "ART_DESIGN": "Arte & Diseño",
+    "MUSIC_SINGING": "Música & Canto",
+    "TUTORING_LESSONS": "Clases particulares",
+    "SPORTS_COURSES": "Cursos de deporte",
+    "LANGUAGE_COURSES": "Cursos de idiomas",
+    "DANCE_COURSES": "Cursos de baile",
+    "CONTINUING_EDUCATION": "Formación continua",
+    "OTHER_LESSONS": "Otras clases & cursos"
   },
   "attrs": {
     "BRAND": "Marca",

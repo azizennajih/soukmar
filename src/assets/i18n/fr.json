@@ -259,7 +259,8 @@
     "OTHER": "Autres",
     "BABY_KIDS": "Bébé & Enfants",
     "PETS": "Animaux",
-    "SPORTS_LEISURE": "Sport & Loisirs"
+    "SPORTS_LEISURE": "Sport & Loisirs",
+    "LESSONS_COURSES": "Cours & Leçons"
   },
   "subcats": {
     "AUTO": "Voiture",
@@ -308,7 +309,19 @@
     "PETS_ACCESSORIES": "Accessoires pour animaux",
     "PETS_FOOD": "Alimentation animale",
     "SPORTS_EQUIPMENT": "Équipement sportif",
-    "BICYCLES": "Vélos"
+    "BICYCLES": "Vélos",
+    "BEAUTY_HEALTH": "Beauté & Santé",
+    "COMPUTER_COURSES": "Cours d'informatique",
+    "ESOTERIC_SPIRITUAL": "Ésotérisme & Spiritualité",
+    "COOKING_BAKING": "Cuisine & Pâtisserie",
+    "ART_DESIGN": "Art & Design",
+    "MUSIC_SINGING": "Musique & Chant",
+    "TUTORING_LESSONS": "Cours particuliers",
+    "SPORTS_COURSES": "Cours de sport",
+    "LANGUAGE_COURSES": "Cours de langues",
+    "DANCE_COURSES": "Cours de danse",
+    "CONTINUING_EDUCATION": "Formation continue",
+    "OTHER_LESSONS": "Autres cours & leçons"
   },
   "attrs": {
     "BRAND": "Marque",

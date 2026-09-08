@@ -259,7 +259,8 @@
     "OTHER": "Altro",
     "BABY_KIDS": "Bimbi & Neonati",
     "PETS": "Animali",
-    "SPORTS_LEISURE": "Sport & Tempo libero"
+    "SPORTS_LEISURE": "Sport & Tempo libero",
+    "LESSONS_COURSES": "Lezioni & Corsi"
   },
   "footer": {
     "tagline": "La prima piattaforma di annunci del Marocco. Semplice, veloce e sicura.",
@@ -620,7 +621,19 @@
     "PETS_ACCESSORIES": "Accessori per animali",
     "PETS_FOOD": "Alimenti per animali",
     "SPORTS_EQUIPMENT": "Attrezzatura sportiva",
-    "BICYCLES": "Biciclette"
+    "BICYCLES": "Biciclette",
+    "BEAUTY_HEALTH": "Bellezza & Salute",
+    "COMPUTER_COURSES": "Corsi di informatica",
+    "ESOTERIC_SPIRITUAL": "Esoterismo & Spiritualità",
+    "COOKING_BAKING": "Cucina & Pasticceria",
+    "ART_DESIGN": "Arte & Design",
+    "MUSIC_SINGING": "Musica & Canto",
+    "TUTORING_LESSONS": "Ripetizioni",
+    "SPORTS_COURSES": "Corsi sportivi",
+    "LANGUAGE_COURSES": "Corsi di lingua",
+    "DANCE_COURSES": "Corsi di ballo",
+    "CONTINUING_EDUCATION": "Formazione continua",
+    "OTHER_LESSONS": "Altre lezioni & corsi"
   },
   "attrs": {
     "BRAND": "Marca",
