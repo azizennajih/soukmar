@@ -9,7 +9,7 @@ import { AuthService } from '../../services/auth.service';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { CitySelectComponent } from '../../components/city-select/city-select.component';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
-import { CATEGORIES, MOROCCO_CITIES, Listing } from '../../models/listing.model';
+import { CATEGORIES, MOROCCO_CITIES, Listing, Category } from '../../models/listing.model';
 import { GeocodeService, Coords } from '../../services/geocode.service';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit {
   radius = '';
   radiusOptions = ['5', '10', '20', '30', '50', '100', '150', '200'];
   favoriteIds = new Set<string>();
+  interests: { category: Category; newListingsCount: number }[] = [];
 
   stats = [
     { labelKey: 'home.stat_active_listings', value: '50K+' },
@@ -64,7 +65,21 @@ export class HomeComponent implements OnInit {
       this.latest = res.listings.slice(0, 8);
       this.cdr.markForCheck();
     });
-    if (this.auth.isLoggedIn) this.loadFavorites();
+    if (this.auth.isLoggedIn) {
+      this.loadFavorites();
+      this.loadInterests();
+    }
+  }
+
+  loadInterests() {
+    this.listingService.getInterests().subscribe({
+      next: interests => { this.interests = interests; this.cdr.markForCheck(); },
+      error: () => { /* non-essential section — fail silently */ }
+    });
+  }
+
+  categoryOf(value: Category) {
+    return this.categories.find(c => c.value === value);
   }
 
   async loadFavorites() {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
-import { Listing, ListingAttributesPayload } from '../models/listing.model';
+import { Listing, ListingAttributesPayload, Category } from '../models/listing.model';
 
 export interface ListingsResponse {
   listings: Listing[];
@@ -66,5 +66,9 @@ export class ListingService {
 
   getSimilar(id: string): Observable<Listing[]> {
     return this.api.get<Listing[]>(`/listings/${id}/similar`);
+  }
+
+  getInterests(): Observable<{ category: Category; newListingsCount: number }[]> {
+    return this.api.get(`/listings/interests`);
   }
 }

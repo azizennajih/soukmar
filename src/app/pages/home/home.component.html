@@ -71,6 +71,32 @@
     </div>
   </section>
 
+  <!-- ===== PERSONALIZED INTERESTS ===== -->
+  @if (interests.length > 0) {
+    <section class="section home__interests">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">👋 {{ 'home.welcome_back' | T }}</h2>
+            <p class="section-sub">{{ 'home.your_interests' | T }}</p>
+          </div>
+        </div>
+
+        <div class="cat-grid">
+          @for (interest of interests; track interest.category) {
+            <a [routerLink]="['/annonces']" [queryParams]="{categorie: interest.category}" class="cat-item">
+              <div class="cat-icon" [ngClass]="categoryOf(interest.category)?.color">
+                <app-cat-icon [category]="interest.category" [size]="24" />
+              </div>
+              <span>{{ ('cats.' + interest.category) | T }}</span>
+              <span class="home__interest-count">{{ 'home.new_listings_count' | T:{count: interest.newListingsCount.toString()} }}</span>
+            </a>
+          }
+        </div>
+      </div>
+    </section>
+  }
+
   <!-- ===== CATEGORIES ===== -->
   <section class="section">
     <div class="container">
