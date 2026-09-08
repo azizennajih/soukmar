@@ -133,11 +133,11 @@ export const CATEGORIES: CategoryConfig[] = [
   { value: 'HOME_GARDEN',    label: 'Maison & Jardin',  icon: '🌿', color: 'cat-emerald' },
   { value: 'FASHION',        label: 'Mode',             icon: '👗', color: 'cat-pink' },
   { value: 'SERVICES',       label: 'Services',         icon: '🔧', color: 'cat-orange' },
-  { value: 'OTHER',          label: 'Autres',           icon: '📦', color: 'cat-gray' },
   { value: 'BABY_KIDS',      label: 'Bébé & Enfants',   icon: '🧸', color: 'cat-teal' },
   { value: 'LESSONS_COURSES', label: 'Cours & Leçons',  icon: '📚', color: 'cat-cyan' },
   { value: 'PETS',           label: 'Animaux',          icon: '🐾', color: 'cat-brown' },
   { value: 'SPORTS_LEISURE', label: 'Sport & Loisirs',  icon: '⚽', color: 'cat-indigo' },
+  { value: 'OTHER',          label: 'Autres',           icon: '📦', color: 'cat-gray' },
 ];
 
 export const CONDITION_CATEGORIES: Category[] = ['VEHICLES', 'ELECTRONICS', 'HOME_GARDEN', 'FASHION', 'BABY_KIDS', 'SPORTS_LEISURE'];
