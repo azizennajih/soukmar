@@ -1,0 +1,25 @@
+<div class="text-autocomplete">
+  <div class="text-autocomplete__field" #fieldWrap [class.text-autocomplete__field--open]="open()">
+    <input
+      type="text"
+      [value]="value"
+      [placeholder]="placeholder"
+      (focus)="onFocus()"
+      (input)="onInput($any($event.target).value)"
+      (keydown.escape)="close()"
+      autocomplete="off"
+    />
+  </div>
+
+  @if (open() && filtered().length) {
+    <div class="text-autocomplete__panel" [style.top]="panelStyle().top" [style.left]="panelStyle().left" [style.width]="panelStyle().width">
+      <div class="text-autocomplete__list">
+        @for (opt of filtered(); track opt.code) {
+          <div class="text-autocomplete__option" (mousedown)="$event.preventDefault()" (click)="pick(opt.label)">
+            {{ opt.label }}
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>
