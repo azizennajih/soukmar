@@ -51,6 +51,16 @@
         </div>
       }
 
+      <!-- Account type -->
+      <div class="sidebar__section">
+        <label class="sidebar__label">{{ 'auth.account_type' | T }}</label>
+        <select [(ngModel)]="filters.accountType" class="sidebar__select">
+          <option value="">{{ 'nav.all' | T }}</option>
+          <option value="PRIVATE">🏠 {{ 'auth.account_type_private' | T }}</option>
+          <option value="BUSINESS">🏢 {{ 'auth.account_type_business' | T }}</option>
+        </select>
+      </div>
+
       <!-- Condition -->
       @if (filters.categorie) {
         <div class="sidebar__section">

@@ -15,6 +15,7 @@ export interface ListingFilters {
   category?: string;
   subcategoryId?: string;
   condition?: string;
+  accountType?: string;
   city?: string;
   minPrice?: string;
   maxPrice?: string;

@@ -48,6 +48,19 @@
           <input type="tel" [(ngModel)]="form.phone" name="phone" placeholder="+212 6 00 00 00 00" />
         </div>
         <div class="form-group">
+          <label>{{ 'auth.account_type' | T }} *</label>
+          <div class="account-type-choice">
+            <label class="account-type-choice__option" [class.active]="form.accountType === 'PRIVATE'">
+              <input type="radio" name="accountType" value="PRIVATE" [(ngModel)]="form.accountType" required />
+              🏠 {{ 'auth.account_type_private' | T }}
+            </label>
+            <label class="account-type-choice__option" [class.active]="form.accountType === 'BUSINESS'">
+              <input type="radio" name="accountType" value="BUSINESS" [(ngModel)]="form.accountType" required />
+              🏢 {{ 'auth.account_type_business' | T }}
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
           <label>{{ 'auth.password' | T }}</label>
           <div class="input-icon-wrap">
             <input [type]="showPass ? 'text' : 'password'" [(ngModel)]="form.password" name="password" [placeholder]="'auth.password_min_placeholder' | T" required style="padding-right:2.8rem" />

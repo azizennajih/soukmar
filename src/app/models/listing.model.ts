@@ -7,6 +7,7 @@ export type ListingStatus = 'ACTIVE' | 'RESERVED' | 'SOLD' | 'PENDING' | 'REJECT
 
 export type AttributeType = 'TEXT' | 'NUMBER' | 'SELECT' | 'BOOLEAN';
 export type Condition = 'NEW' | 'USED';
+export type AccountType = 'PRIVATE' | 'BUSINESS';
 
 export interface Subcategory {
   id: string;
@@ -42,6 +43,7 @@ export interface User {
   phone?: string;
   city?: string;
   image?: string;
+  accountType?: AccountType;
   createdAt: Date;
 }
 
@@ -94,6 +96,7 @@ export interface SellerProfile {
   name: string;
   city?: string | null;
   image?: string | null;
+  accountType?: AccountType;
   createdAt: Date;
   avgRating: number | null;
   reviewCount: number;

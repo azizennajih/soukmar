@@ -11,6 +11,7 @@
         <div class="seller-profile__meta">
           @if (profile.city) { <span>📍 {{ profile.city }}</span> }
           <span>{{ 'seller.member_since' | T }} {{ memberSince(profile.createdAt) }}</span>
+          <span>{{ profile.accountType === 'BUSINESS' ? '🏢 ' + ('auth.account_type_business' | T) : '🏠 ' + ('auth.account_type_private' | T) }}</span>
         </div>
         <div class="seller-profile__badges">
           @if (profile.avgRating) {

@@ -11,6 +11,7 @@ export interface AuthUser {
   role: 'USER' | 'ADMIN' | 'MODERATOR';
   phone?: string;
   city?: string;
+  accountType?: 'PRIVATE' | 'BUSINESS';
 }
 
 const SESSION_KEY = 'soukmar_session';
@@ -49,8 +50,8 @@ export class AuthService {
       });
   }
 
-  register(name: string, email: string, password: string, phone?: string, city?: string, captchaToken?: string): Promise<{ ok: boolean; emailSent?: boolean; error?: string }> {
-    return this.postJson<{ message: string; emailSent: boolean }>('/auth/register', { name, email, password, phone, city, captchaToken })
+  register(name: string, email: string, password: string, phone?: string, city?: string, captchaToken?: string, accountType?: 'PRIVATE' | 'BUSINESS'): Promise<{ ok: boolean; emailSent?: boolean; error?: string }> {
+    return this.postJson<{ message: string; emailSent: boolean }>('/auth/register', { name, email, password, phone, city, captchaToken, accountType })
       .then(res => ({ ok: true, emailSent: res.emailSent }))
       .catch(e => {
         const err = e as Record<string, unknown>;

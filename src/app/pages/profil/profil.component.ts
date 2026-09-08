@@ -17,6 +17,7 @@ interface ProfileData {
   phone?: string;
   city?: string;
   image?: string;
+  accountType: 'PRIVATE' | 'BUSINESS';
   role: string;
   createdAt: string;
 }
@@ -36,7 +37,7 @@ export class ProfilComponent implements OnInit {
   successMsg = '';
   errorMsg = '';
 
-  form = { name: '', phone: '', city: '' };
+  form = { name: '', phone: '', city: '', accountType: 'PRIVATE' as 'PRIVATE' | 'BUSINESS' };
 
   pwForm = { currentPassword: '', newPassword: '', confirmPassword: '' };
   pwSaving = signal(false);
@@ -62,6 +63,7 @@ export class ProfilComponent implements OnInit {
       this.form.name = this.profile.name;
       this.form.phone = this.profile.phone || '';
       this.form.city = this.profile.city || '';
+      this.form.accountType = this.profile.accountType;
     } catch {
       this.errorMsg = this.i18n.t('profil.load_error');
     } finally {
@@ -80,12 +82,13 @@ export class ProfilComponent implements OnInit {
         name: this.form.name.trim(),
         phone: this.form.phone || null,
         city: this.form.city || null,
+        accountType: this.form.accountType,
       }));
       this.profile = updated;
       // Update auth signal
       const user = this.auth.currentUser();
       if (user) {
-        const updatedUser: AuthUser = { ...user, name: updated.name, phone: updated.phone, city: updated.city };
+        const updatedUser: AuthUser = { ...user, name: updated.name, phone: updated.phone, city: updated.city, accountType: updated.accountType };
         (this.auth as any).currentUser.set(updatedUser);
         localStorage.setItem('soukmar_session', JSON.stringify(updatedUser));
       }

@@ -73,6 +73,10 @@
     &--admin { background: #fef3c7; color: #92400e; }
   }
 
+  &__sidebar-account-type {
+    margin-top: .75rem; font-size: .8rem; color: var(--text-muted); font-weight: 600;
+  }
+
   &__main { display: flex; flex-direction: column; gap: 1.5rem; }
 
   &__form-card { padding: 2rem; }

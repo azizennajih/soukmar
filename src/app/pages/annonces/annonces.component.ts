@@ -39,7 +39,7 @@ export class AnnoncesComponent implements OnInit {
   attributeFilterDefs: AttributeDefinition[] = [];
   attrFilters: Record<string, string> = {};
 
-  filters = { q: '', categorie: '', souscategorie: '', ville: '', minPrix: '', maxPrix: '', condition: '', tri: '', radius: '', lat: '', lng: '' };
+  filters = { q: '', categorie: '', souscategorie: '', ville: '', minPrix: '', maxPrix: '', condition: '', tri: '', radius: '', lat: '', lng: '', accountType: '' };
 
   showSaveSearchForm = false;
   newSearchName = '';
@@ -68,6 +68,7 @@ export class AnnoncesComponent implements OnInit {
       this.filters.minPrix       = params['minPrix']       || '';
       this.filters.maxPrix       = params['maxPrix']       || '';
       this.filters.condition     = params['condition']     || '';
+      this.filters.accountType  = params['accountType']    || '';
       this.filters.tri           = params['tri']           || '';
       this.filters.radius        = params['radius']        || '';
       this.filters.lat           = params['lat']            || '';
@@ -122,6 +123,7 @@ export class AnnoncesComponent implements OnInit {
       category:      this.filters.categorie     || undefined,
       subcategoryId: this.filters.souscategorie || undefined,
       condition:     this.filters.condition     || undefined,
+      accountType:   this.filters.accountType   || undefined,
       city:          this.filters.ville         || undefined,
       minPrice:      this.filters.minPrix       || undefined,
       maxPrice:      this.filters.maxPrix       || undefined,
@@ -206,6 +208,7 @@ export class AnnoncesComponent implements OnInit {
     if (this.filters.minPrix)       qp['minPrix']       = this.filters.minPrix;
     if (this.filters.maxPrix)       qp['maxPrix']       = this.filters.maxPrix;
     if (this.filters.condition)     qp['condition']     = this.filters.condition;
+    if (this.filters.accountType)   qp['accountType']   = this.filters.accountType;
     if (this.filters.tri)           qp['tri']           = this.filters.tri;
 
     if (this.filters.lat && this.filters.lng) {
@@ -226,7 +229,7 @@ export class AnnoncesComponent implements OnInit {
   }
 
   resetFilters() {
-    this.filters = { q: '', categorie: '', souscategorie: '', ville: '', minPrix: '', maxPrix: '', condition: '', tri: '', radius: '', lat: '', lng: '' };
+    this.filters = { q: '', categorie: '', souscategorie: '', ville: '', minPrix: '', maxPrix: '', condition: '', tri: '', radius: '', lat: '', lng: '', accountType: '' };
     this.attrFilters = {};
     this.router.navigate([], { queryParams: {} });
   }

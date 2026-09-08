@@ -29,6 +29,10 @@
         <div class="profil__sidebar-badge" [class.profil__sidebar-badge--admin]="profile.role === 'ADMIN'">
           {{ profile.role === 'ADMIN' ? ('profil.role_admin' | T) : profile.role === 'MODERATOR' ? ('profil.role_mod' | T) : ('profil.role_user' | T) }}
         </div>
+
+        <div class="profil__sidebar-account-type">
+          {{ 'auth.account_type' | T }}: {{ profile.accountType === 'BUSINESS' ? '🏢 ' + ('auth.account_type_business' | T) : '🏠 ' + ('auth.account_type_private' | T) }}
+        </div>
       </div>
 
       <!-- Right: Edit form -->
@@ -62,6 +66,20 @@
           <div class="form-group">
             <label class="form-label">{{ 'profil.city' | T }}</label>
             <input type="text" [(ngModel)]="form.city" name="city" class="form-input" [placeholder]="'profil.city' | T" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ 'auth.account_type' | T }}</label>
+            <div class="account-type-choice">
+              <label class="account-type-choice__option" [class.active]="form.accountType === 'PRIVATE'">
+                <input type="radio" name="profileAccountType" value="PRIVATE" [(ngModel)]="form.accountType" />
+                🏠 {{ 'auth.account_type_private' | T }}
+              </label>
+              <label class="account-type-choice__option" [class.active]="form.accountType === 'BUSINESS'">
+                <input type="radio" name="profileAccountType" value="BUSINESS" [(ngModel)]="form.accountType" />
+                🏢 {{ 'auth.account_type_business' | T }}
+              </label>
+            </div>
           </div>
 
           <button type="submit" class="btn-primary profil__save-btn" [disabled]="saving()">

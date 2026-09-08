@@ -18,7 +18,7 @@ export class RegisterComponent {
   private cdr = inject(ChangeDetectorRef);
   i18n = inject(I18nService);
 
-  form = { name: '', email: '', phone: '', city: '', password: '', confirm: '' };
+  form = { name: '', email: '', phone: '', city: '', password: '', confirm: '', accountType: '' as '' | 'PRIVATE' | 'BUSINESS' };
   showPass = false;
   loading = false;
   error = '';
@@ -30,6 +30,9 @@ export class RegisterComponent {
   captchaToken = '';
 
   async submit() {
+    if (!this.form.accountType) {
+      this.error = this.i18n.t('auth.account_type_required'); return;
+    }
     if (this.form.password !== this.form.confirm) {
       this.error = this.i18n.t('auth.reset_mismatch'); return;
     }
@@ -44,7 +47,7 @@ export class RegisterComponent {
     try {
       const result = await this.auth.register(
         this.form.name, this.form.email, this.form.password,
-        this.form.phone, this.form.city, this.captchaToken
+        this.form.phone, this.form.city, this.captchaToken, this.form.accountType || undefined
       );
       if (result.ok) {
         this.registeredEmail = this.form.email;

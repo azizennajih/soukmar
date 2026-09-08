@@ -198,6 +198,9 @@
             @if (listing.user?.city) {
               <div class="detail__seller-city">📍 {{ listing.user?.city }}</div>
             }
+            @if (listing.user?.accountType) {
+              <div class="detail__seller-city">{{ listing.user?.accountType === 'BUSINESS' ? '🏢 ' + ('auth.account_type_business' | T) : '🏠 ' + ('auth.account_type_private' | T) }}</div>
+            }
           </div>
         </div>
         <a [routerLink]="['/vendeur', listing.userId]" class="btn-outline" style="width:100%;justify-content:center;margin-top:.75rem;font-size:.85rem">
