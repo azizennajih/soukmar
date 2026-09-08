@@ -1027,6 +1027,77 @@
       "KIDS": "أطفال"
     }
   },
+  "job_professions": {
+    "DOCTOR": "طبيب/ة", "DENTIST": "طبيب/ة أسنان", "PHARMACIST": "صيدلي/ة", "NURSE": "ممرض/ة",
+    "PHYSIOTHERAPIST": "أخصائي/ة علاج طبيعي", "OCCUPATIONAL_THERAPIST": "أخصائي/ة علاج وظيفي", "MIDWIFE": "قابلة",
+    "MEDICAL_ASSISTANT": "مساعد/ة طبي/ة", "PSYCHOLOGIST": "أخصائي/ة نفسي/ة", "PARAMEDIC": "إسعاف",
+    "LAB_TECHNICIAN": "مختبر", "OTHER_HEALTHCARE": "مهن صحية أخرى",
+
+    "COMPUTER_SCIENTIST": "مهندس/ة معلوماتية", "SOFTWARE_DEVELOPER": "مطور/ة برمجيات", "WEB_DEVELOPER": "مطور/ة مواقع",
+    "APP_DEVELOPER": "مطور/ة تطبيقات", "IT_SYSTEM_ADMIN": "مسؤول/ة أنظمة", "NETWORK_ADMIN": "مسؤول/ة شبكات",
+    "CYBERSECURITY": "الأمن السيبراني", "DATA_SCIENTIST_AI": "عالم بيانات / ذكاء اصطناعي",
+    "DATABASE_ADMIN": "مسؤول/ة قواعد بيانات", "IT_SUPPORT": "دعم تقني", "SAP_SPECIALIST": "SAP",
+    "DEVOPS_CLOUD": "DevOps / السحابة", "IT_PROJECT_MANAGER": "مدير/ة مشروع تقني",
+
+    "ELECTRICIAN": "كهربائي/ة", "INSTALLER": "فني/ة تركيب", "HEATING_SANITARY": "تدفئة وصرف صحي",
+    "MECHANIC": "ميكانيكي/ة", "AUTO_MECHATRONIC": "ميكانيكي/ة سيارات", "LOCKSMITH": "حداد أقفال", "CARPENTER": "نجار/ة",
+    "ROOF_CARPENTER": "نجار/ة أسقف", "MASON": "بناء", "PAINTER": "دهان/ة", "ROOFER": "عامل/ة أسقف",
+    "TILER": "بلاط", "METAL_WORKER": "حداد معادن", "PLANT_MECHANIC": "ميكانيكي/ة منشآت",
+    "INDUSTRIAL_MECHANIC": "ميكانيكي/ة صناعي/ة", "MECHATRONICS_TECH": "فني/ة ميكاترونكس", "CNC_SPECIALIST": "فني/ة CNC",
+
+    "CIVIL_ENGINEER": "مهندس/ة مدني/ة", "ARCHITECT": "مهندس/ة معماري/ة", "SITE_MANAGER": "مدير/ة موقع البناء",
+    "STRUCTURAL_ENGINEER": "مهندس/ة إنشائي/ة", "SURVEYING": "مساحة", "CIVIL_WORKS": "أشغال عمومية",
+    "BUILDING_CONSTRUCTION": "بناء المباني", "ROAD_CONSTRUCTION": "بناء الطرق", "CONSTRUCTION_HELPER": "عامل/ة بناء",
+
+    "BUSINESS_CLERK": "موظف/ة تجاري/ة", "CASE_WORKER": "معالج/ة ملفات", "ADMINISTRATION": "إدارة", "RECEPTION": "استقبال",
+    "SECRETARIAT": "سكرتارية", "ASSISTANT": "مساعدة إدارية", "HR": "الموارد البشرية", "ACCOUNTING": "محاسبة",
+    "CONTROLLING": "مراقبة التسيير", "PURCHASING": "مشتريات", "QUALITY_MANAGEMENT": "إدارة الجودة",
+
+    "BANKING": "بنوك", "INSURANCE": "تأمين", "TAX_ADVISOR": "مستشار/ة ضرائب", "AUDITOR": "مدقق/ة حسابات",
+    "FINANCIAL_ADVISOR": "مستشار/ة مالي/ة", "CONTROLLER": "مراقب/ة تسيير", "ACCOUNTANT": "محاسب/ة",
+    "REAL_ESTATE_FINANCE": "عقارات", "MANAGEMENT_CONSULTING": "استشارات إدارية",
+
+    "SALESPERSON": "بائع/ة", "RETAIL": "تجارة التجزئة", "WHOLESALE": "تجارة الجملة", "CASHIER": "أمين/ة صندوق",
+    "STORE_MANAGEMENT": "إدارة متجر", "FIELD_SALES": "مبيعات ميدانية", "SALES_REP": "مندوب/ة مبيعات",
+    "ECOMMERCE": "التجارة الإلكترونية", "CUSTOMER_ADVISOR": "مستشار/ة عملاء",
+
+    "TRUCK_DRIVER": "سائق/ة شاحنة", "BUS_DRIVER": "سائق/ة حافلة", "TAXI_DRIVER": "سائق/ة سيارة أجرة",
+    "COURIER_DRIVER": "سائق/ة توصيل", "WAREHOUSE_WORKER": "عامل/ة مستودع", "ORDER_PICKER": "عامل/ة تجهيز الطلبيات",
+    "LOGISTICS": "لوجستيك", "FREIGHT_FORWARDING": "شحن", "DISPATCHER": "منسق/ة نقل", "WAREHOUSE_MANAGEMENT": "إدارة المستودع",
+
+    "COOK": "طاهي/ة", "KITCHEN_HELPER": "مساعد/ة مطبخ", "WAITER": "نادل/ة", "RESTAURANT_STAFF": "طاقم مطعم",
+    "BAKER": "خباز/ة", "PASTRY_CHEF": "حلواني/ة", "HOTEL": "فندق", "FRONT_DESK": "استقبال الفندق",
+    "HOUSEKEEPING": "تدبير منزلي",
+
+    "TEACHER": "معلم/ة", "EDUCATOR": "مربي/ة", "PEDAGOGUE": "أخصائي/ة تربوي/ة", "PROFESSOR": "أستاذ/ة جامعي/ة",
+    "LECTURER": "محاضر/ة", "TRAINER": "مدرب/ة", "RESEARCH": "بحث علمي", "SCIENCE": "علوم",
+
+    "LAWYER": "محامي/ة", "NOTARY": "موثق/ة عدل", "LEGAL_EXPERT": "قانوني/ة", "LEGAL_ASSISTANT": "مساعد/ة قانوني/ة",
+    "POLICE": "شرطة", "FIRE_DEPARTMENT": "إطفاء", "SECURITY_SERVICE": "خدمة أمنية", "JUDICIARY": "قضاء",
+
+    "PRODUCTION_WORKER": "عامل/ة إنتاج", "MACHINE_OPERATOR": "مشغل/ة آلات", "PLANT_OPERATOR": "مشغل/ة منشأة",
+    "QUALITY_CONTROL": "مراقبة الجودة", "PRODUCTION_TECHNICIAN": "فني/ة إنتاج", "WELDER": "لحام/ة",
+    "MANUFACTURING_GENERAL": "تصنيع", "FOOD_PRODUCTION": "إنتاج غذائي",
+
+    "FARMER": "فلاح/ة", "GARDENER": "بستاني/ة", "FORESTER": "حراج/ة", "ANIMAL_CARETAKER": "مربي/ة حيوانات",
+    "AGRICULTURAL_HELPER": "عامل/ة زراعي/ة", "ENVIRONMENTAL_TECH": "تقنية بيئية", "RECYCLING": "إعادة التدوير",
+
+    "GRAPHIC_DESIGNER": "مصمم/ة جرافيك", "WEB_DESIGNER": "مصمم/ة مواقع", "PHOTOGRAPHER": "مصور/ة فوتوغرافي/ة",
+    "VIDEOGRAPHER": "مصور/ة فيديو", "JOURNALIST": "صحفي/ة", "SOCIAL_MEDIA": "وسائل التواصل الاجتماعي",
+    "MARKETING": "تسويق", "ADVERTISING": "إعلان", "TRANSLATOR": "مترجم/ة", "INTERPRETER": "مترجم/ة فوري/ة",
+
+    "HAIRDRESSER": "حلاق/ة", "BEAUTICIAN": "أخصائي/ة تجميل", "NAIL_DESIGNER": "مصمم/ة أظافر", "FOOT_CARE": "العناية بالقدم",
+    "MASSEUR": "معالج/ة بالتدليك", "CLEANING_STAFF": "عامل/ة نظافة", "HOUSEHOLD_HELP": "مساعدة منزلية",
+
+    "CHILDCARE": "رعاية الأطفال", "SOCIAL_WORKER": "أخصائي/ة اجتماعي/ة", "ELDERLY_CARE": "رعاية المسنين",
+    "CARE_WORKER": "عامل/ة رعاية", "DISABILITY_SUPPORT": "دعم ذوي الإعاقة", "FAMILY_SUPPORT": "مساعدة أسرية",
+
+    "MECHANICAL_ENGINEERING": "هندسة ميكانيكية", "ELECTRICAL_ENGINEERING": "هندسة كهربائية",
+    "INDUSTRIAL_ENGINEERING": "هندسة صناعية", "CHEMISTRY": "كيمياء", "BIOLOGY": "أحياء", "PHYSICS": "فيزياء",
+
+    "FOOTBALL_COACH": "مدرب/ة كرة قدم", "SPORTS_TEACHER": "مدرس/ة رياضة", "FITNESS_TRAINER": "مدرب/ة لياقة بدنية",
+    "SPORTS_MANAGEMENT": "إدارة رياضية", "SPORTS_CLUB": "نادي رياضي / أكاديمية"
+  },
   "seller": {
     "not_found": "المستخدم غير موجود.",
     "member_since": "عضو منذ",

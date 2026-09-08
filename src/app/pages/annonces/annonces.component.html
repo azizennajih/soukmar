@@ -102,7 +102,13 @@
                   </div>
                 }
                 @case ('TEXT') {
-                  <input type="text" class="sidebar__select" [ngModel]="attrFilters['attr_' + def.code]" (ngModelChange)="setTextFilter(def.code, $event)" />
+                  <input
+                    type="text"
+                    class="sidebar__select"
+                    [attr.list]="def.code === 'PROFESSION' ? 'profession-suggestions' : null"
+                    [ngModel]="attrFilters['attr_' + def.code]"
+                    (ngModelChange)="setTextFilter(def.code, $event)"
+                  />
                 }
               }
             </div>
@@ -211,4 +217,10 @@
     </div>
 
   </div>
+
+  <datalist id="profession-suggestions">
+    @for (code of jobProfessionCodes; track code) {
+      <option [value]="('job_professions.' + code) | T"></option>
+    }
+  </datalist>
 </div>

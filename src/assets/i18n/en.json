@@ -1027,6 +1027,77 @@
       "KIDS": "Kids"
     }
   },
+  "job_professions": {
+    "DOCTOR": "Doctor", "DENTIST": "Dentist", "PHARMACIST": "Pharmacist", "NURSE": "Nurse",
+    "PHYSIOTHERAPIST": "Physiotherapist", "OCCUPATIONAL_THERAPIST": "Occupational Therapist", "MIDWIFE": "Midwife",
+    "MEDICAL_ASSISTANT": "Medical Assistant", "PSYCHOLOGIST": "Psychologist", "PARAMEDIC": "Paramedic",
+    "LAB_TECHNICIAN": "Lab Technician", "OTHER_HEALTHCARE": "Other Healthcare Professions",
+
+    "COMPUTER_SCIENTIST": "Computer Scientist", "SOFTWARE_DEVELOPER": "Software Developer", "WEB_DEVELOPER": "Web Developer",
+    "APP_DEVELOPER": "App Developer", "IT_SYSTEM_ADMIN": "IT System Administrator", "NETWORK_ADMIN": "Network Administrator",
+    "CYBERSECURITY": "Cybersecurity Specialist", "DATA_SCIENTIST_AI": "Data Scientist / AI", "DATABASE_ADMIN": "Database Administrator",
+    "IT_SUPPORT": "IT Support", "SAP_SPECIALIST": "SAP Specialist", "DEVOPS_CLOUD": "DevOps / Cloud Engineer",
+    "IT_PROJECT_MANAGER": "IT Project Manager",
+
+    "ELECTRICIAN": "Electrician", "INSTALLER": "Installer", "HEATING_SANITARY": "Heating & Plumbing Technician",
+    "MECHANIC": "Mechanic", "AUTO_MECHATRONIC": "Automotive Mechatronics Technician", "LOCKSMITH": "Locksmith",
+    "CARPENTER": "Carpenter", "ROOF_CARPENTER": "Carpenter (Roof Framing)", "MASON": "Mason", "PAINTER": "Painter",
+    "ROOFER": "Roofer", "TILER": "Tiler", "METAL_WORKER": "Metalworker", "PLANT_MECHANIC": "Plant Mechanic",
+    "INDUSTRIAL_MECHANIC": "Industrial Mechanic", "MECHATRONICS_TECH": "Mechatronics Technician", "CNC_SPECIALIST": "CNC Specialist",
+
+    "CIVIL_ENGINEER": "Civil Engineer", "ARCHITECT": "Architect", "SITE_MANAGER": "Site Manager",
+    "STRUCTURAL_ENGINEER": "Structural Engineer", "SURVEYING": "Surveying", "CIVIL_WORKS": "Civil Works",
+    "BUILDING_CONSTRUCTION": "Building Construction", "ROAD_CONSTRUCTION": "Road Construction", "CONSTRUCTION_HELPER": "Construction Helper",
+
+    "BUSINESS_CLERK": "Business Clerk", "CASE_WORKER": "Case Handler", "ADMINISTRATION": "Administration",
+    "RECEPTION": "Reception", "SECRETARIAT": "Secretariat", "ASSISTANT": "Assistant", "HR": "HR / Human Resources",
+    "ACCOUNTING": "Accounting", "CONTROLLING": "Controlling", "PURCHASING": "Purchasing", "QUALITY_MANAGEMENT": "Quality Management",
+
+    "BANKING": "Banking", "INSURANCE": "Insurance", "TAX_ADVISOR": "Tax Advisor", "AUDITOR": "Auditor",
+    "FINANCIAL_ADVISOR": "Financial Advisor", "CONTROLLER": "Controller", "ACCOUNTANT": "Accountant",
+    "REAL_ESTATE_FINANCE": "Real Estate", "MANAGEMENT_CONSULTING": "Management Consulting",
+
+    "SALESPERSON": "Salesperson", "RETAIL": "Retail", "WHOLESALE": "Wholesale", "CASHIER": "Cashier",
+    "STORE_MANAGEMENT": "Store Management", "FIELD_SALES": "Field Sales", "SALES_REP": "Sales Representative",
+    "ECOMMERCE": "E-Commerce", "CUSTOMER_ADVISOR": "Customer Advisor",
+
+    "TRUCK_DRIVER": "Truck Driver", "BUS_DRIVER": "Bus Driver", "TAXI_DRIVER": "Taxi Driver",
+    "COURIER_DRIVER": "Courier Driver", "WAREHOUSE_WORKER": "Warehouse Worker", "ORDER_PICKER": "Order Picker",
+    "LOGISTICS": "Logistics", "FREIGHT_FORWARDING": "Freight Forwarding", "DISPATCHER": "Dispatcher",
+    "WAREHOUSE_MANAGEMENT": "Warehouse Management",
+
+    "COOK": "Cook", "KITCHEN_HELPER": "Kitchen Helper", "WAITER": "Waiter / Waitress", "RESTAURANT_STAFF": "Restaurant Staff",
+    "BAKER": "Baker", "PASTRY_CHEF": "Pastry Chef", "HOTEL": "Hotel", "FRONT_DESK": "Front Desk", "HOUSEKEEPING": "Housekeeping",
+
+    "TEACHER": "Teacher", "EDUCATOR": "Educator", "PEDAGOGUE": "Pedagogue", "PROFESSOR": "Professor",
+    "LECTURER": "Lecturer", "TRAINER": "Trainer / Instructor", "RESEARCH": "Research", "SCIENCE": "Science",
+
+    "LAWYER": "Lawyer", "NOTARY": "Notary", "LEGAL_EXPERT": "Legal Expert", "LEGAL_ASSISTANT": "Legal Assistant",
+    "POLICE": "Police", "FIRE_DEPARTMENT": "Fire Department", "SECURITY_SERVICE": "Security Service", "JUDICIARY": "Judiciary",
+
+    "PRODUCTION_WORKER": "Production Worker", "MACHINE_OPERATOR": "Machine Operator", "PLANT_OPERATOR": "Plant Operator",
+    "QUALITY_CONTROL": "Quality Control", "PRODUCTION_TECHNICIAN": "Production Technician", "WELDER": "Welder",
+    "MANUFACTURING_GENERAL": "Manufacturing", "FOOD_PRODUCTION": "Food Production",
+
+    "FARMER": "Farmer", "GARDENER": "Gardener", "FORESTER": "Forester", "ANIMAL_CARETAKER": "Animal Caretaker",
+    "AGRICULTURAL_HELPER": "Agricultural Helper", "ENVIRONMENTAL_TECH": "Environmental Technology", "RECYCLING": "Recycling",
+
+    "GRAPHIC_DESIGNER": "Graphic Designer", "WEB_DESIGNER": "Web Designer", "PHOTOGRAPHER": "Photographer",
+    "VIDEOGRAPHER": "Videographer", "JOURNALIST": "Journalist", "SOCIAL_MEDIA": "Social Media", "MARKETING": "Marketing",
+    "ADVERTISING": "Advertising", "TRANSLATOR": "Translator", "INTERPRETER": "Interpreter",
+
+    "HAIRDRESSER": "Hairdresser", "BEAUTICIAN": "Beautician", "NAIL_DESIGNER": "Nail Designer", "FOOT_CARE": "Foot Care",
+    "MASSEUR": "Massage Therapist", "CLEANING_STAFF": "Cleaning Staff", "HOUSEHOLD_HELP": "Household Help",
+
+    "CHILDCARE": "Childcare", "SOCIAL_WORKER": "Social Worker", "ELDERLY_CARE": "Elderly Care",
+    "CARE_WORKER": "Care Worker", "DISABILITY_SUPPORT": "Disability Support", "FAMILY_SUPPORT": "Family Support",
+
+    "MECHANICAL_ENGINEERING": "Mechanical Engineering", "ELECTRICAL_ENGINEERING": "Electrical Engineering",
+    "INDUSTRIAL_ENGINEERING": "Industrial Engineering", "CHEMISTRY": "Chemistry", "BIOLOGY": "Biology", "PHYSICS": "Physics",
+
+    "FOOTBALL_COACH": "Football Coach", "SPORTS_TEACHER": "Sports Teacher", "FITNESS_TRAINER": "Fitness Trainer",
+    "SPORTS_MANAGEMENT": "Sports Management", "SPORTS_CLUB": "Sports Club / Academy"
+  },
   "seller": {
     "not_found": "User not found.",
     "member_since": "Member since",

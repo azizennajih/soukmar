@@ -11,7 +11,7 @@ import { ListingCardComponent } from '../../components/listing-card/listing-card
 import { CitySelectComponent } from '../../components/city-select/city-select.component';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { MultiSelectComponent } from '../../components/multi-select/multi-select.component';
-import { CATEGORIES, MOROCCO_CITIES, Listing, Category, AttributeDefinition } from '../../models/listing.model';
+import { CATEGORIES, MOROCCO_CITIES, Listing, Category, AttributeDefinition, JOB_PROFESSION_CODES } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { SavedSearchService } from '../../services/saved-search.service';
@@ -38,6 +38,7 @@ export class AnnoncesComponent implements OnInit {
   subcategoryOptions: SubcategoryOption[] = [];
   attributeFilterDefs: AttributeDefinition[] = [];
   attrFilters: Record<string, string> = {};
+  jobProfessionCodes = JOB_PROFESSION_CODES;
 
   filters = { q: '', categorie: '', souscategorie: '', ville: '', minPrix: '', maxPrix: '', condition: '', tri: '', radius: '', lat: '', lng: '', accountType: '' };
 

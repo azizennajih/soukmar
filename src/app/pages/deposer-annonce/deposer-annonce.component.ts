@@ -9,7 +9,7 @@ import { CatalogService } from '../../services/catalog.service';
 import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
-import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, Category, Subcategory, AttributeDefinition, Condition } from '../../models/listing.model';
+import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, Category, Subcategory, AttributeDefinition, Condition, JOB_PROFESSION_CODES } from '../../models/listing.model';
 import { compressListingPhoto } from '../../utils/image-compression';
 import { TurnstileComponent } from '../../components/turnstile/turnstile.component';
 
@@ -25,6 +25,7 @@ export class DeposerAnnonceComponent {
   i18n = inject(I18nService);
   categories = CATEGORIES;
   cities = MOROCCO_CITIES;
+  jobProfessionCodes = JOB_PROFESSION_CODES;
 
   get steps(): string[] {
     const t = (k: string) => this.i18n.t(k);

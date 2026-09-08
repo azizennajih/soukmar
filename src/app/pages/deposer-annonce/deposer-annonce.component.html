@@ -138,7 +138,12 @@
                     </label>
                     @switch (def.type) {
                       @case ('TEXT') {
-                        <input type="text" [ngModel]="form.attributes[def.code]" (ngModelChange)="setAttr(def.code, $event)" />
+                        <input
+                          type="text"
+                          [attr.list]="def.code === 'PROFESSION' ? 'profession-suggestions' : null"
+                          [ngModel]="form.attributes[def.code]"
+                          (ngModelChange)="setAttr(def.code, $event)"
+                        />
                       }
                       @case ('NUMBER') {
                         <input type="number" [ngModel]="form.attributes[def.code]" (ngModelChange)="setAttr(def.code, $event)" />
@@ -278,4 +283,10 @@
       </div>
     </div>
   }
+
+  <datalist id="profession-suggestions">
+    @for (code of jobProfessionCodes; track code) {
+      <option [value]="('job_professions.' + code) | T"></option>
+    }
+  </datalist>
 </div>

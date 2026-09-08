@@ -519,6 +519,86 @@
       "MOUNTAIN": "VTT", "ROAD": "Route", "CITY": "Ville", "KIDS": "Enfant"
     }
   },
+  "job_professions": {
+    "DOCTOR": "Médecin", "DENTIST": "Dentiste", "PHARMACIST": "Pharmacien/ne", "NURSE": "Infirmier/ère",
+    "PHYSIOTHERAPIST": "Kinésithérapeute", "OCCUPATIONAL_THERAPIST": "Ergothérapeute", "MIDWIFE": "Sage-femme",
+    "MEDICAL_ASSISTANT": "Assistant/e médical/e", "PSYCHOLOGIST": "Psychologue", "PARAMEDIC": "Ambulancier/ère",
+    "LAB_TECHNICIAN": "Laboratoire", "OTHER_HEALTHCARE": "Autres métiers de la santé",
+
+    "COMPUTER_SCIENTIST": "Informaticien/ne", "SOFTWARE_DEVELOPER": "Développeur/euse logiciel",
+    "WEB_DEVELOPER": "Développeur/euse web", "APP_DEVELOPER": "Développeur/euse d'applications",
+    "IT_SYSTEM_ADMIN": "Administrateur/trice systèmes", "NETWORK_ADMIN": "Administrateur/trice réseau",
+    "CYBERSECURITY": "Cybersécurité", "DATA_SCIENTIST_AI": "Data Scientist / IA",
+    "DATABASE_ADMIN": "Administrateur/trice de bases de données", "IT_SUPPORT": "Support informatique",
+    "SAP_SPECIALIST": "SAP", "DEVOPS_CLOUD": "DevOps / Cloud", "IT_PROJECT_MANAGER": "Chef de projet informatique",
+
+    "ELECTRICIAN": "Électricien/ne", "INSTALLER": "Installateur/trice", "HEATING_SANITARY": "Chauffage / Sanitaire",
+    "MECHANIC": "Mécanicien/ne", "AUTO_MECHATRONIC": "Mécatronicien/ne automobile", "LOCKSMITH": "Serrurier/ère",
+    "CARPENTER": "Menuisier/ère", "ROOF_CARPENTER": "Charpentier/ère", "MASON": "Maçon/ne",
+    "PAINTER": "Peintre en bâtiment", "ROOFER": "Couvreur/euse", "TILER": "Carreleur/euse",
+    "METAL_WORKER": "Métallier/ère", "PLANT_MECHANIC": "Mécanicien/ne d'installations",
+    "INDUSTRIAL_MECHANIC": "Mécanicien/ne industriel/le", "MECHATRONICS_TECH": "Mécatronicien/ne",
+    "CNC_SPECIALIST": "Technicien/ne CNC",
+
+    "CIVIL_ENGINEER": "Ingénieur/e en génie civil", "ARCHITECT": "Architecte", "SITE_MANAGER": "Conducteur/trice de travaux",
+    "STRUCTURAL_ENGINEER": "Ingénieur/e structure", "SURVEYING": "Géomètre", "CIVIL_WORKS": "Travaux publics",
+    "BUILDING_CONSTRUCTION": "Bâtiment (gros œuvre)", "ROAD_CONSTRUCTION": "Construction de routes",
+    "CONSTRUCTION_HELPER": "Aide-maçon/ne",
+
+    "BUSINESS_CLERK": "Employé/e de commerce", "CASE_WORKER": "Gestionnaire de dossiers", "ADMINISTRATION": "Administration",
+    "RECEPTION": "Accueil", "SECRETARIAT": "Secrétariat", "ASSISTANT": "Assistanat", "HR": "Ressources humaines",
+    "ACCOUNTING": "Comptabilité", "CONTROLLING": "Contrôle de gestion", "PURCHASING": "Achats",
+    "QUALITY_MANAGEMENT": "Gestion de la qualité",
+
+    "BANKING": "Banque", "INSURANCE": "Assurance", "TAX_ADVISOR": "Conseiller/ère fiscal/e", "AUDITOR": "Auditeur/trice",
+    "FINANCIAL_ADVISOR": "Conseiller/ère financier/ère", "CONTROLLER": "Contrôleur/euse de gestion",
+    "ACCOUNTANT": "Comptable", "REAL_ESTATE_FINANCE": "Immobilier", "MANAGEMENT_CONSULTING": "Conseil en gestion",
+
+    "SALESPERSON": "Vendeur/euse", "RETAIL": "Commerce de détail", "WHOLESALE": "Commerce de gros",
+    "CASHIER": "Caissier/ère", "STORE_MANAGEMENT": "Gestion de magasin", "FIELD_SALES": "Vente terrain",
+    "SALES_REP": "Commercial/e", "ECOMMERCE": "E-commerce", "CUSTOMER_ADVISOR": "Conseiller/ère clientèle",
+
+    "TRUCK_DRIVER": "Chauffeur/euse poids lourd", "BUS_DRIVER": "Chauffeur/euse de bus", "TAXI_DRIVER": "Chauffeur/euse de taxi",
+    "COURIER_DRIVER": "Livreur/euse", "WAREHOUSE_WORKER": "Magasinier/ère", "ORDER_PICKER": "Préparateur/trice de commandes",
+    "LOGISTICS": "Logistique", "FREIGHT_FORWARDING": "Transitaire", "DISPATCHER": "Répartiteur/trice",
+    "WAREHOUSE_MANAGEMENT": "Gestion d'entrepôt",
+
+    "COOK": "Cuisinier/ère", "KITCHEN_HELPER": "Aide de cuisine", "WAITER": "Serveur/euse",
+    "RESTAURANT_STAFF": "Personnel de restaurant", "BAKER": "Boulanger/ère", "PASTRY_CHEF": "Pâtissier/ère",
+    "HOTEL": "Hôtellerie", "FRONT_DESK": "Réception", "HOUSEKEEPING": "Housekeeping",
+
+    "TEACHER": "Enseignant/e", "EDUCATOR": "Éducateur/trice", "PEDAGOGUE": "Pédagogue", "PROFESSOR": "Professeur/e",
+    "LECTURER": "Chargé/e de cours", "TRAINER": "Formateur/trice", "RESEARCH": "Recherche", "SCIENCE": "Science",
+
+    "LAWYER": "Avocat/e", "NOTARY": "Notaire", "LEGAL_EXPERT": "Juriste", "LEGAL_ASSISTANT": "Assistant/e juridique",
+    "POLICE": "Police", "FIRE_DEPARTMENT": "Pompiers", "SECURITY_SERVICE": "Service de sécurité", "JUDICIARY": "Justice",
+
+    "PRODUCTION_WORKER": "Opérateur/trice de production", "MACHINE_OPERATOR": "Conducteur/trice de machine",
+    "PLANT_OPERATOR": "Conducteur/trice d'installation", "QUALITY_CONTROL": "Contrôle qualité",
+    "PRODUCTION_TECHNICIAN": "Technicien/ne de production", "WELDER": "Soudeur/euse",
+    "MANUFACTURING_GENERAL": "Fabrication", "FOOD_PRODUCTION": "Production alimentaire",
+
+    "FARMER": "Agriculteur/trice", "GARDENER": "Jardinier/ère", "FORESTER": "Forestier/ère",
+    "ANIMAL_CARETAKER": "Soigneur/euse animalier/ère", "AGRICULTURAL_HELPER": "Aide agricole",
+    "ENVIRONMENTAL_TECH": "Technique environnementale", "RECYCLING": "Recyclage",
+
+    "GRAPHIC_DESIGNER": "Graphiste", "WEB_DESIGNER": "Web designer", "PHOTOGRAPHER": "Photographe",
+    "VIDEOGRAPHER": "Vidéaste", "JOURNALIST": "Journaliste", "SOCIAL_MEDIA": "Réseaux sociaux", "MARKETING": "Marketing",
+    "ADVERTISING": "Publicité", "TRANSLATOR": "Traducteur/trice", "INTERPRETER": "Interprète",
+
+    "HAIRDRESSER": "Coiffeur/euse", "BEAUTICIAN": "Esthéticien/ne", "NAIL_DESIGNER": "Prothésiste ongulaire",
+    "FOOT_CARE": "Pédicure", "MASSEUR": "Masseur/euse", "CLEANING_STAFF": "Agent/e d'entretien",
+    "HOUSEHOLD_HELP": "Aide ménagère",
+
+    "CHILDCARE": "Garde d'enfants", "SOCIAL_WORKER": "Travailleur/euse social/e", "ELDERLY_CARE": "Soins aux personnes âgées",
+    "CARE_WORKER": "Aide-soignant/e", "DISABILITY_SUPPORT": "Aide aux personnes handicapées", "FAMILY_SUPPORT": "Aide familiale",
+
+    "MECHANICAL_ENGINEERING": "Génie mécanique", "ELECTRICAL_ENGINEERING": "Génie électrique",
+    "INDUSTRIAL_ENGINEERING": "Génie industriel", "CHEMISTRY": "Chimie", "BIOLOGY": "Biologie", "PHYSICS": "Physique",
+
+    "FOOTBALL_COACH": "Entraîneur/euse de football", "SPORTS_TEACHER": "Professeur/e de sport",
+    "FITNESS_TRAINER": "Coach fitness", "SPORTS_MANAGEMENT": "Management sportif", "SPORTS_CLUB": "Club de sport / Académie"
+  },
   "footer": {
     "tagline": "La première plateforme de petites annonces au Maroc. Simple, rapide et sécurisée.",
     "categories": "Catégories",

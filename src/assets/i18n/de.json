@@ -1027,6 +1027,80 @@
       "KIDS": "Kinder"
     }
   },
+  "job_professions": {
+    "DOCTOR": "Arzt / Ärztin", "DENTIST": "Zahnarzt / Zahnärztin", "PHARMACIST": "Apotheker/in",
+    "NURSE": "Pflegefachkraft", "PHYSIOTHERAPIST": "Physiotherapeut/in", "OCCUPATIONAL_THERAPIST": "Ergotherapeut/in",
+    "MIDWIFE": "Hebamme", "MEDICAL_ASSISTANT": "Medizinische/r Fachangestellte/r", "PSYCHOLOGIST": "Psychologe/Psychologin",
+    "PARAMEDIC": "Rettungsdienst", "LAB_TECHNICIAN": "Labor", "OTHER_HEALTHCARE": "Sonstige Gesundheitsberufe",
+
+    "COMPUTER_SCIENTIST": "Informatiker/in", "SOFTWARE_DEVELOPER": "Softwareentwickler/in", "WEB_DEVELOPER": "Webentwickler/in",
+    "APP_DEVELOPER": "App-Entwickler/in", "IT_SYSTEM_ADMIN": "IT-Systemadministrator/in", "NETWORK_ADMIN": "Netzwerkadministrator/in",
+    "CYBERSECURITY": "Cybersecurity", "DATA_SCIENTIST_AI": "Data Scientist / KI", "DATABASE_ADMIN": "Datenbankadministrator/in",
+    "IT_SUPPORT": "IT-Support", "SAP_SPECIALIST": "SAP", "DEVOPS_CLOUD": "DevOps / Cloud", "IT_PROJECT_MANAGER": "Projektmanager IT",
+
+    "ELECTRICIAN": "Elektriker/in", "INSTALLER": "Installateur/in", "HEATING_SANITARY": "Heizungs-/Sanitärtechnik",
+    "MECHANIC": "Mechaniker/in", "AUTO_MECHATRONIC": "Kfz-Mechatroniker/in", "LOCKSMITH": "Schlosser/in",
+    "CARPENTER": "Schreiner/Tischler", "ROOF_CARPENTER": "Zimmerer", "MASON": "Maurer", "PAINTER": "Maler/Lackierer",
+    "ROOFER": "Dachdecker", "TILER": "Fliesenleger", "METAL_WORKER": "Metallbauer", "PLANT_MECHANIC": "Anlagenmechaniker",
+    "INDUSTRIAL_MECHANIC": "Industriemechaniker", "MECHATRONICS_TECH": "Mechatroniker", "CNC_SPECIALIST": "CNC-Fachkraft",
+
+    "CIVIL_ENGINEER": "Bauingenieur/in", "ARCHITECT": "Architekt/in", "SITE_MANAGER": "Bauleiter/in",
+    "STRUCTURAL_ENGINEER": "Statiker/in", "SURVEYING": "Vermessung", "CIVIL_WORKS": "Tiefbau",
+    "BUILDING_CONSTRUCTION": "Hochbau", "ROAD_CONSTRUCTION": "Straßenbau", "CONSTRUCTION_HELPER": "Bauhelfer",
+
+    "BUSINESS_CLERK": "Kaufmann/Kauffrau", "CASE_WORKER": "Sachbearbeitung", "ADMINISTRATION": "Verwaltung",
+    "RECEPTION": "Empfang", "SECRETARIAT": "Sekretariat", "ASSISTANT": "Assistenz", "HR": "Personal / HR",
+    "ACCOUNTING": "Buchhaltung", "CONTROLLING": "Controlling", "PURCHASING": "Einkauf", "QUALITY_MANAGEMENT": "Qualitätsmanagement",
+
+    "BANKING": "Bank", "INSURANCE": "Versicherung", "TAX_ADVISOR": "Steuerberater/in", "AUDITOR": "Wirtschaftsprüfer/in",
+    "FINANCIAL_ADVISOR": "Finanzberater/in", "CONTROLLER": "Controller/in", "ACCOUNTANT": "Buchhalter/in",
+    "REAL_ESTATE_FINANCE": "Immobilien", "MANAGEMENT_CONSULTING": "Unternehmensberatung",
+
+    "SALESPERSON": "Verkäufer/in", "RETAIL": "Einzelhandel", "WHOLESALE": "Großhandel", "CASHIER": "Kassierer/in",
+    "STORE_MANAGEMENT": "Filialleitung", "FIELD_SALES": "Außendienst", "SALES_REP": "Vertrieb / Sales",
+    "ECOMMERCE": "E-Commerce", "CUSTOMER_ADVISOR": "Kundenberatung",
+
+    "TRUCK_DRIVER": "Lkw-Fahrer/in", "BUS_DRIVER": "Busfahrer/in", "TAXI_DRIVER": "Taxifahrer/in",
+    "COURIER_DRIVER": "Kurierfahrer/in", "WAREHOUSE_WORKER": "Lagerarbeiter/in", "ORDER_PICKER": "Kommissionierer/in",
+    "LOGISTICS": "Logistik", "FREIGHT_FORWARDING": "Spedition", "DISPATCHER": "Disponent/in",
+    "WAREHOUSE_MANAGEMENT": "Lagerleitung",
+
+    "COOK": "Koch/Köchin", "KITCHEN_HELPER": "Küchenhilfe", "WAITER": "Kellner/in", "RESTAURANT_STAFF": "Restaurantfachkraft",
+    "BAKER": "Bäcker/in", "PASTRY_CHEF": "Konditor/in", "HOTEL": "Hotel", "FRONT_DESK": "Rezeption",
+    "HOUSEKEEPING": "Housekeeping",
+
+    "TEACHER": "Lehrer/in", "EDUCATOR": "Erzieher/in", "PEDAGOGUE": "Pädagoge/Pädagogin", "PROFESSOR": "Professor/in",
+    "LECTURER": "Dozent/in", "TRAINER": "Ausbilder/in", "RESEARCH": "Forschung", "SCIENCE": "Wissenschaft",
+
+    "LAWYER": "Rechtsanwalt/Rechtsanwältin", "NOTARY": "Notar/in", "LEGAL_EXPERT": "Jurist/in",
+    "LEGAL_ASSISTANT": "Rechtsanwaltsfachangestellte/r", "POLICE": "Polizei", "FIRE_DEPARTMENT": "Feuerwehr",
+    "SECURITY_SERVICE": "Sicherheitsdienst", "JUDICIARY": "Justiz",
+
+    "PRODUCTION_WORKER": "Produktionsmitarbeiter/in", "MACHINE_OPERATOR": "Maschinenführer/in",
+    "PLANT_OPERATOR": "Anlagenführer/in", "QUALITY_CONTROL": "Qualitätskontrolle",
+    "PRODUCTION_TECHNICIAN": "Produktionstechniker/in", "WELDER": "Schweißer/in",
+    "MANUFACTURING_GENERAL": "Fertigung", "FOOD_PRODUCTION": "Lebensmittelproduktion",
+
+    "FARMER": "Landwirt/in", "GARDENER": "Gärtner/in", "FORESTER": "Forstwirt/in", "ANIMAL_CARETAKER": "Tierpfleger/in",
+    "AGRICULTURAL_HELPER": "Landwirtschaftliche Helfer", "ENVIRONMENTAL_TECH": "Umwelttechnik", "RECYCLING": "Recycling",
+
+    "GRAPHIC_DESIGNER": "Grafikdesigner/in", "WEB_DESIGNER": "Webdesigner/in", "PHOTOGRAPHER": "Fotograf/in",
+    "VIDEOGRAPHER": "Videograf/in", "JOURNALIST": "Journalist/in", "SOCIAL_MEDIA": "Social Media",
+    "MARKETING": "Marketing", "ADVERTISING": "Werbung", "TRANSLATOR": "Übersetzer/in", "INTERPRETER": "Dolmetscher/in",
+
+    "HAIRDRESSER": "Friseur/in", "BEAUTICIAN": "Kosmetiker/in", "NAIL_DESIGNER": "Nageldesigner/in",
+    "FOOT_CARE": "Fußpflege", "MASSEUR": "Masseur/in", "CLEANING_STAFF": "Reinigungskraft",
+    "HOUSEHOLD_HELP": "Haushaltshilfe",
+
+    "CHILDCARE": "Kinderbetreuung", "SOCIAL_WORKER": "Sozialarbeiter/in", "ELDERLY_CARE": "Altenpflege",
+    "CARE_WORKER": "Betreuungskraft", "DISABILITY_SUPPORT": "Behindertenhilfe", "FAMILY_SUPPORT": "Familienhilfe",
+
+    "MECHANICAL_ENGINEERING": "Maschinenbau", "ELECTRICAL_ENGINEERING": "Elektrotechnik",
+    "INDUSTRIAL_ENGINEERING": "Wirtschaftsingenieurwesen", "CHEMISTRY": "Chemie", "BIOLOGY": "Biologie", "PHYSICS": "Physik",
+
+    "FOOTBALL_COACH": "Fußballtrainer/in", "SPORTS_TEACHER": "Sportlehrer/in", "FITNESS_TRAINER": "Fitnesstrainer/in",
+    "SPORTS_MANAGEMENT": "Sportmanagement", "SPORTS_CLUB": "Sportverein / Akademie"
+  },
   "seller": {
     "not_found": "Benutzer nicht gefunden.",
     "member_since": "Mitglied seit",

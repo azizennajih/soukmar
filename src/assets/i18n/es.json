@@ -1027,6 +1027,87 @@
       "KIDS": "Infantil"
     }
   },
+  "job_professions": {
+    "DOCTOR": "Médico/a", "DENTIST": "Dentista", "PHARMACIST": "Farmacéutico/a", "NURSE": "Enfermero/a",
+    "PHYSIOTHERAPIST": "Fisioterapeuta", "OCCUPATIONAL_THERAPIST": "Terapeuta ocupacional", "MIDWIFE": "Matrona",
+    "MEDICAL_ASSISTANT": "Auxiliar médico/a", "PSYCHOLOGIST": "Psicólogo/a", "PARAMEDIC": "Paramédico/a",
+    "LAB_TECHNICIAN": "Laboratorio", "OTHER_HEALTHCARE": "Otras profesiones sanitarias",
+
+    "COMPUTER_SCIENTIST": "Informático/a", "SOFTWARE_DEVELOPER": "Desarrollador/a de software",
+    "WEB_DEVELOPER": "Desarrollador/a web", "APP_DEVELOPER": "Desarrollador/a de apps",
+    "IT_SYSTEM_ADMIN": "Administrador/a de sistemas", "NETWORK_ADMIN": "Administrador/a de redes",
+    "CYBERSECURITY": "Ciberseguridad", "DATA_SCIENTIST_AI": "Data Scientist / IA",
+    "DATABASE_ADMIN": "Administrador/a de bases de datos", "IT_SUPPORT": "Soporte informático", "SAP_SPECIALIST": "SAP",
+    "DEVOPS_CLOUD": "DevOps / Cloud", "IT_PROJECT_MANAGER": "Jefe/a de proyecto TI",
+
+    "ELECTRICIAN": "Electricista", "INSTALLER": "Instalador/a", "HEATING_SANITARY": "Calefacción / Fontanería",
+    "MECHANIC": "Mecánico/a", "AUTO_MECHATRONIC": "Mecatrónico/a de automoción", "LOCKSMITH": "Cerrajero/a",
+    "CARPENTER": "Carpintero/a", "ROOF_CARPENTER": "Carpintero/a de tejados", "MASON": "Albañil", "PAINTER": "Pintor/a",
+    "ROOFER": "Techador/a", "TILER": "Alicatador/a", "METAL_WORKER": "Metalúrgico/a",
+    "PLANT_MECHANIC": "Mecánico/a de instalaciones", "INDUSTRIAL_MECHANIC": "Mecánico/a industrial",
+    "MECHATRONICS_TECH": "Técnico/a mecatrónico/a", "CNC_SPECIALIST": "Especialista en CNC",
+
+    "CIVIL_ENGINEER": "Ingeniero/a civil", "ARCHITECT": "Arquitecto/a", "SITE_MANAGER": "Jefe/a de obra",
+    "STRUCTURAL_ENGINEER": "Ingeniero/a de estructuras", "SURVEYING": "Topografía", "CIVIL_WORKS": "Obra civil",
+    "BUILDING_CONSTRUCTION": "Construcción de edificios", "ROAD_CONSTRUCTION": "Construcción de carreteras",
+    "CONSTRUCTION_HELPER": "Peón/a de obra",
+
+    "BUSINESS_CLERK": "Empleado/a de comercio", "CASE_WORKER": "Gestor/a administrativo/a", "ADMINISTRATION": "Administración",
+    "RECEPTION": "Recepción", "SECRETARIAT": "Secretaría", "ASSISTANT": "Asistencia", "HR": "Recursos humanos",
+    "ACCOUNTING": "Contabilidad", "CONTROLLING": "Control de gestión", "PURCHASING": "Compras",
+    "QUALITY_MANAGEMENT": "Gestión de calidad",
+
+    "BANKING": "Banca", "INSURANCE": "Seguros", "TAX_ADVISOR": "Asesor/a fiscal", "AUDITOR": "Auditor/a",
+    "FINANCIAL_ADVISOR": "Asesor/a financiero/a", "CONTROLLER": "Controller", "ACCOUNTANT": "Contable",
+    "REAL_ESTATE_FINANCE": "Inmobiliaria", "MANAGEMENT_CONSULTING": "Consultoría de gestión",
+
+    "SALESPERSON": "Vendedor/a", "RETAIL": "Comercio minorista", "WHOLESALE": "Comercio mayorista", "CASHIER": "Cajero/a",
+    "STORE_MANAGEMENT": "Gestión de tienda", "FIELD_SALES": "Ventas de campo", "SALES_REP": "Comercial",
+    "ECOMMERCE": "Comercio electrónico", "CUSTOMER_ADVISOR": "Asesor/a de clientes",
+
+    "TRUCK_DRIVER": "Conductor/a de camión", "BUS_DRIVER": "Conductor/a de autobús", "TAXI_DRIVER": "Taxista",
+    "COURIER_DRIVER": "Repartidor/a", "WAREHOUSE_WORKER": "Trabajador/a de almacén", "ORDER_PICKER": "Preparador/a de pedidos",
+    "LOGISTICS": "Logística", "FREIGHT_FORWARDING": "Transitario", "DISPATCHER": "Despachador/a",
+    "WAREHOUSE_MANAGEMENT": "Gestión de almacén",
+
+    "COOK": "Cocinero/a", "KITCHEN_HELPER": "Ayudante de cocina", "WAITER": "Camarero/a",
+    "RESTAURANT_STAFF": "Personal de restaurante", "BAKER": "Panadero/a", "PASTRY_CHEF": "Pastelero/a", "HOTEL": "Hotel",
+    "FRONT_DESK": "Recepción", "HOUSEKEEPING": "Housekeeping",
+
+    "TEACHER": "Profesor/a", "EDUCATOR": "Educador/a", "PEDAGOGUE": "Pedagogo/a", "PROFESSOR": "Catedrático/a",
+    "LECTURER": "Docente", "TRAINER": "Formador/a", "RESEARCH": "Investigación", "SCIENCE": "Ciencia",
+
+    "LAWYER": "Abogado/a", "NOTARY": "Notario/a", "LEGAL_EXPERT": "Jurista", "LEGAL_ASSISTANT": "Auxiliar jurídico/a",
+    "POLICE": "Policía", "FIRE_DEPARTMENT": "Bomberos", "SECURITY_SERVICE": "Servicio de seguridad", "JUDICIARY": "Justicia",
+
+    "PRODUCTION_WORKER": "Operario/a de producción", "MACHINE_OPERATOR": "Operador/a de máquinas",
+    "PLANT_OPERATOR": "Operador/a de planta", "QUALITY_CONTROL": "Control de calidad",
+    "PRODUCTION_TECHNICIAN": "Técnico/a de producción", "WELDER": "Soldador/a", "MANUFACTURING_GENERAL": "Fabricación",
+    "FOOD_PRODUCTION": "Producción alimentaria",
+
+    "FARMER": "Agricultor/a", "GARDENER": "Jardinero/a", "FORESTER": "Silvicultor/a",
+    "ANIMAL_CARETAKER": "Cuidador/a de animales", "AGRICULTURAL_HELPER": "Peón/a agrícola",
+    "ENVIRONMENTAL_TECH": "Técnica ambiental", "RECYCLING": "Reciclaje",
+
+    "GRAPHIC_DESIGNER": "Diseñador/a gráfico/a", "WEB_DESIGNER": "Diseñador/a web", "PHOTOGRAPHER": "Fotógrafo/a",
+    "VIDEOGRAPHER": "Videógrafo/a", "JOURNALIST": "Periodista", "SOCIAL_MEDIA": "Redes sociales", "MARKETING": "Marketing",
+    "ADVERTISING": "Publicidad", "TRANSLATOR": "Traductor/a", "INTERPRETER": "Intérprete",
+
+    "HAIRDRESSER": "Peluquero/a", "BEAUTICIAN": "Esteticista", "NAIL_DESIGNER": "Diseñador/a de uñas",
+    "FOOT_CARE": "Podología", "MASSEUR": "Masajista", "CLEANING_STAFF": "Personal de limpieza",
+    "HOUSEHOLD_HELP": "Ayuda doméstica",
+
+    "CHILDCARE": "Cuidado infantil", "SOCIAL_WORKER": "Trabajador/a social", "ELDERLY_CARE": "Cuidado de mayores",
+    "CARE_WORKER": "Auxiliar de cuidados", "DISABILITY_SUPPORT": "Apoyo a personas con discapacidad",
+    "FAMILY_SUPPORT": "Ayuda familiar",
+
+    "MECHANICAL_ENGINEERING": "Ingeniería mecánica", "ELECTRICAL_ENGINEERING": "Ingeniería eléctrica",
+    "INDUSTRIAL_ENGINEERING": "Ingeniería industrial", "CHEMISTRY": "Química", "BIOLOGY": "Biología", "PHYSICS": "Física",
+
+    "FOOTBALL_COACH": "Entrenador/a de fútbol", "SPORTS_TEACHER": "Profesor/a de deporte",
+    "FITNESS_TRAINER": "Entrenador/a personal", "SPORTS_MANAGEMENT": "Gestión deportiva",
+    "SPORTS_CLUB": "Club deportivo / Academia"
+  },
   "seller": {
     "not_found": "Usuario no encontrado.",
     "member_since": "Miembro desde",
