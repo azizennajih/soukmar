@@ -152,6 +152,9 @@
                       @case ('NUMBER') {
                         <input type="number" [ngModel]="form.attributes[def.code]" (ngModelChange)="setAttr(def.code, $event)" />
                       }
+                      @case ('DATE') {
+                        <input type="date" [ngModel]="form.attributes[def.code]" (ngModelChange)="setAttr(def.code, $event)" />
+                      }
                       @case ('BOOLEAN') {
                         <select [ngModel]="attrBoolStr(def.code)" (ngModelChange)="setAttr(def.code, $event === 'true')">
                           <option value="">—</option>

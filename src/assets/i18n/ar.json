@@ -644,7 +644,7 @@
     "POWER_HP": "القوة (حصان)",
     "ACCIDENT": "حادث",
     "PREVIOUS_OWNERS": "عدد الملاك السابقين",
-    "INSPECTION_UNTIL_YEAR": "الفحص التقني صالح إلى",
+    "INSPECTION_UNTIL_DATE": "الفحص التقني صالح إلى",
     "BIKE_TYPE": "نوع الدراجة",
     "ENGINE_CC": "سعة المحرك (سم³)",
     "LICENSE_CLASS": "رخصة القيادة المطلوبة",

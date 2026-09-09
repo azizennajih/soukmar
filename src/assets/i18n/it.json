@@ -644,7 +644,7 @@
     "POWER_HP": "Potenza (CV)",
     "ACCIDENT": "Incidente",
     "PREVIOUS_OWNERS": "Proprietari precedenti",
-    "INSPECTION_UNTIL_YEAR": "Revisione valida fino a",
+    "INSPECTION_UNTIL_DATE": "Revisione valida fino a",
     "BIKE_TYPE": "Tipo di moto",
     "ENGINE_CC": "Cilindrata (cc)",
     "LICENSE_CLASS": "Patente richiesta",

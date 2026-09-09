@@ -5,7 +5,7 @@ export type Category =
 
 export type ListingStatus = 'ACTIVE' | 'RESERVED' | 'SOLD' | 'PENDING' | 'REJECTED' | 'EXPIRED'; // updated
 
-export type AttributeType = 'TEXT' | 'NUMBER' | 'SELECT' | 'BOOLEAN';
+export type AttributeType = 'TEXT' | 'NUMBER' | 'SELECT' | 'BOOLEAN' | 'DATE';
 export type Condition = 'NEW' | 'USED';
 export type AccountType = 'PRIVATE' | 'BUSINESS';
 

@@ -332,7 +332,7 @@
     "POWER_HP": "Puissance (ch)",
     "ACCIDENT": "Accident",
     "PREVIOUS_OWNERS": "Propriétaires précédents",
-    "INSPECTION_UNTIL_YEAR": "Contrôle technique jusqu'à",
+    "INSPECTION_UNTIL_DATE": "Contrôle technique jusqu'à",
     "BIKE_TYPE": "Type de moto",
     "ENGINE_CC": "Cylindrée (cc)",
     "LICENSE_CLASS": "Permis requis",

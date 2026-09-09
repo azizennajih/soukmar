@@ -644,7 +644,7 @@
     "POWER_HP": "Leistung (PS)",
     "ACCIDENT": "Unfall",
     "PREVIOUS_OWNERS": "Vorbesitzer",
-    "INSPECTION_UNTIL_YEAR": "TÜV bis",
+    "INSPECTION_UNTIL_DATE": "TÜV bis",
     "BIKE_TYPE": "Motorradtyp",
     "ENGINE_CC": "Hubraum (ccm)",
     "LICENSE_CLASS": "Führerscheinklasse",

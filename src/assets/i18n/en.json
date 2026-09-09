@@ -644,7 +644,7 @@
     "POWER_HP": "Power (hp)",
     "ACCIDENT": "Accident",
     "PREVIOUS_OWNERS": "Previous owners",
-    "INSPECTION_UNTIL_YEAR": "Inspection valid until",
+    "INSPECTION_UNTIL_DATE": "Inspection valid until",
     "BIKE_TYPE": "Bike type",
     "ENGINE_CC": "Engine size (cc)",
     "LICENSE_CLASS": "License required",

@@ -207,6 +207,11 @@ export class AnnonceDetailComponent implements OnInit {
     if (def.type === 'SELECT') return this.i18n.t('attrs.opts.' + av.valueText);
     if (def.type === 'BOOLEAN') return this.i18n.t(av.valueBoolean ? 'common.yes' : 'common.no');
     if (def.type === 'NUMBER') return String(av.valueNumber);
+    if (def.type === 'DATE' && av.valueText) {
+      const lang = this.i18n.lang();
+      const locale = lang === 'ar' ? 'ar-MA' : lang === 'en' ? 'en-US' : lang;
+      return new Date(av.valueText).toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
+    }
     return av.valueText ?? '';
   }
 
