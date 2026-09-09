@@ -260,7 +260,8 @@
     "BABY_KIDS": "Baby & Kind",
     "PETS": "Haustiere",
     "SPORTS_LEISURE": "Sport & Freizeit",
-    "LESSONS_COURSES": "Unterricht & Kurse"
+    "LESSONS_COURSES": "Unterricht & Kurse",
+    "CARPOOLING": "Mitfahrgelegenheit"
   },
   "footer": {
     "tagline": "Marokkos erste Kleinanzeigen-Plattform. Einfach, schnell und sicher.",
@@ -548,6 +549,7 @@
     "photo_main": "Hauptfoto",
     "drag_hint": "Fotos per Drag & Drop verschieben — das erste ist das Hauptfoto.",
     "skip_note": "Sie können ohne Fotos fortfahren und diese später hinzufügen.",
+    "carpooling_photos_hint": "Pflicht: Bitte lade mindestens 2 Fotos hoch — eines von dir und eines vom Auto.",
     "contact_title": "📞 Kontaktdaten",
     "label_phone": "Telefon",
     "label_whatsapp": "WhatsApp",
@@ -574,7 +576,8 @@
     "success_sub_edit": "Deine Änderungen sind jetzt sichtbar.",
     "publish_edit": "💾 Änderungen speichern",
     "show_phone_toggle": "Meine Telefonnummer in der Anzeige anzeigen",
-    "show_phone_hint": "Wenn deaktiviert, können Käufer Sie nur über den Chat kontaktieren."
+    "show_phone_hint": "Wenn deaktiviert, können Käufer Sie nur über den Chat kontaktieren.",
+    "carpooling_phone_hint": "Deine Telefonnummer wird bei Mitfahrgelegenheiten immer angezeigt, damit Mitfahrer dich erreichen können."
   },
   "subcats": {
     "AUTO": "Auto",
@@ -636,7 +639,8 @@
     "LANGUAGE_COURSES": "Sprachkurse",
     "DANCE_COURSES": "Tanzkurse",
     "CONTINUING_EDUCATION": "Weiterbildung",
-    "OTHER_LESSONS": "Weitere Unterricht & Kurse"
+    "OTHER_LESSONS": "Weitere Unterricht & Kurse",
+    "RIDE_OFFER": "Fahrt anbieten"
   },
   "attrs": {
     "BRAND": "Marke",
@@ -661,6 +665,9 @@
     "ENGINE_POWER_HP": "Motorleistung (PS)",
     "PART_TYPE": "Teileart",
     "SUBJECT": "Fach",
+    "DESTINATION_CITY": "Zielstadt",
+    "DEPARTURE_DATE": "Abfahrtsdatum",
+    "SEATS_AVAILABLE": "Freie Plätze",
     "COMPATIBLE_BRAND": "Kompatible Marke",
     "LIVING_AREA_SQM": "Wohnfläche (m²)",
     "ROOMS": "Zimmeranzahl",

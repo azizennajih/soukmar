@@ -260,7 +260,8 @@
     "BABY_KIDS": "Bébé & Enfants",
     "PETS": "Animaux",
     "SPORTS_LEISURE": "Sport & Loisirs",
-    "LESSONS_COURSES": "Cours & Leçons"
+    "LESSONS_COURSES": "Cours & Leçons",
+    "CARPOOLING": "Covoiturage"
   },
   "subcats": {
     "AUTO": "Voiture",
@@ -322,7 +323,8 @@
     "LANGUAGE_COURSES": "Cours de langues",
     "DANCE_COURSES": "Cours de danse",
     "CONTINUING_EDUCATION": "Formation continue",
-    "OTHER_LESSONS": "Autres cours & leçons"
+    "OTHER_LESSONS": "Autres cours & leçons",
+    "RIDE_OFFER": "Proposer un trajet"
   },
   "attrs": {
     "BRAND": "Marque",
@@ -347,6 +349,9 @@
     "ENGINE_POWER_HP": "Puissance moteur (ch)",
     "PART_TYPE": "Type de pièce",
     "SUBJECT": "Matière",
+    "DESTINATION_CITY": "Ville de destination",
+    "DEPARTURE_DATE": "Date de départ",
+    "SEATS_AVAILABLE": "Places disponibles",
     "COMPATIBLE_BRAND": "Marque compatible",
     "LIVING_AREA_SQM": "Surface habitable (m²)",
     "ROOMS": "Nombre de pièces",
@@ -820,11 +825,13 @@
     "photo_main": "Principale",
     "drag_hint": "Glissez les photos pour les réorganiser — la première est la photo principale.",
     "skip_note": "Vous pouvez continuer sans photos et les ajouter plus tard.",
+    "carpooling_photos_hint": "Obligatoire : ajoutez au moins 2 photos — une de vous et une du véhicule.",
     "contact_title": "📞 Coordonnées de contact",
     "label_phone": "Téléphone",
     "label_whatsapp": "WhatsApp",
     "show_phone_toggle": "Afficher mon téléphone sur l'annonce",
     "show_phone_hint": "Si désactivé, les acheteurs ne pourront vous contacter que par chat.",
+    "carpooling_phone_hint": "Votre numéro de téléphone est toujours affiché pour les annonces de covoiturage, afin que les passagers puissent vous joindre.",
     "summary_title": "📋 Récapitulatif",
     "summary_cat": "Catégorie",
     "summary_listing_title": "Titre",

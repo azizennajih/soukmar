@@ -260,7 +260,8 @@
     "BABY_KIDS": "Baby & Kids",
     "PETS": "Pets",
     "SPORTS_LEISURE": "Sports & Leisure",
-    "LESSONS_COURSES": "Lessons & Courses"
+    "LESSONS_COURSES": "Lessons & Courses",
+    "CARPOOLING": "Carpooling"
   },
   "footer": {
     "tagline": "Morocco's first classifieds platform. Simple, fast and secure.",
@@ -430,6 +431,7 @@
     "photo_main": "Main",
     "drag_hint": "Drag photos to reorder — the first one is the main photo.",
     "skip_note": "You can continue without photos and add them later.",
+    "carpooling_photos_hint": "Required: please add at least 2 photos — one of you and one of the car.",
     "contact_title": "📞 Contact details",
     "label_phone": "Phone",
     "label_whatsapp": "WhatsApp",
@@ -456,7 +458,8 @@
     "success_sub_edit": "Your changes are now live.",
     "publish_edit": "💾 Save changes",
     "show_phone_toggle": "Show my phone number on the listing",
-    "show_phone_hint": "If disabled, buyers can only contact you via chat."
+    "show_phone_hint": "If disabled, buyers can only contact you via chat.",
+    "carpooling_phone_hint": "Your phone number is always shown for carpooling listings, so passengers can reach you."
   },
   "mes_annonces": {
     "title": "My listings",
@@ -636,7 +639,8 @@
     "LANGUAGE_COURSES": "Language Courses",
     "DANCE_COURSES": "Dance Courses",
     "CONTINUING_EDUCATION": "Continuing Education",
-    "OTHER_LESSONS": "Other Lessons & Courses"
+    "OTHER_LESSONS": "Other Lessons & Courses",
+    "RIDE_OFFER": "Offer a ride"
   },
   "attrs": {
     "BRAND": "Brand",
@@ -661,6 +665,9 @@
     "ENGINE_POWER_HP": "Engine power (hp)",
     "PART_TYPE": "Part type",
     "SUBJECT": "Subject",
+    "DESTINATION_CITY": "Destination city",
+    "DEPARTURE_DATE": "Departure date",
+    "SEATS_AVAILABLE": "Available seats",
     "COMPATIBLE_BRAND": "Compatible brand",
     "LIVING_AREA_SQM": "Living area (m²)",
     "ROOMS": "Rooms",

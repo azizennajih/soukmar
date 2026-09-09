@@ -146,6 +146,13 @@
                             labelPrefix="job_professions."
                             (valueChange)="setAttr(def.code, $event)"
                           />
+                        } @else if (def.code === 'DESTINATION_CITY') {
+                          <select [ngModel]="form.attributes[def.code]" (ngModelChange)="setAttr(def.code, $event)">
+                            <option value="">—</option>
+                            @for (city of cities; track city) {
+                              <option [value]="city">{{ city | cityLabel }}</option>
+                            }
+                          </select>
                         } @else {
                           <input type="text" [ngModel]="form.attributes[def.code]" (ngModelChange)="setAttr(def.code, $event)" />
                         }
@@ -232,7 +239,11 @@
             <p class="deposer__drag-hint">🖐️ {{ 'deposer.drag_hint' | T }}</p>
           }
 
-          <p class="deposer__skip-note">{{ 'deposer.skip_note' | T }}</p>
+          @if (isCarpooling) {
+            <p class="deposer__skip-note deposer__skip-note--required">{{ 'deposer.carpooling_photos_hint' | T }}</p>
+          } @else {
+            <p class="deposer__skip-note">{{ 'deposer.skip_note' | T }}</p>
+          }
         </div>
       }
 
@@ -251,10 +262,14 @@
             </div>
 
             <label class="deposer__premium-toggle">
-              <input type="checkbox" [(ngModel)]="form.showPhone" name="showPhone" />
+              <input type="checkbox" [(ngModel)]="form.showPhone" name="showPhone" [disabled]="isCarpooling" />
               📞 {{ 'deposer.show_phone_toggle' | T }}
             </label>
-            <p class="deposer__step-sub">{{ 'deposer.show_phone_hint' | T }}</p>
+            @if (isCarpooling) {
+              <p class="deposer__step-sub">{{ 'deposer.carpooling_phone_hint' | T }}</p>
+            } @else {
+              <p class="deposer__step-sub">{{ 'deposer.show_phone_hint' | T }}</p>
+            }
 
             <!-- Summary -->
             <div class="deposer__summary">

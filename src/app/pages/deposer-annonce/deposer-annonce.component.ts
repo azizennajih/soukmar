@@ -159,11 +159,20 @@ export class DeposerAnnonceComponent {
     return !sub || !NO_CONDITION_SUBCATEGORIES.includes(sub.code);
   }
 
+  /** Mitfahrgelegenheit (carpooling): the driver's phone must stay visible and
+   * at least 2 photos (driver + car) are required — enforced here in the UI
+   * and again server-side (attributes.ts/listings.ts), so it can't be
+   * bypassed by calling the API directly. */
+  get isCarpooling(): boolean {
+    return this.form.category === 'CARPOOLING';
+  }
+
   selectCategory(val: Category) {
     this.form.category = val;
     this.form.subcategoryId = '';
     this.attributeDefs = [];
     this.form.attributes = {};
+    if (val === 'CARPOOLING') this.form.showPhone = true;
     this.loadingSubcats = true;
     this.catalog.getSubcategories(val).subscribe({
       next: subs => {
@@ -241,6 +250,7 @@ export class DeposerAnnonceComponent {
           return v !== undefined && v !== null && v !== '';
         });
     }
+    if (this.step === 3 && this.isCarpooling) return this.photos.length >= 2;
     return true;
   }
 

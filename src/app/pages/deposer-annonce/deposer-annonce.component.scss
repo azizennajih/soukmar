@@ -175,6 +175,7 @@ small { font-size: .75rem; color: #94a3b8; }
 }
 
 .deposer__skip-note { text-align: center; font-size: .8rem; color: #94a3b8; margin-top: 1rem; }
+.deposer__skip-note--required { color: var(--primary); font-weight: 600; }
 
 /* Image previews */
 .deposer__previews {

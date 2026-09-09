@@ -118,6 +118,13 @@
                       labelPrefix="job_professions."
                       (valueChange)="setTextFilter(def.code, $event)"
                     />
+                  } @else if (def.code === 'DESTINATION_CITY') {
+                    <app-city-select
+                      [cities]="cities"
+                      [value]="attrFilters['attr_' + def.code] ?? ''"
+                      (valueChange)="setTextFilter(def.code, $event)"
+                      [placeholder]="'nav.all' | T"
+                    />
                   } @else {
                     <input type="text" class="sidebar__select" [ngModel]="attrFilters['attr_' + def.code]" (ngModelChange)="setTextFilter(def.code, $event)" />
                   }

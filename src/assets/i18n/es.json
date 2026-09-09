@@ -260,7 +260,8 @@
     "BABY_KIDS": "Bebé & Niños",
     "PETS": "Mascotas",
     "SPORTS_LEISURE": "Deporte & Ocio",
-    "LESSONS_COURSES": "Clases & Cursos"
+    "LESSONS_COURSES": "Clases & Cursos",
+    "CARPOOLING": "Viajes compartidos"
   },
   "footer": {
     "tagline": "La primera plataforma de anuncios clasificados de Marruecos. Simple, rápida y segura.",
@@ -548,6 +549,7 @@
     "photo_main": "Principal",
     "drag_hint": "Arrastra las fotos para reordenarlas — la primera es la foto principal.",
     "skip_note": "Puedes continuar sin fotos y añadirlas después.",
+    "carpooling_photos_hint": "Obligatorio: añade al menos 2 fotos — una tuya y una del vehículo.",
     "contact_title": "📞 Datos de contacto",
     "label_phone": "Teléfono",
     "label_whatsapp": "WhatsApp",
@@ -574,7 +576,8 @@
     "success_sub_edit": "Tus cambios ya son visibles.",
     "publish_edit": "💾 Guardar cambios",
     "show_phone_toggle": "Mostrar mi teléfono en el anuncio",
-    "show_phone_hint": "Si está desactivado, los compradores solo podrán contactarte por chat."
+    "show_phone_hint": "Si está desactivado, los compradores solo podrán contactarte por chat.",
+    "carpooling_phone_hint": "Tu número de teléfono siempre se muestra en los anuncios de viajes compartidos, para que los pasajeros puedan contactarte."
   },
   "subcats": {
     "AUTO": "Coche",
@@ -636,7 +639,8 @@
     "LANGUAGE_COURSES": "Cursos de idiomas",
     "DANCE_COURSES": "Cursos de baile",
     "CONTINUING_EDUCATION": "Formación continua",
-    "OTHER_LESSONS": "Otras clases & cursos"
+    "OTHER_LESSONS": "Otras clases & cursos",
+    "RIDE_OFFER": "Ofrecer un viaje"
   },
   "attrs": {
     "BRAND": "Marca",
@@ -661,6 +665,9 @@
     "ENGINE_POWER_HP": "Potencia del motor (CV)",
     "PART_TYPE": "Tipo de pieza",
     "SUBJECT": "Asignatura",
+    "DESTINATION_CITY": "Ciudad de destino",
+    "DEPARTURE_DATE": "Fecha de salida",
+    "SEATS_AVAILABLE": "Plazas disponibles",
     "COMPATIBLE_BRAND": "Marca compatible",
     "LIVING_AREA_SQM": "Superficie habitable (m²)",
     "ROOMS": "Número de habitaciones",

@@ -260,7 +260,8 @@
     "BABY_KIDS": "Bimbi & Neonati",
     "PETS": "Animali",
     "SPORTS_LEISURE": "Sport & Tempo libero",
-    "LESSONS_COURSES": "Lezioni & Corsi"
+    "LESSONS_COURSES": "Lezioni & Corsi",
+    "CARPOOLING": "Passaggi auto"
   },
   "footer": {
     "tagline": "La prima piattaforma di annunci del Marocco. Semplice, veloce e sicura.",
@@ -548,6 +549,7 @@
     "photo_main": "Principale",
     "drag_hint": "Trascina le foto per riordinarle — la prima è la foto principale.",
     "skip_note": "Puoi continuare senza foto e aggiungerle in seguito.",
+    "carpooling_photos_hint": "Obbligatorio: aggiungi almeno 2 foto — una tua e una dell'auto.",
     "contact_title": "📞 Dati di contatto",
     "label_phone": "Telefono",
     "label_whatsapp": "WhatsApp",
@@ -574,7 +576,8 @@
     "success_sub_edit": "Le tue modifiche sono ora visibili.",
     "publish_edit": "💾 Salva modifiche",
     "show_phone_toggle": "Mostra il mio numero di telefono nell'annuncio",
-    "show_phone_hint": "Se disattivato, gli acquirenti potranno contattarti solo tramite chat."
+    "show_phone_hint": "Se disattivato, gli acquirenti potranno contattarti solo tramite chat.",
+    "carpooling_phone_hint": "Il tuo numero di telefono è sempre visibile negli annunci di passaggi auto, così i passeggeri possono contattarti."
   },
   "subcats": {
     "AUTO": "Auto",
@@ -636,7 +639,8 @@
     "LANGUAGE_COURSES": "Corsi di lingua",
     "DANCE_COURSES": "Corsi di ballo",
     "CONTINUING_EDUCATION": "Formazione continua",
-    "OTHER_LESSONS": "Altre lezioni & corsi"
+    "OTHER_LESSONS": "Altre lezioni & corsi",
+    "RIDE_OFFER": "Offrire un passaggio"
   },
   "attrs": {
     "BRAND": "Marca",
@@ -661,6 +665,9 @@
     "ENGINE_POWER_HP": "Potenza motore (CV)",
     "PART_TYPE": "Tipo di ricambio",
     "SUBJECT": "Materia",
+    "DESTINATION_CITY": "Città di destinazione",
+    "DEPARTURE_DATE": "Data di partenza",
+    "SEATS_AVAILABLE": "Posti disponibili",
     "COMPATIBLE_BRAND": "Marca compatibile",
     "LIVING_AREA_SQM": "Superficie abitabile (m²)",
     "ROOMS": "Numero di stanze",

@@ -1,7 +1,7 @@
 export type Category =
   | 'VEHICLES' | 'REAL_ESTATE' | 'JOBS' | 'ELECTRONICS'
   | 'HOME_GARDEN' | 'FASHION' | 'SERVICES' | 'OTHER'
-  | 'BABY_KIDS' | 'PETS' | 'SPORTS_LEISURE' | 'LESSONS_COURSES';
+  | 'BABY_KIDS' | 'PETS' | 'SPORTS_LEISURE' | 'LESSONS_COURSES' | 'CARPOOLING';
 
 export type ListingStatus = 'ACTIVE' | 'RESERVED' | 'SOLD' | 'PENDING' | 'REJECTED' | 'EXPIRED'; // updated
 
@@ -137,6 +137,7 @@ export const CATEGORIES: CategoryConfig[] = [
   { value: 'LESSONS_COURSES', label: 'Cours & Leçons',  icon: '📚', color: 'cat-cyan' },
   { value: 'PETS',           label: 'Animaux',          icon: '🐾', color: 'cat-brown' },
   { value: 'SPORTS_LEISURE', label: 'Sport & Loisirs',  icon: '⚽', color: 'cat-indigo' },
+  { value: 'CARPOOLING',     label: 'Covoiturage',      icon: '🚕', color: 'cat-blue' },
   { value: 'OTHER',          label: 'Autres',           icon: '📦', color: 'cat-gray' },
 ];
 
