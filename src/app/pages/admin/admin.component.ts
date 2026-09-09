@@ -7,6 +7,7 @@ import { ListingService } from '../../services/listing.service';
 import { AuthService } from '../../services/auth.service';
 import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { Listing, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.model';
 import { Report } from '../../models/report.model';
@@ -41,7 +42,7 @@ export interface SecurityEvent {
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TranslatePipe],
+  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TranslatePipe, CityLabelPipe],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })

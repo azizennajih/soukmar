@@ -8,6 +8,7 @@ import { UploadService } from '../../services/upload.service';
 import { CatalogService } from '../../services/catalog.service';
 import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { TextAutocompleteComponent } from '../../components/text-autocomplete/text-autocomplete.component';
 import { DateInputComponent } from '../../components/date-input/date-input.component';
@@ -19,7 +20,7 @@ interface PhotoItem { url: string; file?: File; }
 
 @Component({
   selector: 'app-deposer-annonce',
-  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TextAutocompleteComponent, DateInputComponent, TranslatePipe, TurnstileComponent],
+  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TextAutocompleteComponent, DateInputComponent, TranslatePipe, CityLabelPipe, TurnstileComponent],
   templateUrl: './deposer-annonce.component.html',
   styleUrl: './deposer-annonce.component.scss'
 })

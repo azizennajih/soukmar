@@ -6,11 +6,12 @@ import { ReviewService } from '../../services/review.service';
 import { Listing, Review, SellerProfile, timeAgo } from '../../models/listing.model';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { I18nService } from '../../services/i18n.service';
 
 @Component({
   selector: 'app-seller-profile',
-  imports: [CommonModule, ListingCardComponent, TranslatePipe],
+  imports: [CommonModule, ListingCardComponent, TranslatePipe, CityLabelPipe],
   templateUrl: './seller-profile.component.html',
   styleUrl: './seller-profile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -5,11 +5,12 @@ import { Listing, CATEGORIES, HIGHLIGHT_ATTR_CODES, formatPriceParts, timeAgo, i
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { I18nService } from '../../services/i18n.service';
 
 @Component({
   selector: 'app-listing-card',
-  imports: [CommonModule, RouterLink, TranslatePipe],
+  imports: [CommonModule, RouterLink, TranslatePipe, CityLabelPipe],
   templateUrl: './listing-card.component.html',
   styleUrl: './listing-card.component.scss'
 })

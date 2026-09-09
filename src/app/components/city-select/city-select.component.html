@@ -50,7 +50,7 @@
             [class.city-select__option--active]="i === activeIndex()"
             [class.city-select__option--selected]="city === value"
             (mousedown)="$event.preventDefault(); select(city)"
-          >{{ city }}</button>
+          >{{ labelFor(city) }}</button>
         }
       } @else {
         <div class="city-select__empty">{{ 'common.no_results' | T }}</div>

@@ -129,7 +129,7 @@
               <div class="pending-row">
                 <div class="pending-row__info">
                   <span class="pending-row__title">{{ listing.title }}</span>
-                  <span class="pending-row__meta">{{ listing.city }} · {{ listing.user?.name || '—' }}</span>
+                  <span class="pending-row__meta">{{ listing.city | cityLabel }} · {{ listing.user?.name || '—' }}</span>
                 </div>
                 <div class="pending-row__actions">
                   <button class="action-btn action-btn--approve"
@@ -202,7 +202,7 @@
                   <span class="badge" [ngClass]="getCategory(listing.category)?.color">
                     {{ getCategory(listing.category)?.icon }} {{ ('cats.' + listing.category) | T }}
                   </span>
-                  <span class="table-listing-city">📍 {{ listing.city }}</span>
+                  <span class="table-listing-city">📍 {{ listing.city | cityLabel }}</span>
                 </div>
                 @if (listing.isPremium) {
                   <span class="badge badge-premium" style="margin-top:.25rem">⭐ {{ 'listing.premium_badge' | T }}</span>
@@ -294,7 +294,7 @@
                 <div class="table-user-email">{{ user.email }}</div>
               </div>
             </div>
-            <div class="table-cell-muted">{{ user.city || '—' }}</div>
+            <div class="table-cell-muted">{{ (user.city | cityLabel) || '—' }}</div>
             <div class="table-cell-muted" style="font-variant-numeric: tabular-nums">
               {{ user._count?.listings ?? '—' }}
             </div>

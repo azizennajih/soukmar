@@ -9,7 +9,7 @@
       <div class="seller-profile__info">
         <h1>{{ profile.name }}</h1>
         <div class="seller-profile__meta">
-          @if (profile.city) { <span>📍 {{ profile.city }}</span> }
+          @if (profile.city) { <span>📍 {{ profile.city | cityLabel }}</span> }
           <span>{{ 'seller.member_since' | T }} {{ memberSince(profile.createdAt) }}</span>
           <span>{{ profile.accountType === 'BUSINESS' ? '🏢 ' + ('auth.account_type_business' | T) : '🏠 ' + ('auth.account_type_private' | T) }}</span>
         </div>

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { GeocodeService, Coords } from '../../services/geocode.service';
 import { I18nService } from '../../services/i18n.service';
+import { cityLabel } from '../../models/listing.model';
 
 const DIACRITICS = /[̀-ͯ]/g;
 
@@ -52,14 +53,25 @@ export class CitySelectComponent {
 
   filtered = computed(() => {
     const q = normalize(this.query());
+    // Reading lang() makes Angular track this signal and re-run when the
+    // Arabic labels below need to be (re)matched against the query.
+    const lang = this.i18n.lang();
     // No cap: the panel scrolls (max-height + overflow-y), and capping the
     // unfiltered browse-all list broke it — the city list is alphabetical,
     // so a fixed slice only ever showed cities starting with "A".
-    return q ? this.cities.filter(c => normalize(c).includes(q)) : this.cities;
+    return q
+      ? this.cities.filter(c => normalize(c).includes(q) || normalize(cityLabel(c, lang)).includes(q))
+      : this.cities;
   });
 
+  /** Arabic name in Arabic UI (falls back to the stored French/Latin city as-is
+   * for any value outside the dictionary), otherwise that stored value unchanged. */
+  labelFor(city: string): string {
+    return cityLabel(city, this.i18n.lang());
+  }
+
   get displayValue(): string {
-    return this.open() ? this.query() : this.value;
+    return this.open() ? this.query() : this.labelFor(this.value);
   }
 
   private anchorStyle(): PanelStyle {

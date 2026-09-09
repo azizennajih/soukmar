@@ -111,7 +111,7 @@
               <select [(ngModel)]="form.city">
                 <option value="">{{ 'deposer.city_default' | T }}</option>
                 @for (city of cities; track city) {
-                  <option [value]="city">{{ city }}</option>
+                  <option [value]="city">{{ city | cityLabel }}</option>
                 }
               </select>
             </div>
@@ -258,7 +258,7 @@
               }
               <div class="deposer__summary-row"><span>{{ 'deposer.summary_listing_title' | T }}</span><strong>{{ form.title || '—' }}</strong></div>
               <div class="deposer__summary-row"><span>{{ 'deposer.summary_price' | T }}</span><strong>{{ form.price ? form.price + ' ' + form.currency : ('deposer.negotiate' | T) }}</strong></div>
-              <div class="deposer__summary-row"><span>{{ 'deposer.summary_city' | T }}</span><strong>{{ form.city || '—' }}</strong></div>
+              <div class="deposer__summary-row"><span>{{ 'deposer.summary_city' | T }}</span><strong>{{ (form.city | cityLabel) || '—' }}</strong></div>
             </div>
 
             @if (!editId) {

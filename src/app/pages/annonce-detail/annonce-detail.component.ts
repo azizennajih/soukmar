@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth.service';
 import { Listing, ListingAttributeValue, CATEGORIES, formatPriceParts, timeAgo, isNewListing, exactDateTime, localeForLang } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { I18nService } from '../../services/i18n.service';
 import { ReviewService, CanReviewResponse } from '../../services/review.service';
 import { ReportButtonComponent } from '../../components/report-button/report-button.component';
@@ -15,7 +16,7 @@ import { ListingCardComponent } from '../../components/listing-card/listing-card
 
 @Component({
   selector: 'app-annonce-detail',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, ReportButtonComponent, ListingCardComponent],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, CityLabelPipe, ReportButtonComponent, ListingCardComponent],
   templateUrl: './annonce-detail.component.html',
   styleUrl: './annonce-detail.component.scss'
 })

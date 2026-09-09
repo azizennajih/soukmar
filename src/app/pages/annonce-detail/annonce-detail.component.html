@@ -59,7 +59,7 @@
           <div>
             <h1 class="detail__title">{{ listing.title }}</h1>
             <div class="detail__meta">
-              <span>📍 {{ listing.city }}</span>
+              <span>📍 {{ listing.city | cityLabel }}</span>
               <span [title]="exactTime">🕐 {{ isNew ? exactTime : timeDisplay }}</span>
               <span>👁 {{ listing.views }} {{ 'listing.views' | T }}</span>
             </div>
@@ -196,7 +196,7 @@
           <div>
             <div class="detail__seller-name">{{ listing.user?.name || ('listing.anonymous' | T) }}</div>
             @if (listing.user?.city) {
-              <div class="detail__seller-city">📍 {{ listing.user?.city }}</div>
+              <div class="detail__seller-city">📍 {{ listing.user?.city | cityLabel }}</div>
             }
             @if (listing.user?.accountType) {
               <div class="detail__seller-city">{{ listing.user?.accountType === 'BUSINESS' ? '🏢 ' + ('auth.account_type_business' | T) : '🏠 ' + ('auth.account_type_private' | T) }}</div>
