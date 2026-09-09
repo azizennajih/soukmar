@@ -262,7 +262,8 @@
     "SPORTS_LEISURE": "Sport & Loisirs",
     "LESSONS_COURSES": "Cours & Leçons",
     "CARPOOLING": "Covoiturage",
-    "TRANSPORT": "Proposer un transport"
+    "TRANSPORT": "Proposer un transport",
+    "RENTAL": "Location"
   },
   "subcats": {
     "AUTO": "Voiture",
@@ -328,7 +329,11 @@
     "RIDE_OFFER": "Proposer un trajet",
     "CONTAINER": "Conteneur",
     "GOODS": "Marchandises",
-    "OTHER_TRANSPORT": "Autre transport"
+    "OTHER_TRANSPORT": "Autre transport",
+    "CAR_RENTAL": "Louer une voiture",
+    "TRUCK_RENTAL": "Louer un camion",
+    "MACHINERY_RENTAL": "Louer une machine",
+    "OTHER_RENTAL": "Autre location"
   },
   "attrs": {
     "BRAND": "Marque",
@@ -347,6 +352,8 @@
     "VEHICLE_TYPE": "Type de véhicule",
     "PAYLOAD_KG": "Charge utile (kg)",
     "PAYLOAD_TONS": "Charge utile (tonnes)",
+    "RENTAL_PERIOD": "Durée de location",
+    "MACHINE_TYPE": "Type de machine",
     "RV_TYPE": "Type",
     "SLEEPING_PLACES": "Places de couchage",
     "LENGTH_M": "Longueur (m)",
@@ -463,6 +470,13 @@
       "SEMI_TRAILER": "Semi-remorque", "UNDER_1T": "Moins d'1 tonne", "ONE_TO_THREE_T": "1 à 3 tonnes",
       "THREE_TO_FIVE_T": "3 à 5 tonnes", "FIVE_TO_TEN_T": "5 à 10 tonnes", "TEN_TO_TWENTY_T": "10 à 20 tonnes",
       "OVER_TWENTY_T": "Plus de 20 tonnes",
+      "PER_HOUR": "Par heure", "PER_DAY": "Par jour", "PER_WEEK": "Par semaine", "PER_MONTH": "Par mois",
+      "FORKLIFT": "Chariot élévateur", "EXCAVATOR": "Pelleteuse", "BULLDOZER": "Bulldozer", "CRANE": "Grue",
+      "CONCRETE_MIXER": "Bétonnière", "CONCRETE_PUMP": "Pompe à béton", "ROAD_ROLLER": "Rouleau compresseur",
+      "PLATE_COMPACTOR": "Plaque vibrante", "AERIAL_PLATFORM": "Nacelle élévatrice", "SCISSOR_LIFT": "Nacelle ciseaux",
+      "SCAFFOLDING": "Échafaudage", "GENERATOR": "Groupe électrogène", "COMPRESSOR": "Compresseur",
+      "WELDING_MACHINE": "Poste à souder", "WATER_PUMP": "Pompe à eau", "CHAINSAW": "Tronçonneuse",
+      "LAWN_MOWER": "Tondeuse à gazon", "POWER_TOOLS": "Outils électriques", "CLEANING_MACHINE": "Machine de nettoyage",
       "MOTORHOME_INTEGRATED": "Camping-car intégral", "MOTORHOME_SEMI": "Camping-car profilé",
       "CAMPERVAN": "Fourgon aménagé", "CARAVAN": "Caravane",
       "SAILBOAT": "Voilier", "MOTORBOAT": "Bateau à moteur", "JETSKI": "Jet-ski", "DINGHY": "Canot",
