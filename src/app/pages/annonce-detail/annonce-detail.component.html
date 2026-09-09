@@ -137,6 +137,21 @@
         </div>
       }
 
+      <!-- Location -->
+      @if (listing.lat != null && listing.lng != null) {
+        <div class="card detail__location">
+          <div class="detail__location-header">
+            <h2 class="detail__desc-title">📍 {{ 'listing.location_title' | T }}</h2>
+            <button type="button" class="detail__location-toggle" (click)="showMap.set(!showMap())">
+              {{ (showMap() ? 'listing.hide_map' : 'listing.show_map') | T }}
+            </button>
+          </div>
+          @if (showMap()) {
+            <app-listings-map [listings]="[listing]" [heightPx]="320" />
+          }
+        </div>
+      }
+
       <!-- Safety -->
       <div class="detail__safety">
         <div class="detail__safety-title">🛡️ {{ 'listing.safety_title' | T }}</div>

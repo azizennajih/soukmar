@@ -170,6 +170,22 @@
     strong { font-size: .85rem; color: var(--text); font-weight: 700; text-align: right; }
   }
 
+  /* Location */
+  &__location { margin-top: 1.25rem; padding: 1.25rem; }
+
+  &__location-header {
+    display: flex; justify-content: space-between; align-items: center;
+    h2 { margin: 0; }
+  }
+
+  &__location-toggle {
+    flex-shrink: 0;
+    padding: .45rem .9rem; border: 1.5px solid var(--border); border-radius: .65rem;
+    background: var(--white); font-size: .82rem; font-weight: 600; color: var(--text);
+    cursor: pointer; transition: border-color .15s, color .15s;
+    &:hover { border-color: var(--primary); color: var(--primary); }
+  }
+
   /* Safety */
   &__safety {
     background: #eff6ff; border: 1px solid #bfdbfe;

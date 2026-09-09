@@ -144,7 +144,10 @@
     "leave_review": "Lascia una recensione",
     "review_placeholder": "Condividi la tua esperienza (facoltativo)",
     "submit_review": "Invia recensione",
-    "review_thanks": "Grazie per la tua recensione!"
+    "review_thanks": "Grazie per la tua recensione!",
+    "location_title": "Posizione",
+    "show_map": "Vedi sulla mappa",
+    "hide_map": "Nascondi mappa"
   },
   "chat": {
     "back": "Indietro",

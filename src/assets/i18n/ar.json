@@ -144,7 +144,10 @@
     "leave_review": "أضف تقييمًا",
     "review_placeholder": "شارك تجربتك (اختياري)",
     "submit_review": "إرسال التقييم",
-    "review_thanks": "شكرًا على تقييمك!"
+    "review_thanks": "شكرًا على تقييمك!",
+    "location_title": "الموقع",
+    "show_map": "عرض على الخريطة",
+    "hide_map": "إخفاء الخريطة"
   },
   "chat": {
     "back": "رجوع",

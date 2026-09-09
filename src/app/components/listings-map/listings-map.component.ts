@@ -17,6 +17,9 @@ const DEFAULT_ZOOM = 6;
 })
 export class ListingsMapComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() listings: Listing[] = [];
+  /** Canvas height in px — the search page's multi-marker map wants more
+   * room than the single-pin map on a listing's own detail page. */
+  @Input() heightPx = 520;
   @ViewChild('mapEl', { static: true }) mapEl!: ElementRef<HTMLDivElement>;
 
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));

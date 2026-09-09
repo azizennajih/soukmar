@@ -144,7 +144,10 @@
     "leave_review": "Leave a review",
     "review_placeholder": "Share your experience (optional)",
     "submit_review": "Submit review",
-    "review_thanks": "Thanks for your review!"
+    "review_thanks": "Thanks for your review!",
+    "location_title": "Location",
+    "show_map": "View on map",
+    "hide_map": "Hide map"
   },
   "chat": {
     "back": "Back",

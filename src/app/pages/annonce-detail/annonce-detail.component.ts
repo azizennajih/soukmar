@@ -16,10 +16,11 @@ import { ReportButtonComponent } from '../../components/report-button/report-but
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { StarRatingComponent } from '../../components/star-rating/star-rating.component';
 import { VerifiedBadgeComponent } from '../../components/verified-badge/verified-badge.component';
+import { ListingsMapComponent } from '../../components/listings-map/listings-map.component';
 
 @Component({
   selector: 'app-annonce-detail',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, CityLabelPipe, ReportButtonComponent, ListingCardComponent, StarRatingComponent, VerifiedBadgeComponent],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, CityLabelPipe, ReportButtonComponent, ListingCardComponent, StarRatingComponent, VerifiedBadgeComponent, ListingsMapComponent],
   templateUrl: './annonce-detail.component.html',
   styleUrl: './annonce-detail.component.scss'
 })
@@ -35,6 +36,7 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
   favLoading = signal(false);
   shareCopied = signal(false);
   shareMenuOpen = signal(false);
+  showMap = signal(false);
 
   canReviewInfo: CanReviewResponse | null = null;
   showReviewForm = signal(false);
@@ -76,6 +78,7 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
       this.loadError = false;
       this.similarListings = [];
       this.selectedImage = 0;
+      this.showMap.set(false);
       this.cdr.markForCheck();
       this.ls.getById(id).subscribe({
         next: listing => {
