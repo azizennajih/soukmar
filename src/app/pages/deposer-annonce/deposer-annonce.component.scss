@@ -4,9 +4,31 @@
   padding: 2.5rem 1.25rem;
 
   &__header {
+    position: relative;
     text-align: center; margin-bottom: 2rem;
     h1 { font-size: 2rem; font-weight: 900; color: #0f172a; }
     p  { color: #64748b; margin-top: .35rem; }
+  }
+
+  &__close {
+    position: absolute;
+    top: 0;
+    inset-inline-end: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: none;
+    background: var(--bg);
+    color: var(--text-muted);
+    border-radius: 50%;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .15s, color .15s;
+
+    &:hover { background: var(--primary-light); color: var(--primary); }
   }
 
   &__gate, &__success {

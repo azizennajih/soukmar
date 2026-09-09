@@ -405,6 +405,7 @@
     "success_sub": "Your listing is now visible to all buyers.",
     "header_title": "Post a listing",
     "header_sub": "Free · Fast · In under 2 minutes",
+    "confirm_cancel": "Are you sure you want to cancel? Your entries will be lost.",
     "step_category": "Category",
     "step_details": "Details",
     "step_photos": "Photos",

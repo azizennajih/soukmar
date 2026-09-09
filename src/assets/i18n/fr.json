@@ -768,6 +768,7 @@
     "success_sub": "Votre annonce est maintenant visible par tous les acheteurs.",
     "header_title": "Déposer une annonce",
     "header_sub": "Gratuit · Rapide · En moins de 2 minutes",
+    "confirm_cancel": "Voulez-vous vraiment annuler ? Vos informations seront perdues.",
     "step_category": "Catégorie",
     "step_subcategory": "Sous-catégorie",
     "step_details": "Détails",

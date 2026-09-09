@@ -18,6 +18,7 @@
   } @else {
 
     <div class="deposer__header">
+      <button type="button" class="deposer__close" (click)="cancel()" [attr.aria-label]="'common.close' | T">✕</button>
       <h1>{{ (isEdit ? 'deposer.header_title_edit' : 'deposer.header_title') | T }}</h1>
       <p>{{ 'deposer.header_sub' | T }}</p>
     </div>

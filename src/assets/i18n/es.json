@@ -522,6 +522,7 @@
     "success_sub": "Tu anuncio ya es visible para todos los compradores.",
     "header_title": "Publicar un anuncio",
     "header_sub": "Gratis · Rápido · En menos de 2 minutos",
+    "confirm_cancel": "¿Seguro que quieres cancelar? Se perderán tus datos.",
     "step_category": "Categoría",
     "step_details": "Detalles",
     "step_photos": "Fotos",

@@ -522,6 +522,7 @@
     "success_sub": "Ihre Anzeige ist jetzt für alle Käufer sichtbar.",
     "header_title": "Anzeige aufgeben",
     "header_sub": "Kostenlos · Schnell · In unter 2 Minuten",
+    "confirm_cancel": "Möchten Sie wirklich abbrechen? Ihre Eingaben gehen verloren.",
     "step_category": "Kategorie",
     "step_details": "Details",
     "step_photos": "Fotos",

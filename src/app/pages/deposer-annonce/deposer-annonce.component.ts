@@ -192,6 +192,18 @@ export class DeposerAnnonceComponent {
     this.step = this.step - 1;
   }
 
+  /** Leaves the wizard from the header's close button — asks first only if
+   * the user has actually entered something, so an empty/just-opened form
+   * closes silently. */
+  cancel() {
+    const hasProgress = !!(
+      this.form.category || this.form.subcategoryId || this.form.title ||
+      this.form.description || this.form.price || this.form.city || this.photos.length
+    );
+    if (hasProgress && !confirm(this.i18n.t('deposer.confirm_cancel'))) return;
+    this.router.navigate(this.isEdit ? ['/mes-annonces'] : ['/']);
+  }
+
   get canNext(): boolean {
     if (this.step === 0) return !!this.form.category;
     if (this.step === 1) return !!this.form.subcategoryId;
