@@ -17,8 +17,8 @@
     width: 2.25rem;
     height: 2.25rem;
     border: none;
-    background: var(--bg);
-    color: var(--text-muted);
+    background: var(--primary-light);
+    color: var(--primary);
     border-radius: 50%;
     font-size: 1rem;
     line-height: 1;
@@ -28,7 +28,35 @@
     justify-content: center;
     transition: background .15s, color .15s;
 
-    &:hover { background: var(--primary-light); color: var(--primary); }
+    &:hover { background: var(--primary); color: var(--white); }
+  }
+
+  &__confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, .45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1.25rem;
+  }
+
+  &__confirm-card {
+    max-width: 360px;
+    width: 100%;
+    padding: 1.5rem;
+    text-align: center;
+
+    p { color: var(--text); font-weight: 600; margin-bottom: 1.25rem; }
+  }
+
+  &__confirm-actions {
+    display: flex;
+    gap: .75rem;
+    justify-content: center;
+
+    .btn-outline, .btn-primary { flex: 1; }
   }
 
   &__gate, &__success {

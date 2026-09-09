@@ -192,16 +192,26 @@ export class DeposerAnnonceComponent {
     this.step = this.step - 1;
   }
 
+  pendingCancel = false;
+
   /** Leaves the wizard from the header's close button — asks first only if
    * the user has actually entered something, so an empty/just-opened form
-   * closes silently. */
+   * closes silently. Uses an in-page overlay rather than window.confirm():
+   * browsers silently auto-dismiss native dialogs after a page triggers a
+   * few of them in a row ("Prevent this page from creating additional
+   * dialogs"), which made the button appear to randomly stop working. */
   cancel() {
     const hasProgress = !!(
       this.form.category || this.form.subcategoryId || this.form.title ||
       this.form.description || this.form.price || this.form.city || this.photos.length
     );
-    if (hasProgress && !confirm(this.i18n.t('deposer.confirm_cancel'))) return;
+    if (hasProgress) { this.pendingCancel = true; return; }
     this.router.navigate(this.isEdit ? ['/mes-annonces'] : ['/']);
+  }
+
+  confirmCancel(leave: boolean) {
+    this.pendingCancel = false;
+    if (leave) this.router.navigate(this.isEdit ? ['/mes-annonces'] : ['/']);
   }
 
   get canNext(): boolean {
