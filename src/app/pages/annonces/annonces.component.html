@@ -62,7 +62,7 @@
       </div>
 
       <!-- Condition -->
-      @if (filters.categorie) {
+      @if (showCondition) {
         <div class="sidebar__section">
           <label class="sidebar__label">{{ 'annonces.condition' | T }}</label>
           <select [(ngModel)]="filters.condition" class="sidebar__select">

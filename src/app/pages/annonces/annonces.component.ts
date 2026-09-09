@@ -12,7 +12,7 @@ import { CitySelectComponent } from '../../components/city-select/city-select.co
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { MultiSelectComponent } from '../../components/multi-select/multi-select.component';
 import { TextAutocompleteComponent } from '../../components/text-autocomplete/text-autocomplete.component';
-import { CATEGORIES, MOROCCO_CITIES, Listing, Category, AttributeDefinition, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR } from '../../models/listing.model';
+import { CATEGORIES, MOROCCO_CITIES, Listing, Category, AttributeDefinition, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { SavedSearchService } from '../../services/saved-search.service';
@@ -43,6 +43,16 @@ export class AnnoncesComponent implements OnInit {
     const sectors = this.selectedOptions('INDUSTRY');
     if (!sectors.length) return JOB_PROFESSION_CODES;
     return [...new Set(sectors.flatMap(s => JOB_PROFESSIONS_BY_SECTOR[s] ?? []))];
+  }
+
+  /** Hides the Zustand (Neu/Gebraucht) filter for categories/subcategories
+   * where it makes no sense — e.g. services like Trainingsangebote never
+   * have a condition, even though their category (Sport & Freizeit) is
+   * otherwise full of physical goods. */
+  get showCondition(): boolean {
+    if (!this.filters.categorie || !CONDITION_CATEGORIES.includes(this.filters.categorie as Category)) return false;
+    const sub = this.subcategoryOptions.find(s => s.id === this.filters.souscategorie);
+    return !sub || !NO_CONDITION_SUBCATEGORIES.includes(sub.code);
   }
 
   filters = { q: '', categorie: '', souscategorie: '', ville: '', minPrix: '', maxPrix: '', condition: '', tri: '', radius: '', lat: '', lng: '', accountType: '' };

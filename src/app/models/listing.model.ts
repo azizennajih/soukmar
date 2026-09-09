@@ -174,6 +174,12 @@ export const JOB_PROFESSION_CODES: string[] = [...new Set(Object.values(JOB_PROF
 
 export const CONDITION_CATEGORIES: Category[] = ['VEHICLES', 'ELECTRONICS', 'HOME_GARDEN', 'FASHION', 'BABY_KIDS', 'SPORTS_LEISURE'];
 
+/** Subcategories that opt out of "Zustand" (Neu/Gebraucht) even though their
+ * category is otherwise in CONDITION_CATEGORIES — for services offered
+ * within an otherwise physical-goods category. E.g. Sport & Freizeit also
+ * hosts "Trainingsangebote" (coaching), which isn't a "new or used" item. */
+export const NO_CONDITION_SUBCATEGORIES: string[] = ['TRAINING_OFFERS'];
+
 export const HIGHLIGHT_ATTR_CODES: Partial<Record<Category, string[]>> = {
   VEHICLES: ['MILEAGE', 'FUEL_TYPE'],
   ELECTRONICS: ['STORAGE_CAPACITY', 'RAM'],

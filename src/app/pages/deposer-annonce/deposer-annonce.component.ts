@@ -13,7 +13,7 @@ import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { TextAutocompleteComponent } from '../../components/text-autocomplete/text-autocomplete.component';
 import { DateInputComponent } from '../../components/date-input/date-input.component';
 import { MultiSelectComponent } from '../../components/multi-select/multi-select.component';
-import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, Category, Subcategory, AttributeDefinition, Condition, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR } from '../../models/listing.model';
+import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES, Category, Subcategory, AttributeDefinition, Condition, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR } from '../../models/listing.model';
 import { compressListingPhoto } from '../../utils/image-compression';
 import { TurnstileComponent } from '../../components/turnstile/turnstile.component';
 
@@ -154,7 +154,9 @@ export class DeposerAnnonceComponent {
   }
 
   get showCondition(): boolean {
-    return !!this.form.category && CONDITION_CATEGORIES.includes(this.form.category as Category);
+    if (!this.form.category || !CONDITION_CATEGORIES.includes(this.form.category as Category)) return false;
+    const sub = this.subcategories.find(s => s.id === this.form.subcategoryId);
+    return !sub || !NO_CONDITION_SUBCATEGORIES.includes(sub.code);
   }
 
   selectCategory(val: Category) {
@@ -177,6 +179,7 @@ export class DeposerAnnonceComponent {
   selectSubcategory(sub: Subcategory) {
     this.form.subcategoryId = sub.id;
     this.form.attributes = {};
+    if (!this.showCondition) this.form.condition = '';
     this.loadingAttrs = true;
     this.catalog.getAttributes(sub.id).subscribe({
       next: defs => { this.attributeDefs = defs; this.loadingAttrs = false; this.step = 2; this.cdr.markForCheck(); },
