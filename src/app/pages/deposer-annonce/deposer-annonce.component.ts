@@ -190,6 +190,37 @@ export class DeposerAnnonceComponent {
       : 'deposer.placeholder_desc';
   }
 
+  // A small icon per option makes it much faster to spot the right entry in
+  // a 20-item dropdown than reading text alone — scoped to this one select
+  // (via machineTypeIcon(), not baked into the shared attrs.opts.* strings)
+  // since MACHINE_TYPE is the only attribute that needs it.
+  private static readonly MACHINE_TYPE_ICONS: Record<string, string> = {
+    FORKLIFT: '📦',
+    EXCAVATOR: '⛏️',
+    BULLDOZER: '🚜',
+    CRANE: '🏗️',
+    CONCRETE_MIXER: '🧱',
+    CONCRETE_PUMP: '🚰',
+    ROAD_ROLLER: '🛣️',
+    PLATE_COMPACTOR: '🚧',
+    AERIAL_PLATFORM: '🪜',
+    SCISSOR_LIFT: '⬆️',
+    SCAFFOLDING: '🧗',
+    GENERATOR: '🔌',
+    COMPRESSOR: '💨',
+    WELDING_MACHINE: '🔥',
+    WATER_PUMP: '💧',
+    CHAINSAW: '🪚',
+    LAWN_MOWER: '🌱',
+    POWER_TOOLS: '🛠️',
+    CLEANING_MACHINE: '🧹',
+    OTHER: '🔩',
+  };
+
+  machineTypeIcon(code: string): string {
+    return DeposerAnnonceComponent.MACHINE_TYPE_ICONS[code] ?? '';
+  }
+
   selectCategory(val: Category) {
     this.form.category = val;
     this.form.subcategoryId = '';

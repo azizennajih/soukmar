@@ -174,7 +174,7 @@
                         <select [ngModel]="form.attributes[def.code]" (ngModelChange)="setAttr(def.code, $event)">
                           <option value="">—</option>
                           @for (opt of def.options; track opt) {
-                            <option [value]="opt">{{ ('attrs.opts.' + opt) | T }}</option>
+                            <option [value]="opt">{{ (def.code === 'MACHINE_TYPE' ? machineTypeIcon(opt) + ' ' : '') }}{{ ('attrs.opts.' + opt) | T }}</option>
                           }
                         </select>
                       }
