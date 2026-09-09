@@ -957,7 +957,19 @@
     "password_changed": "Mot de passe modifié avec succès !",
     "password_mismatch": "Les mots de passe ne correspondent pas.",
     "password_too_short": "Le mot de passe doit contenir au moins 6 caractères.",
-    "password_change_error": "Erreur lors du changement de mot de passe."
+    "password_change_error": "Erreur lors du changement de mot de passe.",
+    "phone_verified": "Numéro de téléphone vérifié",
+    "phone_not_verified": "Non vérifié",
+    "phone_verify_btn": "Vérifier par SMS",
+    "phone_sending": "Envoi en cours...",
+    "phone_code_hint": "Nous vous avons envoyé un code à 6 chiffres par SMS.",
+    "phone_confirm_btn": "Confirmer",
+    "phone_verifying": "Vérification...",
+    "phone_resend": "Renvoyer le code",
+    "phone_code_sent": "Code envoyé par SMS.",
+    "phone_code_send_error": "Le code n'a pas pu être envoyé.",
+    "phone_verified_success": "Numéro de téléphone vérifié avec succès !",
+    "phone_code_invalid": "Le code est invalide ou expiré."
   },
   "parametres": {
     "title": "Paramètres",

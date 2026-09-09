@@ -547,7 +547,19 @@
     "password_changed": "تم تغيير كلمة المرور بنجاح!",
     "password_mismatch": "كلمتا المرور غير متطابقتين.",
     "password_too_short": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.",
-    "password_change_error": "خطأ أثناء تغيير كلمة المرور."
+    "password_change_error": "خطأ أثناء تغيير كلمة المرور.",
+    "phone_verified": "رقم الهاتف موثق",
+    "phone_not_verified": "غير موثق",
+    "phone_verify_btn": "التحقق عبر الرسائل النصية",
+    "phone_sending": "جارٍ الإرسال...",
+    "phone_code_hint": "أرسلنا لك رمزًا مكونًا من 6 أرقام عبر الرسائل النصية.",
+    "phone_confirm_btn": "تأكيد",
+    "phone_verifying": "جارٍ التحقق...",
+    "phone_resend": "إعادة إرسال الرمز",
+    "phone_code_sent": "تم إرسال الرمز عبر الرسائل النصية.",
+    "phone_code_send_error": "تعذر إرسال الرمز.",
+    "phone_verified_success": "تم توثيق رقم الهاتف بنجاح!",
+    "phone_code_invalid": "الرمز غير صحيح أو منتهي الصلاحية."
   },
   "parametres": {
     "title": "الإعدادات",

@@ -547,7 +547,19 @@
     "password_changed": "Password changed successfully!",
     "password_mismatch": "Passwords do not match.",
     "password_too_short": "Password must be at least 6 characters.",
-    "password_change_error": "Error changing password."
+    "password_change_error": "Error changing password.",
+    "phone_verified": "Phone number verified",
+    "phone_not_verified": "Not verified",
+    "phone_verify_btn": "Verify by SMS",
+    "phone_sending": "Sending...",
+    "phone_code_hint": "We sent you a 6-digit code by SMS.",
+    "phone_confirm_btn": "Confirm",
+    "phone_verifying": "Checking...",
+    "phone_resend": "Resend code",
+    "phone_code_sent": "Code sent by SMS.",
+    "phone_code_send_error": "The code could not be sent.",
+    "phone_verified_success": "Phone number verified successfully!",
+    "phone_code_invalid": "The code is invalid or expired."
   },
   "parametres": {
     "title": "Settings",

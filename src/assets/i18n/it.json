@@ -480,7 +480,19 @@
     "password_changed": "Password cambiata con successo!",
     "password_mismatch": "Le password non corrispondono.",
     "password_too_short": "La password deve contenere almeno 6 caratteri.",
-    "password_change_error": "Errore durante la modifica della password."
+    "password_change_error": "Errore durante la modifica della password.",
+    "phone_verified": "Numero di telefono verificato",
+    "phone_not_verified": "Non verificato",
+    "phone_verify_btn": "Verifica via SMS",
+    "phone_sending": "Invio in corso...",
+    "phone_code_hint": "Ti abbiamo inviato un codice a 6 cifre via SMS.",
+    "phone_confirm_btn": "Conferma",
+    "phone_verifying": "Verifica in corso...",
+    "phone_resend": "Invia di nuovo il codice",
+    "phone_code_sent": "Codice inviato via SMS.",
+    "phone_code_send_error": "Impossibile inviare il codice.",
+    "phone_verified_success": "Numero di telefono verificato con successo!",
+    "phone_code_invalid": "Il codice non è valido o è scaduto."
   },
   "parametres": {
     "title": "Impostazioni",

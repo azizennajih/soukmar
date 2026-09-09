@@ -480,7 +480,19 @@
     "password_changed": "¡Contraseña cambiada con éxito!",
     "password_mismatch": "Las contraseñas no coinciden.",
     "password_too_short": "La contraseña debe tener al menos 6 caracteres.",
-    "password_change_error": "Error al cambiar la contraseña."
+    "password_change_error": "Error al cambiar la contraseña.",
+    "phone_verified": "Número de teléfono verificado",
+    "phone_not_verified": "No verificado",
+    "phone_verify_btn": "Verificar por SMS",
+    "phone_sending": "Enviando...",
+    "phone_code_hint": "Te hemos enviado un código de 6 dígitos por SMS.",
+    "phone_confirm_btn": "Confirmar",
+    "phone_verifying": "Comprobando...",
+    "phone_resend": "Reenviar código",
+    "phone_code_sent": "Código enviado por SMS.",
+    "phone_code_send_error": "No se pudo enviar el código.",
+    "phone_verified_success": "¡Número de teléfono verificado correctamente!",
+    "phone_code_invalid": "El código no es válido o ha caducado."
   },
   "parametres": {
     "title": "Ajustes",

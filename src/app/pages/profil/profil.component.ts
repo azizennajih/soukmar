@@ -20,6 +20,7 @@ interface ProfileData {
   accountType: 'PRIVATE' | 'BUSINESS';
   role: string;
   createdAt: string;
+  phoneVerified?: boolean;
 }
 
 @Component({
@@ -43,6 +44,13 @@ export class ProfilComponent implements OnInit {
   pwSaving = signal(false);
   pwSuccessMsg = '';
   pwErrorMsg = '';
+
+  phoneCodeSent = signal(false);
+  phoneCode = '';
+  phoneSendingCode = signal(false);
+  phoneVerifying = signal(false);
+  phoneMsg = '';
+  phoneErrorMsg = '';
 
   constructor(
     private api: ApiService,
@@ -85,10 +93,16 @@ export class ProfilComponent implements OnInit {
         accountType: this.form.accountType,
       }));
       this.profile = updated;
+      // A changed phone number invalidates any prior verification server-side —
+      // drop any in-progress code entry for the old number to match.
+      this.phoneCodeSent.set(false);
+      this.phoneCode = '';
+      this.phoneMsg = '';
+      this.phoneErrorMsg = '';
       // Update auth signal
       const user = this.auth.currentUser();
       if (user) {
-        const updatedUser: AuthUser = { ...user, name: updated.name, phone: updated.phone, city: updated.city, accountType: updated.accountType };
+        const updatedUser: AuthUser = { ...user, name: updated.name, phone: updated.phone, city: updated.city, accountType: updated.accountType, phoneVerified: updated.phoneVerified };
         (this.auth as any).currentUser.set(updatedUser);
         localStorage.setItem('soukmar_session', JSON.stringify(updatedUser));
       }
@@ -116,6 +130,48 @@ export class ProfilComponent implements OnInit {
       this.errorMsg = this.i18n.t('profil.photo_upload_error');
     } finally {
       this.uploadingImage.set(false);
+    }
+  }
+
+  async sendPhoneCode() {
+    this.phoneMsg = '';
+    this.phoneErrorMsg = '';
+    this.phoneSendingCode.set(true);
+    try {
+      await firstValueFrom(this.api.post('/auth/phone/send-code', {}));
+      this.phoneCodeSent.set(true);
+      this.phoneCode = '';
+      this.phoneMsg = this.i18n.t('profil.phone_code_sent');
+    } catch (e) {
+      const err = e as { error?: { error?: string } };
+      this.phoneErrorMsg = err?.error?.error || this.i18n.t('profil.phone_code_send_error');
+    } finally {
+      this.phoneSendingCode.set(false);
+    }
+  }
+
+  async verifyPhoneCode() {
+    if (!this.phoneCode.trim()) return;
+    this.phoneMsg = '';
+    this.phoneErrorMsg = '';
+    this.phoneVerifying.set(true);
+    try {
+      await firstValueFrom(this.api.post('/auth/phone/verify', { code: this.phoneCode.trim() }));
+      this.profile = { ...this.profile!, phoneVerified: true };
+      this.phoneCodeSent.set(false);
+      this.phoneCode = '';
+      this.phoneMsg = this.i18n.t('profil.phone_verified_success');
+      const user = this.auth.currentUser();
+      if (user) {
+        const updatedUser: AuthUser = { ...user, phoneVerified: true };
+        (this.auth as any).currentUser.set(updatedUser);
+        localStorage.setItem('soukmar_session', JSON.stringify(updatedUser));
+      }
+    } catch (e) {
+      const err = e as { error?: { error?: string } };
+      this.phoneErrorMsg = err?.error?.error || this.i18n.t('profil.phone_code_invalid');
+    } finally {
+      this.phoneVerifying.set(false);
     }
   }
 

@@ -61,6 +61,34 @@
           <div class="form-group">
             <label class="form-label">{{ 'profil.phone' | T }}</label>
             <input type="tel" [(ngModel)]="form.phone" name="phone" class="form-input" placeholder="+212 6xx xxx xxx" />
+
+            @if (profile.phone) {
+              @if (profile.phoneVerified) {
+                <div class="phone-verify phone-verify--done">✓ {{ 'profil.phone_verified' | T }}</div>
+              } @else if (!phoneCodeSent()) {
+                <div class="phone-verify">
+                  <span class="phone-verify__hint">{{ 'profil.phone_not_verified' | T }}</span>
+                  <button type="button" class="btn-outline phone-verify__btn" (click)="sendPhoneCode()" [disabled]="phoneSendingCode()">
+                    {{ (phoneSendingCode() ? 'profil.phone_sending' : 'profil.phone_verify_btn') | T }}
+                  </button>
+                </div>
+              } @else {
+                <div class="phone-verify phone-verify--code">
+                  <span class="phone-verify__hint">{{ 'profil.phone_code_hint' | T }}</span>
+                  <div class="phone-verify__row">
+                    <input type="text" inputmode="numeric" maxlength="6" [(ngModel)]="phoneCode" name="phoneCode" class="form-input phone-verify__input" placeholder="000000" />
+                    <button type="button" class="btn-primary phone-verify__btn" (click)="verifyPhoneCode()" [disabled]="phoneVerifying() || !phoneCode.trim()">
+                      {{ (phoneVerifying() ? 'profil.phone_verifying' : 'profil.phone_confirm_btn') | T }}
+                    </button>
+                  </div>
+                  <button type="button" class="phone-verify__resend" (click)="sendPhoneCode()" [disabled]="phoneSendingCode()">
+                    {{ 'profil.phone_resend' | T }}
+                  </button>
+                </div>
+              }
+              @if (phoneMsg) { <div class="profil__alert profil__alert--success">{{ phoneMsg }}</div> }
+              @if (phoneErrorMsg) { <div class="profil__alert profil__alert--error">{{ phoneErrorMsg }}</div> }
+            }
           </div>
 
           <div class="form-group">

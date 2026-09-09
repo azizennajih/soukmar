@@ -12,6 +12,7 @@ export interface AuthUser {
   phone?: string;
   city?: string;
   accountType?: 'PRIVATE' | 'BUSINESS';
+  phoneVerified?: boolean;
 }
 
 const SESSION_KEY = 'soukmar_session';

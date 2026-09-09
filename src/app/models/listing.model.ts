@@ -47,6 +47,7 @@ export interface User {
   createdAt: Date;
   avgRating?: number | null;
   reviewCount?: number;
+  phoneVerified?: boolean;
 }
 
 export interface Listing {
