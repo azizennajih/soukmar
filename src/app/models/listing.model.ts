@@ -139,7 +139,7 @@ export const CATEGORIES: CategoryConfig[] = [
   { value: 'SPORTS_LEISURE', label: 'Sport & Loisirs',  icon: '⚽', color: 'cat-indigo' },
   { value: 'CARPOOLING',     label: 'Covoiturage',      icon: '🚕', color: 'cat-blue' },
   { value: 'TRANSPORT',      label: 'Transport',        icon: '🚛', color: 'cat-orange' },
-  { value: 'RENTAL',         label: 'Location',         icon: '🔑', color: 'cat-purple' },
+  { value: 'RENTAL',         label: 'Location',         icon: '🚙', color: 'cat-purple' },
   { value: 'OTHER',          label: 'Autres',           icon: '📦', color: 'cat-gray' },
 ];
 
