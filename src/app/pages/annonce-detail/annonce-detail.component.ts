@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ListingService } from '../../services/listing.service';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
-import { Listing, ListingAttributeValue, CATEGORIES, formatPriceParts, timeAgo, isNewListing, exactDateTime } from '../../models/listing.model';
+import { Listing, ListingAttributeValue, CATEGORIES, formatPriceParts, timeAgo, isNewListing, exactDateTime, localeForLang } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
@@ -208,8 +208,7 @@ export class AnnonceDetailComponent implements OnInit {
     if (def.type === 'BOOLEAN') return this.i18n.t(av.valueBoolean ? 'common.yes' : 'common.no');
     if (def.type === 'NUMBER') return String(av.valueNumber);
     if (def.type === 'DATE' && av.valueText) {
-      const lang = this.i18n.lang();
-      const locale = lang === 'ar' ? 'ar-MA' : lang === 'en' ? 'en-US' : lang;
+      const locale = localeForLang(this.i18n.lang());
       return new Date(av.valueText).toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
     }
     return av.valueText ?? '';

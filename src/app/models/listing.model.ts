@@ -274,6 +274,11 @@ export const MOROCCO_CITIES = [
   'Imi N\'Tlit', 'Aït Oujane', 'Aït Benhaddou',
 ].sort();
 
+/** Maps an app language code to the Intl locale used for number/date formatting. */
+export function localeForLang(lang: string): string {
+  return lang === 'ar' ? 'ar-MA' : lang === 'en' ? 'en-US' : lang;
+}
+
 export function formatPrice(price: number, currency = 'MAD', lang = 'fr'): string {
   const locale = lang === 'ar' ? 'ar-MA' : lang === 'en' ? 'en-US' : 'fr-MA';
   return new Intl.NumberFormat(locale, {
@@ -310,7 +315,7 @@ export function isNewListing(date: Date, hours = 24): boolean {
  * on the listing detail page, where there's room for it (timeAgo() alone stays the
  * compact default everywhere else — chat, notifications, listing cards, etc.). */
 export function exactDateTime(date: Date, lang = 'fr'): string {
-  const locale = lang === 'ar' ? 'ar-MA' : lang === 'en' ? 'en-US' : lang;
+  const locale = localeForLang(lang);
   return new Intl.DateTimeFormat(locale, {
     day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
   }).format(new Date(date));
