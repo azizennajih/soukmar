@@ -1,0 +1,10 @@
+.verified-badge {
+  display: inline-flex;
+  gap: .3rem;
+  flex-wrap: wrap;
+
+  &--sm .badge {
+    font-size: .65rem;
+    padding: .12rem .45rem;
+  }
+}

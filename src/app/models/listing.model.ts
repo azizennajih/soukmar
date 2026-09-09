@@ -47,6 +47,7 @@ export interface User {
   createdAt: Date;
   avgRating?: number | null;
   reviewCount?: number;
+  emailVerified?: boolean;
   phoneVerified?: boolean;
 }
 
@@ -105,6 +106,8 @@ export interface SellerProfile {
   reviewCount: number;
   activeListingsCount: number;
   avgResponseHours: number | null;
+  emailVerified?: boolean;
+  phoneVerified?: boolean;
 }
 
 export interface SavedSearch {

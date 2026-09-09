@@ -17,7 +17,7 @@ export interface ChatMessage {
   sender?: { id: string; name: string };
 }
 
-interface RatedUser { id: string; name: string; avgRating?: number | null; reviewCount?: number; }
+interface RatedUser { id: string; name: string; avgRating?: number | null; reviewCount?: number; emailVerified?: boolean; phoneVerified?: boolean; }
 
 export interface Conversation {
   id: string;

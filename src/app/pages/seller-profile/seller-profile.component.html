@@ -8,6 +8,7 @@
       <div class="seller-profile__avatar">{{ profile.name[0]?.toUpperCase() }}</div>
       <div class="seller-profile__info">
         <h1>{{ profile.name }}</h1>
+        <app-verified-badge [emailVerified]="profile.emailVerified" [phoneVerified]="profile.phoneVerified" />
         <div class="seller-profile__meta">
           @if (profile.city) { <span>📍 {{ profile.city | cityLabel }}</span> }
           <span>{{ 'seller.member_since' | T }} {{ memberSince(profile.createdAt) }}</span>

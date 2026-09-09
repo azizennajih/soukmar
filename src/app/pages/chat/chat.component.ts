@@ -9,10 +9,11 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
 import { ReportButtonComponent } from '../../components/report-button/report-button.component';
 import { StarRatingComponent } from '../../components/star-rating/star-rating.component';
+import { VerifiedBadgeComponent } from '../../components/verified-badge/verified-badge.component';
 
 @Component({
   selector: 'app-chat',
-  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe, ReportButtonComponent, StarRatingComponent],
+  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe, ReportButtonComponent, StarRatingComponent, VerifiedBadgeComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -173,6 +174,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     return { avgRating: partner.avgRating, reviewCount: partner.reviewCount || 0 };
   }
 
+  getPartnerVerification(): { emailVerified: boolean | undefined; phoneVerified: boolean | undefined } {
+    const me = this.auth.currentUser()!.id;
+    const partner = this.activeConv!.listing.userId === me ? this.activeConv!.buyer : this.activeConv!.listing.user;
+    return { emailVerified: partner.emailVerified, phoneVerified: partner.phoneVerified };
+  }
+
   isMine(msg: ChatMessage): boolean {
     return msg.senderId === this.auth.currentUser()?.id;
   }
@@ -203,6 +210,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     const me = this.auth.currentUser()!.id;
     const partner = conv.listing.userId === me ? conv.buyer : conv.listing.user;
     return { avgRating: partner.avgRating, reviewCount: partner.reviewCount || 0 };
+  }
+
+  getConvPartnerVerification(conv: Conversation): { emailVerified: boolean | undefined; phoneVerified: boolean | undefined } {
+    const me = this.auth.currentUser()!.id;
+    const partner = conv.listing.userId === me ? conv.buyer : conv.listing.user;
+    return { emailVerified: partner.emailVerified, phoneVerified: partner.phoneVerified };
   }
 
   getLastMessage(conv: Conversation): string {

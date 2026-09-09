@@ -1017,7 +1017,11 @@
     "responds_days": "Répond généralement en {days} j",
     "listings_title": "Annonces",
     "no_listings": "Aucune annonce active.",
-    "reviews_title": "Évaluations"
+    "reviews_title": "Évaluations",
+    "email_verified": "Adresse e-mail vérifiée",
+    "email_verified_short": "E-mail",
+    "phone_verified": "Numéro de téléphone vérifié",
+    "phone_verified_short": "Téléphone"
   },
   "saved_searches": {
     "title": "Recherches sauvegardées",

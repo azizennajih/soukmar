@@ -14,6 +14,7 @@
   }
 
   &__info h1 { font-size: 1.4rem; font-weight: 800; color: var(--text); margin-bottom: .35rem; }
+  &__info app-verified-badge { display: block; margin-bottom: .5rem; }
 
   &__meta {
     display: flex; gap: 1rem; flex-wrap: wrap;

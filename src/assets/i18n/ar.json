@@ -1249,7 +1249,11 @@
     "responds_days": "يرد عادة خلال {days} أيام",
     "listings_title": "الإعلانات",
     "no_listings": "لا توجد إعلانات نشطة.",
-    "reviews_title": "التقييمات"
+    "reviews_title": "التقييمات",
+    "email_verified": "البريد الإلكتروني موثق",
+    "email_verified_short": "البريد الإلكتروني",
+    "phone_verified": "رقم الهاتف موثق",
+    "phone_verified_short": "الهاتف"
   },
   "saved_searches": {
     "title": "عمليات البحث المحفوظة",

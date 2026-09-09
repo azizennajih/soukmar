@@ -1,0 +1,10 @@
+@if (emailVerified || phoneVerified) {
+  <span class="verified-badge" [class.verified-badge--sm]="size === 'sm'">
+    @if (emailVerified) {
+      <span class="badge badge-active" [title]="'seller.email_verified' | T">✓ {{ 'seller.email_verified_short' | T }}</span>
+    }
+    @if (phoneVerified) {
+      <span class="badge badge-active" [title]="'seller.phone_verified' | T">✓ {{ 'seller.phone_verified_short' | T }}</span>
+    }
+  </span>
+}

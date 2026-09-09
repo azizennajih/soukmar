@@ -1259,7 +1259,11 @@
     "responds_days": "Suele responder en {days} días",
     "listings_title": "Anuncios",
     "no_listings": "Sin anuncios activos.",
-    "reviews_title": "Reseñas"
+    "reviews_title": "Reseñas",
+    "email_verified": "Correo electrónico verificado",
+    "email_verified_short": "Correo",
+    "phone_verified": "Número de teléfono verificado",
+    "phone_verified_short": "Teléfono"
   },
   "saved_searches": {
     "title": "Búsquedas guardadas",

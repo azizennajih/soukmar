@@ -195,6 +195,7 @@
           <div class="detail__seller-avatar">{{ listing.user?.name?.[0]?.toUpperCase() || '?' }}</div>
           <div>
             <div class="detail__seller-name">{{ listing.user?.name || ('listing.anonymous' | T) }}</div>
+            <app-verified-badge [emailVerified]="listing.user?.emailVerified" [phoneVerified]="listing.user?.phoneVerified" size="sm" />
             @if (listing.user?.city) {
               <div class="detail__seller-city">📍 {{ listing.user?.city | cityLabel }}</div>
             }

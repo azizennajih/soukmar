@@ -14,10 +14,11 @@ import { ReviewService, CanReviewResponse } from '../../services/review.service'
 import { ReportButtonComponent } from '../../components/report-button/report-button.component';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { StarRatingComponent } from '../../components/star-rating/star-rating.component';
+import { VerifiedBadgeComponent } from '../../components/verified-badge/verified-badge.component';
 
 @Component({
   selector: 'app-annonce-detail',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, CityLabelPipe, ReportButtonComponent, ListingCardComponent, StarRatingComponent],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, CityLabelPipe, ReportButtonComponent, ListingCardComponent, StarRatingComponent, VerifiedBadgeComponent],
   templateUrl: './annonce-detail.component.html',
   styleUrl: './annonce-detail.component.scss'
 })

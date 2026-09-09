@@ -1249,7 +1249,11 @@
     "responds_days": "Usually responds within {days} days",
     "listings_title": "Listings",
     "no_listings": "No active listings.",
-    "reviews_title": "Reviews"
+    "reviews_title": "Reviews",
+    "email_verified": "Email address verified",
+    "email_verified_short": "Email",
+    "phone_verified": "Phone number verified",
+    "phone_verified_short": "Phone"
   },
   "saved_searches": {
     "title": "Saved Searches",

@@ -1258,7 +1258,11 @@
     "responds_days": "Di solito risponde entro {days} giorni",
     "listings_title": "Annunci",
     "no_listings": "Nessun annuncio attivo.",
-    "reviews_title": "Recensioni"
+    "reviews_title": "Recensioni",
+    "email_verified": "Indirizzo email verificato",
+    "email_verified_short": "Email",
+    "phone_verified": "Numero di telefono verificato",
+    "phone_verified_short": "Telefono"
   },
   "saved_searches": {
     "title": "Ricerche salvate",
