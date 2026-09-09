@@ -1,6 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18nService } from './i18n.service';
+import { BrowserStorageService } from './browser-storage.service';
 
 const BASE = 'http://127.0.0.1:3000/api';
 
@@ -21,10 +22,11 @@ const TOKEN_KEY = 'soukmar_token';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private i18n = inject(I18nService);
+  private storage = inject(BrowserStorageService);
   currentUser = signal<AuthUser | null>(null);
 
   constructor(private router: Router) {
-    const saved = localStorage.getItem(SESSION_KEY);
+    const saved = this.storage.getItem(SESSION_KEY);
     if (saved) {
       try { this.currentUser.set(JSON.parse(saved)); } catch { }
     }
@@ -35,7 +37,7 @@ export class AuthService {
   }
 
   get token(): string | null {
-    return localStorage.getItem(TOKEN_KEY);
+    return this.storage.getItem(TOKEN_KEY);
   }
 
   login(email: string, password: string): Promise<{ ok: boolean; unverified?: boolean; error?: string }> {
@@ -104,14 +106,14 @@ export class AuthService {
 
   logout(): void {
     this.currentUser.set(null);
-    localStorage.removeItem(SESSION_KEY);
-    localStorage.removeItem(TOKEN_KEY);
+    this.storage.removeItem(SESSION_KEY);
+    this.storage.removeItem(TOKEN_KEY);
     this.router.navigate(['/']);
   }
 
   private setSession(user: AuthUser, token: string): void {
     this.currentUser.set(user);
-    localStorage.setItem(SESSION_KEY, JSON.stringify(user));
-    localStorage.setItem(TOKEN_KEY, token);
+    this.storage.setItem(SESSION_KEY, JSON.stringify(user));
+    this.storage.setItem(TOKEN_KEY, token);
   }
 }

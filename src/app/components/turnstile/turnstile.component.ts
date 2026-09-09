@@ -1,4 +1,5 @@
-import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { TURNSTILE_SITE_KEY } from '../../config/turnstile.config';
 
 declare global {
@@ -27,9 +28,13 @@ export class TurnstileComponent implements OnInit, OnDestroy {
   @ViewChild('container', { static: true }) container!: ElementRef<HTMLElement>;
   @Output() verified = new EventEmitter<string>();
 
+  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private widgetId: string | null = null;
 
   ngOnInit() {
+    // No captcha on the server — this component's lifecycle re-runs
+    // client-side after hydration, where the widget actually needs to load.
+    if (!this.isBrowser) return;
     if (!TURNSTILE_SITE_KEY) {
       // Dev mode: no site key configured yet — the backend accepts this
       // fixed token as long as TURNSTILE_SECRET_KEY is also unset.
@@ -40,7 +45,7 @@ export class TurnstileComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.widgetId && window.turnstile) window.turnstile.remove(this.widgetId);
+    if (this.isBrowser && this.widgetId && window.turnstile) window.turnstile.remove(this.widgetId);
   }
 
   private render() {

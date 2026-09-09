@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, signal, ChangeDetectorRef, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, OnDestroy, signal, ChangeDetectorRef, HostListener, inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -91,11 +91,12 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
     });
   }
 
+  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+
   private updateMetaTags(listing: Listing) {
     const title = `${listing.title} — SouqMar24`;
     const description = listing.description?.slice(0, 160) || '';
     const image = listing.images?.[0] || '';
-    const url = window.location.href;
 
     this.titleService.setTitle(title);
     this.meta.updateTag({ name: 'description', content: description });
@@ -103,11 +104,17 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
     this.meta.updateTag({ property: 'og:title', content: title });
     this.meta.updateTag({ property: 'og:description', content: description });
     this.meta.updateTag({ property: 'og:image', content: image });
-    this.meta.updateTag({ property: 'og:url', content: url });
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     this.meta.updateTag({ name: 'twitter:title', content: title });
     this.meta.updateTag({ name: 'twitter:description', content: description });
     this.meta.updateTag({ name: 'twitter:image', content: image });
+
+    // window.location doesn't exist during SSR; crawlers fall back to the
+    // URL they actually fetched when og:url is absent, so it's only worth
+    // setting once we know we're in the browser.
+    if (this.isBrowser) {
+      this.meta.updateTag({ property: 'og:url', content: window.location.href });
+    }
   }
 
   ngOnDestroy() {

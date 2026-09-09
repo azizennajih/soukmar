@@ -1,15 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { BrowserStorageService } from './browser-storage.service';
 
 const BASE_URL = 'http://127.0.0.1:3000/api';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
+  private storage = inject(BrowserStorageService);
+
   constructor(private http: HttpClient) {}
 
   private headers(): HttpHeaders {
-    const token = localStorage.getItem('soukmar_token');
+    const token = this.storage.getItem('soukmar_token');
     return token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : new HttpHeaders();
   }
 

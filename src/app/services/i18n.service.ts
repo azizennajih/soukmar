@@ -1,4 +1,6 @@
-import { Injectable, signal, computed, effect } from '@angular/core';
+import { Injectable, signal, computed, effect, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { BrowserStorageService } from './browser-storage.service';
 
 export type Lang = 'fr' | 'en' | 'ar' | 'de' | 'es' | 'it';
 
@@ -24,9 +26,12 @@ const VALID_LANGS: Lang[] = ['fr', 'en', 'ar', 'de', 'es', 'it'];
 
 @Injectable({ providedIn: 'root' })
 export class I18nService {
+  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private storage = inject(BrowserStorageService);
+
   lang = signal<Lang>(
-    (VALID_LANGS.includes(localStorage.getItem(LANG_KEY) as Lang)
-      ? localStorage.getItem(LANG_KEY) as Lang
+    (VALID_LANGS.includes(this.storage.getItem(LANG_KEY) as Lang)
+      ? this.storage.getItem(LANG_KEY) as Lang
       : 'fr')
   );
 
@@ -35,7 +40,8 @@ export class I18nService {
   constructor() {
     effect(() => {
       const l = this.lang();
-      localStorage.setItem(LANG_KEY, l);
+      this.storage.setItem(LANG_KEY, l);
+      if (!this.isBrowser) return;
       document.documentElement.lang = l;
       const scrollY = window.scrollY;
       document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';

@@ -1,6 +1,6 @@
-import { Component, signal, HostListener, OnInit, OnDestroy } from '@angular/core';
+import { Component, signal, HostListener, OnInit, OnDestroy, inject, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -47,8 +47,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(public auth: AuthService, private api: ApiService, private router: Router, public i18n: I18nService, private geocodeService: GeocodeService, public notifService: NotificationService) {}
 
+  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+
   ngOnInit() {
-    if (this.auth.isLoggedIn) this.startPolling();
+    // Polling is a browser-only concern — irrelevant (and, with a future
+    // server-rendered login state, a wasted interval) during SSR.
+    if (this.isBrowser && this.auth.isLoggedIn) this.startPolling();
   }
 
   ngOnDestroy() {
