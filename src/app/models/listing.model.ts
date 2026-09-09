@@ -5,7 +5,7 @@ export type Category =
 
 export type ListingStatus = 'ACTIVE' | 'RESERVED' | 'SOLD' | 'PENDING' | 'REJECTED' | 'EXPIRED'; // updated
 
-export type AttributeType = 'TEXT' | 'NUMBER' | 'SELECT' | 'BOOLEAN' | 'DATE';
+export type AttributeType = 'TEXT' | 'NUMBER' | 'SELECT' | 'MULTI_SELECT' | 'BOOLEAN' | 'DATE';
 export type Condition = 'NEW' | 'USED';
 export type AccountType = 'PRIVATE' | 'BUSINESS';
 
@@ -76,7 +76,7 @@ export interface Listing {
 }
 
 export interface ListingAttributesPayload {
-  attributes?: Record<string, string | number | boolean>;
+  attributes?: Record<string, string | number | boolean | string[]>;
 }
 
 export interface Review {

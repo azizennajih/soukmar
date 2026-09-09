@@ -12,6 +12,7 @@ import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { TextAutocompleteComponent } from '../../components/text-autocomplete/text-autocomplete.component';
 import { DateInputComponent } from '../../components/date-input/date-input.component';
+import { MultiSelectComponent } from '../../components/multi-select/multi-select.component';
 import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, Category, Subcategory, AttributeDefinition, Condition, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR } from '../../models/listing.model';
 import { compressListingPhoto } from '../../utils/image-compression';
 import { TurnstileComponent } from '../../components/turnstile/turnstile.component';
@@ -20,7 +21,7 @@ interface PhotoItem { url: string; file?: File; }
 
 @Component({
   selector: 'app-deposer-annonce',
-  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TextAutocompleteComponent, DateInputComponent, TranslatePipe, CityLabelPipe, TurnstileComponent],
+  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TextAutocompleteComponent, DateInputComponent, MultiSelectComponent, TranslatePipe, CityLabelPipe, TurnstileComponent],
   templateUrl: './deposer-annonce.component.html',
   styleUrl: './deposer-annonce.component.scss'
 })
@@ -71,7 +72,7 @@ export class DeposerAnnonceComponent {
     whatsapp: '',
     showPhone: true,
     images: [] as string[],
-    attributes: {} as Record<string, string | number | boolean>,
+    attributes: {} as Record<string, string | number | boolean | string[]>,
   };
 
   constructor(
@@ -114,11 +115,16 @@ export class DeposerAnnonceComponent {
         this.form.showPhone = listing.showPhone !== false;
         this.photos = (listing.images || []).map(url => ({ url }));
 
-        const attrs: Record<string, string | number | boolean> = {};
+        const attrs: Record<string, string | number | boolean | string[]> = {};
         (listing.attributeValues || []).forEach(av => {
           const code = av.attributeDefinition?.code;
           if (!code) return;
-          if (av.valueText != null) attrs[code] = av.valueText;
+          if (av.attributeDefinition?.type === 'MULTI_SELECT') {
+            const existing = attrs[code];
+            const arr = Array.isArray(existing) ? existing : [];
+            if (av.valueText != null) arr.push(av.valueText);
+            attrs[code] = arr;
+          } else if (av.valueText != null) attrs[code] = av.valueText;
           else if (av.valueNumber != null) attrs[code] = av.valueNumber;
           else if (av.valueBoolean != null) attrs[code] = av.valueBoolean;
         });
@@ -178,8 +184,13 @@ export class DeposerAnnonceComponent {
     });
   }
 
-  setAttr(code: string, value: string | number | boolean) {
+  setAttr(code: string, value: string | number | boolean | string[]) {
     this.form.attributes = { ...this.form.attributes, [code]: value };
+  }
+
+  selectedFor(code: string): string[] {
+    const v = this.form.attributes[code];
+    return Array.isArray(v) ? v : [];
   }
 
   attrBoolStr(code: string): string {
@@ -223,6 +234,7 @@ export class DeposerAnnonceComponent {
         .filter(d => d.required)
         .every(d => {
           const v = this.form.attributes[d.code];
+          if (Array.isArray(v)) return v.length > 0;
           return v !== undefined && v !== null && v !== '';
         });
     }

@@ -89,6 +89,15 @@
                     [placeholder]="'nav.all' | T"
                   />
                 }
+                @case ('MULTI_SELECT') {
+                  <app-multi-select
+                    [options]="def.options"
+                    [selected]="selectedOptions(def.code)"
+                    (selectedChange)="setOptionValues(def.code, $event)"
+                    labelPrefix="attrs.opts."
+                    [placeholder]="'nav.all' | T"
+                  />
+                }
                 @case ('BOOLEAN') {
                   <label class="sidebar__checkbox">
                     <input type="checkbox" [checked]="attrFilters['attr_' + def.code] === 'true'" (change)="setBoolFilter(def.code, $any($event.target).checked)" />

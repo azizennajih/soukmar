@@ -198,13 +198,28 @@ export class AnnonceDetailComponent implements OnInit {
   get isNew(): boolean { return this.listing ? isNewListing(this.listing.createdAt) : false; }
 
   get specAttrs(): ListingAttributeValue[] {
+    // MULTI_SELECT attributes store one row per selected value — keep only
+    // the first row per definition here (formatAttrValue joins all of them),
+    // otherwise @for would see the same attributeDefinitionId more than once.
+    const seen = new Set<string>();
     return [...(this.listing?.attributeValues ?? [])]
-      .filter(av => av.attributeDefinition)
+      .filter(av => {
+        if (!av.attributeDefinition) return false;
+        if (seen.has(av.attributeDefinitionId)) return false;
+        seen.add(av.attributeDefinitionId);
+        return true;
+      })
       .sort((a, b) => a.attributeDefinition!.sortOrder - b.attributeDefinition!.sortOrder);
   }
 
   formatAttrValue(av: ListingAttributeValue): string {
     const def = av.attributeDefinition!;
+    if (def.type === 'MULTI_SELECT') {
+      return (this.listing?.attributeValues ?? [])
+        .filter(x => x.attributeDefinitionId === av.attributeDefinitionId)
+        .map(x => this.i18n.t('attrs.opts.' + x.valueText))
+        .join(', ');
+    }
     if (def.type === 'SELECT') return this.i18n.t('attrs.opts.' + av.valueText);
     if (def.type === 'BOOLEAN') return this.i18n.t(av.valueBoolean ? 'common.yes' : 'common.no');
     if (def.type === 'NUMBER') return String(av.valueNumber);

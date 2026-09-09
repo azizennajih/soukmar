@@ -171,6 +171,15 @@
                           }
                         </select>
                       }
+                      @case ('MULTI_SELECT') {
+                        <app-multi-select
+                          [options]="def.options"
+                          [selected]="selectedFor(def.code)"
+                          (selectedChange)="setAttr(def.code, $event)"
+                          labelPrefix="attrs.opts."
+                          [placeholder]="'common.select' | T"
+                        />
+                      }
                     }
                   </div>
                 }
