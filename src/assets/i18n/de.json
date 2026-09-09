@@ -261,7 +261,8 @@
     "PETS": "Haustiere",
     "SPORTS_LEISURE": "Sport & Freizeit",
     "LESSONS_COURSES": "Unterricht & Kurse",
-    "CARPOOLING": "Mitfahrgelegenheit"
+    "CARPOOLING": "Mitfahrgelegenheit",
+    "TRANSPORT": "Transport anbieten"
   },
   "footer": {
     "tagline": "Marokkos erste Kleinanzeigen-Plattform. Einfach, schnell und sicher.",
@@ -640,7 +641,10 @@
     "DANCE_COURSES": "Tanzkurse",
     "CONTINUING_EDUCATION": "Weiterbildung",
     "OTHER_LESSONS": "Weitere Unterricht & Kurse",
-    "RIDE_OFFER": "Fahrt anbieten"
+    "RIDE_OFFER": "Fahrt anbieten",
+    "CONTAINER": "Container",
+    "GOODS": "Ware",
+    "OTHER_TRANSPORT": "Sonstiger Transport"
   },
   "attrs": {
     "BRAND": "Marke",

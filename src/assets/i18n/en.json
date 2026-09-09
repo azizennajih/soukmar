@@ -261,7 +261,8 @@
     "PETS": "Pets",
     "SPORTS_LEISURE": "Sports & Leisure",
     "LESSONS_COURSES": "Lessons & Courses",
-    "CARPOOLING": "Carpooling"
+    "CARPOOLING": "Carpooling",
+    "TRANSPORT": "Offer Transport"
   },
   "footer": {
     "tagline": "Morocco's first classifieds platform. Simple, fast and secure.",
@@ -640,7 +641,10 @@
     "DANCE_COURSES": "Dance Courses",
     "CONTINUING_EDUCATION": "Continuing Education",
     "OTHER_LESSONS": "Other Lessons & Courses",
-    "RIDE_OFFER": "Offer a ride"
+    "RIDE_OFFER": "Offer a ride",
+    "CONTAINER": "Container",
+    "GOODS": "Goods",
+    "OTHER_TRANSPORT": "Other transport"
   },
   "attrs": {
     "BRAND": "Brand",

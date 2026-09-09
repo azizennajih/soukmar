@@ -261,7 +261,8 @@
     "PETS": "حيوانات أليفة",
     "SPORTS_LEISURE": "رياضة وترفيه",
     "LESSONS_COURSES": "دروس ودورات",
-    "CARPOOLING": "التنقل المشترك"
+    "CARPOOLING": "التنقل المشترك",
+    "TRANSPORT": "عرض النقل"
   },
   "footer": {
     "tagline": "أول منصة إعلانات مبوبة في المغرب. بسيطة، سريعة وآمنة.",
@@ -640,7 +641,10 @@
     "DANCE_COURSES": "دورات الرقص",
     "CONTINUING_EDUCATION": "التكوين المستمر",
     "OTHER_LESSONS": "دروس ودورات أخرى",
-    "RIDE_OFFER": "عرض رحلة"
+    "RIDE_OFFER": "عرض رحلة",
+    "CONTAINER": "حاوية",
+    "GOODS": "بضائع",
+    "OTHER_TRANSPORT": "نقل آخر"
   },
   "attrs": {
     "BRAND": "العلامة التجارية",

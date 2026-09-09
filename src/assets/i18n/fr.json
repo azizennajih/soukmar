@@ -261,7 +261,8 @@
     "PETS": "Animaux",
     "SPORTS_LEISURE": "Sport & Loisirs",
     "LESSONS_COURSES": "Cours & Leçons",
-    "CARPOOLING": "Covoiturage"
+    "CARPOOLING": "Covoiturage",
+    "TRANSPORT": "Proposer un transport"
   },
   "subcats": {
     "AUTO": "Voiture",
@@ -324,7 +325,10 @@
     "DANCE_COURSES": "Cours de danse",
     "CONTINUING_EDUCATION": "Formation continue",
     "OTHER_LESSONS": "Autres cours & leçons",
-    "RIDE_OFFER": "Proposer un trajet"
+    "RIDE_OFFER": "Proposer un trajet",
+    "CONTAINER": "Conteneur",
+    "GOODS": "Marchandises",
+    "OTHER_TRANSPORT": "Autre transport"
   },
   "attrs": {
     "BRAND": "Marque",

@@ -261,7 +261,8 @@
     "PETS": "Mascotas",
     "SPORTS_LEISURE": "Deporte & Ocio",
     "LESSONS_COURSES": "Clases & Cursos",
-    "CARPOOLING": "Viajes compartidos"
+    "CARPOOLING": "Viajes compartidos",
+    "TRANSPORT": "Ofrecer transporte"
   },
   "footer": {
     "tagline": "La primera plataforma de anuncios clasificados de Marruecos. Simple, rápida y segura.",
@@ -640,7 +641,10 @@
     "DANCE_COURSES": "Cursos de baile",
     "CONTINUING_EDUCATION": "Formación continua",
     "OTHER_LESSONS": "Otras clases & cursos",
-    "RIDE_OFFER": "Ofrecer un viaje"
+    "RIDE_OFFER": "Ofrecer un viaje",
+    "CONTAINER": "Contenedor",
+    "GOODS": "Mercancía",
+    "OTHER_TRANSPORT": "Otro transporte"
   },
   "attrs": {
     "BRAND": "Marca",

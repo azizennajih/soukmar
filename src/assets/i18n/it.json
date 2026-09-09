@@ -261,7 +261,8 @@
     "PETS": "Animali",
     "SPORTS_LEISURE": "Sport & Tempo libero",
     "LESSONS_COURSES": "Lezioni & Corsi",
-    "CARPOOLING": "Passaggi auto"
+    "CARPOOLING": "Passaggi auto",
+    "TRANSPORT": "Offrire trasporto"
   },
   "footer": {
     "tagline": "La prima piattaforma di annunci del Marocco. Semplice, veloce e sicura.",
@@ -640,7 +641,10 @@
     "DANCE_COURSES": "Corsi di ballo",
     "CONTINUING_EDUCATION": "Formazione continua",
     "OTHER_LESSONS": "Altre lezioni & corsi",
-    "RIDE_OFFER": "Offrire un passaggio"
+    "RIDE_OFFER": "Offrire un passaggio",
+    "CONTAINER": "Container",
+    "GOODS": "Merci",
+    "OTHER_TRANSPORT": "Altro trasporto"
   },
   "attrs": {
     "BRAND": "Marca",
