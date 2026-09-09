@@ -93,7 +93,11 @@
     "save_search_name": "Search name",
     "search_saved": "Search saved!",
     "edit_search_title": "Edit search",
-    "update_search": "Update"
+    "update_search": "Update",
+    "view_mode": "View mode",
+    "view_list": "List",
+    "view_map": "Map",
+    "map_missing_location": "{count} listing(s) without a location aren't shown on the map."
   },
   "listing": {
     "loading": "Loading...",

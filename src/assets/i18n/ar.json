@@ -93,7 +93,11 @@
     "save_search_name": "اسم البحث",
     "search_saved": "تم حفظ البحث!",
     "edit_search_title": "تعديل البحث",
-    "update_search": "تحديث"
+    "update_search": "تحديث",
+    "view_mode": "وضع العرض",
+    "view_list": "قائمة",
+    "view_map": "خريطة",
+    "map_missing_location": "لا يتم عرض {count} إعلان (إعلانات) بدون موقع على الخريطة."
   },
   "listing": {
     "loading": "جارٍ التحميل...",

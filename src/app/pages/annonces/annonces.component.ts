@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth.service';
 import { CatalogService } from '../../services/catalog.service';
 import { GeocodeService, Coords } from '../../services/geocode.service';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
+import { ListingsMapComponent } from '../../components/listings-map/listings-map.component';
 import { CitySelectComponent } from '../../components/city-select/city-select.component';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { MultiSelectComponent } from '../../components/multi-select/multi-select.component';
@@ -21,7 +22,7 @@ interface SubcategoryOption { id: string; code: string; }
 
 @Component({
   selector: 'app-annonces',
-  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, CitySelectComponent, CatIconComponent, MultiSelectComponent, TextAutocompleteComponent, TranslatePipe],
+  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, ListingsMapComponent, CitySelectComponent, CatIconComponent, MultiSelectComponent, TextAutocompleteComponent, TranslatePipe],
   templateUrl: './annonces.component.html',
   styleUrl: './annonces.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -31,6 +32,7 @@ export class AnnoncesComponent implements OnInit {
   cities = MOROCCO_CITIES;
   radiusOptions = ['5', '10', '20', '30', '50', '100', '150', '200'];
   listings: Listing[] = [];
+  viewMode: 'list' | 'map' = 'list';
   filterOpen = false;
   total = 0;
   loading = false;

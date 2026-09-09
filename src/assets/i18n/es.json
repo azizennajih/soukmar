@@ -93,7 +93,11 @@
     "save_search_name": "Nombre de la búsqueda",
     "search_saved": "¡Búsqueda guardada!",
     "edit_search_title": "Editar búsqueda",
-    "update_search": "Actualizar"
+    "update_search": "Actualizar",
+    "view_mode": "Modo de visualización",
+    "view_list": "Lista",
+    "view_map": "Mapa",
+    "map_missing_location": "{count} anuncio(s) sin ubicación no se muestran en el mapa."
   },
   "listing": {
     "loading": "Cargando...",

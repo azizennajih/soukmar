@@ -1,0 +1,9 @@
+<div class="listings-map">
+  <div class="listings-map__canvas" #mapEl></div>
+
+  @if (withoutLocationCount > 0) {
+    <p class="listings-map__hint">
+      {{ 'annonces.map_missing_location' | T:{ count: withoutLocationCount.toString() } }}
+    </p>
+  }
+</div>

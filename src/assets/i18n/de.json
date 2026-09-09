@@ -93,7 +93,11 @@
     "save_search_name": "Name der Suche",
     "search_saved": "Suche gespeichert!",
     "edit_search_title": "Suche bearbeiten",
-    "update_search": "Aktualisieren"
+    "update_search": "Aktualisieren",
+    "view_mode": "Ansicht",
+    "view_list": "Liste",
+    "view_map": "Karte",
+    "map_missing_location": "{count} Anzeige(n) ohne Standort werden auf der Karte nicht angezeigt."
   },
   "listing": {
     "loading": "Lädt...",

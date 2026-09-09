@@ -93,7 +93,11 @@
     "save_search_name": "Nome della ricerca",
     "search_saved": "Ricerca salvata!",
     "edit_search_title": "Modifica ricerca",
-    "update_search": "Aggiorna"
+    "update_search": "Aggiorna",
+    "view_mode": "Modalità di visualizzazione",
+    "view_list": "Elenco",
+    "view_map": "Mappa",
+    "map_missing_location": "{count} annuncio/i senza posizione non vengono mostrati sulla mappa."
   },
   "listing": {
     "loading": "Caricamento...",

@@ -40,6 +40,25 @@
   &__title { font-size: 1.1rem; font-weight: 700; color: #111827; letter-spacing: -.01em; }
   &__count { font-size: .82rem; color: #64748b; margin-top: .2rem; }
 
+  &__header-actions {
+    display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
+  }
+
+  &__view-toggle {
+    display: flex; flex-shrink: 0;
+    border: 1.5px solid var(--border); border-radius: .65rem;
+    overflow: hidden;
+
+    button {
+      padding: .5rem .85rem; border: none; background: var(--white);
+      font-size: .82rem; font-weight: 600; color: var(--text-muted);
+      cursor: pointer; transition: background .15s, color .15s;
+      &:hover { color: var(--text); }
+      &.active { background: var(--primary-light); color: var(--primary); }
+      &:not(:last-child) { border-right: 1.5px solid var(--border); }
+    }
+  }
+
   &__sort {
     display: flex; align-items: center; gap: .5rem; flex-shrink: 0;
 

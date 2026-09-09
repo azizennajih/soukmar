@@ -63,6 +63,8 @@ export interface Listing {
   condition?: Condition;
   city: string;
   region?: string;
+  lat?: number;
+  lng?: number;
   images: string[];
   status: ListingStatus;
   isPremium: boolean;

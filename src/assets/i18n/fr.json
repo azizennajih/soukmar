@@ -93,7 +93,11 @@
     "save_search_name": "Nom de la recherche",
     "search_saved": "Recherche enregistrée !",
     "edit_search_title": "Modifier la recherche",
-    "update_search": "Mettre à jour"
+    "update_search": "Mettre à jour",
+    "view_mode": "Mode d'affichage",
+    "view_list": "Liste",
+    "view_map": "Carte",
+    "map_missing_location": "{count} annonce(s) sans localisation ne sont pas affichées sur la carte."
   },
   "listing": {
     "loading": "Chargement...",
