@@ -1,5 +1,6 @@
-import { Component, OnInit, signal, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, ChangeDetectorRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ListingService } from '../../services/listing.service';
@@ -22,7 +23,7 @@ import { VerifiedBadgeComponent } from '../../components/verified-badge/verified
   templateUrl: './annonce-detail.component.html',
   styleUrl: './annonce-detail.component.scss'
 })
-export class AnnonceDetailComponent implements OnInit {
+export class AnnonceDetailComponent implements OnInit, OnDestroy {
   listing?: Listing;
   message = '';
   messageSent = false;
@@ -51,7 +52,9 @@ export class AnnonceDetailComponent implements OnInit {
     public auth: AuthService,
     private cdr: ChangeDetectorRef,
     public i18n: I18nService,
-    private reviewService: ReviewService
+    private reviewService: ReviewService,
+    private meta: Meta,
+    private titleService: Title
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -78,6 +81,7 @@ export class AnnonceDetailComponent implements OnInit {
         next: listing => {
           this.listing = listing;
           this.loading = false;
+          this.updateMetaTags(listing);
           this.cdr.markForCheck();
           if (this.auth.isLoggedIn) { this.checkFavorite(); this.checkCanReview(id); }
           this.loadSimilar(id);
@@ -85,6 +89,29 @@ export class AnnonceDetailComponent implements OnInit {
         error: (e) => { console.error('Detail error:', e); this.loading = false; this.loadError = true; this.cdr.markForCheck(); }
       });
     });
+  }
+
+  private updateMetaTags(listing: Listing) {
+    const title = `${listing.title} — SouqMar24`;
+    const description = listing.description?.slice(0, 160) || '';
+    const image = listing.images?.[0] || '';
+    const url = window.location.href;
+
+    this.titleService.setTitle(title);
+    this.meta.updateTag({ name: 'description', content: description });
+    this.meta.updateTag({ property: 'og:type', content: 'website' });
+    this.meta.updateTag({ property: 'og:title', content: title });
+    this.meta.updateTag({ property: 'og:description', content: description });
+    this.meta.updateTag({ property: 'og:image', content: image });
+    this.meta.updateTag({ property: 'og:url', content: url });
+    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:title', content: title });
+    this.meta.updateTag({ name: 'twitter:description', content: description });
+    this.meta.updateTag({ name: 'twitter:image', content: image });
+  }
+
+  ngOnDestroy() {
+    this.titleService.setTitle('SouqMar24');
   }
 
   similarListings: Listing[] = [];
