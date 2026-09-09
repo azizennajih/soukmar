@@ -95,6 +95,7 @@
   min-width: 0;
 }
 .chat__conv-name   { font-weight: 700; font-size: .9rem; color: #0f172a; }
+.chat__conv-info app-star-rating { display: block; margin: .1rem 0; }
 .chat__conv-listing { font-size: .75rem; color: #e63946; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .chat__conv-last   { font-size: .75rem; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: .15rem; }
 
@@ -183,6 +184,7 @@
   }
 
   &-name    { font-weight: 700; color: #0f172a; }
+  &-info app-star-rating { display: block; margin: .1rem 0 .2rem; }
   &-listing {
     font-size: .78rem; color: #e63946;
     text-decoration: none;

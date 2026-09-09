@@ -13,10 +13,11 @@ import { I18nService } from '../../services/i18n.service';
 import { ReviewService, CanReviewResponse } from '../../services/review.service';
 import { ReportButtonComponent } from '../../components/report-button/report-button.component';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
+import { StarRatingComponent } from '../../components/star-rating/star-rating.component';
 
 @Component({
   selector: 'app-annonce-detail',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, CityLabelPipe, ReportButtonComponent, ListingCardComponent],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, CityLabelPipe, ReportButtonComponent, ListingCardComponent, StarRatingComponent],
   templateUrl: './annonce-detail.component.html',
   styleUrl: './annonce-detail.component.scss'
 })

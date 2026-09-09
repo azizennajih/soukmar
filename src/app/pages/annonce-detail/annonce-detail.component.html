@@ -201,6 +201,7 @@
             @if (listing.user?.accountType) {
               <div class="detail__seller-city">{{ listing.user?.accountType === 'BUSINESS' ? '🏢 ' + ('auth.account_type_business' | T) : '🏠 ' + ('auth.account_type_private' | T) }}</div>
             }
+            <app-star-rating [avgRating]="listing.user?.avgRating" [reviewCount]="listing.user?.reviewCount || 0" size="sm" />
           </div>
         </div>
         <a [routerLink]="['/vendeur', listing.userId]" class="btn-outline" style="width:100%;justify-content:center;margin-top:.75rem;font-size:.85rem">

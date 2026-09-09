@@ -8,10 +8,11 @@ import { AuthService } from '../../services/auth.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
 import { ReportButtonComponent } from '../../components/report-button/report-button.component';
+import { StarRatingComponent } from '../../components/star-rating/star-rating.component';
 
 @Component({
   selector: 'app-chat',
-  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe, ReportButtonComponent],
+  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe, ReportButtonComponent, StarRatingComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -166,6 +167,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       : this.activeConv!.listing.user.name;
   }
 
+  getPartnerRating(): { avgRating: number | null | undefined; reviewCount: number } {
+    const me = this.auth.currentUser()!.id;
+    const partner = this.activeConv!.listing.userId === me ? this.activeConv!.buyer : this.activeConv!.listing.user;
+    return { avgRating: partner.avgRating, reviewCount: partner.reviewCount || 0 };
+  }
+
   isMine(msg: ChatMessage): boolean {
     return msg.senderId === this.auth.currentUser()?.id;
   }
@@ -190,6 +197,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   getConvPartner(conv: Conversation): string {
     const me = this.auth.currentUser()!.id;
     return conv.listing.userId === me ? conv.buyer.name : conv.listing.user.name;
+  }
+
+  getConvPartnerRating(conv: Conversation): { avgRating: number | null | undefined; reviewCount: number } {
+    const me = this.auth.currentUser()!.id;
+    const partner = conv.listing.userId === me ? conv.buyer : conv.listing.user;
+    return { avgRating: partner.avgRating, reviewCount: partner.reviewCount || 0 };
   }
 
   getLastMessage(conv: Conversation): string {

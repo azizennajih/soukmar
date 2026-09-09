@@ -24,6 +24,7 @@
         <div class="chat__conv-avatar">{{ getConvPartner(conv)[0] }}</div>
         <div class="chat__conv-info">
           <div class="chat__conv-name">{{ getConvPartner(conv) }}</div>
+          <app-star-rating [avgRating]="getConvPartnerRating(conv).avgRating" [reviewCount]="getConvPartnerRating(conv).reviewCount" size="sm" />
           <div class="chat__conv-listing">{{ conv.listing.title }}</div>
           <div class="chat__conv-last">{{ getLastMessage(conv) }}</div>
         </div>
@@ -57,6 +58,7 @@
         <div class="chat__header-avatar">{{ getPartnerName()[0] }}</div>
         <div class="chat__header-info">
           <div class="chat__header-name">{{ getPartnerName() }}</div>
+          <app-star-rating [avgRating]="getPartnerRating().avgRating" [reviewCount]="getPartnerRating().reviewCount" size="sm" />
           <a [routerLink]="['/annonces', activeConv.listingId]" class="chat__header-listing">
             📌 {{ activeConv.listing.title }}
             @if (activeConv.listing.price) {

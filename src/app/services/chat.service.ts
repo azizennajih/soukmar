@@ -17,12 +17,14 @@ export interface ChatMessage {
   sender?: { id: string; name: string };
 }
 
+interface RatedUser { id: string; name: string; avgRating?: number | null; reviewCount?: number; }
+
 export interface Conversation {
   id: string;
   listingId: string;
   buyerId: string;
-  listing: { id: string; title: string; price?: number; currency: string; images: string[]; userId: string; status: string; user: { id: string; name: string } };
-  buyer: { id: string; name: string };
+  listing: { id: string; title: string; price?: number; currency: string; images: string[]; userId: string; status: string; user: RatedUser };
+  buyer: RatedUser;
   messages: ChatMessage[];
   updatedAt: string;
 }

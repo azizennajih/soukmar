@@ -45,6 +45,8 @@ export interface User {
   image?: string;
   accountType?: AccountType;
   createdAt: Date;
+  avgRating?: number | null;
+  reviewCount?: number;
 }
 
 export interface Listing {

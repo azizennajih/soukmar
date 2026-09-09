@@ -22,15 +22,6 @@
 
   &__badges { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; }
 
-  &__rating {
-    display: inline-flex; align-items: center; gap: .15rem;
-    font-size: .85rem; font-weight: 700; color: var(--text);
-    span { color: #e2e8f0; font-size: 1rem; }
-    span.filled { color: var(--gold); }
-  }
-
-  &__no-reviews { font-size: .82rem; color: var(--text-muted); }
-
   &__response {
     font-size: .8rem; font-weight: 700; color: #16a34a;
     background: #f0fdf4; border: 1px solid #bbf7d0; padding: .25rem .65rem; border-radius: 999px;

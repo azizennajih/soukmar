@@ -1,0 +1,10 @@
+<span class="star-rating" [class.star-rating--sm]="size === 'sm'">
+  @if (hasReviews) {
+    @for (s of stars; track s) {
+      <span class="star-rating__star" [class.filled]="s <= roundedRating">★</span>
+    }
+    <span class="star-rating__value">{{ avgRating | number:'1.1-1' }} ({{ reviewCount }})</span>
+  } @else {
+    <span class="star-rating__none">{{ 'seller.no_reviews' | T }}</span>
+  }
+</span>
