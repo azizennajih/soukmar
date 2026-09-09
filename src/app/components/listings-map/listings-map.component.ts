@@ -9,6 +9,11 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 const MOROCCO_CENTER: [number, number] = [31.7917, -7.0926];
 const DEFAULT_ZOOM = 6;
 
+// Static, hardcoded markup (not user input) for the popup's location icon —
+// matches app-icon's "location" glyph, kept inline since the popup DOM is
+// built by hand rather than through Angular's template.
+const LOCATION_ICON_SVG = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+
 @Component({
   selector: 'app-listings-map',
   imports: [CommonModule, TranslatePipe],
@@ -113,7 +118,12 @@ export class ListingsMapComponent implements AfterViewInit, OnChanges, OnDestroy
 
     const city = document.createElement('div');
     city.className = 'listings-map__popup-city';
-    city.textContent = `📍 ${listing.city}`;
+    // Static trusted markup for the icon; the city name itself still goes
+    // through textContent below, never through innerHTML.
+    city.innerHTML = LOCATION_ICON_SVG;
+    const cityLabel = document.createElement('span');
+    cityLabel.textContent = listing.city;
+    city.appendChild(cityLabel);
     container.appendChild(city);
 
     container.addEventListener('click', () => this.router.navigate(['/annonces', listing.id]));

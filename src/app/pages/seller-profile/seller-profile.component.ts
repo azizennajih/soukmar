@@ -7,13 +7,14 @@ import { Listing, Review, SellerProfile, timeAgo } from '../../models/listing.mo
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { StarRatingComponent } from '../../components/star-rating/star-rating.component';
 import { VerifiedBadgeComponent } from '../../components/verified-badge/verified-badge.component';
+import { IconComponent } from '../../components/icon/icon.component';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { I18nService } from '../../services/i18n.service';
 
 @Component({
   selector: 'app-seller-profile',
-  imports: [CommonModule, ListingCardComponent, StarRatingComponent, VerifiedBadgeComponent, TranslatePipe, CityLabelPipe],
+  imports: [CommonModule, ListingCardComponent, StarRatingComponent, VerifiedBadgeComponent, IconComponent, TranslatePipe, CityLabelPipe],
   templateUrl: './seller-profile.component.html',
   styleUrl: './seller-profile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -6,10 +6,11 @@ import { AuthService } from '../../services/auth.service';
 import { SavedSearch, CATEGORIES } from '../../models/listing.model';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CityLabelPipe } from '../../pipes/city-label.pipe';
+import { IconComponent } from '../../components/icon/icon.component';
 
 @Component({
   selector: 'app-saved-searches',
-  imports: [CommonModule, TranslatePipe, CityLabelPipe],
+  imports: [CommonModule, TranslatePipe, CityLabelPipe, IconComponent],
   templateUrl: './saved-searches.component.html',
   styleUrl: './saved-searches.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

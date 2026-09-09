@@ -17,10 +17,11 @@ import { ListingCardComponent } from '../../components/listing-card/listing-card
 import { StarRatingComponent } from '../../components/star-rating/star-rating.component';
 import { VerifiedBadgeComponent } from '../../components/verified-badge/verified-badge.component';
 import { ListingsMapComponent } from '../../components/listings-map/listings-map.component';
+import { IconComponent } from '../../components/icon/icon.component';
 
 @Component({
   selector: 'app-annonce-detail',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, CityLabelPipe, ReportButtonComponent, ListingCardComponent, StarRatingComponent, VerifiedBadgeComponent, ListingsMapComponent],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, CityLabelPipe, ReportButtonComponent, ListingCardComponent, StarRatingComponent, VerifiedBadgeComponent, ListingsMapComponent, IconComponent],
   templateUrl: './annonce-detail.component.html',
   styleUrl: './annonce-detail.component.scss'
 })

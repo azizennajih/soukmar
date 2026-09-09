@@ -6,10 +6,11 @@ import { AuthService } from '../../../services/auth.service';
 import { I18nService } from '../../../services/i18n.service';
 import { TranslatePipe } from '../../../pipes/translate.pipe';
 import { TurnstileComponent } from '../../../components/turnstile/turnstile.component';
+import { IconComponent } from '../../../components/icon/icon.component';
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, TurnstileComponent],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, TurnstileComponent, IconComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })

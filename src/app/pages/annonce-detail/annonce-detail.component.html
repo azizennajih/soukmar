@@ -59,7 +59,7 @@
           <div>
             <h1 class="detail__title">{{ listing.title }}</h1>
             <div class="detail__meta">
-              <span>📍 {{ listing.city | cityLabel }}</span>
+              <span class="icon-label"><app-icon name="location" [size]="14" /> {{ listing.city | cityLabel }}</span>
               <span [title]="exactTime">🕐 {{ isNew ? exactTime : timeDisplay }}</span>
               <span>👁 {{ listing.views }} {{ 'listing.views' | T }}</span>
             </div>
@@ -141,7 +141,7 @@
       @if (listing.lat != null && listing.lng != null) {
         <div class="card detail__location">
           <div class="detail__location-header">
-            <h2 class="detail__desc-title">📍 {{ 'listing.location_title' | T }}</h2>
+            <h2 class="detail__desc-title icon-label"><app-icon name="location" [size]="18" /> {{ 'listing.location_title' | T }}</h2>
             <button type="button" class="detail__location-toggle" (click)="showMap.set(!showMap())">
               {{ (showMap() ? 'listing.hide_map' : 'listing.show_map') | T }}
             </button>
@@ -212,10 +212,13 @@
             <div class="detail__seller-name">{{ listing.user?.name || ('listing.anonymous' | T) }}</div>
             <app-verified-badge [emailVerified]="listing.user?.emailVerified" [phoneVerified]="listing.user?.phoneVerified" size="sm" />
             @if (listing.user?.city) {
-              <div class="detail__seller-city">📍 {{ listing.user?.city | cityLabel }}</div>
+              <div class="detail__seller-city icon-label"><app-icon name="location" [size]="13" /> {{ listing.user?.city | cityLabel }}</div>
             }
             @if (listing.user?.accountType) {
-              <div class="detail__seller-city">{{ listing.user?.accountType === 'BUSINESS' ? '🏢 ' + ('auth.account_type_business' | T) : '🏠 ' + ('auth.account_type_private' | T) }}</div>
+              <div class="detail__seller-city icon-label">
+                <app-icon [name]="listing.user?.accountType === 'BUSINESS' ? 'business' : 'private'" [size]="13" />
+                {{ (listing.user?.accountType === 'BUSINESS' ? 'auth.account_type_business' : 'auth.account_type_private') | T }}
+              </div>
             }
             <app-star-rating [avgRating]="listing.user?.avgRating" [reviewCount]="listing.user?.reviewCount || 0" size="sm" />
           </div>

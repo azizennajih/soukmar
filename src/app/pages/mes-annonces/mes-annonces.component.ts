@@ -6,11 +6,12 @@ import { ListingService } from '../../services/listing.service';
 import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CityLabelPipe } from '../../pipes/city-label.pipe';
+import { IconComponent } from '../../components/icon/icon.component';
 import { Listing, CATEGORIES, formatPriceParts, timeAgo } from '../../models/listing.model';
 
 @Component({
   selector: 'app-mes-annonces',
-  imports: [CommonModule, RouterLink, TranslatePipe, CityLabelPipe],
+  imports: [CommonModule, RouterLink, TranslatePipe, CityLabelPipe, IconComponent],
   templateUrl: './mes-annonces.component.html',
   styleUrl: './mes-annonces.component.scss'
 })

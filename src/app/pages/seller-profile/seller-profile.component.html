@@ -10,9 +10,12 @@
         <h1>{{ profile.name }}</h1>
         <app-verified-badge [emailVerified]="profile.emailVerified" [phoneVerified]="profile.phoneVerified" />
         <div class="seller-profile__meta">
-          @if (profile.city) { <span>📍 {{ profile.city | cityLabel }}</span> }
+          @if (profile.city) { <span class="icon-label"><app-icon name="location" [size]="13" /> {{ profile.city | cityLabel }}</span> }
           <span>{{ 'seller.member_since' | T }} {{ memberSince(profile.createdAt) }}</span>
-          <span>{{ profile.accountType === 'BUSINESS' ? '🏢 ' + ('auth.account_type_business' | T) : '🏠 ' + ('auth.account_type_private' | T) }}</span>
+          <span class="icon-label">
+            <app-icon [name]="profile.accountType === 'BUSINESS' ? 'business' : 'private'" [size]="13" />
+            {{ (profile.accountType === 'BUSINESS' ? 'auth.account_type_business' : 'auth.account_type_private') | T }}
+          </span>
         </div>
         <div class="seller-profile__badges">
           <app-star-rating [avgRating]="profile.avgRating" [reviewCount]="profile.reviewCount" />

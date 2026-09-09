@@ -49,7 +49,7 @@
               </span>
               <span>👁 {{ listing.views }} {{ 'listing.views' | T }}</span>
               <span>🕐 {{ time(listing) }}</span>
-              <span>📍 {{ listing.city | cityLabel }}</span>
+              <span class="icon-label"><app-icon name="location" [size]="12" /> {{ listing.city | cityLabel }}</span>
             </div>
           </div>
 

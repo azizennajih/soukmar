@@ -202,7 +202,7 @@
                   <span class="badge" [ngClass]="getCategory(listing.category)?.color">
                     {{ getCategory(listing.category)?.icon }} {{ ('cats.' + listing.category) | T }}
                   </span>
-                  <span class="table-listing-city">📍 {{ listing.city | cityLabel }}</span>
+                  <span class="table-listing-city icon-label"><app-icon name="location" [size]="12" /> {{ listing.city | cityLabel }}</span>
                 </div>
                 @if (listing.isPremium) {
                   <span class="badge badge-premium" style="margin-top:.25rem">⭐ {{ 'listing.premium_badge' | T }}</span>

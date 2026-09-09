@@ -52,11 +52,11 @@
           <div class="account-type-choice">
             <label class="account-type-choice__option" [class.active]="form.accountType === 'PRIVATE'">
               <input type="radio" name="accountType" value="PRIVATE" [(ngModel)]="form.accountType" required />
-              🏠 {{ 'auth.account_type_private' | T }}
+              <app-icon name="private" [size]="15" /> {{ 'auth.account_type_private' | T }}
             </label>
             <label class="account-type-choice__option" [class.active]="form.accountType === 'BUSINESS'">
               <input type="radio" name="accountType" value="BUSINESS" [(ngModel)]="form.accountType" required />
-              🏢 {{ 'auth.account_type_business' | T }}
+              <app-icon name="business" [size]="15" /> {{ 'auth.account_type_business' | T }}
             </label>
           </div>
         </div>

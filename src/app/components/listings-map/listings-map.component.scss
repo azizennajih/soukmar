@@ -62,6 +62,7 @@
   }
 
   .listings-map__popup-city {
+    display: flex; align-items: center; gap: .3rem;
     font-size: .78rem;
     color: var(--text-muted);
     margin-top: .15rem;
