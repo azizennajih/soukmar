@@ -11,10 +11,11 @@ import { ReportButtonComponent } from '../../components/report-button/report-but
 import { StarRatingComponent } from '../../components/star-rating/star-rating.component';
 import { VerifiedBadgeComponent } from '../../components/verified-badge/verified-badge.component';
 import { BlockButtonComponent } from '../../components/block-button/block-button.component';
+import { IconComponent } from '../../components/icon/icon.component';
 
 @Component({
   selector: 'app-chat',
-  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe, ReportButtonComponent, StarRatingComponent, VerifiedBadgeComponent, BlockButtonComponent],
+  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe, ReportButtonComponent, StarRatingComponent, VerifiedBadgeComponent, BlockButtonComponent, IconComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

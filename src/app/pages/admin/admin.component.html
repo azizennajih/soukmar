@@ -29,11 +29,11 @@
     <button class="admin-tab" [class.active]="tab() === 'users'" (click)="setTab('users')">
       👥 {{ 'admin.tab_users' | T }}
     </button>
-    <button class="admin-tab" [class.active]="tab() === 'revenue'" (click)="setTab('revenue')">
-      💰 {{ 'admin.tab_revenue' | T }}
+    <button class="admin-tab icon-label" [class.active]="tab() === 'revenue'" (click)="setTab('revenue')">
+      <app-icon name="offer" [size]="14" /> {{ 'admin.tab_revenue' | T }}
     </button>
-    <button class="admin-tab" [class.active]="tab() === 'reports'" (click)="setTab('reports')">
-      🚩 {{ 'admin.tab_reports' | T }}
+    <button class="admin-tab icon-label" [class.active]="tab() === 'reports'" (click)="setTab('reports')">
+      <app-icon name="report" [size]="14" /> {{ 'admin.tab_reports' | T }}
       @if (pendingReportsCount > 0) {
         <span class="tab-badge">{{ pendingReportsCount }}</span>
       }

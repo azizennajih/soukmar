@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { ReportService } from '../../services/report.service';
 import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { IconComponent } from '../../components/icon/icon.component';
 
 @Component({
   selector: 'app-report-button',
-  imports: [CommonModule, FormsModule, TranslatePipe],
+  imports: [CommonModule, FormsModule, TranslatePipe, IconComponent],
   templateUrl: './report-button.component.html',
   styleUrl: './report-button.component.scss'
 })
