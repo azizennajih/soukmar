@@ -1,0 +1,18 @@
+.block-btn {
+  &__toggle {
+    background: none; border: none; cursor: pointer;
+    font-size: .82rem; color: #94a3b8; padding: 0;
+    transition: color .15s;
+    &:hover { color: #e63946; }
+    &:disabled { opacity: .6; cursor: default; }
+
+    &.block-btn--active { color: #dc2626; }
+
+    &.block-btn--compact {
+      font-size: .78rem;
+      color: rgba(255,255,255,.75);
+      &:hover { color: #fff; }
+      &.block-btn--active { color: #fecaca; }
+    }
+  }
+}

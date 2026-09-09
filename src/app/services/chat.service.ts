@@ -27,6 +27,8 @@ export interface Conversation {
   buyer: RatedUser;
   messages: ChatMessage[];
   updatedAt: string;
+  blockedByMe?: boolean;
+  blockedByThem?: boolean;
 }
 
 @Injectable({ providedIn: 'root' })

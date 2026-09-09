@@ -175,7 +175,8 @@
     "confirm_cancel_offer": "¿Cancelar tu oferta?",
     "no_message": "Sin mensajes",
     "offer_short": "Oferta: {amount} MAD",
-    "amount_placeholder": "Importe en MAD"
+    "amount_placeholder": "Importe en MAD",
+    "blocked_banner": "La mensajería con este usuario ya no está disponible."
   },
   "notifications": {
     "title": "Notificaciones",
@@ -1449,5 +1450,11 @@
     "thanks": "Denuncia enviada. Nuestro equipo la revisará.",
     "error_too_short": "Describe la situación con más detalle (mínimo 10 caracteres).",
     "error_generic": "Ha ocurrido un error. Inténtalo de nuevo."
+  },
+  "block": {
+    "block": "Bloquear",
+    "unblock": "Desbloquear",
+    "confirm": "¿Seguro que quiere bloquear a este usuario? Ya no podrán intercambiar mensajes.",
+    "blocked_indicator": "Usuario bloqueado"
   }
 }

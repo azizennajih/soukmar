@@ -14,4 +14,12 @@ export class UserService {
   getListings(id: string): Observable<Listing[]> {
     return this.api.get<Listing[]>(`/users/${id}/listings`);
   }
+
+  blockUser(id: string): Observable<{ blocked: boolean }> {
+    return this.api.post<{ blocked: boolean }>(`/users/${id}/block`, {});
+  }
+
+  unblockUser(id: string): Observable<{ blocked: boolean }> {
+    return this.api.delete<{ blocked: boolean }>(`/users/${id}/block`);
+  }
 }

@@ -175,7 +175,8 @@
     "confirm_cancel_offer": "Ihr Angebot stornieren?",
     "no_message": "Keine Nachricht",
     "offer_short": "Angebot: {amount} MAD",
-    "amount_placeholder": "Betrag in MAD"
+    "amount_placeholder": "Betrag in MAD",
+    "blocked_banner": "Die Kommunikation mit diesem Nutzer ist nicht mehr möglich."
   },
   "notifications": {
     "title": "Benachrichtigungen",
@@ -1449,5 +1450,11 @@
     "thanks": "Meldung gesendet. Unser Team wird sie prüfen.",
     "error_too_short": "Bitte beschreiben Sie die Situation genauer (mindestens 10 Zeichen).",
     "error_generic": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+  },
+  "block": {
+    "block": "Blockieren",
+    "unblock": "Entsperren",
+    "confirm": "Möchten Sie diesen Nutzer wirklich blockieren? Sie können danach keine Nachrichten mehr austauschen.",
+    "blocked_indicator": "Nutzer blockiert"
   }
 }

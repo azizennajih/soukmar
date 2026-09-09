@@ -23,7 +23,10 @@
       >
         <div class="chat__conv-avatar">{{ getConvPartner(conv)[0] }}</div>
         <div class="chat__conv-info">
-          <div class="chat__conv-name">{{ getConvPartner(conv) }}</div>
+          <div class="chat__conv-name">
+            {{ getConvPartner(conv) }}
+            @if (isConvBlocked(conv)) { <span class="chat__conv-blocked" [title]="'block.blocked_indicator' | T">🚫</span> }
+          </div>
           <app-star-rating [avgRating]="getConvPartnerRating(conv).avgRating" [reviewCount]="getConvPartnerRating(conv).reviewCount" size="sm" />
           <app-verified-badge [emailVerified]="getConvPartnerVerification(conv).emailVerified" [phoneVerified]="getConvPartnerVerification(conv).phoneVerified" size="sm" />
           <div class="chat__conv-listing">{{ conv.listing.title }}</div>
@@ -72,6 +75,7 @@
           <div class="chat__typing">{{ 'chat.typing' | T }}</div>
         }
         <div class="chat__header-report">
+          <app-block-button [userId]="getPartnerId()" [blocked]="partnerBlockedByMe" (blockedChange)="onBlockToggled($event)" [compact]="true" />
           <app-report-button [reportedId]="getPartnerId()" [listingId]="activeConv.listingId" />
         </div>
       </div>
@@ -133,39 +137,43 @@
         <div #messagesEnd></div>
       </div>
 
-      <!-- Offer input panel -->
-      @if (showOfferInput) {
-        <div class="chat__offer-panel">
-          <span>💰 {{ 'chat.offer_label' | T }}</span>
-          <input type="number" [(ngModel)]="offerAmount" [placeholder]="'chat.amount_placeholder' | T" min="1" />
-          <button class="btn-primary" (click)="sendOffer()">{{ 'chat.send_offer' | T }}</button>
-          <button class="btn-outline" (click)="showOfferInput=false">{{ 'chat.cancel' | T }}</button>
+      @if (messagingBlocked) {
+        <div class="chat__blocked-banner">🚫 {{ 'chat.blocked_banner' | T }}</div>
+      } @else {
+        <!-- Offer input panel -->
+        @if (showOfferInput) {
+          <div class="chat__offer-panel">
+            <span>💰 {{ 'chat.offer_label' | T }}</span>
+            <input type="number" [(ngModel)]="offerAmount" [placeholder]="'chat.amount_placeholder' | T" min="1" />
+            <button class="btn-primary" (click)="sendOffer()">{{ 'chat.send_offer' | T }}</button>
+            <button class="btn-outline" (click)="showOfferInput=false">{{ 'chat.cancel' | T }}</button>
+          </div>
+        }
+
+        <!-- Quick replies -->
+        <div class="chat__quick-replies">
+          @for (key of quickReplyKeys; track key) {
+            <button type="button" (click)="useQuickReply(key)">{{ key | T }}</button>
+          }
+        </div>
+
+        <!-- Input bar -->
+        <div class="chat__input-bar">
+          <button class="chat__offer-btn" (click)="showOfferInput=!showOfferInput" [title]="'listing.offer' | T">💰</button>
+          <textarea
+            [(ngModel)]="messageText"
+            (input)="onTyping()"
+            (keydown)="onEnter($event)"
+            [placeholder]="'chat.placeholder' | T"
+            rows="1"
+          ></textarea>
+          <button class="chat__send-btn" (click)="sendMessage()" [disabled]="!messageText.trim()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+            </svg>
+          </button>
         </div>
       }
-
-      <!-- Quick replies -->
-      <div class="chat__quick-replies">
-        @for (key of quickReplyKeys; track key) {
-          <button type="button" (click)="useQuickReply(key)">{{ key | T }}</button>
-        }
-      </div>
-
-      <!-- Input bar -->
-      <div class="chat__input-bar">
-        <button class="chat__offer-btn" (click)="showOfferInput=!showOfferInput" [title]="'listing.offer' | T">💰</button>
-        <textarea
-          [(ngModel)]="messageText"
-          (input)="onTyping()"
-          (keydown)="onEnter($event)"
-          [placeholder]="'chat.placeholder' | T"
-          rows="1"
-        ></textarea>
-        <button class="chat__send-btn" (click)="sendMessage()" [disabled]="!messageText.trim()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-          </svg>
-        </button>
-      </div>
     }
   </main>
 </div>

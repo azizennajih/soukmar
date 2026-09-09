@@ -175,7 +175,8 @@
     "confirm_cancel_offer": "Cancel your offer?",
     "no_message": "No message",
     "offer_short": "Offer: {amount} MAD",
-    "amount_placeholder": "Amount in MAD"
+    "amount_placeholder": "Amount in MAD",
+    "blocked_banner": "Messaging with this user is no longer available."
   },
   "notifications": {
     "title": "Notifications",
@@ -1449,5 +1450,11 @@
     "thanks": "Report sent. Our team will review it.",
     "error_too_short": "Please describe the situation in more detail (10 characters minimum).",
     "error_generic": "Something went wrong. Please try again."
+  },
+  "block": {
+    "block": "Block",
+    "unblock": "Unblock",
+    "confirm": "Are you sure you want to block this user? You will no longer be able to exchange messages.",
+    "blocked_indicator": "Blocked user"
   }
 }

@@ -10,10 +10,11 @@ import { I18nService } from '../../services/i18n.service';
 import { ReportButtonComponent } from '../../components/report-button/report-button.component';
 import { StarRatingComponent } from '../../components/star-rating/star-rating.component';
 import { VerifiedBadgeComponent } from '../../components/verified-badge/verified-badge.component';
+import { BlockButtonComponent } from '../../components/block-button/block-button.component';
 
 @Component({
   selector: 'app-chat',
-  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe, ReportButtonComponent, StarRatingComponent, VerifiedBadgeComponent],
+  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe, ReportButtonComponent, StarRatingComponent, VerifiedBadgeComponent, BlockButtonComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -216,6 +217,22 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     const me = this.auth.currentUser()!.id;
     const partner = conv.listing.userId === me ? conv.buyer : conv.listing.user;
     return { emailVerified: partner.emailVerified, phoneVerified: partner.phoneVerified };
+  }
+
+  get partnerBlockedByMe(): boolean {
+    return !!this.activeConv?.blockedByMe;
+  }
+
+  get messagingBlocked(): boolean {
+    return !!(this.activeConv?.blockedByMe || this.activeConv?.blockedByThem);
+  }
+
+  onBlockToggled(blocked: boolean) {
+    if (this.activeConv) this.activeConv.blockedByMe = blocked;
+  }
+
+  isConvBlocked(conv: Conversation): boolean {
+    return !!(conv.blockedByMe || conv.blockedByThem);
   }
 
   getLastMessage(conv: Conversation): string {

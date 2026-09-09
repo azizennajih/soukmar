@@ -1,0 +1,10 @@
+<button
+  type="button"
+  class="block-btn__toggle"
+  [class.block-btn--compact]="compact"
+  [class.block-btn--active]="blocked"
+  [disabled]="submitting()"
+  (click)="toggle()"
+>
+  {{ blocked ? '🔓 ' + ('block.unblock' | T) : '🚫 ' + ('block.block' | T) }}
+</button>

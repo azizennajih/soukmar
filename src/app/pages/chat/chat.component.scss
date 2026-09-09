@@ -95,6 +95,7 @@
   min-width: 0;
 }
 .chat__conv-name   { font-weight: 700; font-size: .9rem; color: #0f172a; }
+.chat__conv-blocked { font-size: .78rem; margin-left: .3rem; opacity: .8; }
 .chat__conv-info app-star-rating { display: block; margin: .1rem 0; }
 .chat__conv-listing { font-size: .75rem; color: #e63946; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .chat__conv-last   { font-size: .75rem; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: .15rem; }
@@ -196,6 +197,9 @@
   position: relative;
   flex-shrink: 0;
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: .9rem;
 
   ::ng-deep .report-btn__form {
     position: absolute;
@@ -204,6 +208,15 @@
     z-index: 10;
     box-shadow: 0 8px 24px rgba(0,0,0,.12);
   }
+}
+
+.chat__blocked-banner {
+  padding: 1.1rem 1.5rem;
+  text-align: center;
+  font-size: .875rem;
+  color: #6b7280;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
 }
 
 .chat__typing {
