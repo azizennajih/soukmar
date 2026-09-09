@@ -650,6 +650,7 @@
     "TRANSMISSION": "Transmission",
     "POWER_HP": "Power (hp)",
     "ACCIDENT": "Accident",
+    "LICENSE_PLATE": "License plate",
     "PREVIOUS_OWNERS": "Previous owners",
     "INSPECTION_UNTIL_DATE": "Inspection valid until",
     "BIKE_TYPE": "Bike type",

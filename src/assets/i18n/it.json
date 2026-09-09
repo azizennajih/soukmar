@@ -650,6 +650,7 @@
     "TRANSMISSION": "Cambio",
     "POWER_HP": "Potenza (CV)",
     "ACCIDENT": "Incidente",
+    "LICENSE_PLATE": "Targa",
     "PREVIOUS_OWNERS": "Proprietari precedenti",
     "INSPECTION_UNTIL_DATE": "Revisione valida fino a",
     "BIKE_TYPE": "Tipo di moto",

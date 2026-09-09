@@ -650,6 +650,7 @@
     "TRANSMISSION": "ناقل الحركة",
     "POWER_HP": "القوة (حصان)",
     "ACCIDENT": "حادث",
+    "LICENSE_PLATE": "رقم اللوحة",
     "PREVIOUS_OWNERS": "عدد الملاك السابقين",
     "INSPECTION_UNTIL_DATE": "الفحص التقني صالح إلى",
     "BIKE_TYPE": "نوع الدراجة",
