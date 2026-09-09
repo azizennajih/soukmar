@@ -5,7 +5,18 @@
   &__back { display: inline-block; font-size: .85rem; color: var(--text-muted); text-decoration: none; margin-bottom: 1rem; }
   &__back:hover { color: var(--primary); }
 
-  &__title { font-size: 1.6rem; font-weight: 800; color: var(--text); margin-bottom: 1.5rem; letter-spacing: -.02em; }
+  &__title { font-size: 1.6rem; font-weight: 800; color: var(--text); margin-bottom: .4rem; letter-spacing: -.02em; }
+
+  &__updated { font-size: .82rem; color: var(--text-muted); margin-bottom: 2rem; }
+
+  &__section {
+    margin-bottom: 1.75rem;
+
+    h2 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: .5rem; }
+    p { font-size: .92rem; line-height: 1.7; color: var(--text-muted); white-space: pre-line; }
+  }
+
+  &__subtitle { font-size: 1.15rem; font-weight: 800; color: var(--text); margin: 2rem 0 1rem; }
 
   &__list { display: flex; flex-direction: column; gap: .6rem; }
 }

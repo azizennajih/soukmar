@@ -1,7 +1,16 @@
 <div class="parametres container fade-in">
   <a routerLink="/parametres" class="parametres__back">← {{ 'parametres.title' | T }}</a>
-  <h1 class="parametres__title">{{ 'parametres.legal' | T }}</h1>
+  <h1 class="parametres__title">{{ 'legal.notice_title' | T }}</h1>
+  <p class="parametres__updated">{{ 'legal.last_updated' | T }}</p>
 
+  @for (n of noticeSections; track n) {
+    <section class="parametres__section">
+      <h2>{{ ('legal.notice.s' + n + '_title') | T }}</h2>
+      <p>{{ ('legal.notice.s' + n + '_body') | T }}</p>
+    </section>
+  }
+
+  <h2 class="parametres__subtitle">{{ 'parametres.legal' | T }}</h2>
   <div class="parametres__list">
     <a routerLink="/politique-confidentialite" class="settings-row">
       <span class="settings-row__icon">🔒</span>

@@ -9,4 +9,6 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
   templateUrl: './mentions-legales.component.html',
   styleUrl: './mentions-legales.component.scss'
 })
-export class MentionsLegalesComponent {}
+export class MentionsLegalesComponent {
+  noticeSections = Array.from({ length: 6 }, (_, i) => i + 1);
+}

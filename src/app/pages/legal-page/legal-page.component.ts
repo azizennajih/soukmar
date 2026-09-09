@@ -4,12 +4,14 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
-  selector: 'app-page-placeholder',
+  selector: 'app-legal-page',
   imports: [CommonModule, RouterLink, TranslatePipe],
-  templateUrl: './page-placeholder.component.html',
-  styleUrl: './page-placeholder.component.scss'
+  templateUrl: './legal-page.component.html',
+  styleUrl: './legal-page.component.scss'
 })
-export class PagePlaceholderComponent {
+export class LegalPageComponent {
   private route = inject(ActivatedRoute);
   titleKey = this.route.snapshot.data['titleKey'] as string;
+  namespace = this.route.snapshot.data['namespace'] as string;
+  sections = Array.from({ length: this.route.snapshot.data['sectionCount'] as number }, (_, i) => i + 1);
 }

@@ -93,18 +93,18 @@ export const routes: Routes = [
   },
   {
     path: 'politique-confidentialite',
-    data: { titleKey: 'legal.privacy_title' },
-    loadComponent: () => import('./pages/page-placeholder/page-placeholder.component').then(m => m.PagePlaceholderComponent)
+    data: { titleKey: 'legal.privacy_title', namespace: 'legal.privacy', sectionCount: 11 },
+    loadComponent: () => import('./pages/legal-page/legal-page.component').then(m => m.LegalPageComponent)
   },
   {
     path: 'conditions-utilisation',
-    data: { titleKey: 'legal.terms_title' },
-    loadComponent: () => import('./pages/page-placeholder/page-placeholder.component').then(m => m.PagePlaceholderComponent)
+    data: { titleKey: 'legal.terms_title', namespace: 'legal.terms', sectionCount: 14 },
+    loadComponent: () => import('./pages/legal-page/legal-page.component').then(m => m.LegalPageComponent)
   },
   {
     path: 'droit-retractation',
-    data: { titleKey: 'legal.withdrawal_title' },
-    loadComponent: () => import('./pages/page-placeholder/page-placeholder.component').then(m => m.PagePlaceholderComponent)
+    data: { titleKey: 'legal.withdrawal_title', namespace: 'legal.withdrawal', sectionCount: 6 },
+    loadComponent: () => import('./pages/legal-page/legal-page.component').then(m => m.LegalPageComponent)
   },
   {
     path: '**',
