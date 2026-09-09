@@ -167,6 +167,29 @@ export class DeposerAnnonceComponent {
     return this.form.category === 'CARPOOLING';
   }
 
+  // Title/description placeholders per category — showing "iPhone 15 Pro Max"
+  // as the example for every category (a job posting, a rental, a ride...)
+  // read as sloppy/unfinished, so each one gets its own realistic example.
+  private static readonly PLACEHOLDER_CATEGORY_KEYS: Category[] = [
+    'VEHICLES', 'REAL_ESTATE', 'JOBS', 'ELECTRONICS', 'HOME_GARDEN', 'FASHION',
+    'SERVICES', 'BABY_KIDS', 'PETS', 'SPORTS_LEISURE', 'LESSONS_COURSES',
+    'CARPOOLING', 'TRANSPORT', 'RENTAL', 'OTHER',
+  ];
+
+  get titlePlaceholderKey(): string {
+    const cat = this.form.category as Category;
+    return DeposerAnnonceComponent.PLACEHOLDER_CATEGORY_KEYS.includes(cat)
+      ? `deposer.placeholder_title_${cat.toLowerCase()}`
+      : 'deposer.placeholder_title';
+  }
+
+  get descPlaceholderKey(): string {
+    const cat = this.form.category as Category;
+    return DeposerAnnonceComponent.PLACEHOLDER_CATEGORY_KEYS.includes(cat)
+      ? `deposer.placeholder_desc_${cat.toLowerCase()}`
+      : 'deposer.placeholder_desc';
+  }
+
   selectCategory(val: Category) {
     this.form.category = val;
     this.form.subcategoryId = '';
