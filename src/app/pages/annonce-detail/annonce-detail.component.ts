@@ -225,6 +225,10 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
   }
 
   get category() { return CATEGORIES.find(c => c.value === this.listing?.category); }
+  // wa.me links want digits only (no "+", no spaces) — strip whatever
+  // formatting the stored number happens to have rather than assuming it's
+  // already clean E.164.
+  get whatsappDigits(): string { return (this.listing?.whatsapp ?? '').replace(/\D/g, ''); }
   get priceParts(): { amount: string; currency: string } | null {
     if (this.listing?.price == null) return null;
     return formatPriceParts(this.listing.price, this.listing.currency, this.i18n.lang());

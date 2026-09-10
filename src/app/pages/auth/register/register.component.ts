@@ -7,10 +7,11 @@ import { I18nService } from '../../../services/i18n.service';
 import { TranslatePipe } from '../../../pipes/translate.pipe';
 import { TurnstileComponent } from '../../../components/turnstile/turnstile.component';
 import { IconComponent } from '../../../components/icon/icon.component';
+import { PhoneInputComponent } from '../../../components/phone-input/phone-input.component';
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, TurnstileComponent, IconComponent],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, TurnstileComponent, IconComponent, PhoneInputComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })

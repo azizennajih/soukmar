@@ -8,6 +8,7 @@ import { UploadService } from '../../services/upload.service';
 import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { IconComponent } from '../../components/icon/icon.component';
+import { PhoneInputComponent } from '../../components/phone-input/phone-input.component';
 import { firstValueFrom } from 'rxjs';
 import { compressAvatar } from '../../utils/image-compression';
 
@@ -26,7 +27,7 @@ interface ProfileData {
 
 @Component({
   selector: 'app-profil',
-  imports: [CommonModule, FormsModule, TranslatePipe, IconComponent],
+  imports: [CommonModule, FormsModule, TranslatePipe, IconComponent, PhoneInputComponent],
   templateUrl: './profil.component.html',
   styleUrl: './profil.component.scss'
 })

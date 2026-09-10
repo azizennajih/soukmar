@@ -62,7 +62,7 @@
 
           <div class="form-group">
             <label class="form-label">{{ 'profil.phone' | T }}</label>
-            <input type="tel" [(ngModel)]="form.phone" name="phone" class="form-input" placeholder="+212 6xx xxx xxx" />
+            <app-phone-input [value]="form.phone" (valueChange)="form.phone = $event" placeholder="6xx xxx xxx" />
 
             @if (profile.phone) {
               @if (profile.phoneVerified) {

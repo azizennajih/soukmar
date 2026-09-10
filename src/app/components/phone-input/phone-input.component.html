@@ -1,0 +1,10 @@
+<div class="phone-input">
+  <app-country-code-select [value]="iso" (valueChange)="onCountryChange($event)" />
+  <input
+    type="tel"
+    [value]="localNumber"
+    (input)="onLocalNumberChange($any($event.target).value)"
+    [placeholder]="placeholder"
+    autocomplete="tel-national"
+  />
+</div>

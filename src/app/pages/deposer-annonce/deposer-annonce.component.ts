@@ -16,12 +16,13 @@ import { MultiSelectComponent } from '../../components/multi-select/multi-select
 import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES, Category, Subcategory, AttributeDefinition, Condition, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR } from '../../models/listing.model';
 import { compressListingPhoto } from '../../utils/image-compression';
 import { TurnstileComponent } from '../../components/turnstile/turnstile.component';
+import { PhoneInputComponent } from '../../components/phone-input/phone-input.component';
 
 interface PhotoItem { url: string; file?: File; }
 
 @Component({
   selector: 'app-deposer-annonce',
-  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TextAutocompleteComponent, DateInputComponent, MultiSelectComponent, TranslatePipe, CityLabelPipe, TurnstileComponent],
+  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TextAutocompleteComponent, DateInputComponent, MultiSelectComponent, TranslatePipe, CityLabelPipe, TurnstileComponent, PhoneInputComponent],
   templateUrl: './deposer-annonce.component.html',
   styleUrl: './deposer-annonce.component.scss'
 })

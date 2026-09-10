@@ -254,11 +254,11 @@
           <div class="deposer__form">
             <div class="form-group">
               <label>{{ 'deposer.label_phone' | T }}</label>
-              <input type="tel" [(ngModel)]="form.phone" placeholder="+212 6 00 00 00 00" />
+              <app-phone-input [value]="form.phone" (valueChange)="form.phone = $event" placeholder="6 00 00 00 00" />
             </div>
             <div class="form-group">
               <label>{{ 'deposer.label_whatsapp' | T }}</label>
-              <input type="tel" [(ngModel)]="form.whatsapp" placeholder="+212 6 00 00 00 00" />
+              <app-phone-input [value]="form.whatsapp" (valueChange)="form.whatsapp = $event" placeholder="6 00 00 00 00" />
             </div>
 
             <label class="deposer__premium-toggle">

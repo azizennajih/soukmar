@@ -1,0 +1,40 @@
+<div class="cc-select">
+  <button type="button" class="cc-select__trigger" #trigger (click)="toggle()" [attr.aria-label]="labelFor(selected.iso) + ' ' + selected.dialCode">
+    <app-flag-icon [iso]="selected.iso" [size]="18" />
+    <span class="cc-select__code">{{ selected.dialCode }}</span>
+    <svg class="cc-select__chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+  </button>
+
+  @if (open()) {
+    <div class="cc-select__panel" [style.top]="panelStyle().top" [style.left]="panelStyle().left" [style.width]="panelStyle().width">
+      <input
+        type="text"
+        class="cc-select__search"
+        [value]="query()"
+        (input)="onSearchInput($any($event.target).value)"
+        (keydown)="onKeydown($event)"
+        [placeholder]="'common.search' | T"
+        autocomplete="off"
+      />
+      <div class="cc-select__list">
+        @if (filtered().length) {
+          @for (opt of filtered(); track opt.iso; let i = $index) {
+            <button
+              type="button"
+              class="cc-select__option"
+              [class.cc-select__option--active]="i === activeIndex()"
+              [class.cc-select__option--selected]="opt.iso === value"
+              (mousedown)="$event.preventDefault(); select(opt.iso)"
+            >
+              <app-flag-icon [iso]="opt.iso" [size]="18" />
+              <span class="cc-select__name">{{ labelFor(opt.iso) }}</span>
+              <span class="cc-select__dial">{{ opt.dialCode }}</span>
+            </button>
+          }
+        } @else {
+          <div class="cc-select__empty">{{ 'common.no_results' | T }}</div>
+        }
+      </div>
+    </div>
+  }
+</div>
