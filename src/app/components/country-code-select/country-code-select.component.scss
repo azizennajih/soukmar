@@ -67,15 +67,7 @@
   &--selected { color: var(--primary); font-weight: 700; }
 }
 
-.cc-select__name {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.cc-select__dial { color: var(--text-muted); font-size: .8rem; flex-shrink: 0; }
+.cc-select__dial { color: var(--text-muted); font-size: .8rem; flex: 1; }
 
 .cc-select__empty {
   padding: .75rem;

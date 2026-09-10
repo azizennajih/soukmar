@@ -24,10 +24,10 @@
               class="cc-select__option"
               [class.cc-select__option--active]="i === activeIndex()"
               [class.cc-select__option--selected]="opt.iso === value"
+              [attr.aria-label]="labelFor(opt.iso) + ' ' + opt.dialCode"
               (mousedown)="$event.preventDefault(); select(opt.iso)"
             >
               <app-flag-icon [iso]="opt.iso" [size]="18" />
-              <span class="cc-select__name">{{ labelFor(opt.iso) }}</span>
               <span class="cc-select__dial">{{ opt.dialCode }}</span>
             </button>
           }
