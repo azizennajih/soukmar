@@ -270,7 +270,10 @@
     "LESSONS_COURSES": "Cours & Leçons",
     "CARPOOLING": "Covoiturage",
     "TRANSPORT": "Proposer un transport",
-    "RENTAL": "Location"
+    "RENTAL": "Location",
+    "TICKETS": "Billets & Tickets",
+    "GIVEAWAY_SWAP": "Dons & Échanges",
+    "MOVING": "Déménagement"
   },
   "subcats": {
     "AUTO": "Voiture",
@@ -340,7 +343,16 @@
     "CAR_RENTAL": "Louer une voiture",
     "TRUCK_RENTAL": "Louer un camion",
     "MACHINERY_RENTAL": "Louer une machine",
-    "OTHER_RENTAL": "Autre location"
+    "OTHER_RENTAL": "Autre location",
+    "CONCERTS": "Concerts",
+    "SPORTS_EVENTS": "Événements sportifs",
+    "CINEMA_THEATER": "Cinéma & Théâtre",
+    "AMUSEMENT_PARKS": "Parcs d'attractions",
+    "OTHER_EVENTS": "Autres événements",
+    "TO_GIVE": "À donner",
+    "TO_SWAP": "À échanger",
+    "PRIVATE_MOVING": "Déménagement particulier",
+    "COMPANY_MOVING": "Déménagement entreprise"
   },
   "attrs": {
     "BRAND": "Marque",
@@ -813,8 +825,21 @@
       "MOUNTAIN": "VTT",
       "ROAD": "Route",
       "CITY": "Ville",
-      "KIDS": "Enfant"
-    }
+      "KIDS": "Enfant",
+      "VIP": "VIP",
+      "CATEGORY_1": "Catégorie 1",
+      "CATEGORY_2": "Catégorie 2",
+      "STANDING": "Place debout",
+      "GENERAL_ADMISSION": "Entrée générale",
+      "HOUSEHOLD": "Articles ménagers"
+    },
+    "EVENT_DATE": "Date de l'événement",
+    "VENUE": "Lieu",
+    "TICKET_COUNT": "Nombre de billets",
+    "SEAT_CATEGORY": "Catégorie de place",
+    "ITEM_CATEGORY": "Catégorie d'objet",
+    "HAS_VEHICLE": "Véhicule disponible",
+    "TEAM_SIZE": "Taille de l'équipe"
   },
   "job_professions": {
     "DOCTOR": "Médecin",
@@ -1238,7 +1263,13 @@
     "header_title_edit": "Modifier l'annonce",
     "success_title_edit": "Annonce mise à jour !",
     "success_sub_edit": "Vos modifications sont maintenant visibles.",
-    "publish_edit": "💾 Enregistrer les modifications"
+    "publish_edit": "💾 Enregistrer les modifications",
+    "placeholder_title_tickets": "ex: 2 billets concert Casablanca à vendre",
+    "placeholder_desc_tickets": "Décrivez l'événement, la date et les places...",
+    "placeholder_title_giveaway_swap": "ex: Canapé à donner",
+    "placeholder_desc_giveaway_swap": "Décrivez l'état et ce que vous recherchez en échange...",
+    "placeholder_title_moving": "ex: Service de déménagement Casablanca–Rabat",
+    "placeholder_desc_moving": "Décrivez les prestations, la zone d'intervention et votre expérience..."
   },
   "mes_annonces": {
     "title": "Mes annonces",

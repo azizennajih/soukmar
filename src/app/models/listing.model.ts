@@ -1,7 +1,8 @@
 export type Category =
   | 'VEHICLES' | 'REAL_ESTATE' | 'JOBS' | 'ELECTRONICS'
   | 'HOME_GARDEN' | 'FASHION' | 'SERVICES' | 'OTHER'
-  | 'BABY_KIDS' | 'PETS' | 'SPORTS_LEISURE' | 'LESSONS_COURSES' | 'CARPOOLING' | 'TRANSPORT' | 'RENTAL';
+  | 'BABY_KIDS' | 'PETS' | 'SPORTS_LEISURE' | 'LESSONS_COURSES' | 'CARPOOLING' | 'TRANSPORT' | 'RENTAL'
+  | 'TICKETS' | 'GIVEAWAY_SWAP' | 'MOVING';
 
 export type ListingStatus = 'ACTIVE' | 'RESERVED' | 'SOLD' | 'PENDING' | 'REJECTED' | 'EXPIRED'; // updated
 
@@ -148,6 +149,9 @@ export const CATEGORIES: CategoryConfig[] = [
   { value: 'CARPOOLING',     label: 'Covoiturage',      icon: '🚕', color: 'cat-blue' },
   { value: 'TRANSPORT',      label: 'Transport',        icon: '🚛', color: 'cat-orange' },
   { value: 'RENTAL',         label: 'Location',         icon: '🚙', color: 'cat-purple' },
+  { value: 'TICKETS',        label: 'Billets & Tickets', icon: '🎫', color: 'cat-yellow' },
+  { value: 'GIVEAWAY_SWAP',  label: 'Dons & Échanges',  icon: '🎁', color: 'cat-green' },
+  { value: 'MOVING',         label: 'Déménagement',     icon: '🚚', color: 'cat-brown' },
   { value: 'OTHER',          label: 'Autres',           icon: '📦', color: 'cat-gray' },
 ];
 
@@ -183,7 +187,7 @@ export const JOB_PROFESSIONS_BY_SECTOR: Record<string, string[]> = {
 // brief), so the "no sector selected yet" fallback must not show them twice.
 export const JOB_PROFESSION_CODES: string[] = [...new Set(Object.values(JOB_PROFESSIONS_BY_SECTOR).flat())];
 
-export const CONDITION_CATEGORIES: Category[] = ['VEHICLES', 'ELECTRONICS', 'HOME_GARDEN', 'FASHION', 'BABY_KIDS', 'SPORTS_LEISURE'];
+export const CONDITION_CATEGORIES: Category[] = ['VEHICLES', 'ELECTRONICS', 'HOME_GARDEN', 'FASHION', 'BABY_KIDS', 'SPORTS_LEISURE', 'GIVEAWAY_SWAP'];
 
 /** Subcategories that opt out of "Zustand" (Neu/Gebraucht) even though their
  * category is otherwise in CONDITION_CATEGORIES — for services offered
@@ -197,6 +201,7 @@ export const HIGHLIGHT_ATTR_CODES: Partial<Record<Category, string[]>> = {
   REAL_ESTATE: ['LIVING_AREA_SQM', 'ROOMS'],
   FASHION: ['SIZE', 'SIZE_EU'],
   HOME_GARDEN: ['FURNITURE_TYPE'],
+  TICKETS: ['EVENT_DATE', 'TICKET_COUNT'],
 };
 
 export const MOROCCO_CITIES = [

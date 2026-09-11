@@ -174,7 +174,7 @@ export class DeposerAnnonceComponent {
   private static readonly PLACEHOLDER_CATEGORY_KEYS: Category[] = [
     'VEHICLES', 'REAL_ESTATE', 'JOBS', 'ELECTRONICS', 'HOME_GARDEN', 'FASHION',
     'SERVICES', 'BABY_KIDS', 'PETS', 'SPORTS_LEISURE', 'LESSONS_COURSES',
-    'CARPOOLING', 'TRANSPORT', 'RENTAL', 'OTHER',
+    'CARPOOLING', 'TRANSPORT', 'RENTAL', 'TICKETS', 'GIVEAWAY_SWAP', 'MOVING', 'OTHER',
   ];
 
   get titlePlaceholderKey(): string {

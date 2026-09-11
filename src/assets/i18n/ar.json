@@ -270,7 +270,10 @@
     "LESSONS_COURSES": "دروس ودورات",
     "CARPOOLING": "التنقل المشترك",
     "TRANSPORT": "عرض النقل",
-    "RENTAL": "الكراء"
+    "RENTAL": "الكراء",
+    "TICKETS": "تذاكر ودخول",
+    "GIVEAWAY_SWAP": "تبرع وتبادل",
+    "MOVING": "نقل الأثاث"
   },
   "footer": {
     "tagline": "أول منصة إعلانات مبوبة في المغرب. بسيطة، سريعة وآمنة.",
@@ -499,7 +502,13 @@
     "publish_edit": "💾 حفظ التغييرات",
     "show_phone_toggle": "إظهار رقم هاتفي في الإعلان",
     "show_phone_hint": "إذا تم التعطيل، لن يتمكن المشترون من التواصل معك إلا عبر الدردشة.",
-    "carpooling_phone_hint": "يظهر رقم هاتفك دائمًا في إعلانات التنقل المشترك حتى يتمكن الركاب من التواصل معك."
+    "carpooling_phone_hint": "يظهر رقم هاتفك دائمًا في إعلانات التنقل المشترك حتى يتمكن الركاب من التواصل معك.",
+    "placeholder_title_tickets": "مثال: تذكرتان لحفل موسيقي بالدار البيضاء للبيع",
+    "placeholder_desc_tickets": "صف الفعالية والتاريخ والمقاعد...",
+    "placeholder_title_giveaway_swap": "مثال: أريكة للتبرع",
+    "placeholder_desc_giveaway_swap": "صف الحالة وما تبحث عنه مقابل ذلك...",
+    "placeholder_title_moving": "مثال: خدمة نقل أثاث الدار البيضاء-الرباط",
+    "placeholder_desc_moving": "صف خدماتك ومنطقة تدخلك وخبرتك..."
   },
   "mes_annonces": {
     "title": "إعلاناتي",
@@ -782,7 +791,16 @@
     "CAR_RENTAL": "كراء سيارة",
     "TRUCK_RENTAL": "كراء شاحنة",
     "MACHINERY_RENTAL": "كراء آلات",
-    "OTHER_RENTAL": "كراء آخر"
+    "OTHER_RENTAL": "كراء آخر",
+    "CONCERTS": "حفلات موسيقية",
+    "SPORTS_EVENTS": "فعاليات رياضية",
+    "CINEMA_THEATER": "سينما ومسرح",
+    "AMUSEMENT_PARKS": "مدن الملاهي",
+    "OTHER_EVENTS": "فعاليات أخرى",
+    "TO_GIVE": "للتبرع",
+    "TO_SWAP": "للتبادل",
+    "PRIVATE_MOVING": "نقل أثاث للأفراد",
+    "COMPANY_MOVING": "نقل أثاث للشركات"
   },
   "attrs": {
     "BRAND": "العلامة التجارية",
@@ -1255,8 +1273,21 @@
       "MOUNTAIN": "جبلية",
       "ROAD": "طرقية",
       "CITY": "مدينة",
-      "KIDS": "أطفال"
-    }
+      "KIDS": "أطفال",
+      "VIP": "VIP",
+      "CATEGORY_1": "الفئة 1",
+      "CATEGORY_2": "الفئة 2",
+      "STANDING": "وقوف",
+      "GENERAL_ADMISSION": "دخول عام",
+      "HOUSEHOLD": "أدوات منزلية"
+    },
+    "EVENT_DATE": "تاريخ الفعالية",
+    "VENUE": "المكان",
+    "TICKET_COUNT": "عدد التذاكر",
+    "SEAT_CATEGORY": "فئة المقعد",
+    "ITEM_CATEGORY": "فئة الغرض",
+    "HAS_VEHICLE": "يملك مركبة",
+    "TEAM_SIZE": "حجم الفريق"
   },
   "job_professions": {
     "DOCTOR": "طبيب/ة",

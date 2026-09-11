@@ -270,7 +270,10 @@
     "LESSONS_COURSES": "Unterricht & Kurse",
     "CARPOOLING": "Mitfahrgelegenheit",
     "TRANSPORT": "Transport anbieten",
-    "RENTAL": "Mieten"
+    "RENTAL": "Mieten",
+    "TICKETS": "Eintrittskarten & Tickets",
+    "GIVEAWAY_SWAP": "Verschenken & Tauschen",
+    "MOVING": "Umzug"
   },
   "footer": {
     "tagline": "Marokkos erste Kleinanzeigen-Plattform. Einfach, schnell und sicher.",
@@ -712,7 +715,13 @@
     "publish_edit": "💾 Änderungen speichern",
     "show_phone_toggle": "Meine Telefonnummer in der Anzeige anzeigen",
     "show_phone_hint": "Wenn deaktiviert, können Käufer Sie nur über den Chat kontaktieren.",
-    "carpooling_phone_hint": "Deine Telefonnummer wird bei Mitfahrgelegenheiten immer angezeigt, damit Mitfahrer dich erreichen können."
+    "carpooling_phone_hint": "Deine Telefonnummer wird bei Mitfahrgelegenheiten immer angezeigt, damit Mitfahrer dich erreichen können.",
+    "placeholder_title_tickets": "z. B. 2 Tickets Konzert Casablanca zu verkaufen",
+    "placeholder_desc_tickets": "Beschreiben Sie die Veranstaltung, den Termin und die Sitzplätze...",
+    "placeholder_title_giveaway_swap": "z. B. Sofa zu verschenken",
+    "placeholder_desc_giveaway_swap": "Beschreiben Sie den Zustand und was Sie im Tausch suchen...",
+    "placeholder_title_moving": "z. B. Umzugsservice Casablanca–Rabat",
+    "placeholder_desc_moving": "Beschreiben Sie Leistungsumfang, Einsatzgebiet und Erfahrung..."
   },
   "subcats": {
     "AUTO": "Auto",
@@ -782,7 +791,16 @@
     "CAR_RENTAL": "Auto mieten",
     "TRUCK_RENTAL": "LKW mieten",
     "MACHINERY_RENTAL": "Maschinen mieten",
-    "OTHER_RENTAL": "Sonstiges mieten"
+    "OTHER_RENTAL": "Sonstiges mieten",
+    "CONCERTS": "Konzerte",
+    "SPORTS_EVENTS": "Sportveranstaltungen",
+    "CINEMA_THEATER": "Kino & Theater",
+    "AMUSEMENT_PARKS": "Freizeitparks",
+    "OTHER_EVENTS": "Sonstige Events",
+    "TO_GIVE": "Zu verschenken",
+    "TO_SWAP": "Zu tauschen",
+    "PRIVATE_MOVING": "Privatumzug",
+    "COMPANY_MOVING": "Firmenumzug"
   },
   "attrs": {
     "BRAND": "Marke",
@@ -1255,8 +1273,21 @@
       "MOUNTAIN": "Mountainbike",
       "ROAD": "Rennrad",
       "CITY": "Cityrad",
-      "KIDS": "Kinder"
-    }
+      "KIDS": "Kinder",
+      "VIP": "VIP",
+      "CATEGORY_1": "Kategorie 1",
+      "CATEGORY_2": "Kategorie 2",
+      "STANDING": "Stehplatz",
+      "GENERAL_ADMISSION": "Allgemeiner Zutritt",
+      "HOUSEHOLD": "Haushaltsartikel"
+    },
+    "EVENT_DATE": "Veranstaltungsdatum",
+    "VENUE": "Veranstaltungsort",
+    "TICKET_COUNT": "Anzahl Tickets",
+    "SEAT_CATEGORY": "Sitzplatzkategorie",
+    "ITEM_CATEGORY": "Objektkategorie",
+    "HAS_VEHICLE": "Eigenes Fahrzeug",
+    "TEAM_SIZE": "Teamgröße"
   },
   "job_professions": {
     "DOCTOR": "Arzt / Ärztin",

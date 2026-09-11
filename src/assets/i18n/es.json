@@ -270,7 +270,10 @@
     "LESSONS_COURSES": "Clases & Cursos",
     "CARPOOLING": "Viajes compartidos",
     "TRANSPORT": "Ofrecer transporte",
-    "RENTAL": "Alquiler"
+    "RENTAL": "Alquiler",
+    "TICKETS": "Entradas y Tickets",
+    "GIVEAWAY_SWAP": "Regalar e Intercambiar",
+    "MOVING": "Mudanzas"
   },
   "footer": {
     "tagline": "La primera plataforma de anuncios clasificados de Marruecos. Simple, rápida y segura.",
@@ -712,7 +715,13 @@
     "publish_edit": "💾 Guardar cambios",
     "show_phone_toggle": "Mostrar mi teléfono en el anuncio",
     "show_phone_hint": "Si está desactivado, los compradores solo podrán contactarte por chat.",
-    "carpooling_phone_hint": "Tu número de teléfono siempre se muestra en los anuncios de viajes compartidos, para que los pasajeros puedan contactarte."
+    "carpooling_phone_hint": "Tu número de teléfono siempre se muestra en los anuncios de viajes compartidos, para que los pasajeros puedan contactarte.",
+    "placeholder_title_tickets": "ej: 2 entradas concierto Casablanca en venta",
+    "placeholder_desc_tickets": "Describa el evento, la fecha y los asientos...",
+    "placeholder_title_giveaway_swap": "ej: Sofá para regalar",
+    "placeholder_desc_giveaway_swap": "Describa el estado y qué busca a cambio...",
+    "placeholder_title_moving": "ej: Servicio de mudanza Casablanca–Rabat",
+    "placeholder_desc_moving": "Describa sus servicios, zona de cobertura y experiencia..."
   },
   "subcats": {
     "AUTO": "Coche",
@@ -782,7 +791,16 @@
     "CAR_RENTAL": "Alquilar un coche",
     "TRUCK_RENTAL": "Alquilar un camión",
     "MACHINERY_RENTAL": "Alquilar maquinaria",
-    "OTHER_RENTAL": "Otro alquiler"
+    "OTHER_RENTAL": "Otro alquiler",
+    "CONCERTS": "Conciertos",
+    "SPORTS_EVENTS": "Eventos deportivos",
+    "CINEMA_THEATER": "Cine y Teatro",
+    "AMUSEMENT_PARKS": "Parques de atracciones",
+    "OTHER_EVENTS": "Otros eventos",
+    "TO_GIVE": "Para regalar",
+    "TO_SWAP": "Para intercambiar",
+    "PRIVATE_MOVING": "Mudanza particular",
+    "COMPANY_MOVING": "Mudanza de empresa"
   },
   "attrs": {
     "BRAND": "Marca",
@@ -1255,8 +1273,21 @@
       "MOUNTAIN": "Montaña",
       "ROAD": "Carretera",
       "CITY": "Urbana",
-      "KIDS": "Infantil"
-    }
+      "KIDS": "Infantil",
+      "VIP": "VIP",
+      "CATEGORY_1": "Categoría 1",
+      "CATEGORY_2": "Categoría 2",
+      "STANDING": "De pie",
+      "GENERAL_ADMISSION": "Entrada general",
+      "HOUSEHOLD": "Artículos del hogar"
+    },
+    "EVENT_DATE": "Fecha del evento",
+    "VENUE": "Lugar",
+    "TICKET_COUNT": "Número de entradas",
+    "SEAT_CATEGORY": "Categoría de asiento",
+    "ITEM_CATEGORY": "Categoría del artículo",
+    "HAS_VEHICLE": "Vehículo propio",
+    "TEAM_SIZE": "Tamaño del equipo"
   },
   "job_professions": {
     "DOCTOR": "Médico/a",

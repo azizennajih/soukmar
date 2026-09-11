@@ -270,7 +270,10 @@
     "LESSONS_COURSES": "Lessons & Courses",
     "CARPOOLING": "Carpooling",
     "TRANSPORT": "Offer Transport",
-    "RENTAL": "Rentals"
+    "RENTAL": "Rentals",
+    "TICKETS": "Tickets",
+    "GIVEAWAY_SWAP": "Free & Swap",
+    "MOVING": "Moving"
   },
   "footer": {
     "tagline": "Morocco's first classifieds platform. Simple, fast and secure.",
@@ -499,7 +502,13 @@
     "publish_edit": "💾 Save changes",
     "show_phone_toggle": "Show my phone number on the listing",
     "show_phone_hint": "If disabled, buyers can only contact you via chat.",
-    "carpooling_phone_hint": "Your phone number is always shown for carpooling listings, so passengers can reach you."
+    "carpooling_phone_hint": "Your phone number is always shown for carpooling listings, so passengers can reach you.",
+    "placeholder_title_tickets": "e.g. 2 concert tickets Casablanca for sale",
+    "placeholder_desc_tickets": "Describe the event, date and seats...",
+    "placeholder_title_giveaway_swap": "e.g. Sofa to give away",
+    "placeholder_desc_giveaway_swap": "Describe the condition and what you want in exchange...",
+    "placeholder_title_moving": "e.g. Moving service Casablanca–Rabat",
+    "placeholder_desc_moving": "Describe your services, coverage area and experience..."
   },
   "mes_annonces": {
     "title": "My listings",
@@ -782,7 +791,16 @@
     "CAR_RENTAL": "Rent a car",
     "TRUCK_RENTAL": "Rent a truck",
     "MACHINERY_RENTAL": "Rent machinery",
-    "OTHER_RENTAL": "Other rental"
+    "OTHER_RENTAL": "Other rental",
+    "CONCERTS": "Concerts",
+    "SPORTS_EVENTS": "Sports events",
+    "CINEMA_THEATER": "Cinema & Theater",
+    "AMUSEMENT_PARKS": "Amusement parks",
+    "OTHER_EVENTS": "Other events",
+    "TO_GIVE": "To give away",
+    "TO_SWAP": "To swap",
+    "PRIVATE_MOVING": "Private moving",
+    "COMPANY_MOVING": "Company moving"
   },
   "attrs": {
     "BRAND": "Brand",
@@ -1255,8 +1273,21 @@
       "MOUNTAIN": "Mountain",
       "ROAD": "Road",
       "CITY": "City",
-      "KIDS": "Kids"
-    }
+      "KIDS": "Kids",
+      "VIP": "VIP",
+      "CATEGORY_1": "Category 1",
+      "CATEGORY_2": "Category 2",
+      "STANDING": "Standing",
+      "GENERAL_ADMISSION": "General admission",
+      "HOUSEHOLD": "Household items"
+    },
+    "EVENT_DATE": "Event date",
+    "VENUE": "Venue",
+    "TICKET_COUNT": "Number of tickets",
+    "SEAT_CATEGORY": "Seat category",
+    "ITEM_CATEGORY": "Item category",
+    "HAS_VEHICLE": "Own vehicle",
+    "TEAM_SIZE": "Team size"
   },
   "job_professions": {
     "DOCTOR": "Doctor",
