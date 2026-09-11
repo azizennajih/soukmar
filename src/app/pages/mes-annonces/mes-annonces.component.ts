@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ListingService } from '../../services/listing.service';
@@ -9,9 +10,11 @@ import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { IconComponent } from '../../components/icon/icon.component';
 import { Listing, CATEGORIES, formatPriceParts, timeAgo } from '../../models/listing.model';
 
+type SortKey = '' | 'oldest' | 'prix_asc' | 'prix_desc';
+
 @Component({
   selector: 'app-mes-annonces',
-  imports: [CommonModule, RouterLink, TranslatePipe, CityLabelPipe, IconComponent],
+  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe, CityLabelPipe, IconComponent],
   templateUrl: './mes-annonces.component.html',
   styleUrl: './mes-annonces.component.scss'
 })
@@ -22,6 +25,21 @@ export class MesAnnoncesComponent implements OnInit {
   bumping: Record<string, boolean> = {};
   statsOpenId: string | null = null;
   statsData: Record<string, { date: string; count: number }[]> = {};
+  sortBy: SortKey = '';
+
+  get sortedListings(): Listing[] {
+    const sorted = [...this.listings];
+    switch (this.sortBy) {
+      case 'oldest':
+        return sorted.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+      case 'prix_asc':
+        return sorted.sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
+      case 'prix_desc':
+        return sorted.sort((a, b) => (b.price ?? -Infinity) - (a.price ?? -Infinity));
+      default:
+        return sorted.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    }
+  }
 
   get statusConfig(): Record<string, { label: string; cls: string }> {
     const t = (k: string) => this.i18n.t(k);
@@ -66,6 +84,17 @@ export class MesAnnoncesComponent implements OnInit {
   getCategory(val: string) { return CATEGORIES.find(c => c.value === val); }
   priceParts(l: Listing) { return l.price != null ? formatPriceParts(l.price, l.currency) : null; }
   time(l: Listing)  { return timeAgo(l.createdAt); }
+
+  daysUntilExpiry(l: Listing): number | null {
+    if (!l.expiresAt) return null;
+    const ms = new Date(l.expiresAt).getTime() - Date.now();
+    return Math.max(0, Math.ceil(ms / (24 * 3_600_000)));
+  }
+
+  isExpiringSoon(l: Listing): boolean {
+    const days = this.daysUntilExpiry(l);
+    return days !== null && days <= 7;
+  }
 
   canBump(listing: Listing): boolean {
     if (!listing.bumpedAt) return true;

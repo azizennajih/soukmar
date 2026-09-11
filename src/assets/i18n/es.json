@@ -197,7 +197,9 @@
     "saved_search_match": "Nuevo anuncio para tu búsqueda «{name}».",
     "enable_push": "Activa las notificaciones push para no perderte nada.",
     "enable_push_btn": "Activar",
-    "report_resolved": "Tu denuncia ha sido revisada por nuestro equipo."
+    "report_resolved": "Tu denuncia ha sido revisada por nuestro equipo.",
+    "listing_expiring_soon": "Tu anuncio caduca en aproximadamente una semana.",
+    "listing_expired": "Tu anuncio ha caducado. Hazte Premium para reactivarlo."
   },
   "auth": {
     "login_title": "¡Bienvenido de vuelta!",
@@ -454,7 +456,9 @@
     "bump": "Destacar anuncio",
     "bump_cooldown": "Disponible una vez al día",
     "stats": "Estadísticas",
-    "stats_title": "Visitas de los últimos 14 días"
+    "stats_title": "Visitas de los últimos 14 días",
+    "expires_in_days": "Caduca en {n} días",
+    "expires_today": "Caduca hoy"
   },
   "mes_favoris": {
     "title": "Mis favoritos",

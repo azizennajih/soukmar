@@ -197,7 +197,9 @@
     "saved_search_match": "إعلان جديد لبحثك «{name}».",
     "enable_push": "فعّل إشعارات Push حتى لا يفوتك أي شيء.",
     "enable_push_btn": "تفعيل",
-    "report_resolved": "تمت مراجعة بلاغك من قبل فريقنا."
+    "report_resolved": "تمت مراجعة بلاغك من قبل فريقنا.",
+    "listing_expiring_soon": "ستنتهي صلاحية إعلانك خلال حوالي أسبوع.",
+    "listing_expired": "انتهت صلاحية إعلانك. اشترك في Premium لإعادة تفعيله."
   },
   "auth": {
     "login_title": "مرحبًا بعودتك!",
@@ -525,7 +527,9 @@
     "bump": "رفع الإعلان",
     "bump_cooldown": "متاح مرة واحدة يوميًا",
     "stats": "الإحصائيات",
-    "stats_title": "المشاهدات خلال آخر 14 يومًا"
+    "stats_title": "المشاهدات خلال آخر 14 يومًا",
+    "expires_in_days": "تنتهي خلال {n} يومًا",
+    "expires_today": "تنتهي اليوم"
   },
   "mes_favoris": {
     "title": "المفضلة",

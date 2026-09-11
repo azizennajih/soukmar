@@ -2,10 +2,30 @@
   padding: 2.5rem 1.25rem;
 
   &__header {
-    display: flex; justify-content: space-between; align-items: center;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
     margin-bottom: 2rem;
     h1 { font-size: 1.6rem; font-weight: 800; color: #111827; letter-spacing: -.02em; }
     p  { font-size: .875rem; color: #64748b; margin-top: .2rem; }
+  }
+
+  &__header-actions {
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  }
+
+  &__sort {
+    display: flex; align-items: center; gap: .5rem; flex-shrink: 0;
+
+    label { font-size: .8rem; color: var(--text-muted); white-space: nowrap; }
+
+    select {
+      padding: .5rem .75rem; border: 1.5px solid var(--border); border-radius: .65rem;
+      background: var(--white); font-size: .85rem; color: var(--text); cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='3'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right .6rem center;
+      padding-right: 1.8rem;
+      &:focus { outline: none; border-color: var(--primary); }
+    }
   }
 
   &__empty {
@@ -49,6 +69,10 @@
 
   &__price { font-weight: 600; color: #111827; font-size: .85rem; }
   &__currency { font-size: .68rem; font-weight: 500; color: #94a3b8; }
+
+  &__expiry {
+    &--soon { color: var(--primary); font-weight: 600; }
+  }
 
   &__actions { display: flex; gap: .4rem; flex-shrink: 0; }
 

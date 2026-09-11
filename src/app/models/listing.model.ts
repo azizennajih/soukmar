@@ -80,6 +80,8 @@ export interface Listing {
   avgPrice?: number | null;
   bumpedAt?: Date;
   createdAt: Date;
+  expiresAt?: Date | null;
+  expiryExtended?: boolean;
 }
 
 export interface ListingAttributesPayload {

@@ -197,7 +197,9 @@
     "saved_search_match": "Nouvelle annonce pour votre recherche « {name} ».",
     "enable_push": "Activez les notifications push pour ne rien manquer.",
     "enable_push_btn": "Activer",
-    "report_resolved": "Votre signalement a été examiné par notre équipe."
+    "report_resolved": "Votre signalement a été examiné par notre équipe.",
+    "listing_expiring_soon": "Votre annonce expire dans environ une semaine.",
+    "listing_expired": "Votre annonce a expiré. Passez en Premium pour la réactiver."
   },
   "auth": {
     "login_title": "Bon retour !",
@@ -1288,7 +1290,9 @@
     "bump": "Remonter l'annonce",
     "bump_cooldown": "Disponible une fois par jour",
     "stats": "Statistiques",
-    "stats_title": "Vues sur les 14 derniers jours"
+    "stats_title": "Vues sur les 14 derniers jours",
+    "expires_in_days": "Expire dans {n} jours",
+    "expires_today": "Expire aujourd'hui"
   },
   "mes_favoris": {
     "title": "Mes favoris",

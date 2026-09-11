@@ -197,7 +197,9 @@
     "saved_search_match": "Nuovo annuncio per la tua ricerca \"{name}\".",
     "enable_push": "Attiva le notifiche push per non perdere nulla.",
     "enable_push_btn": "Attiva",
-    "report_resolved": "La tua segnalazione è stata esaminata dal nostro team."
+    "report_resolved": "La tua segnalazione è stata esaminata dal nostro team.",
+    "listing_expiring_soon": "Il tuo annuncio scade tra circa una settimana.",
+    "listing_expired": "Il tuo annuncio è scaduto. Passa a Premium per riattivarlo."
   },
   "auth": {
     "login_title": "Bentornato!",
@@ -454,7 +456,9 @@
     "bump": "Fai risalire l'annuncio",
     "bump_cooldown": "Disponibile una volta al giorno",
     "stats": "Statistiche",
-    "stats_title": "Visualizzazioni negli ultimi 14 giorni"
+    "stats_title": "Visualizzazioni negli ultimi 14 giorni",
+    "expires_in_days": "Scade tra {n} giorni",
+    "expires_today": "Scade oggi"
   },
   "mes_favoris": {
     "title": "I miei preferiti",

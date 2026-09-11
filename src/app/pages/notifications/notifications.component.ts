@@ -53,6 +53,8 @@ export class NotificationsComponent implements OnInit {
       : n.type === 'NEW_REVIEW' ? 'notifications.new_review'
       : n.type === 'SAVED_SEARCH_MATCH' ? 'notifications.saved_search_match'
       : n.type === 'REPORT_RESOLVED' ? 'notifications.report_resolved'
+      : n.type === 'LISTING_EXPIRING_SOON' ? 'notifications.listing_expiring_soon'
+      : n.type === 'LISTING_EXPIRED' ? 'notifications.listing_expired'
       : 'notifications.new_message';
     return this.i18n.t(key, { name: n.actorName || '' });
   }
@@ -70,6 +72,8 @@ export class NotificationsComponent implements OnInit {
     if (n.type === 'NEW_REVIEW') { this.router.navigate(['/profil'], { queryParams: { tab: 'reviews' } }); return; }
     if (n.type === 'REPORT_RESOLVED') { return; }
     if (n.type === 'SAVED_SEARCH_MATCH' && n.listingId) { this.router.navigate(['/annonces', n.listingId]); return; }
+    if (n.type === 'LISTING_EXPIRING_SOON') { this.router.navigate(['/mes-annonces']); return; }
+    if (n.type === 'LISTING_EXPIRED') { this.router.navigate(['/premium']); return; }
     if (n.listingId) this.router.navigate(['/chat'], { queryParams: { listing: n.listingId } });
   }
 

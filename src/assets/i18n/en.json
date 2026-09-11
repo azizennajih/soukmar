@@ -197,7 +197,9 @@
     "saved_search_match": "New listing for your search \"{name}\".",
     "enable_push": "Enable push notifications so you never miss anything.",
     "enable_push_btn": "Enable",
-    "report_resolved": "Your report has been reviewed by our team."
+    "report_resolved": "Your report has been reviewed by our team.",
+    "listing_expiring_soon": "Your listing expires in about a week.",
+    "listing_expired": "Your listing has expired. Go Premium to reactivate it."
   },
   "auth": {
     "login_title": "Welcome back!",
@@ -525,7 +527,9 @@
     "bump": "Bump listing",
     "bump_cooldown": "Available once a day",
     "stats": "Statistics",
-    "stats_title": "Views over the last 14 days"
+    "stats_title": "Views over the last 14 days",
+    "expires_in_days": "Expires in {n} days",
+    "expires_today": "Expires today"
   },
   "mes_favoris": {
     "title": "My favorites",

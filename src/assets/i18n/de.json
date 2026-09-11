@@ -197,7 +197,9 @@
     "saved_search_match": "Neue Anzeige für Ihre Suche „{name}“.",
     "enable_push": "Aktivieren Sie Push-Benachrichtigungen, um nichts zu verpassen.",
     "enable_push_btn": "Aktivieren",
-    "report_resolved": "Ihre Meldung wurde von unserem Team geprüft."
+    "report_resolved": "Ihre Meldung wurde von unserem Team geprüft.",
+    "listing_expiring_soon": "Ihre Anzeige läuft in etwa einer Woche ab.",
+    "listing_expired": "Ihre Anzeige ist abgelaufen. Werden Sie Premium, um sie wieder zu aktivieren."
   },
   "auth": {
     "login_title": "Willkommen zurück!",
@@ -454,7 +456,9 @@
     "bump": "Anzeige nach oben schieben",
     "bump_cooldown": "Einmal täglich verfügbar",
     "stats": "Statistiken",
-    "stats_title": "Aufrufe der letzten 14 Tage"
+    "stats_title": "Aufrufe der letzten 14 Tage",
+    "expires_in_days": "Läuft in {n} Tagen ab",
+    "expires_today": "Läuft heute ab"
   },
   "mes_favoris": {
     "title": "Meine Favoriten",

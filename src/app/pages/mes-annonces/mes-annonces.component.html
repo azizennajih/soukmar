@@ -5,10 +5,23 @@
       <h1>{{ 'mes_annonces.title' | T }}</h1>
       <p>{{ listings.length }}</p>
     </div>
-    <a routerLink="/deposer-annonce" class="btn-primary">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      {{ 'mes_annonces.new' | T }}
-    </a>
+    <div class="mes-annonces__header-actions">
+      @if (listings.length > 0) {
+        <div class="mes-annonces__sort">
+          <label for="mes-annonces-sort">{{ 'annonces.sort' | T }}</label>
+          <select id="mes-annonces-sort" [(ngModel)]="sortBy">
+            <option value="">{{ 'annonces.newest' | T }}</option>
+            <option value="oldest">{{ 'annonces.oldest' | T }}</option>
+            <option value="prix_asc">{{ 'annonces.price_asc' | T }}</option>
+            <option value="prix_desc">{{ 'annonces.price_desc' | T }}</option>
+          </select>
+        </div>
+      }
+      <a routerLink="/deposer-annonce" class="btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        {{ 'mes_annonces.new' | T }}
+      </a>
+    </div>
   </div>
 
   @if (listings.length === 0) {
@@ -20,7 +33,7 @@
     </div>
   } @else {
     <div class="mes-annonces__list">
-      @for (listing of listings; track listing.id) {
+      @for (listing of sortedListings; track listing.id) {
         <div class="listing-row card">
           <!-- Thumb -->
           <div class="listing-row__thumb">
@@ -50,6 +63,11 @@
               <span>👁 {{ listing.views }} {{ 'listing.views' | T }}</span>
               <span>🕐 {{ time(listing) }}</span>
               <span class="icon-label"><app-icon name="location" [size]="12" /> {{ listing.city | cityLabel }}</span>
+              @if (listing.expiresAt) {
+                <span class="listing-row__expiry" [class.listing-row__expiry--soon]="isExpiringSoon(listing)">
+                  ⏳ {{ (daysUntilExpiry(listing) === 0 ? 'mes_annonces.expires_today' : 'mes_annonces.expires_in_days') | T:{n: (daysUntilExpiry(listing) || 0).toString()} }}
+                </span>
+              }
             </div>
           </div>
 
