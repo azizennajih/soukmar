@@ -5,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { I18nService } from '../../../services/i18n.service';
 import { TranslatePipe } from '../../../pipes/translate.pipe';
+import { PasswordInputComponent } from '../../../components/password-input/password-input.component';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, PasswordInputComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -21,7 +22,6 @@ export class LoginComponent implements OnInit {
 
   email = '';
   password = '';
-  showPass = false;
   loading = false;
   error = '';
   unverifiedEmail = '';

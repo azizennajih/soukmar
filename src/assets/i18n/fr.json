@@ -1051,7 +1051,9 @@
     "reject": "Rejeter",
     "deactivate": "Désactiver",
     "clear": "Effacer",
-    "toggle_premium": "Activer/désactiver Premium"
+    "toggle_premium": "Activer/désactiver Premium",
+    "show_password": "Afficher le mot de passe",
+    "hide_password": "Masquer le mot de passe"
   },
   "premium": {
     "badge": "✨ Boostez vos annonces",

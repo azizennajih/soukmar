@@ -6,11 +6,12 @@ import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { PasswordInputComponent } from '../../components/password-input/password-input.component';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-supprimer-compte',
-  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe],
+  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe, PasswordInputComponent],
   templateUrl: './supprimer-compte.component.html',
   styleUrl: './supprimer-compte.component.scss'
 })

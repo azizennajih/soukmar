@@ -5,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { I18nService } from '../../../services/i18n.service';
 import { TranslatePipe } from '../../../pipes/translate.pipe';
+import { PasswordInputComponent } from '../../../components/password-input/password-input.component';
 
 @Component({
   selector: 'app-reset-password',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, PasswordInputComponent],
   templateUrl: './reset-password.component.html',
   styleUrl: '../login/login.component.scss'
 })
@@ -22,7 +23,6 @@ export class ResetPasswordComponent implements OnInit {
   token = '';
   password = '';
   confirmPassword = '';
-  showPass = false;
   loading = false;
   success = false;
   error = '';

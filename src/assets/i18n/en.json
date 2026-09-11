@@ -721,7 +721,9 @@
     "reject": "Reject",
     "deactivate": "Deactivate",
     "clear": "Clear",
-    "toggle_premium": "Toggle Premium"
+    "toggle_premium": "Toggle Premium",
+    "show_password": "Show password",
+    "hide_password": "Hide password"
   },
   "subcats": {
     "AUTO": "Car",

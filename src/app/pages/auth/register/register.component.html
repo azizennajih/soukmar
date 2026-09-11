@@ -62,16 +62,11 @@
         </div>
         <div class="form-group">
           <label>{{ 'auth.password' | T }}</label>
-          <div class="input-icon-wrap">
-            <input [type]="showPass ? 'text' : 'password'" [(ngModel)]="form.password" name="password" [placeholder]="'auth.password_min_placeholder' | T" required style="padding-right:2.8rem" />
-            <button type="button" class="input-eye" (click)="showPass=!showPass">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-            </button>
-          </div>
+          <app-password-input [value]="form.password" (valueChange)="form.password = $event" name="password" [placeholder]="'auth.password_min_placeholder' | T" autocomplete="new-password" />
         </div>
         <div class="form-group">
           <label>{{ 'auth.password' | T }}</label>
-          <input type="password" [(ngModel)]="form.confirm" name="confirm" placeholder="••••••••" required />
+          <app-password-input [value]="form.confirm" (valueChange)="form.confirm = $event" name="confirm" placeholder="••••••••" autocomplete="new-password" />
         </div>
 
         <app-turnstile (verified)="captchaToken = $event" />

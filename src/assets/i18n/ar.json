@@ -721,7 +721,9 @@
     "reject": "رفض",
     "deactivate": "تعطيل",
     "clear": "مسح",
-    "toggle_premium": "تفعيل/إلغاء المميز"
+    "toggle_premium": "تفعيل/إلغاء المميز",
+    "show_password": "إظهار كلمة المرور",
+    "hide_password": "إخفاء كلمة المرور"
   },
   "subcats": {
     "AUTO": "سيارة",

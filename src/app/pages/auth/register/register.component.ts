@@ -8,10 +8,11 @@ import { TranslatePipe } from '../../../pipes/translate.pipe';
 import { TurnstileComponent } from '../../../components/turnstile/turnstile.component';
 import { IconComponent } from '../../../components/icon/icon.component';
 import { PhoneInputComponent } from '../../../components/phone-input/phone-input.component';
+import { PasswordInputComponent } from '../../../components/password-input/password-input.component';
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, TurnstileComponent, IconComponent, PhoneInputComponent],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, TurnstileComponent, IconComponent, PhoneInputComponent, PasswordInputComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
@@ -21,7 +22,6 @@ export class RegisterComponent {
   i18n = inject(I18nService);
 
   form = { name: '', email: '', phone: '', city: '', password: '', confirm: '', accountType: '' as '' | 'PRIVATE' | 'BUSINESS' };
-  showPass = false;
   loading = false;
   error = '';
   emailSent = false;

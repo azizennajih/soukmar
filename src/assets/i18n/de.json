@@ -316,7 +316,9 @@
     "reject": "Ablehnen",
     "deactivate": "Deaktivieren",
     "clear": "Löschen",
-    "toggle_premium": "Premium umschalten"
+    "toggle_premium": "Premium umschalten",
+    "show_password": "Passwort anzeigen",
+    "hide_password": "Passwort verbergen"
   },
   "premium": {
     "badge": "✨ Anzeigen boosten",

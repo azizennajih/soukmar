@@ -316,7 +316,9 @@
     "reject": "Rifiuta",
     "deactivate": "Disattiva",
     "clear": "Cancella",
-    "toggle_premium": "Attiva/disattiva Premium"
+    "toggle_premium": "Attiva/disattiva Premium",
+    "show_password": "Mostra password",
+    "hide_password": "Nascondi password"
   },
   "premium": {
     "badge": "✨ Potenzia i tuoi annunci",

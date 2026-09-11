@@ -17,7 +17,7 @@
       <form (ngSubmit)="deleteAccount()" class="supprimer__form">
         <div class="form-group">
           <label class="form-label">{{ 'delete_account.password_label' | T }}</label>
-          <input type="password" [(ngModel)]="password" name="password" class="form-input" placeholder="••••••••" required />
+          <app-password-input [value]="password" (valueChange)="password = $event" name="password" placeholder="••••••••" />
         </div>
 
         <label class="supprimer__checkbox">
