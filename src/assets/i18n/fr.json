@@ -1289,6 +1289,7 @@
     "unreserve": "Annuler la réservation",
     "bump": "Remonter l'annonce",
     "bump_cooldown": "Disponible une fois par jour",
+    "extend": "Prolonger de 3 semaines maintenant (gratuit, une seule fois)",
     "stats": "Statistiques",
     "stats_title": "Vues sur les 14 derniers jours",
     "expires_in_days": "Expire dans {n} jours",

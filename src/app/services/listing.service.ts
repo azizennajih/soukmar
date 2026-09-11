@@ -61,6 +61,10 @@ export class ListingService {
     return this.api.post<Listing>(`/listings/${id}/bump`, {});
   }
 
+  extend(id: string): Observable<Listing> {
+    return this.api.post<Listing>(`/listings/${id}/extend`, {});
+  }
+
   getViewStats(id: string): Observable<{ days: { date: string; count: number }[]; total: number }> {
     return this.api.get(`/listings/${id}/view-stats`);
   }

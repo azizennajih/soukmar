@@ -455,6 +455,7 @@
     "unreserve": "Reservierung aufheben",
     "bump": "Anzeige nach oben schieben",
     "bump_cooldown": "Einmal täglich verfügbar",
+    "extend": "Jetzt um 3 Wochen verlängern (einmalig kostenlos)",
     "stats": "Statistiken",
     "stats_title": "Aufrufe der letzten 14 Tage",
     "expires_in_days": "Läuft in {n} Tagen ab",

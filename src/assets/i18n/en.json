@@ -526,6 +526,7 @@
     "unreserve": "Cancel reservation",
     "bump": "Bump listing",
     "bump_cooldown": "Available once a day",
+    "extend": "Extend by 3 weeks now (free, one time)",
     "stats": "Statistics",
     "stats_title": "Views over the last 14 days",
     "expires_in_days": "Expires in {n} days",

@@ -23,6 +23,7 @@ export class MesAnnoncesComponent implements OnInit {
   listings: Listing[] = [];
   loading = false;
   bumping: Record<string, boolean> = {};
+  extending: Record<string, boolean> = {};
   statsOpenId: string | null = null;
   statsData: Record<string, { date: string; count: number }[]> = {};
   sortBy: SortKey = '';
@@ -94,6 +95,24 @@ export class MesAnnoncesComponent implements OnInit {
   isExpiringSoon(l: Listing): boolean {
     const days = this.daysUntilExpiry(l);
     return days !== null && days <= 7;
+  }
+
+  canExtend(l: Listing): boolean {
+    return !!l.expiresAt && !l.expiryExtended;
+  }
+
+  extend(listing: Listing) {
+    if (this.extending[listing.id] || !this.canExtend(listing)) return;
+    this.extending[listing.id] = true;
+    this.ls.extend(listing.id).subscribe({
+      next: updated => {
+        listing.expiresAt = updated.expiresAt;
+        listing.expiryExtended = updated.expiryExtended;
+        this.extending[listing.id] = false;
+        this.cdr.markForCheck();
+      },
+      error: () => { this.extending[listing.id] = false; this.cdr.markForCheck(); }
+    });
   }
 
   canBump(listing: Listing): boolean {

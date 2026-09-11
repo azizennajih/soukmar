@@ -455,6 +455,7 @@
     "unreserve": "Annulla prenotazione",
     "bump": "Fai risalire l'annuncio",
     "bump_cooldown": "Disponibile una volta al giorno",
+    "extend": "Prolunga di 3 settimane ora (gratis, una sola volta)",
     "stats": "Statistiche",
     "stats_title": "Visualizzazioni negli ultimi 14 giorni",
     "expires_in_days": "Scade tra {n} giorni",

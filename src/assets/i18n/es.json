@@ -455,6 +455,7 @@
     "unreserve": "Cancelar reserva",
     "bump": "Destacar anuncio",
     "bump_cooldown": "Disponible una vez al día",
+    "extend": "Ampliar 3 semanas ahora (gratis, una sola vez)",
     "stats": "Estadísticas",
     "stats_title": "Visitas de los últimos 14 días",
     "expires_in_days": "Caduca en {n} días",
