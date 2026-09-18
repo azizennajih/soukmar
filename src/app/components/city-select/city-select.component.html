@@ -40,7 +40,7 @@
     </div>
   }
 
-  @if (open()) {
+  @if (open() && cities().length) {
     <div class="city-select__panel" [style.top]="panelStyle().top" [style.left]="panelStyle().left" [style.width]="panelStyle().width">
       @if (filtered().length) {
         @for (city of filtered(); track city; let i = $index) {
