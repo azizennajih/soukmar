@@ -61,6 +61,16 @@
         </select>
       </div>
 
+      <!-- Intent (Angebot/Gesuch) -->
+      <div class="sidebar__section">
+        <label class="sidebar__label">{{ 'annonces.intent_filter_label' | T }}</label>
+        <select [(ngModel)]="filters.intent" class="sidebar__select">
+          <option value="">{{ 'annonces.intent_offers_only' | T }}</option>
+          <option value="SEARCH">{{ 'listing.intent_search_badge' | T }}</option>
+          <option value="ALL">{{ 'annonces.intent_all' | T }}</option>
+        </select>
+      </div>
+
       <!-- Condition -->
       @if (showCondition) {
         <div class="sidebar__section">

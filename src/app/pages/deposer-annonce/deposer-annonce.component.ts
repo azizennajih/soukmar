@@ -13,7 +13,7 @@ import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { TextAutocompleteComponent } from '../../components/text-autocomplete/text-autocomplete.component';
 import { DateInputComponent } from '../../components/date-input/date-input.component';
 import { MultiSelectComponent } from '../../components/multi-select/multi-select.component';
-import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES, Category, Subcategory, AttributeDefinition, Condition, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR } from '../../models/listing.model';
+import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES, Category, Subcategory, AttributeDefinition, Condition, ListingIntent, PriceType, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR } from '../../models/listing.model';
 import { compressListingPhoto } from '../../utils/image-compression';
 import { TurnstileComponent } from '../../components/turnstile/turnstile.component';
 import { PhoneInputComponent } from '../../components/phone-input/phone-input.component';
@@ -37,7 +37,7 @@ export class DeposerAnnonceComponent {
 
   get steps(): string[] {
     const t = (k: string) => this.i18n.t(k);
-    return [t('deposer.step_category'), t('deposer.step_subcategory'), t('deposer.step_details'), t('deposer.step_photos'), t('deposer.step_contact')];
+    return [t('deposer.step_intent'), t('deposer.step_category'), t('deposer.step_subcategory'), t('deposer.step_details'), t('deposer.step_photos'), t('deposer.step_contact')];
   }
   step = 0;
   loading = false;
@@ -61,12 +61,14 @@ export class DeposerAnnonceComponent {
   get maxPhotos(): number { return this.premium ? 20 : 10; }
 
   form = {
+    intent: '' as ListingIntent | '',
     category: '' as Category | '',
     subcategoryId: '',
     condition: '' as Condition | '',
     title: '',
     description: '',
     price: '',
+    priceType: 'FIXED' as PriceType,
     currency: 'MAD',
     city: '',
     phone: '',
@@ -103,12 +105,14 @@ export class DeposerAnnonceComponent {
           this.router.navigate(['/mes-annonces']);
           return;
         }
+        this.form.intent = listing.intent || 'OFFER';
         this.form.category = listing.category as Category;
         this.form.subcategoryId = listing.subcategoryId || '';
         this.form.condition = (listing.condition as Condition) || '';
         this.form.title = listing.title;
         this.form.description = listing.description;
         this.form.price = listing.price != null ? String(listing.price) : '';
+        this.form.priceType = listing.priceType || (listing.price != null ? 'FIXED' : 'NEGOTIABLE');
         this.form.currency = listing.currency || 'MAD';
         this.form.city = listing.city;
         this.form.phone = listing.phone || '';
@@ -146,7 +150,7 @@ export class DeposerAnnonceComponent {
           });
         }
 
-        this.step = 2;
+        this.step = 3;
         this.initLoading = false;
         this.cdr.markForCheck();
       },
@@ -222,6 +226,11 @@ export class DeposerAnnonceComponent {
     return DeposerAnnonceComponent.MACHINE_TYPE_ICONS[code] ?? '';
   }
 
+  selectIntent(val: ListingIntent) {
+    this.form.intent = val;
+    this.step = 1;
+  }
+
   selectCategory(val: Category) {
     this.form.category = val;
     this.form.subcategoryId = '';
@@ -233,10 +242,10 @@ export class DeposerAnnonceComponent {
       next: subs => {
         this.subcategories = subs;
         this.loadingSubcats = false;
-        this.step = subs.length ? 1 : 2;
+        this.step = subs.length ? 2 : 3;
         this.cdr.markForCheck();
       },
-      error: () => { this.subcategories = []; this.loadingSubcats = false; this.step = 2; this.cdr.markForCheck(); }
+      error: () => { this.subcategories = []; this.loadingSubcats = false; this.step = 3; this.cdr.markForCheck(); }
     });
   }
 
@@ -246,9 +255,14 @@ export class DeposerAnnonceComponent {
     if (!this.showCondition) this.form.condition = '';
     this.loadingAttrs = true;
     this.catalog.getAttributes(sub.id).subscribe({
-      next: defs => { this.attributeDefs = defs; this.loadingAttrs = false; this.step = 2; this.cdr.markForCheck(); },
-      error: () => { this.attributeDefs = []; this.loadingAttrs = false; this.step = 2; this.cdr.markForCheck(); }
+      next: defs => { this.attributeDefs = defs; this.loadingAttrs = false; this.step = 3; this.cdr.markForCheck(); },
+      error: () => { this.attributeDefs = []; this.loadingAttrs = false; this.step = 3; this.cdr.markForCheck(); }
     });
+  }
+
+  selectPriceType(val: PriceType) {
+    this.form.priceType = val;
+    if (val === 'FREE') this.form.price = '';
   }
 
   setAttr(code: string, value: string | number | boolean | string[]) {
@@ -266,7 +280,7 @@ export class DeposerAnnonceComponent {
   }
 
   goBack() {
-    if (this.step === 2 && !this.subcategories.length) { this.step = 0; return; }
+    if (this.step === 3 && !this.subcategories.length) { this.step = 1; return; }
     this.step = this.step - 1;
   }
 
@@ -280,7 +294,7 @@ export class DeposerAnnonceComponent {
    * dialogs"), which made the button appear to randomly stop working. */
   cancel() {
     const hasProgress = !!(
-      this.form.category || this.form.subcategoryId || this.form.title ||
+      this.form.intent || this.form.category || this.form.subcategoryId || this.form.title ||
       this.form.description || this.form.price || this.form.city || this.photos.length
     );
     if (hasProgress) { this.pendingCancel = true; return; }
@@ -293,10 +307,12 @@ export class DeposerAnnonceComponent {
   }
 
   get canNext(): boolean {
-    if (this.step === 0) return !!this.form.category;
-    if (this.step === 1) return !!this.form.subcategoryId;
-    if (this.step === 2) {
+    if (this.step === 0) return !!this.form.intent;
+    if (this.step === 1) return !!this.form.category;
+    if (this.step === 2) return !!this.form.subcategoryId;
+    if (this.step === 3) {
       if (!(this.form.title && this.form.description && this.form.city)) return false;
+      if (this.form.priceType === 'FIXED' && !this.form.price) return false;
       return this.attributeDefs
         .filter(d => d.required)
         .every(d => {
@@ -305,7 +321,7 @@ export class DeposerAnnonceComponent {
           return v !== undefined && v !== null && v !== '';
         });
     }
-    if (this.step === 3 && this.isCarpooling) return this.photos.length >= 2;
+    if (this.step === 4 && this.isCarpooling) return this.photos.length >= 2;
     return true;
   }
 
@@ -413,7 +429,9 @@ export class DeposerAnnonceComponent {
         title: this.form.title,
         description: this.form.description,
         price: this.form.price ? +this.form.price : undefined,
+        priceType: this.form.priceType,
         currency: this.form.currency,
+        intent: this.form.intent as ListingIntent,
         category: this.form.category as Category,
         subcategoryId: this.form.subcategoryId || undefined,
         condition: this.form.condition || undefined,

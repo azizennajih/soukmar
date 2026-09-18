@@ -45,6 +45,18 @@ export class ListingCardComponent implements OnInit {
     return this.i18n.t('listing.negotiate');
   }
 
+  get isFree(): boolean {
+    return this.listing.priceType === 'FREE';
+  }
+
+  get isNegotiableWithPrice(): boolean {
+    return this.listing.priceType === 'NEGOTIABLE' && this.listing.price != null;
+  }
+
+  get isSearchIntent(): boolean {
+    return this.listing.intent === 'SEARCH';
+  }
+
   get timeDisplay(): string {
     return timeAgo(this.listing.createdAt, this.i18n.lang());
   }

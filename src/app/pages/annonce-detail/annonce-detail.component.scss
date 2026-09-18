@@ -54,6 +54,17 @@
   // case a freshly-posted listing is also featured.
   &__featured-badge + &__new-badge { top: 3.1rem; }
 
+  &__search-badge {
+    position: absolute; top: 1rem; left: 1rem;
+    background: rgba(30,58,95,.1); color: #1E3A5F; border: 1px solid rgba(30,58,95,.25);
+    padding: .3rem .75rem; border-radius: 999px;
+    font-size: .78rem; font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0,0,0,.12);
+  }
+
+  &__new-badge + &__search-badge, &__featured-badge + &__search-badge { top: 3.1rem; }
+  &__featured-badge + &__new-badge + &__search-badge { top: 5.2rem; }
+
   &__thumbs {
     display: flex; gap: .5rem; padding: .75rem;
     overflow-x: auto;
@@ -135,6 +146,10 @@
 
   &__currency {
     font-size: .65rem; font-weight: 600; color: #6b7280;
+  }
+
+  &__vb {
+    font-size: .65rem; font-weight: 600; color: #6b7280; margin-left: .2rem;
   }
 
   &__desc-title {

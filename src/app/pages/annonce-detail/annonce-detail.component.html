@@ -41,6 +41,9 @@
           @if (isNew) {
             <span class="detail__new-badge">{{ 'listing.new_badge' | T }}</span>
           }
+          @if (isSearchIntent) {
+            <span class="detail__search-badge">{{ 'listing.intent_search_badge' | T }}</span>
+          }
         </div>
         @if (listing.images.length > 1) {
           <div class="detail__thumbs">
@@ -96,8 +99,13 @@
         </div>
 
         <div class="detail__price">
-          @if (priceParts; as p) {
+          @if (isFree) {
+            {{ 'listing.free_badge' | T }}
+          } @else if (priceParts; as p) {
             {{ p.amount }} <span class="detail__currency">{{ p.currency }}</span>
+            @if (isNegotiableWithPrice) {
+              <span class="detail__vb">{{ 'listing.vb_suffix' | T }}</span>
+            }
           } @else {
             {{ negotiateLabel }}
           }
@@ -170,8 +178,13 @@
       <!-- Price + Contact -->
       <div class="card detail__contact-card">
         <div class="detail__contact-price">
-          @if (priceParts; as p) {
+          @if (isFree) {
+            {{ 'listing.free_badge' | T }}
+          } @else if (priceParts; as p) {
             {{ p.amount }} <span class="detail__currency">{{ p.currency }}</span>
+            @if (isNegotiableWithPrice) {
+              <span class="detail__vb">{{ 'listing.vb_suffix' | T }}</span>
+            }
           } @else {
             {{ negotiateLabel }}
           }

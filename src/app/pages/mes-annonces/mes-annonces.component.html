@@ -54,12 +54,20 @@
             </div>
             <div class="listing-row__meta">
               <span class="listing-row__price">
-                @if (priceParts(listing); as p) {
+                @if (listing.priceType === 'FREE') {
+                  {{ 'listing.free_badge' | T }}
+                } @else if (priceParts(listing); as p) {
                   {{ p.amount }} <span class="listing-row__currency">{{ p.currency }}</span>
+                  @if (listing.priceType === 'NEGOTIABLE') {
+                    <span class="listing-row__currency">&nbsp;{{ 'listing.vb_suffix' | T }}</span>
+                  }
                 } @else {
                   {{ 'listing.negotiate' | T }}
                 }
               </span>
+              @if (listing.intent === 'SEARCH') {
+                <span class="badge">{{ 'listing.intent_search_badge' | T }}</span>
+              }
               <span>👁 {{ listing.views }} {{ 'listing.views' | T }}</span>
               <span>🕐 {{ time(listing) }}</span>
               <span class="icon-label"><app-icon name="location" [size]="12" /> {{ listing.city | cityLabel }}</span>

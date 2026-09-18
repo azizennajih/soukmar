@@ -237,6 +237,18 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
   get negotiateLabel(): string {
     return this.i18n.t('listing.negotiate');
   }
+
+  get isFree(): boolean {
+    return this.listing?.priceType === 'FREE';
+  }
+
+  get isNegotiableWithPrice(): boolean {
+    return this.listing?.priceType === 'NEGOTIABLE' && this.listing?.price != null;
+  }
+
+  get isSearchIntent(): boolean {
+    return this.listing?.intent === 'SEARCH';
+  }
   get timeDisplay() { return this.listing ? timeAgo(this.listing.createdAt, this.i18n.lang()) : ''; }
   get exactTime() { return this.listing ? exactDateTime(this.listing.createdAt, this.i18n.lang()) : ''; }
   get isNew(): boolean { return this.listing ? isNewListing(this.listing.createdAt) : false; }

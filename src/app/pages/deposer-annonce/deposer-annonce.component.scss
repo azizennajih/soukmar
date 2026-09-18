@@ -136,6 +136,42 @@
   &-icon { font-size: 2rem; }
 }
 
+/* Intent choice (Angebot/Gesuch) */
+.deposer__intent-choice {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.25rem;
+  @media (max-width: 500px) { grid-template-columns: 1fr; }
+}
+
+.deposer__intent-option {
+  display: flex; flex-direction: column; align-items: center; gap: .4rem;
+  padding: 1.75rem 1rem; border-radius: 1rem;
+  border: 2px solid #e2e8f0; background: #fff; cursor: pointer;
+  text-align: center; transition: all .2s;
+
+  &:hover { border-color: #fca5a5; transform: translateY(-2px); }
+  &.selected { border-color: #e63946; background: #fff5f5; box-shadow: 0 4px 12px rgba(230,57,70,.15); }
+}
+
+.deposer__intent-icon { font-size: 2.25rem; }
+.deposer__intent-label { font-size: 1rem; font-weight: 800; color: #0f172a; }
+.deposer__intent-sub { font-size: .8rem; color: #64748b; }
+
+/* Price type (Festpreis/Verhandlungsbasis/Zu verschenken) */
+.deposer__price-type {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem;
+  @media (max-width: 500px) { grid-template-columns: 1fr; }
+}
+
+.deposer__price-type-option {
+  padding: .65rem .5rem; border-radius: .75rem;
+  border: 2px solid #e2e8f0; background: #fff; cursor: pointer;
+  font-size: .82rem; font-weight: 600; color: #374151; text-align: center;
+  transition: all .2s;
+
+  &:hover { border-color: #fca5a5; }
+  &.selected { border-color: #e63946; background: #fff5f5; color: #e63946; }
+}
+
 /* Form */
 .deposer__form { display: flex; flex-direction: column; gap: 1.1rem; margin-top: 1.25rem; }
 

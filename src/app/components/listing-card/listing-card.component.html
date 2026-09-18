@@ -21,6 +21,9 @@
       @if (listing.isPremium && !listing.isFeatured) {
         <span class="listing-card__badge listing-card__badge--pro">{{ 'listing.pro_badge' | T }}</span>
       }
+      @if (isSearchIntent) {
+        <span class="listing-card__badge listing-card__badge--search">{{ 'listing.intent_search_badge' | T }}</span>
+      }
     </div>
 
     <!-- Favorite -->
@@ -36,8 +39,13 @@
     <h3 class="listing-card__title">{{ listing.title }}</h3>
 
     <div class="listing-card__price">
-      @if (priceParts; as p) {
+      @if (isFree) {
+        {{ 'listing.free_badge' | T }}
+      } @else if (priceParts; as p) {
         {{ p.amount }} <span class="listing-card__currency">{{ p.currency }}</span>
+        @if (isNegotiableWithPrice) {
+          <span class="listing-card__vb">{{ 'listing.vb_suffix' | T }}</span>
+        }
       } @else {
         {{ negotiateLabel }}
       }

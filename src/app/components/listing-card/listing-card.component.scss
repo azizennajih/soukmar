@@ -73,6 +73,7 @@
     &--new      { background: #dcfce7; color: #15803d; }
     &--premium  { background: rgba(201,148,26,.12); color: #A07314; border: 1px solid rgba(201,148,26,.3); }
     &--pro      { background: #f3e8ff; color: #6b21a8; }
+    &--search   { background: rgba(30,58,95,.1); color: #1E3A5F; border: 1px solid rgba(30,58,95,.25); }
   }
 
   &__fav {
@@ -118,6 +119,13 @@
     font-size: .7rem;
     font-weight: 600;
     color: #6b7280;
+  }
+
+  &__vb {
+    font-size: .7rem;
+    font-weight: 600;
+    color: #6b7280;
+    margin-left: .2rem;
   }
 
   &__meta { margin-bottom: .5rem; }

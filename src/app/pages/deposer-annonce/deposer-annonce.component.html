@@ -38,8 +38,37 @@
 
     <div class="card deposer__card">
 
-      <!-- STEP 0: Category -->
+      <!-- STEP 0: Intent (Angebot/Gesuch) -->
       @if (step === 0) {
+        <div class="deposer__step">
+          <h2 class="deposer__step-title">{{ 'deposer.intent_title' | T }}</h2>
+          <div class="deposer__intent-choice">
+            <button
+              type="button"
+              class="deposer__intent-option"
+              [class.selected]="form.intent === 'OFFER'"
+              (click)="selectIntent('OFFER')"
+            >
+              <span class="deposer__intent-icon">📢</span>
+              <span class="deposer__intent-label">{{ 'deposer.intent_offer' | T }}</span>
+              <span class="deposer__intent-sub">{{ 'deposer.intent_offer_sub' | T }}</span>
+            </button>
+            <button
+              type="button"
+              class="deposer__intent-option"
+              [class.selected]="form.intent === 'SEARCH'"
+              (click)="selectIntent('SEARCH')"
+            >
+              <span class="deposer__intent-icon">🔍</span>
+              <span class="deposer__intent-label">{{ 'deposer.intent_search' | T }}</span>
+              <span class="deposer__intent-sub">{{ 'deposer.intent_search_sub' | T }}</span>
+            </button>
+          </div>
+        </div>
+      }
+
+      <!-- STEP 1: Category -->
+      @if (step === 1) {
         <div class="deposer__step">
           <h2 class="deposer__step-title">{{ 'deposer.cat_title' | T }}</h2>
           <div class="deposer__cats">
@@ -57,8 +86,8 @@
         </div>
       }
 
-      <!-- STEP 1: Subcategory -->
-      @if (step === 1) {
+      <!-- STEP 2: Subcategory -->
+      @if (step === 2) {
         <div class="deposer__step">
           <h2 class="deposer__step-title">{{ 'deposer.subcat_title' | T }}</h2>
           @if (loadingSubcats) {
@@ -79,8 +108,8 @@
         </div>
       }
 
-      <!-- STEP 2: Details + attributes -->
-      @if (step === 2) {
+      <!-- STEP 3: Details + attributes -->
+      @if (step === 3) {
         <div class="deposer__step">
           <h2 class="deposer__step-title">{{ 'deposer.details_title' | T }}</h2>
           <div class="deposer__form">
@@ -93,20 +122,30 @@
               <label>{{ 'deposer.label_desc' | T }}</label>
               <textarea [(ngModel)]="form.description" rows="5" [placeholder]="descPlaceholderKey | T"></textarea>
             </div>
-            <div class="deposer__row">
-              <div class="form-group">
-                <label>{{ 'deposer.label_price' | T }}</label>
-                <input type="number" [(ngModel)]="form.price" placeholder="0" min="0" />
-              </div>
-              <div class="form-group deposer__currency">
-                <label>{{ 'deposer.label_currency' | T }}</label>
-                <select [(ngModel)]="form.currency">
-                  <option value="MAD">MAD</option>
-                  <option value="EUR">EUR</option>
-                  <option value="USD">USD</option>
-                </select>
+            <div class="form-group">
+              <label>{{ 'deposer.label_price_type' | T }}</label>
+              <div class="deposer__price-type">
+                <button type="button" class="deposer__price-type-option" [class.selected]="form.priceType === 'FIXED'" (click)="selectPriceType('FIXED')">{{ 'deposer.price_type_fixed' | T }}</button>
+                <button type="button" class="deposer__price-type-option" [class.selected]="form.priceType === 'NEGOTIABLE'" (click)="selectPriceType('NEGOTIABLE')">{{ 'deposer.price_type_negotiable' | T }}</button>
+                <button type="button" class="deposer__price-type-option" [class.selected]="form.priceType === 'FREE'" (click)="selectPriceType('FREE')">{{ 'deposer.price_type_free' | T }}</button>
               </div>
             </div>
+            @if (form.priceType !== 'FREE') {
+              <div class="deposer__row">
+                <div class="form-group">
+                  <label>{{ 'deposer.label_price' | T }}{{ form.priceType === 'FIXED' ? ' *' : '' }}</label>
+                  <input type="number" [(ngModel)]="form.price" placeholder="0" min="0" />
+                </div>
+                <div class="form-group deposer__currency">
+                  <label>{{ 'deposer.label_currency' | T }}</label>
+                  <select [(ngModel)]="form.currency">
+                    <option value="MAD">MAD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="USD">USD</option>
+                  </select>
+                </div>
+              </div>
+            }
             <div class="form-group">
               <label>{{ 'deposer.label_city' | T }}</label>
               <select [(ngModel)]="form.city">
@@ -196,8 +235,8 @@
         </div>
       }
 
-      <!-- STEP 3: Photos -->
-      @if (step === 3) {
+      <!-- STEP 4: Photos -->
+      @if (step === 4) {
         <div class="deposer__step">
           <h2 class="deposer__step-title">{{ 'deposer.photos_title' | T }}</h2>
           <p class="deposer__step-sub">{{ 'deposer.photos_sub_prefix' | T }} {{ maxPhotos }} {{ 'deposer.photos_sub_suffix' | T }}</p>
@@ -247,8 +286,8 @@
         </div>
       }
 
-      <!-- STEP 4: Contact -->
-      @if (step === 4) {
+      <!-- STEP 5: Contact -->
+      @if (step === 5) {
         <div class="deposer__step">
           <h2 class="deposer__step-title">{{ 'deposer.contact_title' | T }}</h2>
           <div class="deposer__form">
@@ -274,6 +313,7 @@
             <!-- Summary -->
             <div class="deposer__summary">
               <div class="deposer__summary-title">{{ 'deposer.summary_title' | T }}</div>
+              <div class="deposer__summary-row"><span>{{ 'deposer.summary_intent' | T }}</span><strong>{{ (form.intent === 'SEARCH' ? 'deposer.intent_search' : 'deposer.intent_offer') | T }}</strong></div>
               <div class="deposer__summary-row"><span>{{ 'deposer.summary_cat' | T }}</span><strong>{{ summaryCategory?.icon }} {{ ('cats.' + summaryCategory?.value) | T }}</strong></div>
               @if (summarySubcategory) {
                 <div class="deposer__summary-row"><span>{{ 'deposer.summary_subcat' | T }}</span><strong>{{ ('subcats.' + summarySubcategory!.code) | T }}</strong></div>
@@ -282,7 +322,18 @@
                 <div class="deposer__summary-row"><span>{{ 'deposer.label_condition' | T }}</span><strong>{{ (form.condition === 'NEW' ? 'listing.condition_new' : 'listing.condition_used') | T }}</strong></div>
               }
               <div class="deposer__summary-row"><span>{{ 'deposer.summary_listing_title' | T }}</span><strong>{{ form.title || '—' }}</strong></div>
-              <div class="deposer__summary-row"><span>{{ 'deposer.summary_price' | T }}</span><strong>{{ form.price ? form.price + ' ' + form.currency : ('deposer.negotiate' | T) }}</strong></div>
+              <div class="deposer__summary-row">
+                <span>{{ 'deposer.summary_price' | T }}</span>
+                <strong>
+                  @if (form.priceType === 'FREE') {
+                    {{ 'deposer.price_type_free' | T }}
+                  } @else if (form.price) {
+                    {{ form.price }} {{ form.currency }}{{ form.priceType === 'NEGOTIABLE' ? ' (' + ('deposer.negotiate' | T) + ')' : '' }}
+                  } @else {
+                    {{ 'deposer.negotiate' | T }}
+                  }
+                </strong>
+              </div>
               <div class="deposer__summary-row"><span>{{ 'deposer.summary_city' | T }}</span><strong>{{ (form.city | cityLabel) || '—' }}</strong></div>
             </div>
 

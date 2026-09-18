@@ -53,12 +53,17 @@ export interface User {
   phoneVerified?: boolean;
 }
 
+export type ListingIntent = 'OFFER' | 'SEARCH';
+export type PriceType = 'FIXED' | 'NEGOTIABLE' | 'FREE';
+
 export interface Listing {
   id: string;
   title: string;
   description: string;
   price?: number;
+  priceType?: PriceType;
   currency: string;
+  intent?: ListingIntent;
   category: Category;
   subcategoryId?: string;
   subcategory?: Subcategory;
