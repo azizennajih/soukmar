@@ -10,6 +10,11 @@ export interface ListingsResponse {
   pages: number;
 }
 
+export interface SearchSuggestions {
+  categories: { category: Category; count: number }[];
+  phrases: string[];
+}
+
 export interface ListingFilters {
   q?: string;
   category?: string;
@@ -44,6 +49,10 @@ export class ListingService {
 
   getMyListings(): Observable<Listing[]> {
     return this.api.get<Listing[]>('/listings/user/mine');
+  }
+
+  getSuggestions(q: string): Observable<SearchSuggestions> {
+    return this.api.get<SearchSuggestions>('/listings/suggestions', { q });
   }
 
   create(data: Partial<Listing> & ListingAttributesPayload): Observable<Listing> {

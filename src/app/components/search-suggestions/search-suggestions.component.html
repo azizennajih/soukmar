@@ -1,0 +1,37 @@
+@if (show) {
+  <div class="search-suggestions" [style.top]="panelStyle().top" [style.left]="panelStyle().left" [style.width]="panelStyle().width">
+    <button
+      type="button"
+      class="search-suggestions__item"
+      (mousedown)="$event.preventDefault()"
+      (click)="select(query)"
+    >
+      <svg class="search-suggestions__icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <span><strong>{{ query }}</strong> {{ 'nav.suggest_in_all' | T }}</span>
+    </button>
+
+    @for (phrase of suggestions!.phrases; track phrase) {
+      <button
+        type="button"
+        class="search-suggestions__item"
+        (mousedown)="$event.preventDefault()"
+        (click)="select(phrase)"
+      >
+        <svg class="search-suggestions__icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <span><strong>{{ phrase }}</strong> {{ 'nav.suggest_in_all' | T }}</span>
+      </button>
+    }
+
+    @for (c of suggestions!.categories; track c.category) {
+      <button
+        type="button"
+        class="search-suggestions__item"
+        (mousedown)="$event.preventDefault()"
+        (click)="select(query, c.category)"
+      >
+        <svg class="search-suggestions__icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <span><strong>{{ query }}</strong> {{ 'nav.suggest_in' | T }} {{ categoryLabel(c.category) }}</span>
+      </button>
+    }
+  </div>
+}

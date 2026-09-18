@@ -19,7 +19,9 @@
     "all": "الكل",
     "saved_searches": "عمليات البحث المحفوظة",
     "city_placeholder_short": "المدينة",
-    "settings": "الإعدادات"
+    "settings": "الإعدادات",
+    "suggest_in_all": "في جميع الفئات",
+    "suggest_in": "في"
   },
   "home": {
     "hero_badge": "أكثر من 50,000 إعلان نشط",

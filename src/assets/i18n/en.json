@@ -19,7 +19,9 @@
     "all": "All",
     "saved_searches": "Saved Searches",
     "city_placeholder_short": "City",
-    "settings": "Settings"
+    "settings": "Settings",
+    "suggest_in_all": "in all categories",
+    "suggest_in": "in"
   },
   "home": {
     "hero_badge": "Over 50,000 active listings",

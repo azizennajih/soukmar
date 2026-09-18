@@ -22,13 +22,19 @@
       </p>
 
       <form class="hero__search" (ngSubmit)="search()">
-        <input
-          type="text"
-          [(ngModel)]="searchQuery"
-          name="q"
-          [placeholder]="'home.search_placeholder' | T"
-          class="hero__search-input"
-        />
+        <div class="hero__search-field-wrap">
+          <input
+            type="text"
+            [(ngModel)]="searchQuery"
+            name="q"
+            [placeholder]="'home.search_placeholder' | T"
+            class="hero__search-input"
+            autocomplete="off"
+            (focus)="searchFocused.set(true)"
+            (blur)="searchFocused.set(false)"
+          />
+          <app-search-suggestions [query]="searchQuery" [active]="searchFocused()" (pick)="onSuggestionPick($event)" />
+        </div>
         <div class="hero__search-city">
           <app-city-select
             [cities]="allCities"

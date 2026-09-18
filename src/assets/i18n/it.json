@@ -19,7 +19,9 @@
     "all": "Tutti",
     "saved_searches": "Ricerche salvate",
     "city_placeholder_short": "Città",
-    "settings": "Impostazioni"
+    "settings": "Impostazioni",
+    "suggest_in_all": "in tutte le categorie",
+    "suggest_in": "in"
   },
   "home": {
     "hero_badge": "Oltre 50.000 annunci attivi",

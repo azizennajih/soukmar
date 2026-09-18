@@ -12,11 +12,12 @@ import { CitySelectComponent } from '../city-select/city-select.component';
 import { CatIconComponent } from '../cat-icon/cat-icon.component';
 import { GeocodeService, Coords } from '../../services/geocode.service';
 import { NotificationService } from '../../services/notification.service';
+import { SearchSuggestionsComponent } from '../search-suggestions/search-suggestions.component';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink, FormsModule, CitySelectComponent, CatIconComponent, TranslatePipe],
+  imports: [CommonModule, RouterLink, FormsModule, CitySelectComponent, CatIconComponent, TranslatePipe, SearchSuggestionsComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -32,6 +33,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   mobileOpen = signal(false);
   userMenuOpen = signal(false);
   unreadCount = signal(0);
+  searchFocused = signal(false);
   private pollInterval: ReturnType<typeof setInterval> | null = null;
 
   langs: { code: Lang; flag: string; label: string }[] = [
@@ -106,9 +108,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (!this.radius) this.radius = '10';
   }
 
-  async search() {
+  onSuggestionPick(e: { q: string; category?: string }) {
+    this.searchQuery = e.q;
+    this.searchFocused.set(false);
+    this.search(e.category);
+  }
+
+  async search(category?: string) {
     const params: Record<string, string> = {};
     if (this.searchQuery.trim()) params['q'] = this.searchQuery.trim();
+    if (category) params['categorie'] = category;
     if (this.selectedCity.trim()) params['ville'] = this.selectedCity.trim();
 
     if (this.gpsCoords) {

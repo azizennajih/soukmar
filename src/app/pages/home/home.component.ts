@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -14,10 +14,11 @@ import { GeocodeService, Coords } from '../../services/geocode.service';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CityLabelPipe } from '../../pipes/city-label.pipe';
+import { SearchSuggestionsComponent } from '../../components/search-suggestions/search-suggestions.component';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, CitySelectComponent, CatIconComponent, TranslatePipe, CityLabelPipe],
+  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, CitySelectComponent, CatIconComponent, TranslatePipe, CityLabelPipe, SearchSuggestionsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -29,6 +30,7 @@ export class HomeComponent implements OnInit {
   featured: Listing[] = [];
   latest: Listing[] = [];
   searchQuery = '';
+  searchFocused = signal(false);
   selectedCity = '';
   gpsCoords: Coords | null = null;
   radius = '';
@@ -104,9 +106,16 @@ export class HomeComponent implements OnInit {
     if (!this.radius) this.radius = '10';
   }
 
-  async search() {
+  onSuggestionPick(e: { q: string; category?: string }) {
+    this.searchQuery = e.q;
+    this.searchFocused.set(false);
+    this.search(e.category);
+  }
+
+  async search(category?: string) {
     const params: Record<string, string> = {};
     if (this.searchQuery.trim()) params['q'] = this.searchQuery.trim();
+    if (category) params['categorie'] = category;
     if (this.selectedCity.trim()) params['ville'] = this.selectedCity.trim();
 
     if (this.gpsCoords) {

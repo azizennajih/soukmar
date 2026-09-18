@@ -19,7 +19,9 @@
     "all": "Alle",
     "saved_searches": "Gespeicherte Suchen",
     "city_placeholder_short": "Stadt",
-    "settings": "Einstellungen"
+    "settings": "Einstellungen",
+    "suggest_in_all": "in allen Kategorien",
+    "suggest_in": "in"
   },
   "home": {
     "hero_badge": "Über 50.000 aktive Anzeigen",

@@ -19,7 +19,9 @@
     "logout": "Se déconnecter",
     "register": "S'inscrire",
     "categories": "Catégories",
-    "all": "Toutes"
+    "all": "Toutes",
+    "suggest_in_all": "dans toutes les catégories",
+    "suggest_in": "dans"
   },
   "home": {
     "hero_badge": "Plus de 50 000 annonces actives",
