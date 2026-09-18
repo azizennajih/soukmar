@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, Output, EventEmitter, ViewChild, inject, signal, computed } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, Output, EventEmitter, ViewChild, inject, signal, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../pipes/translate.pipe';
@@ -25,7 +25,13 @@ interface PanelStyle {
   styleUrl: './city-select.component.scss'
 })
 export class CitySelectComponent {
-  @Input() cities: string[] = [];
+  /** A real signal input (not a plain @Input()) so `filtered` below actually
+   * re-runs when the parent swaps the list (e.g. the navbar/annonces country
+   * switcher) — a computed() only tracks *signal* reads, and a plain @Input
+   * array read inside one silently goes stale whenever `query`/`lang` happen
+   * not to change value on that same re-render (e.g. re-focusing an already-
+   * empty field just calls query.set('') again, a no-op signal write). */
+  cities = input<string[]>([]);
   @Input() placeholder = '';
   @Input() value = '';
   @Input() showGps = false;
@@ -59,9 +65,10 @@ export class CitySelectComponent {
     // No cap: the panel scrolls (max-height + overflow-y), and capping the
     // unfiltered browse-all list broke it — the city list is alphabetical,
     // so a fixed slice only ever showed cities starting with "A".
+    const cities = this.cities();
     return q
-      ? this.cities.filter(c => normalize(c).includes(q) || normalize(cityLabel(c, lang)).includes(q))
-      : this.cities;
+      ? cities.filter(c => normalize(c).includes(q) || normalize(cityLabel(c, lang)).includes(q))
+      : cities;
   });
 
   /** Arabic name in Arabic UI (falls back to the stored French/Latin city as-is
