@@ -24,6 +24,7 @@ export interface AttributeDefinition {
   type: AttributeType;
   required: boolean;
   filterable: boolean;
+  sortable: boolean;
   sortOrder: number;
   options: string[];
 }

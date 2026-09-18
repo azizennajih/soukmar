@@ -68,6 +68,8 @@
     "price_asc": "Prix croissant",
     "price_desc": "Prix décroissant",
     "distance": "Distance",
+    "sort_asc_suffix": "croissant",
+    "sort_desc_suffix": "décroissant",
     "apply": "Appliquer",
     "reset": "Réinitialiser",
     "empty": "Aucune annonce trouvée",

@@ -68,6 +68,8 @@
     "price_asc": "Prezzo: crescente",
     "price_desc": "Prezzo: decrescente",
     "distance": "Distanza",
+    "sort_asc_suffix": "crescente",
+    "sort_desc_suffix": "decrescente",
     "apply": "Applica",
     "reset": "Reimposta",
     "empty": "Nessun annuncio trovato",

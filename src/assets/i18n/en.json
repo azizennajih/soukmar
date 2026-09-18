@@ -68,6 +68,8 @@
     "price_asc": "Price: lowest",
     "price_desc": "Price: highest",
     "distance": "Distance",
+    "sort_asc_suffix": "ascending",
+    "sort_desc_suffix": "descending",
     "apply": "Apply",
     "reset": "Reset",
     "empty": "No listings found",

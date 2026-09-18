@@ -68,6 +68,8 @@
     "price_asc": "السعر: من الأقل",
     "price_desc": "السعر: من الأعلى",
     "distance": "المسافة",
+    "sort_asc_suffix": "تصاعدي",
+    "sort_desc_suffix": "تنازلي",
     "apply": "تطبيق",
     "reset": "إعادة تعيين",
     "empty": "لا توجد إعلانات",

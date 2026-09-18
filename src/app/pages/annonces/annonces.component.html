@@ -201,6 +201,10 @@
               @if (filters.lat) {
                 <option value="distance">{{ 'annonces.distance' | T }}</option>
               }
+              @for (def of sortableAttributeDefs; track def.code) {
+                <option [value]="'attr_' + def.code + '_asc'">{{ ('attrs.' + def.code) | T }} ({{ 'annonces.sort_asc_suffix' | T }})</option>
+                <option [value]="'attr_' + def.code + '_desc'">{{ ('attrs.' + def.code) | T }} ({{ 'annonces.sort_desc_suffix' | T }})</option>
+              }
             </select>
           </div>
         </div>

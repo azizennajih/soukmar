@@ -68,6 +68,8 @@
     "price_asc": "Preis: aufsteigend",
     "price_desc": "Preis: absteigend",
     "distance": "Entfernung",
+    "sort_asc_suffix": "aufsteigend",
+    "sort_desc_suffix": "absteigend",
     "apply": "Anwenden",
     "reset": "Zurücksetzen",
     "empty": "Keine Anzeigen gefunden",

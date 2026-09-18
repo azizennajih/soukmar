@@ -40,6 +40,11 @@ export class AnnoncesComponent implements OnInit {
 
   subcategoryOptions: SubcategoryOption[] = [];
   attributeFilterDefs: AttributeDefinition[] = [];
+  /** Category/subcategory-specific sort options (e.g. mileage, first
+   * registration year for vehicles) — only the attributes the catalog
+   * marks `sortable`, same union-across-subcategories logic as
+   * `attributeFilterDefs`. Empty outside a selected category. */
+  sortableAttributeDefs: AttributeDefinition[] = [];
   attrFilters: Record<string, string> = {};
   get jobProfessionCodes(): string[] {
     const sectors = this.selectedOptions('INDUSTRY');
@@ -110,6 +115,7 @@ export class AnnoncesComponent implements OnInit {
     if (!this.filters.categorie) {
       this.subcategoryOptions = [];
       this.attributeFilterDefs = [];
+      this.sortableAttributeDefs = [];
       return;
     }
     this.catalog.getCategoryFull(this.filters.categorie as Category).subscribe({
@@ -119,11 +125,19 @@ export class AnnoncesComponent implements OnInit {
         const defs = selected
           ? selected.attributeDefinitions
           : res.subcategories.flatMap(s => s.attributeDefinitions);
-        const seen = new Set<string>();
-        this.attributeFilterDefs = defs.filter(d => d.filterable && !seen.has(d.code) && seen.add(d.code));
+        const seenFilter = new Set<string>();
+        this.attributeFilterDefs = defs.filter(d => d.filterable && !seenFilter.has(d.code) && seenFilter.add(d.code));
+        const seenSort = new Set<string>();
+        this.sortableAttributeDefs = defs.filter(d => d.sortable && !seenSort.has(d.code) && seenSort.add(d.code));
+        // A category switch can drop the previously selected sort attribute
+        // (e.g. leaving Véhicules while sorted by mileage) — fall back to
+        // the default sort instead of silently sending a dead `tri` value.
+        if (this.filters.tri.startsWith('attr_') && !this.sortableAttributeDefs.some(d => this.filters.tri === `attr_${d.code}_asc` || this.filters.tri === `attr_${d.code}_desc`)) {
+          this.filters.tri = '';
+        }
         this.cdr.markForCheck();
       },
-      error: () => { this.subcategoryOptions = []; this.attributeFilterDefs = []; this.cdr.markForCheck(); }
+      error: () => { this.subcategoryOptions = []; this.attributeFilterDefs = []; this.sortableAttributeDefs = []; this.cdr.markForCheck(); }
     });
   }
 

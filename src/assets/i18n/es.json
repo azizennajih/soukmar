@@ -68,6 +68,8 @@
     "price_asc": "Precio: más bajo",
     "price_desc": "Precio: más alto",
     "distance": "Distancia",
+    "sort_asc_suffix": "ascendente",
+    "sort_desc_suffix": "descendente",
     "apply": "Aplicar",
     "reset": "Restablecer",
     "empty": "No se encontraron anuncios",
