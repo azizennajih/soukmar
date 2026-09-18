@@ -88,7 +88,7 @@
       display: flex;
       align-items: center;
       flex: 1;
-      min-width: 0;
+      min-width: 90px;
 
       &--location {
         flex: 0 0 230px;
@@ -302,6 +302,7 @@
   &__lang-label {
     font-size: .78rem;
     letter-spacing: .03em;
+    @media (max-width: 1024px) { display: none; }
   }
 
   &__lang-dropdown {
@@ -350,6 +351,12 @@
     font-size: .85rem;
     padding: .6rem 1rem;
     box-shadow: 0 2px 8px rgba(230,57,70,.3);
+  }
+
+  &__post-text {
+    // Icon-only past this width — frees room for the search field, which
+    // otherwise gets squeezed to near-unusable once the actions area is full.
+    @media (max-width: 1024px) { display: none; }
   }
 
   &__burger {
