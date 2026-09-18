@@ -186,12 +186,32 @@
                             (valueChange)="setAttr(def.code, $event)"
                           />
                         } @else if (def.code === 'DESTINATION_CITY') {
-                          <select [ngModel]="form.attributes[def.code]" (ngModelChange)="setAttr(def.code, $event)">
-                            <option value="">—</option>
-                            @for (city of cities; track city) {
-                              <option [value]="city">{{ city | cityLabel }}</option>
+                          @if (hasDestinationCountry) {
+                            @if (!destinationCountry) {
+                              <input type="text" disabled [placeholder]="'deposer.destination_country_default' | T" />
+                            } @else if (destinationCountry === 'MOROCCO') {
+                              <select [ngModel]="form.attributes[def.code]" (ngModelChange)="setAttr(def.code, $event)">
+                                <option value="">—</option>
+                                @for (city of cities; track city) {
+                                  <option [value]="city">{{ city | cityLabel }}</option>
+                                }
+                              </select>
+                            } @else {
+                              <app-text-autocomplete
+                                [value]="$any(form.attributes[def.code] ?? '')"
+                                [options]="destinationCitiesForCountry"
+                                [placeholder]="'deposer.destination_city_other_placeholder' | T"
+                                (valueChange)="setAttr(def.code, $event)"
+                              />
                             }
-                          </select>
+                          } @else {
+                            <select [ngModel]="form.attributes[def.code]" (ngModelChange)="setAttr(def.code, $event)">
+                              <option value="">—</option>
+                              @for (city of cities; track city) {
+                                <option [value]="city">{{ city | cityLabel }}</option>
+                              }
+                            </select>
+                          }
                         } @else {
                           <input type="text" [ngModel]="form.attributes[def.code]" (ngModelChange)="setAttr(def.code, $event)" />
                         }
@@ -210,12 +230,25 @@
                         </select>
                       }
                       @case ('SELECT') {
-                        <select [ngModel]="form.attributes[def.code]" (ngModelChange)="setAttr(def.code, $event)">
-                          <option value="">—</option>
-                          @for (opt of def.options; track opt) {
-                            <option [value]="opt">{{ (def.code === 'MACHINE_TYPE' ? machineTypeIcon(opt) + ' ' : '') }}{{ ('attrs.opts.' + opt) | T }}</option>
-                          }
-                        </select>
+                        @if (def.code === 'DESTINATION_COUNTRY') {
+                          <select [ngModel]="form.attributes[def.code]" (ngModelChange)="onDestinationCountryChange($event)">
+                            <option value="">{{ 'deposer.destination_country_default' | T }}</option>
+                            @for (group of transportCountryRegions; track group.region) {
+                              <optgroup [label]="regionLabelKey(group.region) | T">
+                                @for (opt of group.countries; track opt) {
+                                  <option [value]="opt">{{ ('attrs.opts.' + opt) | T }}</option>
+                                }
+                              </optgroup>
+                            }
+                          </select>
+                        } @else {
+                          <select [ngModel]="form.attributes[def.code]" (ngModelChange)="setAttr(def.code, $event)">
+                            <option value="">—</option>
+                            @for (opt of def.options; track opt) {
+                              <option [value]="opt">{{ (def.code === 'MACHINE_TYPE' ? machineTypeIcon(opt) + ' ' : '') }}{{ ('attrs.opts.' + opt) | T }}</option>
+                            }
+                          </select>
+                        }
                       }
                       @case ('MULTI_SELECT') {
                         <app-multi-select

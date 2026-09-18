@@ -13,7 +13,7 @@ import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { TextAutocompleteComponent } from '../../components/text-autocomplete/text-autocomplete.component';
 import { DateInputComponent } from '../../components/date-input/date-input.component';
 import { MultiSelectComponent } from '../../components/multi-select/multi-select.component';
-import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES, Category, Subcategory, AttributeDefinition, Condition, ListingIntent, PriceType, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR } from '../../models/listing.model';
+import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES, Category, Subcategory, AttributeDefinition, Condition, ListingIntent, PriceType, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR, TRANSPORT_COUNTRY_REGIONS, TRANSPORT_CITIES_BY_COUNTRY } from '../../models/listing.model';
 import { compressListingPhoto } from '../../utils/image-compression';
 import { TurnstileComponent } from '../../components/turnstile/turnstile.component';
 import { PhoneInputComponent } from '../../components/phone-input/phone-input.component';
@@ -267,6 +267,34 @@ export class DeposerAnnonceComponent {
 
   setAttr(code: string, value: string | number | boolean | string[]) {
     this.form.attributes = { ...this.form.attributes, [code]: value };
+  }
+
+  /** Transport anbieten (TRANSPORT category) offers cross-border routes: a
+   * DESTINATION_COUNTRY attribute (Morocco/Europe/Africa) gates which
+   * DESTINATION_CITY picker renders. Other subcategories (e.g. Carpooling)
+   * never get this attribute, so they keep the plain Morocco-only city select. */
+  transportCountryRegions = TRANSPORT_COUNTRY_REGIONS;
+
+  get hasDestinationCountry(): boolean {
+    return this.attributeDefs.some(d => d.code === 'DESTINATION_COUNTRY');
+  }
+
+  get destinationCountry(): string {
+    return (this.form.attributes['DESTINATION_COUNTRY'] as string) ?? '';
+  }
+
+  get destinationCitiesForCountry(): string[] {
+    return TRANSPORT_CITIES_BY_COUNTRY[this.destinationCountry] ?? [];
+  }
+
+  regionLabelKey(region: string): string {
+    return 'deposer.region_' + region.toLowerCase();
+  }
+
+  /** Switching country invalidates whatever city was already typed for the
+   * previous one, so it's cleared rather than left stale. */
+  onDestinationCountryChange(value: string) {
+    this.form.attributes = { ...this.form.attributes, DESTINATION_COUNTRY: value, DESTINATION_CITY: '' };
   }
 
   selectedFor(code: string): string[] {

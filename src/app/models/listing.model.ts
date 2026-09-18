@@ -208,6 +208,66 @@ export const SHOE_SIZES_EU: string[] = (() => {
   return sizes;
 })();
 
+/** Groups TRANSPORT's DESTINATION_COUNTRY option codes (see catalog-data.ts's
+ * TRANSPORT_COUNTRIES on the backend, which this must stay in sync with)
+ * into <optgroup>s for the "Transport anbieten" international destination
+ * picker — Morocco stays the default domestic case, Europe/Africa cover
+ * cross-border freight routes. */
+export const TRANSPORT_COUNTRY_REGIONS: { region: 'MOROCCO' | 'EUROPE' | 'AFRICA'; countries: string[] }[] = [
+  { region: 'MOROCCO', countries: ['MOROCCO'] },
+  {
+    region: 'EUROPE',
+    countries: [
+      'FRANCE', 'SPAIN', 'GERMANY', 'ITALY', 'PORTUGAL', 'NETHERLANDS', 'BELGIUM',
+      'UNITED_KINGDOM', 'SWITZERLAND', 'AUSTRIA', 'SWEDEN', 'POLAND', 'GREECE', 'IRELAND', 'DENMARK',
+    ],
+  },
+  {
+    region: 'AFRICA',
+    countries: [
+      'ALGERIA', 'TUNISIA', 'LIBYA', 'MAURITANIA', 'SENEGAL', 'MALI', 'EGYPT', 'NIGERIA',
+      'COTE_DIVOIRE', 'GHANA', 'CAMEROON', 'SOUTH_AFRICA', 'KENYA', 'ETHIOPIA', 'TANZANIA',
+    ],
+  },
+];
+
+/** Curated major cities per non-Morocco destination country, offered via
+ * app-text-autocomplete (free typing still works) — the app can't realistically
+ * maintain an exhaustive city database for 29 countries the way MOROCCO_CITIES
+ * does for one. Morocco itself keeps using the full MOROCCO_CITIES picker. */
+export const TRANSPORT_CITIES_BY_COUNTRY: Record<string, string[]> = {
+  FRANCE: ['Paris', 'Marseille', 'Lyon', 'Toulouse', 'Nice', 'Nantes', 'Strasbourg', 'Bordeaux', 'Lille'],
+  SPAIN: ['Madrid', 'Barcelona', 'Valencia', 'Sevilla', 'Zaragoza', 'Malaga', 'Bilbao'],
+  GERMANY: ['Berlin', 'Hamburg', 'Munich', 'Cologne', 'Frankfurt', 'Stuttgart', 'Dusseldorf'],
+  ITALY: ['Rome', 'Milan', 'Naples', 'Turin', 'Palermo', 'Bologna', 'Genoa'],
+  PORTUGAL: ['Lisbon', 'Porto', 'Braga', 'Coimbra', 'Faro'],
+  NETHERLANDS: ['Amsterdam', 'Rotterdam', 'The Hague', 'Utrecht', 'Eindhoven'],
+  BELGIUM: ['Brussels', 'Antwerp', 'Ghent', 'Liege', 'Bruges'],
+  UNITED_KINGDOM: ['London', 'Manchester', 'Birmingham', 'Liverpool', 'Glasgow'],
+  SWITZERLAND: ['Zurich', 'Geneva', 'Basel', 'Bern', 'Lausanne'],
+  AUSTRIA: ['Vienna', 'Graz', 'Linz', 'Salzburg'],
+  SWEDEN: ['Stockholm', 'Gothenburg', 'Malmo'],
+  POLAND: ['Warsaw', 'Krakow', 'Lodz', 'Wroclaw'],
+  GREECE: ['Athens', 'Thessaloniki', 'Patras'],
+  IRELAND: ['Dublin', 'Cork', 'Galway'],
+  DENMARK: ['Copenhagen', 'Aarhus', 'Odense'],
+  ALGERIA: ['Algiers', 'Oran', 'Constantine', 'Annaba'],
+  TUNISIA: ['Tunis', 'Sfax', 'Sousse', 'Bizerte'],
+  LIBYA: ['Tripoli', 'Benghazi', 'Misrata'],
+  MAURITANIA: ['Nouakchott', 'Nouadhibou'],
+  SENEGAL: ['Dakar', 'Touba', 'Saint-Louis'],
+  MALI: ['Bamako', 'Sikasso'],
+  EGYPT: ['Cairo', 'Alexandria', 'Giza'],
+  NIGERIA: ['Lagos', 'Abuja', 'Kano'],
+  COTE_DIVOIRE: ['Abidjan', 'Yamoussoukro'],
+  GHANA: ['Accra', 'Kumasi'],
+  CAMEROON: ['Douala', 'Yaounde'],
+  SOUTH_AFRICA: ['Johannesburg', 'Cape Town', 'Durban'],
+  KENYA: ['Nairobi', 'Mombasa'],
+  ETHIOPIA: ['Addis Ababa'],
+  TANZANIA: ['Dar es Salaam', 'Dodoma'],
+};
+
 /** Subcategories that opt out of "Zustand" (Neu/Gebraucht) even though their
  * category is otherwise in CONDITION_CATEGORIES — for services offered
  * within an otherwise physical-goods category. E.g. Sport & Freizeit also
