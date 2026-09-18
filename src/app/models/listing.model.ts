@@ -231,41 +231,155 @@ export const TRANSPORT_COUNTRY_REGIONS: { region: 'MOROCCO' | 'EUROPE' | 'AFRICA
   },
 ];
 
-/** Curated major cities per non-Morocco destination country, offered via
- * app-text-autocomplete (free typing still works) — the app can't realistically
- * maintain an exhaustive city database for 29 countries the way MOROCCO_CITIES
- * does for one. Morocco itself keeps using the full MOROCCO_CITIES picker. */
+/** Major/mid-size cities per non-Morocco destination country, offered via
+ * app-text-autocomplete (free typing still works for anything not listed) —
+ * a genuinely exhaustive list (France alone has 34,000+ communes) isn't
+ * maintainable, so this aims for the same depth as MOROCCO_CITIES: every
+ * well-known city plus a broad set of regional/mid-size ones, not just the
+ * handful of biggest metros. Morocco itself keeps using the full
+ * MOROCCO_CITIES picker instead of this map. */
 export const TRANSPORT_CITIES_BY_COUNTRY: Record<string, string[]> = {
-  FRANCE: ['Paris', 'Marseille', 'Lyon', 'Toulouse', 'Nice', 'Nantes', 'Strasbourg', 'Bordeaux', 'Lille'],
-  SPAIN: ['Madrid', 'Barcelona', 'Valencia', 'Sevilla', 'Zaragoza', 'Malaga', 'Bilbao'],
-  GERMANY: ['Berlin', 'Hamburg', 'Munich', 'Cologne', 'Frankfurt', 'Stuttgart', 'Dusseldorf'],
-  ITALY: ['Rome', 'Milan', 'Naples', 'Turin', 'Palermo', 'Bologna', 'Genoa'],
-  PORTUGAL: ['Lisbon', 'Porto', 'Braga', 'Coimbra', 'Faro'],
-  NETHERLANDS: ['Amsterdam', 'Rotterdam', 'The Hague', 'Utrecht', 'Eindhoven'],
-  BELGIUM: ['Brussels', 'Antwerp', 'Ghent', 'Liege', 'Bruges'],
-  UNITED_KINGDOM: ['London', 'Manchester', 'Birmingham', 'Liverpool', 'Glasgow'],
-  SWITZERLAND: ['Zurich', 'Geneva', 'Basel', 'Bern', 'Lausanne'],
-  AUSTRIA: ['Vienna', 'Graz', 'Linz', 'Salzburg'],
-  SWEDEN: ['Stockholm', 'Gothenburg', 'Malmo'],
-  POLAND: ['Warsaw', 'Krakow', 'Lodz', 'Wroclaw'],
-  GREECE: ['Athens', 'Thessaloniki', 'Patras'],
-  IRELAND: ['Dublin', 'Cork', 'Galway'],
-  DENMARK: ['Copenhagen', 'Aarhus', 'Odense'],
-  ALGERIA: ['Algiers', 'Oran', 'Constantine', 'Annaba'],
-  TUNISIA: ['Tunis', 'Sfax', 'Sousse', 'Bizerte'],
-  LIBYA: ['Tripoli', 'Benghazi', 'Misrata'],
-  MAURITANIA: ['Nouakchott', 'Nouadhibou'],
-  SENEGAL: ['Dakar', 'Touba', 'Saint-Louis'],
-  MALI: ['Bamako', 'Sikasso'],
-  EGYPT: ['Cairo', 'Alexandria', 'Giza'],
-  NIGERIA: ['Lagos', 'Abuja', 'Kano'],
-  COTE_DIVOIRE: ['Abidjan', 'Yamoussoukro'],
-  GHANA: ['Accra', 'Kumasi'],
-  CAMEROON: ['Douala', 'Yaounde'],
-  SOUTH_AFRICA: ['Johannesburg', 'Cape Town', 'Durban'],
-  KENYA: ['Nairobi', 'Mombasa'],
-  ETHIOPIA: ['Addis Ababa'],
-  TANZANIA: ['Dar es Salaam', 'Dodoma'],
+  FRANCE: [
+    'Paris', 'Marseille', 'Lyon', 'Toulouse', 'Nice', 'Nantes', 'Strasbourg', 'Montpellier', 'Bordeaux', 'Lille',
+    'Rennes', 'Reims', 'Le Havre', 'Saint-Étienne', 'Toulon', 'Grenoble', 'Dijon', 'Angers', 'Nîmes', 'Villeurbanne',
+    'Clermont-Ferrand', 'Le Mans', 'Aix-en-Provence', 'Brest', 'Tours', 'Limoges', 'Amiens', 'Annecy', 'Perpignan', 'Besançon',
+    'Metz', 'Orléans', 'Rouen', 'Mulhouse', 'Caen', 'Nancy', 'Argenteuil', 'Saint-Denis', 'Roubaix', 'Tourcoing',
+    'Avignon', 'Créteil', 'Poitiers', 'Versailles', 'Pau', 'La Rochelle', 'Calais', 'Cannes', 'Antibes', 'Béziers',
+  ],
+  SPAIN: [
+    'Madrid', 'Barcelona', 'Valencia', 'Sevilla', 'Zaragoza', 'Malaga', 'Murcia', 'Palma', 'Las Palmas', 'Bilbao',
+    'Alicante', 'Córdoba', 'Valladolid', 'Vigo', 'Gijón', 'Vitoria-Gasteiz', 'A Coruña', 'Granada', 'Elche', 'Oviedo',
+    'Badalona', 'Cartagena', 'Terrassa', 'Jerez de la Frontera', 'Sabadell', 'Móstoles', 'Alcalá de Henares', 'Pamplona', 'Fuenlabrada', 'Almería',
+    'San Sebastián', 'Leganés', 'Santander', 'Burgos', 'Castellón de la Plana', 'Getafe', 'Albacete', 'Alcorcón', 'Logroño', 'Badajoz',
+    'Salamanca', 'Huelva', 'Marbella', 'Tarragona', 'León', 'Cádiz', 'Lleida', 'Dos Hermanas', 'Mataró', 'Santa Cruz de Tenerife',
+  ],
+  GERMANY: [
+    'Berlin', 'Hamburg', 'Munich', 'Cologne', 'Frankfurt', 'Stuttgart', 'Düsseldorf', 'Leipzig', 'Dortmund', 'Essen',
+    'Bremen', 'Dresden', 'Hannover', 'Nuremberg', 'Duisburg', 'Bochum', 'Wuppertal', 'Bielefeld', 'Bonn', 'Münster',
+    'Mannheim', 'Karlsruhe', 'Augsburg', 'Wiesbaden', 'Mönchengladbach', 'Gelsenkirchen', 'Braunschweig', 'Chemnitz', 'Kiel', 'Aachen',
+    'Halle', 'Magdeburg', 'Freiburg', 'Krefeld', 'Lübeck', 'Oberhausen', 'Erfurt', 'Mainz', 'Rostock', 'Kassel',
+    'Hagen', 'Saarbrücken', 'Hamm', 'Potsdam', 'Ludwigshafen', 'Oldenburg', 'Leverkusen', 'Osnabrück', 'Solingen', 'Heidelberg',
+  ],
+  ITALY: [
+    'Rome', 'Milan', 'Naples', 'Turin', 'Palermo', 'Genoa', 'Bologna', 'Florence', 'Bari', 'Catania',
+    'Venice', 'Verona', 'Messina', 'Padua', 'Trieste', 'Taranto', 'Brescia', 'Parma', 'Prato', 'Modena',
+    'Reggio Calabria', 'Reggio Emilia', 'Perugia', 'Ravenna', 'Livorno', 'Cagliari', 'Foggia', 'Rimini', 'Salerno', 'Ferrara',
+    'Sassari', 'Latina', 'Monza', 'Syracuse', 'Pescara', 'Bergamo', 'Trento', 'Forlì', 'Vicenza', 'Terni',
+    'Bolzano', 'Novara', 'Piacenza', 'Ancona', 'Andria', 'Arezzo', 'Udine', 'Cesena', 'Lecce', 'La Spezia',
+  ],
+  PORTUGAL: [
+    'Lisbon', 'Porto', 'Vila Nova de Gaia', 'Amadora', 'Braga', 'Funchal', 'Coimbra', 'Setúbal', 'Almada', 'Agualva-Cacém',
+    'Queluz', 'Barreiro', 'Aveiro', 'Faro', 'Évora', 'Viseu', 'Guimarães', 'Leiria', 'Portimão', 'Odivelas',
+    'Barcelos', 'Póvoa de Varzim', 'Rio Maior', 'Viana do Castelo', 'Vila Real', 'Covilhã', 'Tomar', 'Torres Vedras', 'Peniche', 'Elvas',
+    'Beja', 'Chaves', 'Estoril', 'Cascais', 'Sintra', 'Loures', 'Matosinhos',
+  ],
+  NETHERLANDS: [
+    'Amsterdam', 'Rotterdam', 'The Hague', 'Utrecht', 'Eindhoven', 'Tilburg', 'Groningen', 'Almere', 'Breda', 'Nijmegen',
+    'Enschede', 'Haarlem', 'Arnhem', 'Zaanstad', 'Amersfoort', 'Apeldoorn', 'Hoofddorp', 'Maastricht', 'Leiden', 'Dordrecht',
+    'Zoetermeer', 'Zwolle', 'Deventer', 'Delft', 'Alkmaar', 'Heerlen', 'Venlo', 'Leeuwarden', 'Hilversum', 'Amstelveen',
+    'Purmerend', 'Roosendaal', 'Oss', 'Schiedam', 'Spijkenisse', 'Vlaardingen', 'Almelo', 'Gouda', 'Hengelo', 'Emmen',
+  ],
+  BELGIUM: [
+    'Brussels', 'Antwerp', 'Ghent', 'Charleroi', 'Liège', 'Bruges', 'Namur', 'Leuven', 'Mons', 'Aalst',
+    'Mechelen', 'La Louvière', 'Kortrijk', 'Hasselt', 'Sint-Niklaas', 'Ostend', 'Tournai', 'Genk', 'Seraing', 'Roeselare',
+    'Verviers', 'Mouscron', 'Beveren', 'Dendermonde', 'Beringen', 'Turnhout', 'Dilbeek', 'Heist-op-den-Berg', 'Lokeren', 'Vilvoorde',
+  ],
+  UNITED_KINGDOM: [
+    'London', 'Birmingham', 'Manchester', 'Glasgow', 'Liverpool', 'Leeds', 'Sheffield', 'Edinburgh', 'Bristol', 'Cardiff',
+    'Leicester', 'Belfast', 'Nottingham', 'Newcastle upon Tyne', 'Southampton', 'Portsmouth', 'Bradford', 'Coventry', 'Kingston upon Hull', 'Stoke-on-Trent',
+    'Wolverhampton', 'Plymouth', 'Derby', 'Swansea', 'Aberdeen', 'Reading', 'Milton Keynes', 'Northampton', 'Norwich', 'Luton',
+    'York', 'Oxford', 'Cambridge', 'Preston', 'Sunderland', 'Middlesbrough', 'Blackpool', 'Bolton', 'Ipswich', 'Watford',
+    'Slough', 'Exeter', 'Gloucester', 'Dundee', 'Blackburn', 'Southend-on-Sea', 'Peterborough', 'Bath', 'Brighton', 'Warrington',
+  ],
+  SWITZERLAND: [
+    'Zurich', 'Geneva', 'Basel', 'Lausanne', 'Bern', 'Winterthur', 'Lucerne', 'St. Gallen', 'Lugano', 'Biel/Bienne',
+    'Thun', 'Köniz', 'La Chaux-de-Fonds', 'Fribourg', 'Schaffhausen', 'Chur', 'Vernier', 'Neuchâtel', 'Uster', 'Sion',
+    'Emmen', 'Zug', 'Yverdon-les-Bains', 'Kriens', 'Rapperswil-Jona', 'Dübendorf', 'Montreux', 'Dietikon', 'Frauenfeld', 'Wetzikon',
+  ],
+  AUSTRIA: [
+    'Vienna', 'Graz', 'Linz', 'Salzburg', 'Innsbruck', 'Klagenfurt', 'Villach', 'Wels', 'Sankt Pölten', 'Dornbirn',
+    'Wiener Neustadt', 'Steyr', 'Feldkirch', 'Bregenz', 'Leonding', 'Klosterneuburg', 'Baden', 'Wolfsberg', 'Leoben', 'Krems an der Donau',
+    'Traun', 'Amstetten', 'Lustenau', 'Kapfenberg', 'Hallein',
+  ],
+  SWEDEN: [
+    'Stockholm', 'Gothenburg', 'Malmö', 'Uppsala', 'Västerås', 'Örebro', 'Linköping', 'Helsingborg', 'Jönköping', 'Norrköping',
+    'Lund', 'Umeå', 'Gävle', 'Borås', 'Södertälje', 'Eskilstuna', 'Halmstad', 'Växjö', 'Karlstad', 'Sundsvall',
+    'Trollhättan', 'Östersund', 'Borlänge', 'Falun', 'Kalmar',
+  ],
+  POLAND: [
+    'Warsaw', 'Kraków', 'Łódź', 'Wrocław', 'Poznań', 'Gdańsk', 'Szczecin', 'Bydgoszcz', 'Lublin', 'Białystok',
+    'Katowice', 'Gdynia', 'Częstochowa', 'Radom', 'Sosnowiec', 'Toruń', 'Kielce', 'Gliwice', 'Zabrze', 'Bytom',
+    'Olsztyn', 'Bielsko-Biała', 'Rzeszów', 'Ruda Śląska', 'Rybnik', 'Tychy', 'Opole', 'Gorzów Wielkopolski', 'Płock', 'Wałbrzych',
+    'Włocławek', 'Elbląg', 'Zielona Góra', 'Koszalin',
+  ],
+  GREECE: [
+    'Athens', 'Thessaloniki', 'Patras', 'Heraklion', 'Larissa', 'Volos', 'Rhodes', 'Ioannina', 'Chania', 'Chalcis',
+    'Agrinio', 'Katerini', 'Trikala', 'Serres', 'Lamia', 'Alexandroupoli', 'Xanthi', 'Kavala', 'Kalamata', 'Kozani',
+    'Veroia', 'Drama', 'Komotini', 'Rethymno', 'Karditsa',
+  ],
+  IRELAND: [
+    'Dublin', 'Cork', 'Limerick', 'Galway', 'Waterford', 'Drogheda', 'Dundalk', 'Swords', 'Bray', 'Navan',
+    'Kilkenny', 'Ennis', 'Carlow', 'Tralee', 'Naas', 'Sligo', 'Athlone', 'Wexford', 'Letterkenny', 'Celbridge',
+  ],
+  DENMARK: [
+    'Copenhagen', 'Aarhus', 'Odense', 'Aalborg', 'Esbjerg', 'Randers', 'Kolding', 'Horsens', 'Vejle', 'Roskilde',
+    'Herning', 'Silkeborg', 'Næstved', 'Fredericia', 'Viborg', 'Køge', 'Holstebro', 'Taastrup', 'Slagelse', 'Hillerød',
+  ],
+  ALGERIA: [
+    'Algiers', 'Oran', 'Constantine', 'Annaba', 'Blida', 'Batna', 'Djelfa', 'Sétif', 'Sidi Bel Abbès', 'Biskra',
+    'Tébessa', 'Tlemcen', 'Béjaïa', 'Skikda', 'Tiaret', 'Ouargla', 'Bordj Bou Arréridj', 'Béchar', 'Mostaganem', 'Chlef',
+    'Médéa', 'El Oued', 'Relizane', 'Tizi Ouzou', "M'Sila", 'Mascara', 'Ghardaïa', 'Souk Ahras', 'Jijel', 'Saïda',
+  ],
+  TUNISIA: [
+    'Tunis', 'Sfax', 'Sousse', 'Kairouan', 'Bizerte', 'Gabès', 'Ariana', 'Gafsa', 'Monastir', 'Ben Arous',
+    'Kasserine', 'Médenine', 'Nabeul', 'Tataouine', 'Béja', 'Jendouba', 'Mahdia', 'Sidi Bouzid', 'Tozeur', 'Zaghouan',
+    'Siliana', 'Kef', 'Manouba',
+  ],
+  LIBYA: ['Tripoli', 'Benghazi', 'Misrata', 'Zawiya', 'Bayda', 'Zliten', 'Ajdabiya', 'Tobruk', 'Sabha', 'Sirte', 'Derna', 'Khoms'],
+  MAURITANIA: ['Nouakchott', 'Nouadhibou', 'Kiffa', 'Kaédi', 'Rosso', 'Zouérat', 'Atar', 'Néma', 'Sélibaby', 'Aleg', 'Akjoujt'],
+  SENEGAL: [
+    'Dakar', 'Touba', 'Thiès', 'Kaolack', "M'bour", 'Ziguinchor', 'Diourbel', 'Saint-Louis', 'Louga', 'Tambacounda',
+    'Kolda', 'Rufisque', 'Mbacké', 'Richard Toll', 'Kaffrine', 'Fatick', 'Kédougou',
+  ],
+  MALI: ['Bamako', 'Sikasso', 'Mopti', 'Koutiala', 'Ségou', 'Kayes', 'Gao', 'Kati', 'San', 'Timbuktu', 'Kolondiéba', 'Bougouni', 'Koulikoro'],
+  EGYPT: [
+    'Cairo', 'Alexandria', 'Giza', 'Shubra El Kheima', 'Port Said', 'Suez', 'Luxor', 'Mansoura', 'El Mahalla El Kubra', 'Tanta',
+    'Asyut', 'Ismailia', 'Faiyum', 'Zagazig', 'Aswan', 'Damietta', 'Damanhur', 'Minya', 'Beni Suef', 'Qena',
+    'Sohag', 'Hurghada', '6th of October City', 'Shibin El Kom', 'Banha',
+  ],
+  NIGERIA: [
+    'Lagos', 'Kano', 'Ibadan', 'Abuja', 'Port Harcourt', 'Benin City', 'Maiduguri', 'Zaria', 'Aba', 'Jos',
+    'Ilorin', 'Oyo', 'Enugu', 'Abeokuta', 'Kaduna', 'Onitsha', 'Warri', 'Sokoto', 'Calabar', 'Katsina',
+    'Akure', 'Bauchi', 'Owerri', 'Uyo', 'Ado-Ekiti',
+  ],
+  COTE_DIVOIRE: [
+    'Abidjan', 'Bouaké', 'Daloa', 'Yamoussoukro', 'Korhogo', 'San-Pédro', 'Man', 'Divo', 'Gagnoa', 'Anyama',
+    'Abengourou', 'Agboville', 'Grand-Bassam', 'Dabou', 'Bondoukou', 'Séguéla',
+  ],
+  GHANA: [
+    'Accra', 'Kumasi', 'Tamale', 'Sekondi-Takoradi', 'Sunyani', 'Cape Coast', 'Obuasi', 'Teshie', 'Tema', 'Koforidua',
+    'Ho', 'Wa', 'Bolgatanga', 'Techiman', 'Nkawkaw',
+  ],
+  CAMEROON: [
+    'Douala', 'Yaoundé', 'Garoua', 'Bamenda', 'Maroua', 'Bafoussam', 'Ngaoundéré', 'Bertoua', 'Loum', 'Kumba',
+    'Nkongsamba', 'Buea', 'Edéa', 'Kribi', 'Ebolowa',
+  ],
+  SOUTH_AFRICA: [
+    'Johannesburg', 'Cape Town', 'Durban', 'Pretoria', 'Port Elizabeth', 'Bloemfontein', 'Nelspruit', 'Kimberley', 'Polokwane', 'Pietermaritzburg',
+    'Rustenburg', 'George', 'Welkom', 'East London', 'Vereeniging', 'Klerksdorp', 'Potchefstroom', 'Vryburg', 'Upington', 'Worcester',
+  ],
+  KENYA: [
+    'Nairobi', 'Mombasa', 'Kisumu', 'Nakuru', 'Eldoret', 'Thika', 'Malindi', 'Kitale', 'Garissa', 'Kakamega',
+    'Nyeri', 'Machakos', 'Meru', 'Kericho', 'Embu',
+  ],
+  ETHIOPIA: [
+    'Addis Ababa', 'Dire Dawa', 'Mekelle', 'Gondar', 'Adama', 'Hawassa', 'Bahir Dar', 'Jimma', 'Jijiga', 'Dessie',
+    'Shashamane', 'Bishoftu', 'Sodo', 'Arba Minch', 'Hosaena',
+  ],
+  TANZANIA: [
+    'Dar es Salaam', 'Dodoma', 'Mwanza', 'Arusha', 'Mbeya', 'Morogoro', 'Tanga', 'Kahama', 'Tabora', 'Zanzibar City',
+    'Kigoma', 'Sumbawanga', 'Kasulu', 'Songea', 'Musoma',
+  ],
 };
 
 /** Subcategories that opt out of "Zustand" (Neu/Gebraucht) even though their
