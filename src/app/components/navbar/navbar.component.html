@@ -37,7 +37,7 @@
             (blur)="searchFocused.set(false)"
             (keydown)="suggestions.onKeydown($event)"
           />
-          <app-search-suggestions #suggestions [query]="searchQuery" [active]="searchFocused()" (pick)="onSuggestionPick($event)" />
+          <app-search-suggestions #suggestions [query]="searchQuery" [active]="searchFocused()" [country]="countryService.country()" (pick)="onSuggestionPick($event)" />
         </div>
         <!-- Divider -->
         <div class="navbar__search-sep"></div>
@@ -148,6 +148,39 @@
           <a routerLink="/auth/login" class="btn-outline navbar__login-btn">{{ 'nav.login' | T }}</a>
         }
 
+        <!-- Country switcher dropdown -->
+        <div class="navbar__country-wrapper">
+          <button type="button" class="navbar__country-btn" (click)="toggleCountryMenu($event)" [title]="countryName(countryService.country(), i18n.lang())">
+            <app-flag-icon [iso]="countryService.country()" [size]="16" />
+            <span class="navbar__country-label">{{ countryName(countryService.country(), i18n.lang()) }}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          @if (countryMenuOpen()) {
+            <div class="navbar__country-dropdown">
+              <input
+                type="text"
+                class="navbar__country-search"
+                [(ngModel)]="countrySearchQuery"
+                [placeholder]="'common.search' | T"
+                autocomplete="off"
+                (click)="$event.stopPropagation()"
+              />
+              <div class="navbar__country-list">
+                @for (group of filteredCountryRegions; track group.region) {
+                  @if (group.countries.length) {
+                    <div class="navbar__country-group-label">{{ regionLabelKey(group.region) | T }}</div>
+                    @for (code of group.countries; track code) {
+                      <button type="button" class="navbar__country-option" [class.active]="countryService.country() === code" (click)="selectCountry(code, $event)">
+                        <app-flag-icon [iso]="code" [size]="16" /> {{ countryName(code, i18n.lang()) }}
+                      </button>
+                    }
+                  }
+                }
+              </div>
+            </div>
+          }
+        </div>
+
         <!-- Language switcher dropdown -->
         <div class="navbar__lang-wrapper">
           <button type="button" class="navbar__lang-btn" (click)="toggleLangMenu($event)">
@@ -196,7 +229,7 @@
           (blur)="searchFocused.set(false)"
           (keydown)="mobileSuggestions.onKeydown($event)"
         />
-        <app-search-suggestions #mobileSuggestions [query]="searchQuery" [active]="searchFocused()" (pick)="onSuggestionPick($event)" />
+        <app-search-suggestions #mobileSuggestions [query]="searchQuery" [active]="searchFocused()" [country]="countryService.country()" (pick)="onSuggestionPick($event)" />
       </div>
       <button type="submit">{{ 'nav.search_btn' | T }}</button>
     </form>

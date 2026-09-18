@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +10,8 @@ import { ListingCardComponent } from '../../components/listing-card/listing-card
 import { CitySelectComponent } from '../../components/city-select/city-select.component';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing, Category } from '../../models/listing.model';
+import { CITIES_BY_COUNTRY } from '../../models/country.model';
+import { CountryService } from '../../services/country.service';
 import { GeocodeService, Coords } from '../../services/geocode.service';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
@@ -25,8 +27,13 @@ import { SearchSuggestionsComponent } from '../../components/search-suggestions/
 })
 export class HomeComponent implements OnInit {
   categories = CATEGORIES;
-  cities = MOROCCO_CITIES.slice(0, 12);
-  allCities = MOROCCO_CITIES;
+  get allCities(): string[] {
+    const c = this.countryService.country();
+    return c === 'MA' ? MOROCCO_CITIES : (CITIES_BY_COUNTRY[c] ?? []);
+  }
+  get cities(): string[] {
+    return this.allCities.slice(0, 12);
+  }
   featured: Listing[] = [];
   latest: Listing[] = [];
   searchQuery = '';
@@ -58,16 +65,24 @@ export class HomeComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private geocodeService: GeocodeService
-  ) {}
+    private geocodeService: GeocodeService,
+    public countryService: CountryService
+  ) {
+    // Re-runs whenever the navbar's country switcher changes — a visitor
+    // sitting on the homepage sees it reflect the new country immediately,
+    // not just on their next navigation.
+    effect(() => {
+      const country = this.countryService.country();
+      this.listingService.getAll({ limit: '20', country }).subscribe(res => {
+        this.featured = res.listings.filter(l => l.isFeatured);
+        this.latest = res.listings.slice(0, 8);
+        this.cdr.markForCheck();
+      });
+    });
+  }
 
   ngOnInit() {
     this.cdr.markForCheck();
-    this.listingService.getAll({ limit: '20' }).subscribe(res => {
-      this.featured = res.listings.filter(l => l.isFeatured);
-      this.latest = res.listings.slice(0, 8);
-      this.cdr.markForCheck();
-    });
     if (this.auth.isLoggedIn) {
       this.loadFavorites();
       this.loadInterests();
@@ -113,7 +128,7 @@ export class HomeComponent implements OnInit {
   }
 
   async search(category?: string) {
-    const params: Record<string, string> = {};
+    const params: Record<string, string> = { pays: this.countryService.country() };
     if (this.searchQuery.trim()) params['q'] = this.searchQuery.trim();
     if (category) params['categorie'] = category;
     if (this.selectedCity.trim()) params['ville'] = this.selectedCity.trim();
@@ -135,6 +150,6 @@ export class HomeComponent implements OnInit {
   }
 
   goToCity(city: string) {
-    this.router.navigate(['/annonces'], { queryParams: { ville: city } });
+    this.router.navigate(['/annonces'], { queryParams: { ville: city, pays: this.countryService.country() } });
   }
 }

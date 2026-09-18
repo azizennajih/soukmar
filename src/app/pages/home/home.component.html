@@ -34,7 +34,7 @@
             (blur)="searchFocused.set(false)"
             (keydown)="suggestions.onKeydown($event)"
           />
-          <app-search-suggestions #suggestions [query]="searchQuery" [active]="searchFocused()" (pick)="onSuggestionPick($event)" />
+          <app-search-suggestions #suggestions [query]="searchQuery" [active]="searchFocused()" [country]="countryService.country()" (pick)="onSuggestionPick($event)" />
         </div>
         <div class="hero__search-city">
           <app-city-select

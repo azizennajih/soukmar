@@ -62,7 +62,7 @@
           <div>
             <h1 class="detail__title">{{ listing.title }}</h1>
             <div class="detail__meta">
-              <span class="icon-label"><app-icon name="location" [size]="14" /> {{ listing.city | cityLabel }}</span>
+              <span class="icon-label"><app-icon name="location" [size]="14" /> {{ listing.city | cityLabel }}@if (foreignCountry) { <app-flag-icon [iso]="foreignCountry" [size]="14" /> }</span>
               <span [title]="exactTime">🕐 {{ isNew ? exactTime : timeDisplay }}</span>
               <span>👁 {{ listing.views }} {{ 'listing.views' | T }}</span>
             </div>

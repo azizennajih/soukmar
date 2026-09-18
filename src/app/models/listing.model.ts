@@ -70,6 +70,7 @@ export interface Listing {
   condition?: Condition;
   city: string;
   region?: string;
+  country?: string;
   lat?: number;
   lng?: number;
   images: string[];
@@ -827,11 +828,13 @@ export function localeForLang(lang: string): string {
   return lang === 'ar' ? 'ar-MA' : lang === 'en' ? 'en-US' : lang;
 }
 
+// Any valid ISO 4217 code formats correctly via Intl.NumberFormat regardless
+// of currency — no more hand-rolled MAD/EUR-only branching now that listings
+// can be denominated in any of ~195 countries' currencies (see country.model.ts).
 export function formatPrice(price: number, currency = 'MAD', lang = 'fr'): string {
-  const locale = lang === 'ar' ? 'ar-MA' : lang === 'en' ? 'en-US' : 'fr-MA';
-  return new Intl.NumberFormat(locale, {
+  return new Intl.NumberFormat(localeForLang(lang), {
     style: 'currency',
-    currency: currency === 'MAD' ? 'MAD' : 'EUR',
+    currency,
     minimumFractionDigits: 0,
   }).format(price);
 }
@@ -839,15 +842,13 @@ export function formatPrice(price: number, currency = 'MAD', lang = 'fr'): strin
 /** Splits a formatted price into its numeric amount and currency label, so the
  * currency can be rendered smaller/lighter than the amount in the UI. */
 export function formatPriceParts(price: number, currency = 'MAD', lang = 'fr'): { amount: string; currency: string } {
-  const locale = lang === 'ar' ? 'ar-MA' : lang === 'en' ? 'en-US' : 'fr-MA';
-  const curr = currency === 'MAD' ? 'MAD' : currency === 'EUR' ? 'EUR' : currency;
-  const parts = new Intl.NumberFormat(locale, {
+  const parts = new Intl.NumberFormat(localeForLang(lang), {
     style: 'currency',
-    currency: curr,
+    currency,
     minimumFractionDigits: 0,
   }).formatToParts(price);
   const amount = parts.filter(p => p.type !== 'currency').map(p => p.value).join('').trim();
-  const currencyLabel = parts.find(p => p.type === 'currency')?.value || curr;
+  const currencyLabel = parts.find(p => p.type === 'currency')?.value || currency;
   return { amount, currency: currencyLabel };
 }
 

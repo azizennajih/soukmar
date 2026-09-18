@@ -18,10 +18,11 @@ import { StarRatingComponent } from '../../components/star-rating/star-rating.co
 import { VerifiedBadgeComponent } from '../../components/verified-badge/verified-badge.component';
 import { ListingsMapComponent } from '../../components/listings-map/listings-map.component';
 import { IconComponent } from '../../components/icon/icon.component';
+import { FlagIconComponent } from '../../components/flag-icon/flag-icon.component';
 
 @Component({
   selector: 'app-annonce-detail',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, CityLabelPipe, ReportButtonComponent, ListingCardComponent, StarRatingComponent, VerifiedBadgeComponent, ListingsMapComponent, IconComponent],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, CityLabelPipe, ReportButtonComponent, ListingCardComponent, StarRatingComponent, VerifiedBadgeComponent, ListingsMapComponent, IconComponent, FlagIconComponent],
   templateUrl: './annonce-detail.component.html',
   styleUrl: './annonce-detail.component.scss'
 })
@@ -248,6 +249,9 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
 
   get isSearchIntent(): boolean {
     return this.listing?.intent === 'SEARCH';
+  }
+  get foreignCountry(): string | null {
+    return this.listing?.country && this.listing.country !== 'MA' ? this.listing.country : null;
   }
   get timeDisplay() { return this.listing ? timeAgo(this.listing.createdAt, this.i18n.lang()) : ''; }
   get exactTime() { return this.listing ? exactDateTime(this.listing.createdAt, this.i18n.lang()) : ''; }

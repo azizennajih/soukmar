@@ -22,6 +22,7 @@ export interface ListingFilters {
   condition?: string;
   accountType?: string;
   intent?: string;
+  country?: string;
   city?: string;
   minPrice?: string;
   maxPrice?: string;
@@ -51,8 +52,8 @@ export class ListingService {
     return this.api.get<Listing[]>('/listings/user/mine');
   }
 
-  getSuggestions(q: string): Observable<SearchSuggestions> {
-    return this.api.get<SearchSuggestions>('/listings/suggestions', { q });
+  getSuggestions(q: string, country?: string): Observable<SearchSuggestions> {
+    return this.api.get<SearchSuggestions>('/listings/suggestions', country ? { q, country } : { q });
   }
 
   create(data: Partial<Listing> & ListingAttributesPayload): Observable<Listing> {

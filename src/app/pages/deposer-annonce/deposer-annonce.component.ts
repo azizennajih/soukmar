@@ -14,6 +14,10 @@ import { TextAutocompleteComponent } from '../../components/text-autocomplete/te
 import { DateInputComponent } from '../../components/date-input/date-input.component';
 import { MultiSelectComponent } from '../../components/multi-select/multi-select.component';
 import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES, Category, Subcategory, AttributeDefinition, Condition, ListingIntent, PriceType, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR, TRANSPORT_COUNTRY_REGIONS, TRANSPORT_CITIES_BY_COUNTRY } from '../../models/listing.model';
+import { CITIES_BY_COUNTRY, currencyForCountry, countryName } from '../../models/country.model';
+import { CountryService } from '../../services/country.service';
+import { CountrySelectComponent } from '../../components/country-select/country-select.component';
+import { FlagIconComponent } from '../../components/flag-icon/flag-icon.component';
 import { compressListingPhoto } from '../../utils/image-compression';
 import { TurnstileComponent } from '../../components/turnstile/turnstile.component';
 import { PhoneInputComponent } from '../../components/phone-input/phone-input.component';
@@ -22,7 +26,7 @@ interface PhotoItem { url: string; file?: File; }
 
 @Component({
   selector: 'app-deposer-annonce',
-  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TextAutocompleteComponent, DateInputComponent, MultiSelectComponent, TranslatePipe, CityLabelPipe, TurnstileComponent, PhoneInputComponent],
+  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TextAutocompleteComponent, DateInputComponent, MultiSelectComponent, TranslatePipe, CityLabelPipe, TurnstileComponent, PhoneInputComponent, CountrySelectComponent, FlagIconComponent],
   templateUrl: './deposer-annonce.component.html',
   styleUrl: './deposer-annonce.component.scss'
 })
@@ -30,6 +34,7 @@ export class DeposerAnnonceComponent {
   i18n = inject(I18nService);
   categories = CATEGORIES;
   cities = MOROCCO_CITIES;
+  countryName = countryName;
   get jobProfessionCodes(): string[] {
     const sector = this.form.attributes['INDUSTRY'] as string | undefined;
     return sector ? (JOB_PROFESSIONS_BY_SECTOR[sector] ?? JOB_PROFESSION_CODES) : JOB_PROFESSION_CODES;
@@ -69,7 +74,7 @@ export class DeposerAnnonceComponent {
     description: '',
     price: '',
     priceType: 'FIXED' as PriceType,
-    currency: 'MAD',
+    country: '',
     city: '',
     phone: '',
     whatsapp: '',
@@ -85,12 +90,18 @@ export class DeposerAnnonceComponent {
     private catalog: CatalogService,
     private router: Router,
     private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private countryService: CountryService
   ) {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.editId = id;
       this.loadForEdit(id);
+    } else {
+      // New listing: default to whatever country the seller is currently
+      // browsing (navbar switcher) — editing an existing listing instead
+      // preserves its own country, set below in loadForEdit().
+      this.form.country = this.countryService.country();
     }
   }
 
@@ -113,7 +124,7 @@ export class DeposerAnnonceComponent {
         this.form.description = listing.description;
         this.form.price = listing.price != null ? String(listing.price) : '';
         this.form.priceType = listing.priceType || (listing.price != null ? 'FIXED' : 'NEGOTIABLE');
-        this.form.currency = listing.currency || 'MAD';
+        this.form.country = listing.country || 'MA';
         this.form.city = listing.city;
         this.form.phone = listing.phone || '';
         this.form.whatsapp = listing.whatsapp || '';
@@ -297,24 +308,21 @@ export class DeposerAnnonceComponent {
     this.form.attributes = { ...this.form.attributes, DESTINATION_COUNTRY: value, DESTINATION_CITY: '' };
   }
 
-  /** Mirrors DESTINATION_COUNTRY/DESTINATION_CITY above, but for the trip's
-   * starting point — Listing.city itself (the field every category uses),
-   * not a TRANSPORT-only attribute, since every listing already has exactly
-   * one "where is this" city. */
-  get hasOriginCountry(): boolean {
-    return this.attributeDefs.some(d => d.code === 'ORIGIN_COUNTRY');
+  /** The listing's own country — every category now has this (Listing.country,
+   * see country.model.ts's full ~195-country list), gating the "Stadt" field
+   * the same way DESTINATION_COUNTRY gates DESTINATION_CITY above. Replaces
+   * the old TRANSPORT-only ORIGIN_COUNTRY attribute, which was a duplicate of
+   * this exact same "where is this listing based" question. */
+  get citiesForCountry(): string[] {
+    return CITIES_BY_COUNTRY[this.form.country] ?? [];
   }
 
-  get originCountry(): string {
-    return (this.form.attributes['ORIGIN_COUNTRY'] as string) ?? '';
+  get derivedCurrency(): string {
+    return currencyForCountry(this.form.country);
   }
 
-  get originCitiesForCountry(): string[] {
-    return TRANSPORT_CITIES_BY_COUNTRY[this.originCountry] ?? [];
-  }
-
-  onOriginCountryChange(value: string) {
-    this.form.attributes = { ...this.form.attributes, ORIGIN_COUNTRY: value };
+  onCountryChange(value: string) {
+    this.form.country = value;
     this.form.city = '';
   }
 
@@ -479,11 +487,11 @@ export class DeposerAnnonceComponent {
         description: this.form.description,
         price: this.form.price ? +this.form.price : undefined,
         priceType: this.form.priceType,
-        currency: this.form.currency,
         intent: this.form.intent as ListingIntent,
         category: this.form.category as Category,
         subcategoryId: this.form.subcategoryId || undefined,
         condition: this.form.condition || undefined,
+        country: this.form.country,
         city: this.form.city,
         images,
         phone: this.form.phone,

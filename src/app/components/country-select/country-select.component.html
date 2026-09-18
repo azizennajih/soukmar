@@ -1,0 +1,41 @@
+<div class="country-select">
+  <button type="button" class="country-select__trigger" #trigger (click)="toggle()">
+    @if (value) {
+      <app-flag-icon [iso]="value" [size]="18" />
+    }
+    <span class="country-select__label">{{ selectedLabel || placeholder }}</span>
+    <svg class="country-select__chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+  </button>
+
+  @if (open()) {
+    <div class="country-select__panel" [style.top]="panelStyle().top" [style.left]="panelStyle().left" [style.width]="panelStyle().width">
+      <input
+        type="text"
+        class="country-select__search"
+        [value]="query()"
+        (input)="onSearchInput($any($event.target).value)"
+        (keydown)="onKeydown($event)"
+        [placeholder]="'common.search' | T"
+        autocomplete="off"
+      />
+      <div class="country-select__list">
+        @if (filtered().length) {
+          @for (code of filtered(); track code; let i = $index) {
+            <button
+              type="button"
+              class="country-select__option"
+              [class.country-select__option--active]="i === activeIndex()"
+              [class.country-select__option--selected]="code === value"
+              (mousedown)="$event.preventDefault(); select(code)"
+            >
+              <app-flag-icon [iso]="code" [size]="18" />
+              <span class="country-select__name">{{ labelFor(code) }}</span>
+            </button>
+          }
+        } @else {
+          <div class="country-select__empty">{{ 'common.no_results' | T }}</div>
+        }
+      </div>
+    </div>
+  }
+</div>

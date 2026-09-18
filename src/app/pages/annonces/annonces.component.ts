@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -14,6 +14,8 @@ import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { MultiSelectComponent } from '../../components/multi-select/multi-select.component';
 import { TextAutocompleteComponent } from '../../components/text-autocomplete/text-autocomplete.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing, Category, AttributeDefinition, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES, SHOE_SIZES_EU } from '../../models/listing.model';
+import { CITIES_BY_COUNTRY } from '../../models/country.model';
+import { CountryService } from '../../services/country.service';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { SavedSearchService } from '../../services/saved-search.service';
@@ -29,7 +31,10 @@ interface SubcategoryOption { id: string; code: string; }
 })
 export class AnnoncesComponent implements OnInit {
   categories = CATEGORIES;
-  cities = MOROCCO_CITIES;
+  get cities(): string[] {
+    const c = this.filters.pays || this.countryService.country();
+    return c === 'MA' ? MOROCCO_CITIES : (CITIES_BY_COUNTRY[c] ?? []);
+  }
   shoeSizes = SHOE_SIZES_EU;
   radiusOptions = ['5', '10', '20', '30', '50', '100', '150', '200'];
   listings: Listing[] = [];
@@ -63,13 +68,19 @@ export class AnnoncesComponent implements OnInit {
     return !sub || !NO_CONDITION_SUBCATEGORIES.includes(sub.code);
   }
 
-  filters = { q: '', categorie: '', souscategorie: '', ville: '', minPrix: '', maxPrix: '', condition: '', tri: '', radius: '', lat: '', lng: '', accountType: '', intent: '' };
+  filters = { q: '', categorie: '', souscategorie: '', ville: '', minPrix: '', maxPrix: '', condition: '', tri: '', radius: '', lat: '', lng: '', accountType: '', intent: '', pays: '' };
 
   showSaveSearchForm = false;
   newSearchName = '';
   searchSaved = false;
   savingSearch = false;
   editSearchId: string | null = null;
+
+  /** Skips the effect's first firing — the initial load already goes
+   * through the queryParams subscription below, so this only reacts to a
+   * *later* switch of the navbar's country dropdown while already on this
+   * page (no navigation happens in that case, so queryParams never refires). */
+  private countryEffectRan = false;
 
   constructor(
     private listingService: ListingService,
@@ -80,8 +91,16 @@ export class AnnoncesComponent implements OnInit {
     private api: ApiService,
     public auth: AuthService,
     private cdr: ChangeDetectorRef,
-    private savedSearchService: SavedSearchService
-  ) {}
+    private savedSearchService: SavedSearchService,
+    public countryService: CountryService
+  ) {
+    effect(() => {
+      const country = this.countryService.country();
+      if (!this.countryEffectRan) { this.countryEffectRan = true; return; }
+      this.filters.pays = country;
+      this.loadListings();
+    });
+  }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -94,6 +113,7 @@ export class AnnoncesComponent implements OnInit {
       this.filters.condition     = params['condition']     || '';
       this.filters.accountType  = params['accountType']    || '';
       this.filters.intent        = params['intent']        || '';
+      this.filters.pays          = params['pays']           || this.countryService.country();
       this.filters.tri           = params['tri']           || '';
       this.filters.radius        = params['radius']        || '';
       this.filters.lat           = params['lat']            || '';
@@ -159,6 +179,7 @@ export class AnnoncesComponent implements OnInit {
       condition:     this.filters.condition     || undefined,
       accountType:   this.filters.accountType   || undefined,
       intent:        this.filters.intent        || undefined,
+      country:       this.filters.pays          || undefined,
       city:          this.filters.ville         || undefined,
       minPrice:      this.filters.minPrix       || undefined,
       maxPrice:      this.filters.maxPrix       || undefined,
@@ -235,7 +256,7 @@ export class AnnoncesComponent implements OnInit {
   }
 
   async applyFilters() {
-    const qp: Record<string, string> = {};
+    const qp: Record<string, string> = { pays: this.filters.pays || this.countryService.country() };
     if (this.filters.q)             qp['q']             = this.filters.q;
     if (this.filters.categorie)     qp['categorie']     = this.filters.categorie;
     if (this.filters.souscategorie) qp['souscategorie'] = this.filters.souscategorie;
@@ -265,9 +286,10 @@ export class AnnoncesComponent implements OnInit {
   }
 
   resetFilters() {
-    this.filters = { q: '', categorie: '', souscategorie: '', ville: '', minPrix: '', maxPrix: '', condition: '', tri: '', radius: '', lat: '', lng: '', accountType: '', intent: '' };
+    const pays = this.countryService.country();
+    this.filters = { q: '', categorie: '', souscategorie: '', ville: '', minPrix: '', maxPrix: '', condition: '', tri: '', radius: '', lat: '', lng: '', accountType: '', intent: '', pays };
     this.attrFilters = {};
-    this.router.navigate([], { queryParams: {} });
+    this.router.navigate([], { queryParams: { pays } });
   }
 
   get activeCategory() {

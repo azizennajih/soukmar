@@ -131,32 +131,33 @@
               </div>
             </div>
             @if (form.priceType !== 'FREE') {
-              <div class="deposer__row">
-                <div class="form-group">
-                  <label>{{ 'deposer.label_price' | T }}{{ form.priceType === 'FIXED' ? ' *' : '' }}</label>
-                  <input type="number" [(ngModel)]="form.price" placeholder="0" min="0" />
-                </div>
-                <div class="form-group deposer__currency">
-                  <label>{{ 'deposer.label_currency' | T }}</label>
-                  <select [(ngModel)]="form.currency">
-                    <option value="MAD">MAD</option>
-                    <option value="EUR">EUR</option>
-                    <option value="USD">USD</option>
-                  </select>
-                </div>
+              <div class="form-group">
+                <label>{{ 'deposer.label_price' | T }} ({{ derivedCurrency }}){{ form.priceType === 'FIXED' ? ' *' : '' }}</label>
+                <input type="number" [(ngModel)]="form.price" placeholder="0" min="0" />
               </div>
             }
-            @if (!hasOriginCountry) {
-              <div class="form-group">
-                <label>{{ 'deposer.label_city' | T }}</label>
+            <div class="form-group">
+              <label>{{ 'deposer.label_country' | T }}</label>
+              <app-country-select [value]="form.country" (valueChange)="onCountryChange($event)" />
+            </div>
+            <div class="form-group">
+              <label>{{ 'deposer.label_city' | T }}</label>
+              @if (form.country === 'MA') {
                 <select [(ngModel)]="form.city">
                   <option value="">{{ 'deposer.city_default' | T }}</option>
                   @for (city of cities; track city) {
                     <option [value]="city">{{ city | cityLabel }}</option>
                   }
                 </select>
-              </div>
-            }
+              } @else {
+                <app-text-autocomplete
+                  [value]="form.city"
+                  [options]="citiesForCountry"
+                  [placeholder]="'deposer.destination_city_other_placeholder' | T"
+                  (valueChange)="form.city = $event"
+                />
+              }
+            </div>
             @if (showCondition) {
               <div class="form-group">
                 <label>{{ 'deposer.label_condition' | T }}</label>
@@ -232,18 +233,7 @@
                         </select>
                       }
                       @case ('SELECT') {
-                        @if (def.code === 'ORIGIN_COUNTRY') {
-                          <select [ngModel]="form.attributes[def.code]" (ngModelChange)="onOriginCountryChange($event)">
-                            <option value="">{{ 'deposer.destination_country_default' | T }}</option>
-                            @for (group of transportCountryRegions; track group.region) {
-                              <optgroup [label]="regionLabelKey(group.region) | T">
-                                @for (opt of group.countries; track opt) {
-                                  <option [value]="opt">{{ ('attrs.opts.' + opt) | T }}</option>
-                                }
-                              </optgroup>
-                            }
-                          </select>
-                        } @else if (def.code === 'DESTINATION_COUNTRY') {
+                        @if (def.code === 'DESTINATION_COUNTRY') {
                           <select [ngModel]="form.attributes[def.code]" (ngModelChange)="onDestinationCountryChange($event)">
                             <option value="">{{ 'deposer.destination_country_default' | T }}</option>
                             @for (group of transportCountryRegions; track group.region) {
@@ -274,28 +264,6 @@
                       }
                     }
                   </div>
-                  @if (def.code === 'ORIGIN_COUNTRY') {
-                    <div class="form-group">
-                      <label>{{ 'deposer.label_city' | T }}</label>
-                      @if (!originCountry) {
-                        <input type="text" disabled [placeholder]="'deposer.destination_country_default' | T" />
-                      } @else if (originCountry === 'MOROCCO') {
-                        <select [(ngModel)]="form.city">
-                          <option value="">{{ 'deposer.city_default' | T }}</option>
-                          @for (city of cities; track city) {
-                            <option [value]="city">{{ city | cityLabel }}</option>
-                          }
-                        </select>
-                      } @else {
-                        <app-text-autocomplete
-                          [value]="form.city"
-                          [options]="originCitiesForCountry"
-                          [placeholder]="'deposer.destination_city_other_placeholder' | T"
-                          (valueChange)="form.city = $event"
-                        />
-                      }
-                    </div>
-                  }
                 }
               </div>
             }
@@ -396,12 +364,13 @@
                   @if (form.priceType === 'FREE') {
                     {{ 'deposer.price_type_free' | T }}
                   } @else if (form.price) {
-                    {{ form.price }} {{ form.currency }}{{ form.priceType === 'NEGOTIABLE' ? ' (' + ('deposer.negotiate' | T) + ')' : '' }}
+                    {{ form.price }} {{ derivedCurrency }}{{ form.priceType === 'NEGOTIABLE' ? ' (' + ('deposer.negotiate' | T) + ')' : '' }}
                   } @else {
                     {{ 'deposer.negotiate' | T }}
                   }
                 </strong>
               </div>
+              <div class="deposer__summary-row"><span>{{ 'deposer.label_country' | T }}</span><strong class="deposer__summary-country"><app-flag-icon [iso]="form.country" [size]="16" /> {{ countryName(form.country, i18n.lang()) }}</strong></div>
               <div class="deposer__summary-row"><span>{{ 'deposer.summary_city' | T }}</span><strong>{{ (form.city | cityLabel) || '—' }}</strong></div>
             </div>
 

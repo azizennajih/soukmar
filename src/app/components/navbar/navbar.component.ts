@@ -6,10 +6,13 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ApiService } from '../../services/api.service';
 import { I18nService, Lang } from '../../services/i18n.service';
+import { CountryService } from '../../services/country.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CATEGORIES, MOROCCO_CITIES } from '../../models/listing.model';
+import { COUNTRY_REGIONS, CITIES_BY_COUNTRY, countryName } from '../../models/country.model';
 import { CitySelectComponent } from '../city-select/city-select.component';
 import { CatIconComponent } from '../cat-icon/cat-icon.component';
+import { FlagIconComponent } from '../flag-icon/flag-icon.component';
 import { GeocodeService, Coords } from '../../services/geocode.service';
 import { NotificationService } from '../../services/notification.service';
 import { SearchSuggestionsComponent } from '../search-suggestions/search-suggestions.component';
@@ -17,13 +20,18 @@ import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink, FormsModule, CitySelectComponent, CatIconComponent, TranslatePipe, SearchSuggestionsComponent],
+  imports: [CommonModule, RouterLink, FormsModule, CitySelectComponent, CatIconComponent, FlagIconComponent, TranslatePipe, SearchSuggestionsComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   categories = CATEGORIES;
-  cities = MOROCCO_CITIES;
+  countryRegions = COUNTRY_REGIONS;
+  countryName = countryName;
+  get cities(): string[] {
+    const c = this.countryService.country();
+    return c === 'MA' ? MOROCCO_CITIES : (CITIES_BY_COUNTRY[c] ?? []);
+  }
   searchQuery = '';
   selectedCity = '';
   selectedCategory = '';
@@ -46,8 +54,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ];
 
   langMenuOpen = signal(false);
+  countryMenuOpen = signal(false);
 
-  constructor(public auth: AuthService, private api: ApiService, private router: Router, public i18n: I18nService, private geocodeService: GeocodeService, public notifService: NotificationService) {}
+  constructor(public auth: AuthService, private api: ApiService, private router: Router, public i18n: I18nService, public countryService: CountryService, private geocodeService: GeocodeService, public notifService: NotificationService) {}
 
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
@@ -80,12 +89,47 @@ export class NavbarComponent implements OnInit, OnDestroy {
     const target = e.target as HTMLElement;
     if (!target.closest('.user-menu-wrapper')) this.userMenuOpen.set(false);
     if (!target.closest('.navbar__lang-wrapper')) this.langMenuOpen.set(false);
+    if (!target.closest('.navbar__country-wrapper')) this.countryMenuOpen.set(false);
   }
 
   toggleLangMenu(e: Event) { e.stopPropagation(); this.langMenuOpen.update(v => !v); }
   selectLang(code: Lang, e: Event) { e.stopPropagation(); this.i18n.setLang(code); this.langMenuOpen.set(false); }
 
   get activeLang() { return this.langs.find(l => l.code === this.i18n.lang())!; }
+
+  countrySearchQuery = '';
+
+  toggleCountryMenu(e: Event) {
+    e.stopPropagation();
+    this.countryMenuOpen.update(v => !v);
+    this.countrySearchQuery = '';
+  }
+  selectCountry(code: string, e: Event) {
+    e.stopPropagation();
+    this.countryService.setCountry(code);
+    this.countryMenuOpen.set(false);
+    // A new country invalidates whatever city was picked under the old one.
+    this.selectedCity = '';
+    this.gpsCoords = null;
+  }
+
+  regionLabelKey(region: string): string {
+    return 'deposer.region_' + region.toLowerCase();
+  }
+
+  /** Type-to-filter within the grouped panel — matches app-city-select's
+   * own free-typing search instead of a plain click-through list. Groups
+   * with no remaining match collapse away via the template's existing
+   * `@if (group.countries.length)` guard. */
+  get filteredCountryRegions(): { region: string; countries: string[] }[] {
+    const q = this.countrySearchQuery.trim().toLowerCase();
+    if (!q) return this.countryRegions;
+    const lang = this.i18n.lang();
+    return this.countryRegions.map(g => ({
+      region: g.region,
+      countries: g.countries.filter(code => this.countryName(code, lang).toLowerCase().includes(q)),
+    }));
+  }
 
   /** "Youssef Amrani" -> "YA" — keeps the navbar compact enough for the
    * search bar; the full name stays available via the button's title tooltip. */
@@ -115,7 +159,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   async search(category?: string) {
-    const params: Record<string, string> = {};
+    const params: Record<string, string> = { pays: this.countryService.country() };
     if (this.searchQuery.trim()) params['q'] = this.searchQuery.trim();
     if (category) params['categorie'] = category;
     if (this.selectedCity.trim()) params['ville'] = this.selectedCity.trim();

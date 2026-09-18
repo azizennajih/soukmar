@@ -7,10 +7,11 @@ import { AuthService } from '../../services/auth.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { I18nService } from '../../services/i18n.service';
+import { FlagIconComponent } from '../flag-icon/flag-icon.component';
 
 @Component({
   selector: 'app-listing-card',
-  imports: [CommonModule, RouterLink, TranslatePipe, CityLabelPipe],
+  imports: [CommonModule, RouterLink, TranslatePipe, CityLabelPipe, FlagIconComponent],
   templateUrl: './listing-card.component.html',
   styleUrl: './listing-card.component.scss'
 })
@@ -55,6 +56,13 @@ export class ListingCardComponent implements OnInit {
 
   get isSearchIntent(): boolean {
     return this.listing.intent === 'SEARCH';
+  }
+
+  /** Only shown for non-Morocco listings — Morocco is the overwhelming
+   * majority, so flagging every card would just be visual noise; a foreign
+   * listing is the one that's worth calling out while browsing. */
+  get foreignCountry(): string | null {
+    return this.listing.country && this.listing.country !== 'MA' ? this.listing.country : null;
   }
 
   get timeDisplay(): string {

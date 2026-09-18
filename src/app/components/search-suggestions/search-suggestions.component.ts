@@ -21,6 +21,9 @@ export class SearchSuggestionsComponent implements OnChanges, OnDestroy {
    * parent on (focus)/(blur) so suggestions from a previous field don't
    * linger visible after the user tabs away. */
   @Input() active = false;
+  /** Scopes suggestions to the currently browsed country (CountryService) —
+   * omit to search across all countries. */
+  @Input() country = '';
   @Output() pick = new EventEmitter<{ q: string; category?: string }>();
 
   private ls = inject(ListingService);
@@ -48,7 +51,7 @@ export class SearchSuggestionsComponent implements OnChanges, OnDestroy {
       distinctUntilChanged(),
       switchMap(q => {
         if (q.trim().length < 2) return of(null);
-        return this.ls.getSuggestions(q.trim()).pipe(catchError(() => of(null)));
+        return this.ls.getSuggestions(q.trim(), this.country || undefined).pipe(catchError(() => of(null)));
       })
     ).subscribe(res => {
       this.suggestions = res;

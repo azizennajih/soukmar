@@ -175,12 +175,6 @@
 /* Form */
 .deposer__form { display: flex; flex-direction: column; gap: 1.1rem; margin-top: 1.25rem; }
 
-.deposer__row {
-  display: grid; grid-template-columns: 1fr 110px; gap: .75rem;
-}
-
-.deposer__currency select { padding: .7rem .75rem; }
-
 textarea { resize: vertical; min-height: 120px; font-family: inherit; }
 
 small { font-size: .75rem; color: #94a3b8; }
