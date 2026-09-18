@@ -7,6 +7,7 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
 
 interface PanelStyle { top: string; left: string; width: string; }
+export interface SuggestionItem { q: string; category?: string; suffix: string }
 
 @Component({
   selector: 'app-search-suggestions',
@@ -37,6 +38,9 @@ export class SearchSuggestionsComponent implements OnChanges, OnDestroy {
   // mirroring CitySelectComponent's identical fixed-panel approach.
   panelStyle = signal<PanelStyle>({ top: '0px', left: '0px', width: '0px' });
   visible = signal(false);
+  /** Keyboard-highlighted row, mirroring CitySelectComponent's own
+   * ArrowUp/ArrowDown/Enter handling so both dropdowns behave the same way. */
+  activeIndex = signal(-1);
 
   constructor() {
     this.sub = this.query$.pipe(
@@ -48,12 +52,13 @@ export class SearchSuggestionsComponent implements OnChanges, OnDestroy {
       })
     ).subscribe(res => {
       this.suggestions = res;
+      this.activeIndex.set(-1);
       this.cdr.markForCheck();
     });
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['query']) this.query$.next(this.query);
+    if (changes['query']) { this.query$.next(this.query); this.activeIndex.set(-1); }
     if (changes['active']) {
       if (this.active) { this.updatePosition(); this.visible.set(true); }
       else this.visible.set(false);
@@ -87,6 +92,42 @@ export class SearchSuggestionsComponent implements OnChanges, OnDestroy {
 
   categoryLabel(cat: string): string {
     return this.i18n.t('cats.' + cat);
+  }
+
+  /** Single flat list backing both the rendered rows and the keyboard-nav
+   * index, so ArrowDown/Enter always land on exactly what's on screen. */
+  get items(): SuggestionItem[] {
+    if (!this.suggestions) return [];
+    const inAll = this.i18n.t('nav.suggest_in_all');
+    const inCat = this.i18n.t('nav.suggest_in');
+    return [
+      { q: this.query, suffix: inAll },
+      ...this.suggestions.phrases.map(phrase => ({ q: phrase, suffix: inAll })),
+      ...this.suggestions.categories.map(c => ({ q: this.query, category: c.category, suffix: `${inCat} ${this.categoryLabel(c.category)}` })),
+    ];
+  }
+
+  /** Called from the owning input's (keydown) via a template reference —
+   * the input lives in the parent's template, this component just supplies
+   * the list to navigate. */
+  onKeydown(e: KeyboardEvent) {
+    if (!this.show) return;
+    const items = this.items;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      this.activeIndex.set(Math.min(this.activeIndex() + 1, items.length - 1));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      this.activeIndex.set(Math.max(this.activeIndex() - 1, 0));
+    } else if (e.key === 'Enter') {
+      const i = this.activeIndex();
+      if (i >= 0 && i < items.length) {
+        e.preventDefault();
+        this.select(items[i]!.q, items[i]!.category);
+      }
+    } else if (e.key === 'Escape') {
+      this.visible.set(false);
+    }
   }
 
   select(q: string, category?: string) {

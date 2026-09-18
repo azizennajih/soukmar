@@ -35,8 +35,9 @@
             autocomplete="off"
             (focus)="searchFocused.set(true)"
             (blur)="searchFocused.set(false)"
+            (keydown)="suggestions.onKeydown($event)"
           />
-          <app-search-suggestions [query]="searchQuery" [active]="searchFocused()" (pick)="onSuggestionPick($event)" />
+          <app-search-suggestions #suggestions [query]="searchQuery" [active]="searchFocused()" (pick)="onSuggestionPick($event)" />
         </div>
         <!-- Divider -->
         <div class="navbar__search-sep"></div>
@@ -193,8 +194,9 @@
           autocomplete="off"
           (focus)="searchFocused.set(true)"
           (blur)="searchFocused.set(false)"
+          (keydown)="mobileSuggestions.onKeydown($event)"
         />
-        <app-search-suggestions [query]="searchQuery" [active]="searchFocused()" (pick)="onSuggestionPick($event)" />
+        <app-search-suggestions #mobileSuggestions [query]="searchQuery" [active]="searchFocused()" (pick)="onSuggestionPick($event)" />
       </div>
       <button type="submit">{{ 'nav.search_btn' | T }}</button>
     </form>

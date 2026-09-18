@@ -24,6 +24,8 @@
     transition: background .12s;
 
     &:hover, &:focus-visible { background: #f8fafc; outline: none; }
+    &--active { background: var(--primary-light); }
+    &--active strong { color: var(--primary); }
 
     strong { font-weight: 700; color: #111827; }
   }
