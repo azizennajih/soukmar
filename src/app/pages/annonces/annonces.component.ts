@@ -13,7 +13,7 @@ import { CitySelectComponent } from '../../components/city-select/city-select.co
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { MultiSelectComponent } from '../../components/multi-select/multi-select.component';
 import { TextAutocompleteComponent } from '../../components/text-autocomplete/text-autocomplete.component';
-import { CATEGORIES, MOROCCO_CITIES, Listing, Category, AttributeDefinition, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES } from '../../models/listing.model';
+import { CATEGORIES, MOROCCO_CITIES, Listing, Category, AttributeDefinition, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES, SHOE_SIZES_EU } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { SavedSearchService } from '../../services/saved-search.service';
@@ -30,6 +30,7 @@ interface SubcategoryOption { id: string; code: string; }
 export class AnnoncesComponent implements OnInit {
   categories = CATEGORIES;
   cities = MOROCCO_CITIES;
+  shoeSizes = SHOE_SIZES_EU;
   radiusOptions = ['5', '10', '20', '30', '50', '100', '150', '200'];
   listings: Listing[] = [];
   viewMode: 'list' | 'map' = 'list';

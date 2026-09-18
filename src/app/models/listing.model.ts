@@ -192,6 +192,17 @@ export const JOB_PROFESSION_CODES: string[] = [...new Set(Object.values(JOB_PROF
 
 export const CONDITION_CATEGORIES: Category[] = ['VEHICLES', 'ELECTRONICS', 'HOME_GARDEN', 'FASHION', 'BABY_KIDS', 'SPORTS_LEISURE', 'GIVEAWAY_SWAP'];
 
+// Standard EU shoe sizes (adult range, half sizes included) — SHOE_TYPE's
+// SIZE_EU is a NUMBER attribute, but a raw number input is a poor fit for a
+// value that only ever comes from this one fixed, well-known set. Rendered
+// via app-text-autocomplete instead of a plain <input type="number">
+// wherever SIZE_EU shows up (search filter, deposer-annonce form).
+export const SHOE_SIZES_EU: string[] = (() => {
+  const sizes: string[] = [];
+  for (let s = 35; s <= 48; s += 0.5) sizes.push(s % 1 === 0 ? String(s) : s.toFixed(1));
+  return sizes;
+})();
+
 /** Subcategories that opt out of "Zustand" (Neu/Gebraucht) even though their
  * category is otherwise in CONDITION_CATEGORIES — for services offered
  * within an otherwise physical-goods category. E.g. Sport & Freizeit also

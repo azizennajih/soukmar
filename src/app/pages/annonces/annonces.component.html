@@ -105,10 +105,27 @@
                   </label>
                 }
                 @case ('NUMBER') {
-                  <div class="sidebar__price-row">
-                    <input type="number" [ngModel]="attrFilters['attr_' + def.code + '_min']" (ngModelChange)="setRangeFilter(def.code, 'min', $event)" [placeholder]="'annonces.min' | T" />
-                    <input type="number" [ngModel]="attrFilters['attr_' + def.code + '_max']" (ngModelChange)="setRangeFilter(def.code, 'max', $event)" [placeholder]="'annonces.max' | T" />
-                  </div>
+                  @if (def.code === 'SIZE_EU') {
+                    <div class="sidebar__price-row">
+                      <app-text-autocomplete
+                        [value]="attrFilters['attr_' + def.code + '_min'] ?? ''"
+                        [options]="shoeSizes"
+                        [placeholder]="'annonces.min' | T"
+                        (valueChange)="setRangeFilter(def.code, 'min', $event)"
+                      />
+                      <app-text-autocomplete
+                        [value]="attrFilters['attr_' + def.code + '_max'] ?? ''"
+                        [options]="shoeSizes"
+                        [placeholder]="'annonces.max' | T"
+                        (valueChange)="setRangeFilter(def.code, 'max', $event)"
+                      />
+                    </div>
+                  } @else {
+                    <div class="sidebar__price-row">
+                      <input type="number" [ngModel]="attrFilters['attr_' + def.code + '_min']" (ngModelChange)="setRangeFilter(def.code, 'min', $event)" [placeholder]="'annonces.min' | T" />
+                      <input type="number" [ngModel]="attrFilters['attr_' + def.code + '_max']" (ngModelChange)="setRangeFilter(def.code, 'max', $event)" [placeholder]="'annonces.max' | T" />
+                    </div>
+                  }
                 }
                 @case ('TEXT') {
                   @if (def.code === 'PROFESSION') {
