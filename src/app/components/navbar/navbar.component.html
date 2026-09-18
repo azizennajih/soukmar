@@ -84,9 +84,8 @@
             }
           </a>
           <div class="user-menu-wrapper">
-            <button class="navbar__user-btn" (click)="toggleUserMenu($event)">
-              <div class="navbar__user-avatar">{{ auth.currentUser()?.name?.[0]?.toUpperCase() }}</div>
-              <span class="navbar__user-name">{{ auth.currentUser()?.name }}</span>
+            <button class="navbar__user-btn" (click)="toggleUserMenu($event)" [title]="auth.currentUser()?.name ?? ''">
+              <div class="navbar__user-avatar">{{ userInitials }}</div>
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
             </button>
 

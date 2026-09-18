@@ -85,6 +85,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   get activeLang() { return this.langs.find(l => l.code === this.i18n.lang())!; }
 
+  /** "Youssef Amrani" -> "YA" — keeps the navbar compact enough for the
+   * search bar; the full name stays available via the button's title tooltip. */
+  get userInitials(): string {
+    const name = this.auth.currentUser()?.name ?? '';
+    const parts = name.trim().split(/\s+/).filter(Boolean);
+    if (!parts.length) return '';
+    return parts.length === 1
+      ? parts[0][0].toUpperCase()
+      : (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }
+
   onCityChange(value: string) {
     this.selectedCity = value;
     this.gpsCoords = null;

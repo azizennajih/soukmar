@@ -218,27 +218,17 @@
   }
 
   &__user-avatar {
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
     background: #fee2e2;
     color: #c62d3a;
     font-weight: 700;
-    font-size: .8rem;
+    font-size: .7rem;
+    letter-spacing: -.02em;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  &__user-name {
-    font-size: .85rem;
-    font-weight: 600;
-    max-width: 90px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    @media (max-width: 768px) { display: none; }
   }
 
   &__dropdown {
