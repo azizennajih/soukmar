@@ -863,6 +863,7 @@
     "ENGINE_POWER_HP": "Potenza motore (CV)",
     "PART_TYPE": "Tipo di ricambio",
     "SUBJECT": "Materia",
+    "ORIGIN_COUNTRY": "Paese di partenza",
     "DESTINATION_COUNTRY": "Paese di destinazione",
     "DESTINATION_CITY": "Città di destinazione",
     "DEPARTURE_DATE": "Data di partenza",

@@ -297,6 +297,27 @@ export class DeposerAnnonceComponent {
     this.form.attributes = { ...this.form.attributes, DESTINATION_COUNTRY: value, DESTINATION_CITY: '' };
   }
 
+  /** Mirrors DESTINATION_COUNTRY/DESTINATION_CITY above, but for the trip's
+   * starting point — Listing.city itself (the field every category uses),
+   * not a TRANSPORT-only attribute, since every listing already has exactly
+   * one "where is this" city. */
+  get hasOriginCountry(): boolean {
+    return this.attributeDefs.some(d => d.code === 'ORIGIN_COUNTRY');
+  }
+
+  get originCountry(): string {
+    return (this.form.attributes['ORIGIN_COUNTRY'] as string) ?? '';
+  }
+
+  get originCitiesForCountry(): string[] {
+    return TRANSPORT_CITIES_BY_COUNTRY[this.originCountry] ?? [];
+  }
+
+  onOriginCountryChange(value: string) {
+    this.form.attributes = { ...this.form.attributes, ORIGIN_COUNTRY: value };
+    this.form.city = '';
+  }
+
   selectedFor(code: string): string[] {
     const v = this.form.attributes[code];
     return Array.isArray(v) ? v : [];

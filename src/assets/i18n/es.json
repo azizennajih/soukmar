@@ -863,6 +863,7 @@
     "ENGINE_POWER_HP": "Potencia del motor (CV)",
     "PART_TYPE": "Tipo de pieza",
     "SUBJECT": "Asignatura",
+    "ORIGIN_COUNTRY": "País de origen",
     "DESTINATION_COUNTRY": "País de destino",
     "DESTINATION_CITY": "Ciudad de destino",
     "DEPARTURE_DATE": "Fecha de salida",

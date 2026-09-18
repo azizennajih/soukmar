@@ -394,6 +394,7 @@
     "ENGINE_POWER_HP": "Puissance moteur (ch)",
     "PART_TYPE": "Type de pièce",
     "SUBJECT": "Matière",
+    "ORIGIN_COUNTRY": "Pays de départ",
     "DESTINATION_COUNTRY": "Pays de destination",
     "DESTINATION_CITY": "Ville de destination",
     "DEPARTURE_DATE": "Date de départ",

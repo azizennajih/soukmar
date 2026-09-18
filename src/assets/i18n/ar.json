@@ -863,6 +863,7 @@
     "ENGINE_POWER_HP": "قوة المحرك (حصان)",
     "PART_TYPE": "نوع القطعة",
     "SUBJECT": "المادة",
+    "ORIGIN_COUNTRY": "بلد الانطلاق",
     "DESTINATION_COUNTRY": "بلد الوجهة",
     "DESTINATION_CITY": "مدينة الوجهة",
     "DEPARTURE_DATE": "تاريخ المغادرة",

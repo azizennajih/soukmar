@@ -863,6 +863,7 @@
     "ENGINE_POWER_HP": "Motorleistung (PS)",
     "PART_TYPE": "Teileart",
     "SUBJECT": "Fach",
+    "ORIGIN_COUNTRY": "Startland",
     "DESTINATION_COUNTRY": "Zielland",
     "DESTINATION_CITY": "Zielstadt",
     "DEPARTURE_DATE": "Abfahrtsdatum",

@@ -863,6 +863,7 @@
     "ENGINE_POWER_HP": "Engine power (hp)",
     "PART_TYPE": "Part type",
     "SUBJECT": "Subject",
+    "ORIGIN_COUNTRY": "Origin country",
     "DESTINATION_COUNTRY": "Destination country",
     "DESTINATION_CITY": "Destination city",
     "DEPARTURE_DATE": "Departure date",

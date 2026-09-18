@@ -146,15 +146,17 @@
                 </div>
               </div>
             }
-            <div class="form-group">
-              <label>{{ 'deposer.label_city' | T }}</label>
-              <select [(ngModel)]="form.city">
-                <option value="">{{ 'deposer.city_default' | T }}</option>
-                @for (city of cities; track city) {
-                  <option [value]="city">{{ city | cityLabel }}</option>
-                }
-              </select>
-            </div>
+            @if (!hasOriginCountry) {
+              <div class="form-group">
+                <label>{{ 'deposer.label_city' | T }}</label>
+                <select [(ngModel)]="form.city">
+                  <option value="">{{ 'deposer.city_default' | T }}</option>
+                  @for (city of cities; track city) {
+                    <option [value]="city">{{ city | cityLabel }}</option>
+                  }
+                </select>
+              </div>
+            }
             @if (showCondition) {
               <div class="form-group">
                 <label>{{ 'deposer.label_condition' | T }}</label>
@@ -230,7 +232,18 @@
                         </select>
                       }
                       @case ('SELECT') {
-                        @if (def.code === 'DESTINATION_COUNTRY') {
+                        @if (def.code === 'ORIGIN_COUNTRY') {
+                          <select [ngModel]="form.attributes[def.code]" (ngModelChange)="onOriginCountryChange($event)">
+                            <option value="">{{ 'deposer.destination_country_default' | T }}</option>
+                            @for (group of transportCountryRegions; track group.region) {
+                              <optgroup [label]="regionLabelKey(group.region) | T">
+                                @for (opt of group.countries; track opt) {
+                                  <option [value]="opt">{{ ('attrs.opts.' + opt) | T }}</option>
+                                }
+                              </optgroup>
+                            }
+                          </select>
+                        } @else if (def.code === 'DESTINATION_COUNTRY') {
                           <select [ngModel]="form.attributes[def.code]" (ngModelChange)="onDestinationCountryChange($event)">
                             <option value="">{{ 'deposer.destination_country_default' | T }}</option>
                             @for (group of transportCountryRegions; track group.region) {
@@ -261,6 +274,28 @@
                       }
                     }
                   </div>
+                  @if (def.code === 'ORIGIN_COUNTRY') {
+                    <div class="form-group">
+                      <label>{{ 'deposer.label_city' | T }}</label>
+                      @if (!originCountry) {
+                        <input type="text" disabled [placeholder]="'deposer.destination_country_default' | T" />
+                      } @else if (originCountry === 'MOROCCO') {
+                        <select [(ngModel)]="form.city">
+                          <option value="">{{ 'deposer.city_default' | T }}</option>
+                          @for (city of cities; track city) {
+                            <option [value]="city">{{ city | cityLabel }}</option>
+                          }
+                        </select>
+                      } @else {
+                        <app-text-autocomplete
+                          [value]="form.city"
+                          [options]="originCitiesForCountry"
+                          [placeholder]="'deposer.destination_city_other_placeholder' | T"
+                          (valueChange)="form.city = $event"
+                        />
+                      }
+                    </div>
+                  }
                 }
               </div>
             }
