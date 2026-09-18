@@ -1,6 +1,6 @@
 {
   "nav": {
-    "topbar_tagline": "Il n°1 degli annunci in Marocco",
+    "topbar_tagline": "Il n°1 degli annunci",
     "search_placeholder": "Cosa stai cercando?",
     "city_placeholder": "Città o regione",
     "search_btn": "Cerca",
@@ -27,7 +27,6 @@
     "hero_badge": "Oltre 50.000 annunci attivi",
     "hero_title": "Compra e vendi",
     "hero_highlight": "facilmente",
-    "hero_subtitle": "in Marocco",
     "hero_desc": "SouqMar24 — il tuo mercato locale per trovare le migliori offerte vicino a te.",
     "search_placeholder": "Cosa stai cercando?",
     "all_cities": "Tutte le città",

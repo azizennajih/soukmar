@@ -2,7 +2,7 @@
   <!-- Top bar -->
   <div class="navbar__topbar">
     <div class="container navbar__topbar-inner">
-      <span>🇲🇦 {{ 'nav.topbar_tagline' | T }}</span>
+      <span><app-flag-icon [iso]="countryService.country()" [size]="14" /> {{ 'nav.topbar_tagline' | T }} · {{ countryName(countryService.country(), i18n.lang()) }}</span>
       <div class="navbar__topbar-links">
         @if (!auth.isLoggedIn) {
           <a routerLink="/auth/login">{{ 'nav.login' | T }}</a>

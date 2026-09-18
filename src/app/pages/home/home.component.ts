@@ -10,8 +10,9 @@ import { ListingCardComponent } from '../../components/listing-card/listing-card
 import { CitySelectComponent } from '../../components/city-select/city-select.component';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing, Category } from '../../models/listing.model';
-import { CITIES_BY_COUNTRY } from '../../models/country.model';
+import { CITIES_BY_COUNTRY, countryName } from '../../models/country.model';
 import { CountryService } from '../../services/country.service';
+import { I18nService } from '../../services/i18n.service';
 import { GeocodeService, Coords } from '../../services/geocode.service';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
@@ -33,6 +34,16 @@ export class HomeComponent implements OnInit {
   }
   get cities(): string[] {
     return this.allCities.slice(0, 12);
+  }
+  /** Localized name of the currently browsed country, for the hero heading.
+   * Deliberately not "in {country}"/"au {country}"/etc. — the required
+   * preposition's grammatical gender varies per country in French (and to a
+   * lesser extent Italian/Spanish), so a single static template would read
+   * correctly for Morocco but wrong for most other selectable countries. A
+   * plain country name after a dash sidesteps that without a 195-country
+   * gender table. */
+  get heroCountryName(): string {
+    return countryName(this.countryService.country(), this.i18n.lang());
   }
   featured: Listing[] = [];
   latest: Listing[] = [];
@@ -66,7 +77,8 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private geocodeService: GeocodeService,
-    public countryService: CountryService
+    public countryService: CountryService,
+    public i18n: I18nService
   ) {
     // Re-runs whenever the navbar's country switcher changes — a visitor
     // sitting on the homepage sees it reflect the new country immediately,

@@ -1,6 +1,6 @@
 {
   "nav": {
-    "topbar_tagline": "Morocco's #1 classifieds site",
+    "topbar_tagline": "The #1 classifieds site",
     "search_placeholder": "What are you looking for?",
     "city_placeholder": "City or region",
     "search_btn": "Search",
@@ -27,7 +27,6 @@
     "hero_badge": "Over 50,000 active listings",
     "hero_title": "Buy & Sell",
     "hero_highlight": "easily",
-    "hero_subtitle": "in Morocco",
     "hero_desc": "SouqMar24 — your local marketplace to find the best deals near you.",
     "search_placeholder": "What are you looking for?",
     "all_cities": "All cities",
