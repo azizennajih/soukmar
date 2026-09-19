@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Subject, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, catchError } from 'rxjs/operators';
 import { ListingService, SearchSuggestions } from '../../services/listing.service';
-import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
 
 interface PanelStyle { top: string; left: string; width: string; }
@@ -11,7 +10,7 @@ export interface SuggestionItem { q: string; category?: string; suffix: string }
 
 @Component({
   selector: 'app-search-suggestions',
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule],
   templateUrl: './search-suggestions.component.html',
   styleUrl: './search-suggestions.component.scss'
 })
