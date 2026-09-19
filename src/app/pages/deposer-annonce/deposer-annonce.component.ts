@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, ChangeDetectorRef, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +16,6 @@ import { MultiSelectComponent } from '../../components/multi-select/multi-select
 import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES, Category, Subcategory, AttributeDefinition, Condition, ListingIntent, PriceType, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR, TRANSPORT_COUNTRY_REGIONS, TRANSPORT_CITIES_BY_COUNTRY } from '../../models/listing.model';
 import { CITIES_BY_COUNTRY, currencyForCountry, countryName } from '../../models/country.model';
 import { CountryService } from '../../services/country.service';
-import { CountrySelectComponent } from '../../components/country-select/country-select.component';
 import { FlagIconComponent } from '../../components/flag-icon/flag-icon.component';
 import { compressListingPhoto } from '../../utils/image-compression';
 import { TurnstileComponent } from '../../components/turnstile/turnstile.component';
@@ -26,7 +25,7 @@ interface PhotoItem { url: string; file?: File; }
 
 @Component({
   selector: 'app-deposer-annonce',
-  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TextAutocompleteComponent, DateInputComponent, MultiSelectComponent, TranslatePipe, CityLabelPipe, TurnstileComponent, PhoneInputComponent, CountrySelectComponent, FlagIconComponent],
+  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TextAutocompleteComponent, DateInputComponent, MultiSelectComponent, TranslatePipe, CityLabelPipe, TurnstileComponent, PhoneInputComponent, FlagIconComponent],
   templateUrl: './deposer-annonce.component.html',
   styleUrl: './deposer-annonce.component.scss'
 })
@@ -98,10 +97,26 @@ export class DeposerAnnonceComponent {
       this.editId = id;
       this.loadForEdit(id);
     } else {
-      // New listing: default to whatever country the seller is currently
-      // browsing (navbar switcher) — editing an existing listing instead
-      // preserves its own country, set below in loadForEdit().
-      this.form.country = this.countryService.country();
+      // New listing: country is centrally controlled by the navbar switcher,
+      // never a separate choice within this form — kept in sync live (not
+      // just defaulted once) so switching country while the wizard is open
+      // takes effect immediately. Editing an existing listing instead
+      // preserves its own country, set in loadForEdit(), and is deliberately
+      // NOT re-synced here (you're editing a specific already-posted item,
+      // not creating a new one in whatever country you're currently browsing).
+      effect(() => {
+        const country = this.countryService.country();
+        // Deferred to a microtask: calling markForCheck() synchronously
+        // inside the same effect-flush pass that the signal write triggered
+        // doesn't reliably schedule a new zoneless CD tick (mirrors why
+        // home.component.ts's equivalent effect only ever mutates state
+        // inside an async .subscribe() callback, never synchronously).
+        queueMicrotask(() => {
+          this.form.country = country;
+          this.form.city = '';
+          this.cdr.markForCheck();
+        });
+      });
     }
   }
 
@@ -319,11 +334,6 @@ export class DeposerAnnonceComponent {
 
   get derivedCurrency(): string {
     return currencyForCountry(this.form.country);
-  }
-
-  onCountryChange(value: string) {
-    this.form.country = value;
-    this.form.city = '';
   }
 
   selectedFor(code: string): string[] {

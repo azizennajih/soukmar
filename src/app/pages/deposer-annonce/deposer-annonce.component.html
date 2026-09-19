@@ -137,10 +137,6 @@
               </div>
             }
             <div class="form-group">
-              <label>{{ 'deposer.label_country' | T }}</label>
-              <app-country-select [value]="form.country" (valueChange)="onCountryChange($event)" />
-            </div>
-            <div class="form-group">
               <label>{{ 'deposer.label_city' | T }}</label>
               @if (form.country === 'MA') {
                 <select [(ngModel)]="form.city">
