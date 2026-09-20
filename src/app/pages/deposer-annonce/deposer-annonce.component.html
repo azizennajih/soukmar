@@ -288,6 +288,11 @@
             <input id="fileInput" type="file" multiple accept="image/*" (change)="onFilesSelected($event)" style="display:none" />
           </label>
 
+          <label class="deposer__camera-btn" for="cameraInput">
+            📷 {{ 'deposer.take_photo' | T }}
+            <input id="cameraInput" type="file" accept="image/*" capture="environment" (change)="onFilesSelected($event)" style="display:none" />
+          </label>
+
           @if (photos.length > 0) {
             <div class="deposer__previews">
               @for (photo of photos; track $index; let i = $index) {
