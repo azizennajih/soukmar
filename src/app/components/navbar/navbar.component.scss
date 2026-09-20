@@ -633,7 +633,14 @@
     &:hover { background: #f8fafc; }
   }
 
-  &__mobile-icon { font-size: 1.2rem; }
+  &__mobile-icon {
+    font-size: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    svg { width: 1rem; height: 1rem; }
+  }
 }
 
 .user-menu-wrapper { position: relative; }
