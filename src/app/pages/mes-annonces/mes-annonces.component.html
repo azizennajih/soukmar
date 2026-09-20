@@ -68,12 +68,12 @@
               @if (listing.intent === 'SEARCH') {
                 <span class="badge">{{ 'listing.intent_search_badge' | T }}</span>
               }
-              <span>👁 {{ listing.views }} {{ 'listing.views' | T }}</span>
-              <span>🕐 {{ time(listing) }}</span>
+              <span class="icon-label"><app-icon name="eye" [size]="12" /> {{ listing.views }} {{ 'listing.views' | T }}</span>
+              <span class="icon-label"><app-icon name="clock" [size]="12" /> {{ time(listing) }}</span>
               <span class="icon-label"><app-icon name="location" [size]="12" /> {{ listing.city | cityLabel }}</span>
               @if (listing.expiresAt) {
-                <span class="listing-row__expiry" [class.listing-row__expiry--soon]="isExpiringSoon(listing)">
-                  ⏳ {{ (daysUntilExpiry(listing) === 0 ? 'mes_annonces.expires_today' : 'mes_annonces.expires_in_days') | T:{n: (daysUntilExpiry(listing) || 0).toString()} }}
+                <span class="listing-row__expiry icon-label" [class.listing-row__expiry--soon]="isExpiringSoon(listing)">
+                  <app-icon name="clock" [size]="12" /> {{ (daysUntilExpiry(listing) === 0 ? 'mes_annonces.expires_today' : 'mes_annonces.expires_in_days') | T:{n: (daysUntilExpiry(listing) || 0).toString()} }}
                 </span>
               }
             </div>

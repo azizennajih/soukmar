@@ -8,10 +8,11 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { I18nService } from '../../services/i18n.service';
 import { FlagIconComponent } from '../flag-icon/flag-icon.component';
+import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'app-listing-card',
-  imports: [CommonModule, RouterLink, TranslatePipe, CityLabelPipe, FlagIconComponent],
+  imports: [CommonModule, RouterLink, TranslatePipe, CityLabelPipe, FlagIconComponent, IconComponent],
   templateUrl: './listing-card.component.html',
   styleUrl: './listing-card.component.scss'
 })

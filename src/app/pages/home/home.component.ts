@@ -9,6 +9,7 @@ import { AuthService } from '../../services/auth.service';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { CitySelectComponent } from '../../components/city-select/city-select.component';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
+import { IconComponent } from '../../components/icon/icon.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing, Category } from '../../models/listing.model';
 import { CITIES_BY_COUNTRY, countryName } from '../../models/country.model';
 import { CountryService } from '../../services/country.service';
@@ -21,7 +22,7 @@ import { SearchSuggestionsComponent } from '../../components/search-suggestions/
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, CitySelectComponent, CatIconComponent, TranslatePipe, CityLabelPipe, SearchSuggestionsComponent],
+  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, CitySelectComponent, CatIconComponent, TranslatePipe, CityLabelPipe, SearchSuggestionsComponent, IconComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -64,10 +65,10 @@ export class HomeComponent implements OnInit {
   ];
 
   features = [
-    { icon: '⚡', titleKey: 'home.feature_fast_title', descKey: 'home.feature_fast_desc', bg: '#fef9c3', color: '#a16207' },
-    { icon: '🛡️', titleKey: 'home.feature_secure_title', descKey: 'home.feature_secure_desc', bg: '#dcfce7', color: '#15803d' },
-    { icon: '👥', titleKey: 'home.feature_community_title', descKey: 'home.feature_community_desc', bg: '#dbeafe', color: '#1d4ed8' },
-    { icon: '📈', titleKey: 'home.feature_boost_title', descKey: 'home.feature_boost_desc', bg: '#f3e8ff', color: '#7e22ce' },
+    { icon: 'zap' as const, titleKey: 'home.feature_fast_title', descKey: 'home.feature_fast_desc', bg: '#fef9c3', color: '#a16207' },
+    { icon: 'shield' as const, titleKey: 'home.feature_secure_title', descKey: 'home.feature_secure_desc', bg: '#dcfce7', color: '#15803d' },
+    { icon: 'users' as const, titleKey: 'home.feature_community_title', descKey: 'home.feature_community_desc', bg: '#dbeafe', color: '#1d4ed8' },
+    { icon: 'trending-up' as const, titleKey: 'home.feature_boost_title', descKey: 'home.feature_boost_desc', bg: '#f3e8ff', color: '#7e22ce' },
   ];
 
   constructor(

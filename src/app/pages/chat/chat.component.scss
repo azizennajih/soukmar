@@ -211,8 +211,11 @@
 }
 
 .chat__blocked-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
   padding: 1.1rem 1.5rem;
-  text-align: center;
   font-size: .875rem;
   color: #6b7280;
   background: #f8fafc;

@@ -20,8 +20,8 @@
             </span>
           </div>
           <div class="search-row__actions">
-            <button type="button" class="search-row__edit" (click)="edit(s, $event)" [title]="'common.edit' | T">✏️</button>
-            <button type="button" class="search-row__remove" (click)="remove(s, $event)" [title]="'common.delete' | T">✕</button>
+            <button type="button" class="search-row__edit" (click)="edit(s, $event)" [title]="'common.edit' | T"><app-icon name="edit" [size]="14" /></button>
+            <button type="button" class="search-row__remove" (click)="remove(s, $event)" [title]="'common.delete' | T"><app-icon name="trash" [size]="14" /></button>
           </div>
         </div>
       }

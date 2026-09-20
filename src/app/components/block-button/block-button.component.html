@@ -6,5 +6,6 @@
   [disabled]="submitting()"
   (click)="toggle()"
 >
-  {{ blocked ? '🔓 ' + ('block.unblock' | T) : '🚫 ' + ('block.block' | T) }}
+  <app-icon [name]="blocked ? 'unlock' : 'block'" [size]="14" />
+  {{ (blocked ? 'block.unblock' : 'block.block') | T }}
 </button>

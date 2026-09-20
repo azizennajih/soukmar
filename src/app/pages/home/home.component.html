@@ -190,7 +190,7 @@
       <div class="grid-4">
         @for (f of features; track f.titleKey) {
           <div class="feature-card">
-            <div class="feature-icon" [style.background]="f.bg" [style.color]="f.color">{{ f.icon }}</div>
+            <div class="feature-icon" [style.background]="f.bg" [style.color]="f.color"><app-icon [name]="f.icon" [size]="24" /></div>
             <h3>{{ f.titleKey | T }}</h3>
             <p>{{ f.descKey | T }}</p>
           </div>

@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'app-block-button',
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, TranslatePipe, IconComponent],
   templateUrl: './block-button.component.html',
   styleUrl: './block-button.component.scss'
 })

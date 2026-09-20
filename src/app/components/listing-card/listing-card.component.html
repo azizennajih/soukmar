@@ -4,19 +4,31 @@
     @if (listing.images[0]) {
       <img [src]="listing.images[0]" [alt]="listing.title" loading="lazy" />
     } @else {
-      <div class="listing-card__placeholder">{{ category?.icon || '📦' }}</div>
+      <div class="listing-card__placeholder">
+        @if (category?.icon) {
+          {{ category?.icon }}
+        } @else {
+          <app-icon name="image" [size]="32" />
+        }
+      </div>
     }
 
     <!-- Badges -->
     <div class="listing-card__badges">
       @if (listing.status === 'RESERVED') {
-        <span class="listing-card__badge listing-card__badge--reserved">🔒 {{ 'annonces.reserved' | T }}</span>
+        <span class="listing-card__badge listing-card__badge--reserved">
+          <app-icon name="lock" [size]="11" />
+          {{ 'annonces.reserved' | T }}
+        </span>
       }
       @if (isNew && listing.status !== 'RESERVED') {
         <span class="listing-card__badge listing-card__badge--new">{{ 'listing.new_badge' | T }}</span>
       }
       @if (listing.isFeatured) {
-        <span class="listing-card__badge listing-card__badge--premium">⭐ {{ 'listing.premium_badge' | T }}</span>
+        <span class="listing-card__badge listing-card__badge--premium">
+          <app-icon name="star" [size]="11" />
+          {{ 'listing.premium_badge' | T }}
+        </span>
       }
       @if (listing.isPremium && !listing.isFeatured) {
         <span class="listing-card__badge listing-card__badge--pro">{{ 'listing.pro_badge' | T }}</span>

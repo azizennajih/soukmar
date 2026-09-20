@@ -1,12 +1,12 @@
 @if (loading) {
   <div class="container" style="min-height:100vh;padding:4rem;text-align:center;font-size:1.1rem;color:var(--text-muted)">
-    ⏳ {{ 'listing.loading' | T }}
+    <span class="icon-label" style="justify-content:center"><app-icon name="clock" [size]="18" /> {{ 'listing.loading' | T }}</span>
   </div>
 }
 
 @if (loadError) {
   <div class="container" style="min-height:100vh;padding:4rem;text-align:center">
-    <p>❌ {{ 'listing.not_found' | T }}</p>
+    <p class="icon-label" style="justify-content:center"><app-icon name="close" [size]="16" /> {{ 'listing.not_found' | T }}</p>
     <a routerLink="/annonces" class="btn-primary">{{ 'listing.back' | T }}</a>
   </div>
 }
@@ -33,10 +33,12 @@
           @if (listing.images[selectedImage]) {
             <img [src]="listing.images[selectedImage]" [alt]="listing.title" />
           } @else {
-            <div class="detail__no-img">{{ category?.icon || '📦' }}</div>
+            <div class="detail__no-img">
+              @if (category?.icon) { {{ category?.icon }} } @else { <app-icon name="image" [size]="40" /> }
+            </div>
           }
           @if (listing.isFeatured) {
-            <span class="detail__featured-badge">⭐ {{ 'listing.premium_badge' | T }}</span>
+            <span class="detail__featured-badge icon-label"><app-icon name="star" [size]="12" /> {{ 'listing.premium_badge' | T }}</span>
           }
           @if (isNew) {
             <span class="detail__new-badge">{{ 'listing.new_badge' | T }}</span>
@@ -63,8 +65,8 @@
             <h1 class="detail__title">{{ listing.title }}</h1>
             <div class="detail__meta">
               <span class="icon-label"><app-icon name="location" [size]="14" /> {{ listing.city | cityLabel }}@if (foreignCountry) { <app-flag-icon [iso]="foreignCountry" [size]="14" /> }</span>
-              <span [title]="exactTime">🕐 {{ isNew ? exactTime : timeDisplay }}</span>
-              <span>👁 {{ listing.views }} {{ 'listing.views' | T }}</span>
+              <span class="icon-label" [title]="exactTime"><app-icon name="clock" [size]="14" /> {{ isNew ? exactTime : timeDisplay }}</span>
+              <span class="icon-label"><app-icon name="eye" [size]="14" /> {{ listing.views }} {{ 'listing.views' | T }}</span>
             </div>
           </div>
           <div class="detail__actions">
@@ -112,12 +114,12 @@
         </div>
         @if (priceComparisonPct; as pct) {
           @if (pct < 0) {
-            <div class="detail__price-indicator detail__price-indicator--good">
-              📉 {{ 'listing.price_below' | T:{pct: (-pct).toString()} }}
+            <div class="detail__price-indicator detail__price-indicator--good icon-label">
+              <app-icon name="trending-down" [size]="14" /> {{ 'listing.price_below' | T:{pct: (-pct).toString()} }}
             </div>
           } @else {
-            <div class="detail__price-indicator" [class.detail__price-indicator--high]="pct > 10">
-              📈 {{ 'listing.price_above' | T:{pct: pct.toString()} }}
+            <div class="detail__price-indicator icon-label" [class.detail__price-indicator--high]="pct > 10">
+              <app-icon name="trending-up" [size]="14" /> {{ 'listing.price_above' | T:{pct: pct.toString()} }}
             </div>
           }
         }
@@ -162,7 +164,7 @@
 
       <!-- Safety -->
       <div class="detail__safety">
-        <div class="detail__safety-title">🛡️ {{ 'listing.safety_title' | T }}</div>
+        <div class="detail__safety-title icon-label"><app-icon name="shield" [size]="16" /> {{ 'listing.safety_title' | T }}</div>
         <ul>
           <li>{{ 'listing.safety_1' | T }}</li>
           <li>{{ 'listing.safety_2' | T }}</li>
@@ -192,27 +194,27 @@
 
         @if (auth.isLoggedIn) {
           @if (listing.phone) {
-            <div class="detail__contact-btn detail__contact-btn--green detail__contact-btn--number">
-              📞 {{ listing.phone }}
+            <div class="detail__contact-btn detail__contact-btn--green detail__contact-btn--number icon-label">
+              <app-icon name="phone" [size]="16" /> {{ listing.phone }}
             </div>
           }
           @if (listing.whatsapp) {
-            <a [href]="'https://wa.me/' + whatsappDigits" target="_blank" class="detail__contact-btn detail__contact-btn--whatsapp">
-              💬 WhatsApp · {{ listing.whatsapp }}
+            <a [href]="'https://wa.me/' + whatsappDigits" target="_blank" class="detail__contact-btn detail__contact-btn--whatsapp icon-label">
+              <app-icon name="message" [size]="16" /> WhatsApp · {{ listing.whatsapp }}
             </a>
           }
-          <a routerLink="/chat" [queryParams]="{listing: listing.id}" class="detail__contact-btn detail__contact-btn--chat">
-            💬 {{ 'listing.chat_btn' | T }}
+          <a routerLink="/chat" [queryParams]="{listing: listing.id}" class="detail__contact-btn detail__contact-btn--chat icon-label">
+            <app-icon name="message" [size]="16" /> {{ 'listing.chat_btn' | T }}
           </a>
         } @else {
-          <a routerLink="/auth/login" class="detail__contact-btn detail__contact-btn--chat">
-            🔐 {{ 'listing.login_contact' | T }}
+          <a routerLink="/auth/login" class="detail__contact-btn detail__contact-btn--chat icon-label">
+            <app-icon name="lock" [size]="16" /> {{ 'listing.login_contact' | T }}
           </a>
         }
 
         <!-- Reserved badge -->
         @if ($any(listing).status === 'RESERVED') {
-          <div class="detail__reserved-badge">🔒 {{ 'listing.reserved_badge' | T }}</div>
+          <div class="detail__reserved-badge icon-label"><app-icon name="lock" [size]="13" /> {{ 'listing.reserved_badge' | T }}</div>
         }
       </div>
 
@@ -245,8 +247,8 @@
       @if (canReviewInfo?.canReview) {
         <div class="card detail__review-box">
           @if (!showReviewForm()) {
-            <button class="btn-outline" style="width:100%;justify-content:center" (click)="showReviewForm.set(true)">
-              ⭐ {{ 'listing.leave_review' | T }}
+            <button class="btn-outline icon-label" style="width:100%;justify-content:center" (click)="showReviewForm.set(true)">
+              <app-icon name="star" [size]="14" /> {{ 'listing.leave_review' | T }}
             </button>
           } @else {
             <h3>{{ 'listing.leave_review' | T }}</h3>

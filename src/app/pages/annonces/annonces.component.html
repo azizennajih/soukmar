@@ -212,11 +212,11 @@
         </div>
         <div class="annonces__header-actions">
           <div class="annonces__view-toggle" role="group" [attr.aria-label]="'annonces.view_mode' | T">
-            <button type="button" [class.active]="viewMode === 'list'" (click)="viewMode = 'list'">
-              ☰ {{ 'annonces.view_list' | T }}
+            <button type="button" class="icon-label" [class.active]="viewMode === 'list'" (click)="viewMode = 'list'">
+              <app-icon name="list" [size]="14" /> {{ 'annonces.view_list' | T }}
             </button>
-            <button type="button" [class.active]="viewMode === 'map'" (click)="viewMode = 'map'">
-              🗺️ {{ 'annonces.view_map' | T }}
+            <button type="button" class="icon-label" [class.active]="viewMode === 'map'" (click)="viewMode = 'map'">
+              <app-icon name="map" [size]="14" /> {{ 'annonces.view_map' | T }}
             </button>
           </div>
           <div class="annonces__sort">
@@ -240,15 +240,15 @@
       @if (auth.isLoggedIn) {
         <div class="annonces__save-search">
           @if (searchSaved) {
-            <span class="annonces__save-search-ok">✅ {{ 'annonces.search_saved' | T }}</span>
+            <span class="annonces__save-search-ok icon-label"><app-icon name="check" [size]="13" /> {{ 'annonces.search_saved' | T }}</span>
           } @else if (!showSaveSearchForm) {
-            <button class="annonces__save-search-btn" (click)="showSaveSearchForm = true">
-              🔔 {{ 'annonces.save_search' | T }}
+            <button class="annonces__save-search-btn icon-label" (click)="showSaveSearchForm = true">
+              <app-icon name="bell" [size]="14" /> {{ 'annonces.save_search' | T }}
             </button>
           } @else {
             <div class="annonces__save-search-form">
               @if (editSearchId) {
-                <span class="annonces__save-search-edit-label">✏️ {{ 'annonces.edit_search_title' | T }}</span>
+                <span class="annonces__save-search-edit-label icon-label"><app-icon name="edit" [size]="13" /> {{ 'annonces.edit_search_title' | T }}</span>
               }
               <input type="text" [(ngModel)]="newSearchName" [placeholder]="'annonces.save_search_name' | T" />
               <button class="btn-primary" [disabled]="!newSearchName.trim() || savingSearch" (click)="saveSearch()">

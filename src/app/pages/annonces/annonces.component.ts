@@ -11,6 +11,7 @@ import { ListingCardComponent } from '../../components/listing-card/listing-card
 import { ListingsMapComponent } from '../../components/listings-map/listings-map.component';
 import { CitySelectComponent } from '../../components/city-select/city-select.component';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
+import { IconComponent } from '../../components/icon/icon.component';
 import { MultiSelectComponent } from '../../components/multi-select/multi-select.component';
 import { TextAutocompleteComponent } from '../../components/text-autocomplete/text-autocomplete.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing, Category, AttributeDefinition, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES, SHOE_SIZES_EU } from '../../models/listing.model';
@@ -24,7 +25,7 @@ interface SubcategoryOption { id: string; code: string; }
 
 @Component({
   selector: 'app-annonces',
-  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, ListingsMapComponent, CitySelectComponent, CatIconComponent, MultiSelectComponent, TextAutocompleteComponent, TranslatePipe],
+  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, ListingsMapComponent, CitySelectComponent, CatIconComponent, MultiSelectComponent, TextAutocompleteComponent, TranslatePipe, IconComponent],
   templateUrl: './annonces.component.html',
   styleUrl: './annonces.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
