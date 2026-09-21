@@ -21,43 +21,9 @@
         {{ 'home.hero_desc' | T }}
       </p>
 
-      <form class="hero__search" (ngSubmit)="search()">
-        <div class="hero__search-field-wrap">
-          <input
-            type="text"
-            [(ngModel)]="searchQuery"
-            name="q"
-            [placeholder]="'home.search_placeholder' | T"
-            class="hero__search-input"
-            autocomplete="off"
-            (focus)="searchFocused.set(true)"
-            (blur)="searchFocused.set(false)"
-            (keydown)="suggestions.onKeydown($event)"
-          />
-          <app-search-suggestions #suggestions [query]="searchQuery" [active]="searchFocused()" [country]="countryService.country()" (pick)="onSuggestionPick($event)" />
-        </div>
-        <div class="hero__search-city">
-          <app-city-select
-            [cities]="allCities"
-            [value]="selectedCity"
-            (valueChange)="onCityChange($event)"
-            [showGps]="true"
-            (gpsSelected)="onGpsSelected($event)"
-            [placeholder]="'nav.city_placeholder_short' | T"
-            [bare]="true"
-          />
-        </div>
-        <div class="hero__search-radius">
-          <select [(ngModel)]="radius" name="radius" class="hero__search-radius-select" [title]="'annonces.radius' | T">
-            <option value="">{{ 'annonces.whole_city' | T }}</option>
-            @for (r of radiusOptions; track r) {
-              <option [value]="r">+{{ r }} km</option>
-            }
-          </select>
-        </div>
-        <button type="submit" class="hero__search-btn">{{ 'home.search_btn' | T }}</button>
-      </form>
-
+      <!-- Search lives in the navbar (its own full-width row there) — a
+           second search form here would just duplicate it right below,
+           which read as redundant/cluttered once that row became prominent. -->
       <div class="hero__tags">
         @for (tag of ['iPhone', 'Toyota', 'Appartement Casablanca', 'Emploi Rabat', 'MacBook']; track tag) {
           <a [routerLink]="['/annonces']" [queryParams]="{q: tag}" class="hero__tag">{{ tag }}</a>

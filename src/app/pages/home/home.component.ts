@@ -1,42 +1,36 @@
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, signal, effect } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ListingService } from '../../services/listing.service';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
-import { CitySelectComponent } from '../../components/city-select/city-select.component';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { IconComponent } from '../../components/icon/icon.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing, Category } from '../../models/listing.model';
 import { CITIES_BY_COUNTRY, countryName } from '../../models/country.model';
 import { CountryService } from '../../services/country.service';
 import { I18nService } from '../../services/i18n.service';
-import { GeocodeService, Coords } from '../../services/geocode.service';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CityLabelPipe } from '../../pipes/city-label.pipe';
-import { SearchSuggestionsComponent } from '../../components/search-suggestions/search-suggestions.component';
 import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, ListingCardComponent, CitySelectComponent, CatIconComponent, TranslatePipe, CityLabelPipe, SearchSuggestionsComponent, IconComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, ListingCardComponent, CatIconComponent, TranslatePipe, CityLabelPipe, IconComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
   categories = CATEGORIES;
-  get allCities(): string[] {
-    const c = this.countryService.country();
-    return c === 'MA' ? MOROCCO_CITIES : (CITIES_BY_COUNTRY[c] ?? []);
-  }
   get cities(): string[] {
-    return this.allCities.slice(0, 12);
+    const c = this.countryService.country();
+    const all = c === 'MA' ? MOROCCO_CITIES : (CITIES_BY_COUNTRY[c] ?? []);
+    return all.slice(0, 12);
   }
   /** Localized name of the currently browsed country, for the hero heading.
    * Deliberately not "in {country}"/"au {country}"/etc. — the required
@@ -50,12 +44,6 @@ export class HomeComponent implements OnInit {
   }
   featured: Listing[] = [];
   latest: Listing[] = [];
-  searchQuery = '';
-  searchFocused = signal(false);
-  selectedCity = '';
-  gpsCoords: Coords | null = null;
-  radius = '';
-  radiusOptions = ['5', '10', '20', '30', '50', '100', '150', '200'];
   favoriteIds = new Set<string>();
   interests: { category: Category; newListingsCount: number }[] = [];
 
@@ -79,7 +67,6 @@ export class HomeComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private geocodeService: GeocodeService,
     public countryService: CountryService,
     public i18n: I18nService,
     private seo: SeoService
@@ -133,43 +120,6 @@ export class HomeComponent implements OnInit {
     return this.favoriteIds.has(listing.id);
   }
 
-  onCityChange(value: string) {
-    this.selectedCity = value;
-    this.gpsCoords = null;
-  }
-
-  onGpsSelected(coords: Coords) {
-    this.gpsCoords = coords;
-    if (!this.radius) this.radius = '10';
-  }
-
-  onSuggestionPick(e: { q: string; category?: string }) {
-    this.searchQuery = e.q;
-    this.searchFocused.set(false);
-    this.search(e.category);
-  }
-
-  async search(category?: string) {
-    const params: Record<string, string> = { pays: this.countryService.country() };
-    if (this.searchQuery.trim()) params['q'] = this.searchQuery.trim();
-    if (category) params['categorie'] = category;
-    if (this.selectedCity.trim()) params['ville'] = this.selectedCity.trim();
-
-    if (this.gpsCoords) {
-      params['lat'] = String(this.gpsCoords.lat);
-      params['lng'] = String(this.gpsCoords.lng);
-      params['radius'] = this.radius || '10';
-    } else if (this.radius && this.selectedCity.trim()) {
-      try {
-        const coords = await firstValueFrom(this.geocodeService.geocode(this.selectedCity.trim()));
-        params['lat'] = String(coords.lat);
-        params['lng'] = String(coords.lng);
-        params['radius'] = this.radius;
-      } catch { /* geocoding failed — fall back to plain city-text search */ }
-    }
-
-    this.router.navigate(this.i18n.withLang(['/annonces']), { queryParams: params });
-  }
 
   goToCity(city: string) {
     this.router.navigate(this.i18n.withLang(['/annonces']), { queryParams: { ville: city, pays: this.countryService.country() } });
