@@ -21,60 +21,6 @@
         <span class="navbar__logo-text">SouqMar<span>24</span></span>
       </a>
 
-      <!-- Search -->
-      <form class="navbar__search" (ngSubmit)="search()">
-        <!-- Keyword -->
-        <div class="navbar__search-field">
-          <svg class="navbar__search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          <input
-            type="text"
-            [(ngModel)]="searchQuery"
-            name="q"
-            [placeholder]="'nav.search_placeholder' | T"
-            class="navbar__search-input"
-            autocomplete="off"
-            (focus)="searchFocused.set(true)"
-            (blur)="searchFocused.set(false)"
-            (keydown)="suggestions.onKeydown($event)"
-          />
-          <app-search-suggestions #suggestions [query]="searchQuery" [active]="searchFocused()" [country]="countryService.country()" (pick)="onSuggestionPick($event)" />
-          <input #imageSearchFile type="file" accept="image/*" hidden (change)="onImageSearchFileSelected($event)" />
-          <button type="button" class="navbar__search-camera-btn" [title]="'nav.search_by_image' | T" (click)="imageSearchFile.click()">
-            <app-icon name="camera" [size]="16" />
-          </button>
-        </div>
-        <!-- Divider -->
-        <div class="navbar__search-sep"></div>
-        <!-- Location -->
-        <div class="navbar__search-field navbar__search-field--location">
-          <app-city-select
-            [cities]="cities"
-            [value]="selectedCity"
-            (valueChange)="onCityChange($event)"
-            [showGps]="true"
-            (gpsSelected)="onGpsSelected($event)"
-            [placeholder]="'nav.city_placeholder_short' | T"
-            [bare]="true"
-          />
-        </div>
-        <!-- Divider -->
-        <div class="navbar__search-sep"></div>
-        <!-- Radius -->
-        <div class="navbar__search-field navbar__search-field--radius">
-          <select [(ngModel)]="radius" name="radius" class="navbar__search-input navbar__search-radius-select" [title]="'annonces.radius' | T">
-            <option value="">{{ 'annonces.whole_city' | T }}</option>
-            @for (r of radiusOptions; track r) {
-              <option [value]="r">+{{ r }} km</option>
-            }
-          </select>
-        </div>
-        <!-- Button -->
-        <button type="submit" class="navbar__search-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          <span class="navbar__search-btn-text">{{ 'nav.search_btn' | T }}</span>
-        </button>
-      </form>
-
       <!-- Right actions -->
       <div class="navbar__actions">
         @if (auth.isLoggedIn) {
@@ -216,27 +162,65 @@
         </button>
       </div>
     </div>
-  </div>
 
-  <!-- Mobile search bar -->
-  <div class="navbar__mobile-search">
-    <form class="navbar__mobile-search-form" (ngSubmit)="search()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-      <div class="navbar__mobile-search-field-wrap">
-        <input
-          type="text"
-          [(ngModel)]="searchQuery"
-          name="q_mobile"
-          [placeholder]="'nav.search_placeholder' | T"
-          autocomplete="off"
-          (focus)="searchFocused.set(true)"
-          (blur)="searchFocused.set(false)"
-          (keydown)="mobileSuggestions.onKeydown($event)"
-        />
-        <app-search-suggestions #mobileSuggestions [query]="searchQuery" [active]="searchFocused()" [country]="countryService.country()" (pick)="onSuggestionPick($event)" />
-      </div>
-      <button type="submit">{{ 'nav.search_btn' | T }}</button>
-    </form>
+    <!-- Search row — its own full-width row below the logo/menu row, at
+         every viewport size (was previously squeezed into the same row as
+         logo+actions, which left it too narrow to be usable; also replaces
+         the old, separately-maintained mobile-only search form below). -->
+    <div class="container navbar__search-row">
+      <form class="navbar__search" (ngSubmit)="search()">
+        <!-- Keyword -->
+        <div class="navbar__search-field">
+          <svg class="navbar__search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input
+            type="text"
+            [(ngModel)]="searchQuery"
+            name="q"
+            [placeholder]="'nav.search_placeholder' | T"
+            class="navbar__search-input"
+            autocomplete="off"
+            (focus)="searchFocused.set(true)"
+            (blur)="searchFocused.set(false)"
+            (keydown)="suggestions.onKeydown($event)"
+          />
+          <app-search-suggestions #suggestions [query]="searchQuery" [active]="searchFocused()" [country]="countryService.country()" (pick)="onSuggestionPick($event)" />
+          <input #imageSearchFile type="file" accept="image/*" hidden (change)="onImageSearchFileSelected($event)" />
+          <button type="button" class="navbar__search-camera-btn" [title]="'nav.search_by_image' | T" (click)="imageSearchFile.click()">
+            <app-icon name="camera" [size]="16" />
+          </button>
+        </div>
+        <!-- Divider -->
+        <div class="navbar__search-sep"></div>
+        <!-- Location -->
+        <div class="navbar__search-field navbar__search-field--location">
+          <app-city-select
+            [cities]="cities"
+            [value]="selectedCity"
+            (valueChange)="onCityChange($event)"
+            [showGps]="true"
+            (gpsSelected)="onGpsSelected($event)"
+            [placeholder]="'nav.city_placeholder_short' | T"
+            [bare]="true"
+          />
+        </div>
+        <!-- Divider -->
+        <div class="navbar__search-sep"></div>
+        <!-- Radius -->
+        <div class="navbar__search-field navbar__search-field--radius">
+          <select [(ngModel)]="radius" name="radius" class="navbar__search-input navbar__search-radius-select" [title]="'annonces.radius' | T">
+            <option value="">{{ 'annonces.whole_city' | T }}</option>
+            @for (r of radiusOptions; track r) {
+              <option [value]="r">+{{ r }} km</option>
+            }
+          </select>
+        </div>
+        <!-- Button -->
+        <button type="submit" class="navbar__search-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <span class="navbar__search-btn-text">{{ 'nav.search_btn' | T }}</span>
+        </button>
+      </form>
+    </div>
   </div>
 
   <!-- Mobile menu -->

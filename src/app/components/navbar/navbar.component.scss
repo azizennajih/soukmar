@@ -32,8 +32,14 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      padding: .75rem 1.25rem;
+      padding: .65rem 1.25rem;
     }
+  }
+
+  // Search's own full-width row, below logo+actions, at every viewport size.
+  &__search-row {
+    padding: 0 1.25rem .65rem;
+    @media (max-width: 480px) { padding: 0 .75rem .6rem; }
   }
 
   &__logo {
@@ -66,8 +72,8 @@
   }
 
   &__search {
-    flex: 1;
-    max-width: 740px;
+    width: 100%;
+    max-width: 900px;
     display: flex;
     align-items: stretch;
     height: 44px;
@@ -81,19 +87,20 @@
       border-color: #e63946;
       box-shadow: 0 0 0 3px rgba(230,57,70,.12);
     }
-    @media (max-width: 640px) { display: none; }
 
     &-field {
       position: relative;
       display: flex;
       align-items: center;
       flex: 1;
-      min-width: 90px;
+      min-width: 70px;
 
       &--location {
         flex: 0 0 230px;
         border-left: 1.5px solid #e2e8f0;
         @media (max-width: 900px) { flex: 0 0 195px; }
+        @media (max-width: 640px) { flex: 0 0 130px; }
+        @media (max-width: 400px) { flex: 0 0 105px; }
       }
 
       &--radius {
@@ -479,52 +486,6 @@
     cursor: pointer;
 
     @media (max-width: 768px) { display: flex; }
-  }
-
-  &__mobile-search {
-    display: none;
-    padding: .5rem 1rem .6rem;
-    background: #fff;
-    border-bottom: 1px solid #f1f5f9;
-
-    @media (max-width: 640px) { display: block; }
-
-    &-form {
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-      background: #f8fafc;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 999px;
-      padding: .45rem .75rem;
-
-      svg { color: #94a3b8; flex-shrink: 0; }
-
-      &-field-wrap { position: relative; flex: 1; min-width: 0; }
-
-      input {
-        width: 100%;
-        border: none;
-        background: transparent;
-        font-size: .875rem;
-        outline: none;
-        color: #0f172a;
-        &::placeholder { color: #94a3b8; }
-      }
-
-      button {
-        background: #e63946;
-        color: #fff;
-        border: none;
-        border-radius: 999px;
-        padding: .35rem .85rem;
-        font-size: .8rem;
-        font-weight: 700;
-        cursor: pointer;
-        white-space: nowrap;
-        flex-shrink: 0;
-      }
-    }
   }
 
   &__mobile {
