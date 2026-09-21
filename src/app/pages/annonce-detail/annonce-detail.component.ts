@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, signal, ChangeDetectorRef, HostListener, inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Meta, Title } from '@angular/platform-browser';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
+import { SeoService } from '../../services/seo.service';
 import { FormsModule } from '@angular/forms';
 import { ListingService } from '../../services/listing.service';
 import { ApiService } from '../../services/api.service';
@@ -57,8 +57,7 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     public i18n: I18nService,
     private reviewService: ReviewService,
-    private meta: Meta,
-    private titleService: Title
+    private seo: SeoService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -102,28 +101,42 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
     const title = `${listing.title} — SouqMar24`;
     const description = listing.description?.slice(0, 160) || '';
     const image = listing.images?.[0] || '';
+    const url = this.seo.canonicalUrl;
 
-    this.titleService.setTitle(title);
-    this.meta.updateTag({ name: 'description', content: description });
-    this.meta.updateTag({ property: 'og:type', content: 'website' });
-    this.meta.updateTag({ property: 'og:title', content: title });
-    this.meta.updateTag({ property: 'og:description', content: description });
-    this.meta.updateTag({ property: 'og:image', content: image });
-    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
-    this.meta.updateTag({ name: 'twitter:title', content: title });
-    this.meta.updateTag({ name: 'twitter:description', content: description });
-    this.meta.updateTag({ name: 'twitter:image', content: image });
+    this.seo.setTitleAndDescription(title, description);
+    this.seo.setCanonical(url);
+    this.seo.updateTag({ property: 'og:type', content: 'website' });
+    this.seo.updateTag({ property: 'og:image', content: image });
+    this.seo.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.seo.updateTag({ name: 'twitter:title', content: title });
+    this.seo.updateTag({ name: 'twitter:description', content: description });
+    this.seo.updateTag({ name: 'twitter:image', content: image });
 
-    // window.location doesn't exist during SSR; crawlers fall back to the
-    // URL they actually fetched when og:url is absent, so it's only worth
-    // setting once we know we're in the browser.
-    if (this.isBrowser) {
-      this.meta.updateTag({ property: 'og:url', content: window.location.href });
-    }
+    // Product/Offer JSON-LD — lets Google show price/availability directly
+    // in the search result (rich snippet), no ranking guarantee but a real,
+    // well-documented click-through-rate lever for listing pages.
+    this.seo.setStructuredData('listing-structured-data', {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: listing.title,
+      description: listing.description || listing.title,
+      image: listing.images?.length ? listing.images : undefined,
+      url,
+      offers: {
+        '@type': 'Offer',
+        price: listing.price ?? undefined,
+        priceCurrency: listing.currency || 'MAD',
+        availability: listing.status === 'ACTIVE'
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock',
+        url,
+      },
+    });
   }
 
   ngOnDestroy() {
-    this.titleService.setTitle('SouqMar24');
+    this.seo.setTitleAndDescription('SouqMar24', '');
+    this.seo.removeStructuredData('listing-structured-data');
   }
 
   similarListings: Listing[] = [];

@@ -20,6 +20,7 @@ import { CountryService } from '../../services/country.service';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { SavedSearchService } from '../../services/saved-search.service';
+import { SeoService, SITE_URL } from '../../services/seo.service';
 
 interface SubcategoryOption { id: string; code: string; }
 
@@ -93,7 +94,8 @@ export class AnnoncesComponent implements OnInit {
     public auth: AuthService,
     private cdr: ChangeDetectorRef,
     private savedSearchService: SavedSearchService,
-    public countryService: CountryService
+    public countryService: CountryService,
+    private seo: SeoService
   ) {
     effect(() => {
       const country = this.countryService.country();
@@ -194,10 +196,29 @@ export class AnnoncesComponent implements OnInit {
         this.listings = res.listings;
         this.total = res.total;
         this.loading = false;
+        this.updateSeo();
         this.cdr.markForCheck();
       },
       error: () => { this.loading = false; this.cdr.markForCheck(); }
     });
+  }
+
+  // Faceted-navigation SEO fix: sort/price/city/etc. produce endless
+  // near-duplicate URLs for the same underlying result set, which Google
+  // would otherwise index as separate thin pages. Canonicalize to the one
+  // real landing page this search reduces to — the category alone (a
+  // genuine, worth-indexing page) if one is selected, /annonces otherwise —
+  // and drop every other filter from both the canonical URL and og:url.
+  private updateSeo() {
+    const catLabel = this.filters.categorie ? `${this.filters.categorie} — ` : '';
+    this.seo.setTitleAndDescription(
+      `${catLabel}Annonces — SouqMar24`,
+      `${this.total} annonces disponibles sur SouqMar24.`
+    );
+    const canonicalPath = this.filters.categorie
+      ? `/annonces?categorie=${encodeURIComponent(this.filters.categorie)}`
+      : '/annonces';
+    this.seo.setCanonical(`${SITE_URL}${canonicalPath}`);
   }
 
   isFav(listing: Listing): boolean {

@@ -19,6 +19,7 @@ import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { SearchSuggestionsComponent } from '../../components/search-suggestions/search-suggestions.component';
+import { SeoService, SITE_URL } from '../../services/seo.service';
 
 @Component({
   selector: 'app-home',
@@ -79,7 +80,8 @@ export class HomeComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private geocodeService: GeocodeService,
     public countryService: CountryService,
-    public i18n: I18nService
+    public i18n: I18nService,
+    private seo: SeoService
   ) {
     // Re-runs whenever the navbar's country switcher changes — a visitor
     // sitting on the homepage sees it reflect the new country immediately,
@@ -95,6 +97,11 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.seo.setTitleAndDescription(
+      'SouqMar24 — Achetez & vendez facilement',
+      'La marketplace pour acheter et vendre rapidement : véhicules, immobilier, électronique, mode et plus encore.'
+    );
+    this.seo.setCanonical(SITE_URL + '/');
     this.cdr.markForCheck();
     if (this.auth.isLoggedIn) {
       this.loadFavorites();
