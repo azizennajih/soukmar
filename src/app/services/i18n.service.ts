@@ -1,5 +1,5 @@
 import { Injectable, signal, computed, effect, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { BrowserStorageService } from './browser-storage.service';
 import { DEFAULT_LANG, isSupportedLang, withLang as withLangCommands, type Lang } from './locale-routing';
 
@@ -46,6 +46,7 @@ function detectInitialLang(storage: BrowserStorageService, isBrowser: boolean): 
 export class I18nService {
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private storage = inject(BrowserStorageService);
+  private document = inject(DOCUMENT);
 
   lang = signal<Lang>(detectInitialLang(this.storage, this.isBrowser));
 
@@ -55,10 +56,10 @@ export class I18nService {
     effect(() => {
       const l = this.lang();
       this.storage.setItem(LANG_KEY, l);
+      this.document.documentElement.lang = l;
+      this.document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
       if (!this.isBrowser) return;
-      document.documentElement.lang = l;
       const scrollY = window.scrollY;
-      document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
       requestAnimationFrame(() => window.scrollTo(0, scrollY));
     });
   }
