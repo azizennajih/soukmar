@@ -16,7 +16,7 @@ import { I18nService } from '../../services/i18n.service';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CityLabelPipe } from '../../pipes/city-label.pipe';
-import { SeoService } from '../../services/seo.service';
+import { SeoService, SITE_URL } from '../../services/seo.service';
 
 @Component({
   selector: 'app-home',
@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit {
       'SouqMar24 — Achetez & vendez facilement',
       'La marketplace pour acheter et vendre rapidement : véhicules, immobilier, électronique, mode et plus encore.'
     );
-    this.seo.setCanonical();
+    this.seo.setCanonical(`${SITE_URL}/${this.i18n.lang()}`);
     this.seo.setHreflangAlternates('/');
     this.cdr.markForCheck();
     if (this.auth.isLoggedIn) {

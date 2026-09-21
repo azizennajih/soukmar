@@ -187,6 +187,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.search(e.category);
   }
 
+  /** Explicit fallback for Enter in the keyword field: `suggestions.onKeydown()`
+   * already handles Enter-with-a-highlighted-suggestion (arrow-key navigated,
+   * calls preventDefault + picks it) — this only fires `search()` when that
+   * branch did nothing, i.e. no suggestion was highlighted. Written this way
+   * (rather than relying on the browser's native implicit-submit-on-Enter)
+   * because that native behavior wasn't firing reliably here. */
+  onSearchInputKeydown(e: KeyboardEvent, suggestions: SearchSuggestionsComponent) {
+    suggestions.onKeydown(e);
+    if (e.key === 'Enter' && !e.defaultPrevented) this.search();
+  }
+
   async search(category?: string) {
     const params: Record<string, string> = { pays: this.countryService.country() };
     if (this.searchQuery.trim()) params['q'] = this.searchQuery.trim();

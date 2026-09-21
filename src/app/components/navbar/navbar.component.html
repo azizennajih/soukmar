@@ -181,7 +181,7 @@
             autocomplete="off"
             (focus)="searchFocused.set(true)"
             (blur)="searchFocused.set(false)"
-            (keydown)="suggestions.onKeydown($event)"
+            (keydown)="onSearchInputKeydown($event, suggestions)"
           />
           <app-search-suggestions #suggestions [query]="searchQuery" [active]="searchFocused()" [country]="countryService.country()" (pick)="onSuggestionPick($event)" />
           <input #imageSearchFile type="file" accept="image/*" hidden (change)="onImageSearchFileSelected($event)" />

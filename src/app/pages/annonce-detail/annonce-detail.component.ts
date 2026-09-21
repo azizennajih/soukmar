@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, signal, ChangeDetectorRef, HostListener, 
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
-import { SeoService } from '../../services/seo.service';
+import { SeoService, SITE_URL } from '../../services/seo.service';
 import { FormsModule } from '@angular/forms';
 import { ListingService } from '../../services/listing.service';
 import { ApiService } from '../../services/api.service';
@@ -102,7 +102,9 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
     const title = `${listing.title} — SouqMar24`;
     const description = listing.description?.slice(0, 160) || '';
     const image = listing.images?.[0] || '';
-    const url = this.seo.canonicalUrl;
+    // Built explicitly (not this.seo.canonicalUrl) so a stray query param
+    // (referrer tags, etc.) never leaks into the canonical/hreflang URLs.
+    const url = `${SITE_URL}/${this.i18n.lang()}/annonces/${listing.id}`;
 
     this.seo.setTitleAndDescription(title, description);
     this.seo.setCanonical(url);
