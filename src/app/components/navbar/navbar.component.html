@@ -38,6 +38,10 @@
             (keydown)="suggestions.onKeydown($event)"
           />
           <app-search-suggestions #suggestions [query]="searchQuery" [active]="searchFocused()" [country]="countryService.country()" (pick)="onSuggestionPick($event)" />
+          <input #imageSearchFile type="file" accept="image/*" hidden (change)="onImageSearchFileSelected($event)" />
+          <button type="button" class="navbar__search-camera-btn" [title]="'nav.search_by_image' | T" (click)="imageSearchFile.click()">
+            <app-icon name="camera" [size]="16" />
+          </button>
         </div>
         <!-- Divider -->
         <div class="navbar__search-sep"></div>

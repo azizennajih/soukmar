@@ -11,7 +11,7 @@
 
   @if (pushService.supported && !pushService.subscribed()) {
     <div class="notifications__push-banner">
-      <span>🔔 {{ 'notifications.enable_push' | T }}</span>
+      <span class="icon-label"><app-icon name="bell" [size]="15" /> {{ 'notifications.enable_push' | T }}</span>
       <button class="btn-primary" (click)="enablePush()">{{ 'notifications.enable_push_btn' | T }}</button>
     </div>
   }
@@ -29,7 +29,7 @@
           @if (!n.isRead) { <span class="notif-row__dot"></span> }
           <div class="notif-row__body">
             <p class="notif-row__text">{{ text(n) }}</p>
-            @if (n.listingTitle) { <p class="notif-row__listing">📌 {{ n.listingTitle }}</p> }
+            @if (n.listingTitle) { <p class="notif-row__listing icon-label"><app-icon name="link" [size]="12" /> {{ n.listingTitle }}</p> }
             <span class="notif-row__time">{{ time(n) }}</span>
           </div>
         </button>

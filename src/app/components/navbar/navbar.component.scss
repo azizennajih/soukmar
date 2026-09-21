@@ -111,6 +111,17 @@
       flex-shrink: 0;
     }
 
+    &-camera-btn {
+      position: absolute;
+      right: .5rem;
+      width: 1.7rem; height: 1.7rem;
+      display: flex; align-items: center; justify-content: center;
+      border: none; border-radius: 50%;
+      background: transparent; color: #94a3b8; cursor: pointer;
+      transition: background .15s, color .15s;
+      &:hover { background: #f1f5f9; color: var(--primary); }
+    }
+
     &-sep {
       width: 1px;
       background: #e2e8f0;
@@ -121,7 +132,7 @@
     &-input {
       border: none;
       border-radius: 0;
-      padding: 0 .75rem 0 2.4rem;
+      padding: 0 2.1rem 0 2.4rem;
       background: transparent;
       font-size: .875rem;
       height: 100%;

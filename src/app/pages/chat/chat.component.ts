@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ChatService, ChatMessage, Conversation } from '../../services/chat.service';
+import { ChatService, ChatMessage, Conversation, CallState, IncomingCallInfo } from '../../services/chat.service';
 import { AuthService } from '../../services/auth.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
@@ -22,8 +22,13 @@ import { IconComponent } from '../../components/icon/icon.component';
 })
 export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild('messagesEnd') messagesEnd!: ElementRef;
+  @ViewChild('remoteAudio') remoteAudio?: ElementRef<HTMLAudioElement>;
 
   conversations: Conversation[] = [];
+  callState: CallState = 'idle';
+  incomingCall: IncomingCallInfo | null = null;
+  muted = false;
+  callError: string | null = null;
   activeConv?: Conversation;
   messages: ChatMessage[] = [];
   messageText = '';
@@ -67,6 +72,13 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
           this.listingStatus = data.status;
           this.cdr.markForCheck();
         }
+      }),
+      this.chatService.callState$.subscribe(s => { this.callState = s; this.cdr.markForCheck(); }),
+      this.chatService.incomingCall$.subscribe(c => { this.incomingCall = c; this.cdr.markForCheck(); }),
+      this.chatService.muted$.subscribe(m => { this.muted = m; this.cdr.markForCheck(); }),
+      this.chatService.callError$.subscribe(e => { this.callError = e; this.cdr.markForCheck(); }),
+      this.chatService.remoteStream$.subscribe(stream => {
+        if (this.remoteAudio) this.remoteAudio.nativeElement.srcObject = stream;
       })
     );
 
@@ -176,10 +188,10 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     return { avgRating: partner.avgRating, reviewCount: partner.reviewCount || 0 };
   }
 
-  getPartnerVerification(): { emailVerified: boolean | undefined; phoneVerified: boolean | undefined } {
+  getPartnerVerification(): { emailVerified: boolean | undefined; phoneVerified: boolean | undefined; idVerified: boolean | undefined } {
     const me = this.auth.currentUser()!.id;
     const partner = this.activeConv!.listing.userId === me ? this.activeConv!.buyer : this.activeConv!.listing.user;
-    return { emailVerified: partner.emailVerified, phoneVerified: partner.phoneVerified };
+    return { emailVerified: partner.emailVerified, phoneVerified: partner.phoneVerified, idVerified: partner.idVerified };
   }
 
   isMine(msg: ChatMessage): boolean {
@@ -203,6 +215,18 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.chatService.cancelOffer(msg.id, this.activeConv.id, this.activeConv.listingId);
   }
 
+  startCall() {
+    if (!this.activeConv) return;
+    this.chatService.startCall(this.activeConv.id);
+  }
+
+  acceptCall() { this.chatService.acceptCall(); }
+  rejectCall() { this.chatService.rejectCall(); }
+  endCall() { this.chatService.endCall(); }
+  toggleMute() { this.chatService.toggleMute(); }
+
+  dismissCallError() { this.chatService.callError$.next(null); }
+
   getConvPartner(conv: Conversation): string {
     const me = this.auth.currentUser()!.id;
     return conv.listing.userId === me ? conv.buyer.name : conv.listing.user.name;
@@ -214,10 +238,10 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     return { avgRating: partner.avgRating, reviewCount: partner.reviewCount || 0 };
   }
 
-  getConvPartnerVerification(conv: Conversation): { emailVerified: boolean | undefined; phoneVerified: boolean | undefined } {
+  getConvPartnerVerification(conv: Conversation): { emailVerified: boolean | undefined; phoneVerified: boolean | undefined; idVerified: boolean | undefined } {
     const me = this.auth.currentUser()!.id;
     const partner = conv.listing.userId === me ? conv.buyer : conv.listing.user;
-    return { emailVerified: partner.emailVerified, phoneVerified: partner.phoneVerified };
+    return { emailVerified: partner.emailVerified, phoneVerified: partner.phoneVerified, idVerified: partner.idVerified };
   }
 
   get partnerBlockedByMe(): boolean {

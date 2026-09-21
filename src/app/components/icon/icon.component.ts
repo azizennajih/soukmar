@@ -5,7 +5,8 @@ export type IconName =
   | 'eye' | 'clock' | 'lock' | 'unlock' | 'star' | 'phone' | 'message'
   | 'check' | 'close' | 'block' | 'trash' | 'edit' | 'bell'
   | 'trending-up' | 'trending-down' | 'image' | 'shield' | 'link'
-  | 'list' | 'map' | 'zap' | 'users';
+  | 'list' | 'map' | 'zap' | 'users' | 'bar-chart' | 'id-card'
+  | 'camera' | 'phone-call' | 'mic' | 'mic-off' | 'phone-off';
 
 @Component({
   selector: 'app-icon',

@@ -3,7 +3,7 @@
   <!-- Header -->
   <div class="admin-header">
     <div class="admin-header__left">
-      <div class="admin-header__icon">🛡️</div>
+      <div class="admin-header__icon"><app-icon name="shield" [size]="26" /></div>
       <div>
         <h1 class="admin-header__title">{{ 'admin.title' | T }}</h1>
         <p class="admin-header__sub">{{ 'admin.subtitle' | T }}</p>
@@ -17,17 +17,17 @@
 
   <!-- Tabs -->
   <nav class="admin-tabs">
-    <button class="admin-tab" [class.active]="tab() === 'overview'" (click)="setTab('overview')">
-      📊 {{ 'admin.tab_overview' | T }}
+    <button class="admin-tab icon-label" [class.active]="tab() === 'overview'" (click)="setTab('overview')">
+      <app-icon name="bar-chart" [size]="14" /> {{ 'admin.tab_overview' | T }}
     </button>
-    <button class="admin-tab" [class.active]="tab() === 'listings'" (click)="setTab('listings')">
-      📋 {{ 'admin.tab_listings' | T }}
+    <button class="admin-tab icon-label" [class.active]="tab() === 'listings'" (click)="setTab('listings')">
+      <app-icon name="list" [size]="14" /> {{ 'admin.tab_listings' | T }}
       @if (stats.pending > 0) {
         <span class="tab-badge">{{ stats.pending }}</span>
       }
     </button>
-    <button class="admin-tab" [class.active]="tab() === 'users'" (click)="setTab('users')">
-      👥 {{ 'admin.tab_users' | T }}
+    <button class="admin-tab icon-label" [class.active]="tab() === 'users'" (click)="setTab('users')">
+      <app-icon name="users" [size]="14" /> {{ 'admin.tab_users' | T }}
     </button>
     <button class="admin-tab icon-label" [class.active]="tab() === 'revenue'" (click)="setTab('revenue')">
       <app-icon name="offer" [size]="14" /> {{ 'admin.tab_revenue' | T }}
@@ -38,8 +38,14 @@
         <span class="tab-badge">{{ pendingReportsCount }}</span>
       }
     </button>
-    <button class="admin-tab" [class.active]="tab() === 'security'" (click)="setTab('security')">
-      🛡️ {{ 'admin.tab_security' | T }}
+    <button class="admin-tab icon-label" [class.active]="tab() === 'id-verifications'" (click)="setTab('id-verifications')">
+      <app-icon name="id-card" [size]="14" /> {{ 'admin.tab_id_verifications' | T }}
+      @if (pendingIdVerificationsCount > 0) {
+        <span class="tab-badge">{{ pendingIdVerificationsCount }}</span>
+      }
+    </button>
+    <button class="admin-tab icon-label" [class.active]="tab() === 'security'" (click)="setTab('security')">
+      <app-icon name="shield" [size]="14" /> {{ 'admin.tab_security' | T }}
       @if (highSeverityEventCount > 0) {
         <span class="tab-badge">{{ highSeverityEventCount }}</span>
       }
@@ -412,7 +418,7 @@
       <div class="admin-loading">{{ 'admin.loading' | T }}</div>
     } @else if (filteredReports.length === 0) {
       <div class="empty-state">
-        <span>🚩</span><p>{{ 'admin.reports_empty' | T }}</p>
+        <span><app-icon name="report" [size]="32" /></span><p>{{ 'admin.reports_empty' | T }}</p>
       </div>
     } @else {
       <div class="report-list">
@@ -437,11 +443,11 @@
               </div>
             </div>
             @if (report.listing) {
-              <a [routerLink]="['/annonces', report.listing.id]" class="report-card__listing">📌 {{ report.listing.title }}</a>
+              <a [routerLink]="['/annonces', report.listing.id]" class="report-card__listing icon-label"><app-icon name="link" [size]="12" /> {{ report.listing.title }}</a>
             }
             <p class="report-card__reason">{{ report.reason }}</p>
             @if (report.adminNote) {
-              <p class="report-card__note">📝 {{ report.adminNote }}</p>
+              <p class="report-card__note icon-label"><app-icon name="edit" [size]="12" /> {{ report.adminNote }}</p>
             }
             @if (report.status === 'PENDING') {
               <div class="report-card__actions">
@@ -450,6 +456,71 @@
                 </button>
                 <button class="btn-outline" [disabled]="isActionLoading(report.id)" (click)="resolveReport(report, 'DISMISSED')">
                   {{ 'admin.reports_dismiss' | T }}
+                </button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  }
+
+  <!-- ══════════════ ID VERIFICATIONS ══════════════ -->
+  @if (tab() === 'id-verifications') {
+    <div class="section-header">
+      <h2 class="section-title">{{ 'admin.id_verifications_title' | T }}</h2>
+      <span class="section-count">{{ filteredIdVerifications.length }}</span>
+    </div>
+
+    <div class="filter-bar">
+      @for (f of ['PENDING', 'APPROVED', 'REJECTED', 'ALL']; track f) {
+        <button class="filter-pill" [class.active]="idVerificationFilter() === f"
+                (click)="setIdVerificationFilter($any(f))">
+          {{ f === 'ALL' ? ('admin.filter_all' | T) : ('admin.reports_status_' + f.toLowerCase()) | T }}
+          <span class="filter-pill__count">
+            {{ f === 'ALL' ? idVerifications.length : idVerifications.filter(v => v.status === f).length }}
+          </span>
+        </button>
+      }
+    </div>
+
+    @if (idVerificationsLoading()) {
+      <div class="admin-loading">{{ 'admin.loading' | T }}</div>
+    } @else if (filteredIdVerifications.length === 0) {
+      <div class="empty-state">
+        <span><app-icon name="id-card" [size]="32" /></span><p>{{ 'admin.id_verifications_empty' | T }}</p>
+      </div>
+    } @else {
+      <div class="report-list">
+        @for (v of filteredIdVerifications; track v.id) {
+          <div class="report-card card" [class.report-card--pending]="v.status === 'PENDING'">
+            <div class="report-card__top">
+              <span class="badge" [ngClass]="v.status === 'PENDING' ? 'badge-pending' : v.status === 'APPROVED' ? 'badge-active' : 'badge-rejected'">
+                {{ ('admin.reports_status_' + v.status.toLowerCase()) | T }}
+              </span>
+              <span class="report-card__date">{{ timeAgo(v.createdAt) }}</span>
+            </div>
+            <div class="report-card__parties">
+              <div>
+                <span class="report-card__label">{{ 'admin.id_verifications_user' | T }}</span>
+                <strong>{{ v.user?.name || '—' }}</strong>
+                <span class="table-user-email">{{ v.user?.email }}</span>
+              </div>
+            </div>
+            <div class="id-verification-photos">
+              <a [href]="v.idImageUrl" target="_blank" rel="noopener">{{ 'admin.id_verifications_id_photo' | T }}</a>
+              <a [href]="v.selfieImageUrl" target="_blank" rel="noopener">{{ 'admin.id_verifications_selfie_photo' | T }}</a>
+            </div>
+            @if (v.adminNote) {
+              <p class="report-card__note icon-label"><app-icon name="edit" [size]="12" /> {{ v.adminNote }}</p>
+            }
+            @if (v.status === 'PENDING') {
+              <div class="report-card__actions">
+                <button class="btn-primary" [disabled]="isActionLoading(v.id)" (click)="reviewIdVerification(v, 'APPROVED')">
+                  {{ 'admin.id_verifications_approve' | T }}
+                </button>
+                <button class="btn-outline" [disabled]="isActionLoading(v.id)" (click)="reviewIdVerification(v, 'REJECTED')">
+                  {{ 'admin.id_verifications_reject' | T }}
                 </button>
               </div>
             }

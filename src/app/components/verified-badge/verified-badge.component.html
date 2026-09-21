@@ -1,4 +1,4 @@
-@if (emailVerified || phoneVerified) {
+@if (emailVerified || phoneVerified || idVerified) {
   <span class="verified-badge" [class.verified-badge--sm]="size === 'sm'">
     @if (emailVerified) {
       <span class="badge badge-active" [title]="'seller.email_verified' | T">
@@ -10,6 +10,12 @@
       <span class="badge badge-active" [title]="'seller.phone_verified' | T">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><polyline points="8 12 11 15 16 9"/></svg>
         {{ 'seller.phone_verified_short' | T }}
+      </span>
+    }
+    @if (idVerified) {
+      <span class="badge badge-active" [title]="'seller.id_verified' | T">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><polyline points="8 12 11 15 16 9"/></svg>
+        {{ 'seller.id_verified_short' | T }}
       </span>
     }
   </span>

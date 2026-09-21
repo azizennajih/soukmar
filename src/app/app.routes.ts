@@ -15,6 +15,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/annonce-detail/annonce-detail.component').then(m => m.AnnonceDetailComponent)
   },
   {
+    path: 'recherche-image',
+    loadComponent: () => import('./pages/image-search/image-search.component').then(m => m.ImageSearchComponent)
+  },
+  {
     path: 'deposer-annonce',
     loadComponent: () => import('./pages/deposer-annonce/deposer-annonce.component').then(m => m.DeposerAnnonceComponent)
   },

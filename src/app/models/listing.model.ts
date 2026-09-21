@@ -51,6 +51,7 @@ export interface User {
   reviewCount?: number;
   emailVerified?: boolean;
   phoneVerified?: boolean;
+  idVerified?: boolean;
 }
 
 export type ListingIntent = 'OFFER' | 'SEARCH';
@@ -120,6 +121,7 @@ export interface SellerProfile {
   avgResponseHours: number | null;
   emailVerified?: boolean;
   phoneVerified?: boolean;
+  idVerified?: boolean;
 }
 
 export interface SavedSearch {

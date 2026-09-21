@@ -425,3 +425,83 @@
   &:hover { background: #c1121f; }
   &:disabled { background: #cbd5e1; cursor: default; }
 }
+
+/* Calling */
+.chat__call-btn {
+  width: 2rem; height: 2rem;
+  display: flex; align-items: center; justify-content: center;
+  border: none; border-radius: 50%;
+  background: var(--primary-light); color: var(--primary);
+  cursor: pointer; transition: background .15s;
+  &:hover { background: var(--primary); color: #fff; }
+}
+
+.call-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(15, 23, 42, .55);
+  display: flex; align-items: center; justify-content: center;
+
+  &__card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 2rem 2.5rem;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    min-width: 260px;
+  }
+
+  &__avatar {
+    width: 4rem; height: 4rem; margin: 0 auto .75rem;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff; font-weight: 800; font-size: 1.5rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  &__name { font-weight: 700; font-size: 1.1rem; color: var(--text); }
+  &__label {
+    color: var(--text-muted); font-size: .85rem; margin-top: .25rem;
+    display: flex; align-items: center; justify-content: center; gap: .35rem;
+  }
+
+  &__actions {
+    display: flex; justify-content: center; gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+}
+
+.call-btn {
+  width: 3.2rem; height: 3.2rem;
+  border-radius: 50%; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; transition: transform .1s, filter .15s;
+  &:hover { filter: brightness(1.1); }
+  &:active { transform: scale(.95); }
+  &--accept { background: #15803d; }
+  &--reject { background: #e63946; }
+}
+
+.call-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .6rem 1.25rem;
+  background: #ecfdf5; border-bottom: 1px solid #a7f3d0;
+  font-size: .85rem; font-weight: 600; color: #15803d;
+
+  &__actions { display: flex; gap: .5rem; }
+
+  &__btn {
+    width: 2rem; height: 2rem; border-radius: 50%; border: none;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff; color: #15803d; cursor: pointer;
+    &:hover { background: #d1fae5; }
+    &--end { background: #e63946; color: #fff; &:hover { background: #c1121f; } }
+  }
+}
+
+.call-error-banner {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .55rem 1.25rem;
+  background: #fef1f2; border-bottom: 1px solid #fca5a5;
+  color: #b8313c; font-size: .82rem; font-weight: 600;
+  button { margin-left: auto; background: none; border: none; color: inherit; cursor: pointer; display: flex; }
+}

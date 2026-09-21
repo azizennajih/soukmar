@@ -80,6 +80,20 @@ export class ListingService {
     return this.api.get(`/listings/${id}/view-stats`);
   }
 
+  getFunnel(id: string): Observable<{ views: number; favorites: number; contacts: number; offers: number; offersAccepted: number }> {
+    return this.api.get(`/listings/${id}/funnel`);
+  }
+
+  /** Free "search by photo": uploads a query image and returns visually
+   * similar active/reserved listings, closest match first (server-side
+   * perceptual-hash comparison, no paid vision API — see
+   * soukmar-backend's lib/imageHash.ts). */
+  searchByImage(file: File): Observable<Listing[]> {
+    const form = new FormData();
+    form.append('image', file);
+    return this.api.post(`/listings/search-by-image`, form);
+  }
+
   getSimilar(id: string): Observable<Listing[]> {
     return this.api.get<Listing[]>(`/listings/${id}/similar`);
   }

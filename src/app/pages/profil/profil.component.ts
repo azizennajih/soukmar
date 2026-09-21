@@ -24,6 +24,7 @@ interface ProfileData {
   role: string;
   createdAt: string;
   phoneVerified?: boolean;
+  idVerified?: boolean;
 }
 
 @Component({
@@ -55,6 +56,17 @@ export class ProfilComponent implements OnInit {
   phoneMsg = '';
   phoneErrorMsg = '';
 
+  // Free KYC-lite: government-ID photo + selfie, reviewed manually by an
+  // admin (see admin.component.ts's "Vérifications" tab) rather than an
+  // automated paid provider — see soukmar-backend's IdVerification model.
+  idVerificationStatus: 'NONE' | 'PENDING' | 'APPROVED' | 'REJECTED' = 'NONE';
+  idVerificationNote: string | null = null;
+  idImageFile: File | null = null;
+  selfieImageFile: File | null = null;
+  submittingIdVerification = signal(false);
+  idVerificationMsg = '';
+  idVerificationErrorMsg = '';
+
   constructor(
     private api: ApiService,
     private auth: AuthService,
@@ -66,6 +78,51 @@ export class ProfilComponent implements OnInit {
   ngOnInit() {
     if (!this.auth.isLoggedIn) { this.router.navigate(['/auth/login']); return; }
     this.loadProfile();
+    this.loadIdVerificationStatus();
+  }
+
+  async loadIdVerificationStatus() {
+    try {
+      const res = await firstValueFrom(this.api.get<{ status: 'PENDING' | 'APPROVED' | 'REJECTED'; adminNote: string | null } | null>('/auth/id-verification'));
+      this.idVerificationStatus = res?.status || 'NONE';
+      this.idVerificationNote = res?.adminNote || null;
+      this.cdr.markForCheck();
+    } catch { /* non-essential — just leave the form open */ }
+  }
+
+  onIdImageChange(event: Event) {
+    this.idImageFile = (event.target as HTMLInputElement).files?.[0] || null;
+  }
+
+  onSelfieImageChange(event: Event) {
+    this.selfieImageFile = (event.target as HTMLInputElement).files?.[0] || null;
+  }
+
+  async submitIdVerification() {
+    if (!this.idImageFile || !this.selfieImageFile) {
+      this.idVerificationErrorMsg = this.i18n.t('profil.id_verification_files_required');
+      return;
+    }
+    this.submittingIdVerification.set(true);
+    this.idVerificationMsg = '';
+    this.idVerificationErrorMsg = '';
+    try {
+      const [idImageUrl, selfieImageUrl] = await Promise.all([
+        firstValueFrom(this.upload.uploadFile(this.idImageFile, 'idVerification')),
+        firstValueFrom(this.upload.uploadFile(this.selfieImageFile, 'idVerification')),
+      ]);
+      await firstValueFrom(this.api.post('/auth/id-verification', { idImageUrl, selfieImageUrl }));
+      this.idVerificationStatus = 'PENDING';
+      this.idImageFile = null;
+      this.selfieImageFile = null;
+      this.idVerificationMsg = this.i18n.t('profil.id_verification_submitted');
+    } catch (e) {
+      const err = e as { error?: { error?: string } };
+      this.idVerificationErrorMsg = err?.error?.error || this.i18n.t('profil.id_verification_error');
+    } finally {
+      this.submittingIdVerification.set(false);
+      this.cdr.markForCheck();
+    }
   }
 
   async loadProfile() {

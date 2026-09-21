@@ -26,6 +26,7 @@ export class MesAnnoncesComponent implements OnInit {
   extending: Record<string, boolean> = {};
   statsOpenId: string | null = null;
   statsData: Record<string, { date: string; count: number }[]> = {};
+  funnelData: Record<string, { views: number; favorites: number; contacts: number; offers: number; offersAccepted: number }> = {};
   sortBy: SortKey = '';
 
   get sortedListings(): Listing[] {
@@ -137,6 +138,21 @@ export class MesAnnoncesComponent implements OnInit {
         error: () => {}
       });
     }
+    if (this.statsOpenId && !this.funnelData[listing.id]) {
+      this.ls.getFunnel(listing.id).subscribe({
+        next: res => { this.funnelData[listing.id] = res; this.cdr.markForCheck(); },
+        error: () => {}
+      });
+    }
+  }
+
+  /** Each funnel step's bar width relative to the top of the funnel (views)
+   * — 100% for views itself, shrinking down through favorites/contacts/
+   * offers/accepted. Guards against divide-by-zero on a brand-new listing. */
+  funnelPct(listing: Listing, count: number): number {
+    const views = this.funnelData[listing.id]?.views || 0;
+    if (views <= 0) return 0;
+    return Math.min(100, Math.round((count / views) * 100));
   }
 
   maxCount(listing: Listing): number {

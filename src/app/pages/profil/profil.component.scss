@@ -159,4 +159,16 @@
   }
 }
 
+.id-verify {
+  &__desc { font-size: .85rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.5; }
+
+  &__status {
+    font-size: .85rem; font-weight: 700; margin-bottom: 1rem;
+    &--pending { color: #a16207; }
+    &--rejected { color: var(--primary); }
+  }
+
+  &__note { font-size: .82rem; color: var(--text-muted); margin: -.5rem 0 1rem; font-style: italic; }
+}
+
 @keyframes spin { to { transform: rotate(360deg); } }

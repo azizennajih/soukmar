@@ -7,10 +7,11 @@ import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { timeAgo } from '../../models/listing.model';
 import { PushService } from '../../services/push.service';
+import { IconComponent } from '../../components/icon/icon.component';
 
 @Component({
   selector: 'app-notifications',
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, TranslatePipe, IconComponent],
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -55,6 +56,8 @@ export class NotificationsComponent implements OnInit {
       : n.type === 'REPORT_RESOLVED' ? 'notifications.report_resolved'
       : n.type === 'LISTING_EXPIRING_SOON' ? 'notifications.listing_expiring_soon'
       : n.type === 'LISTING_EXPIRED' ? 'notifications.listing_expired'
+      : n.type === 'PRICE_DROP' ? 'notifications.price_drop'
+      : n.type === 'ID_VERIFICATION_REVIEWED' ? 'notifications.id_verification_reviewed'
       : 'notifications.new_message';
     return this.i18n.t(key, { name: n.actorName || '' });
   }
@@ -74,6 +77,8 @@ export class NotificationsComponent implements OnInit {
     if (n.type === 'SAVED_SEARCH_MATCH' && n.listingId) { this.router.navigate(['/annonces', n.listingId]); return; }
     if (n.type === 'LISTING_EXPIRING_SOON') { this.router.navigate(['/mes-annonces']); return; }
     if (n.type === 'LISTING_EXPIRED') { this.router.navigate(['/premium']); return; }
+    if (n.type === 'PRICE_DROP' && n.listingId) { this.router.navigate(['/annonces', n.listingId]); return; }
+    if (n.type === 'ID_VERIFICATION_REVIEWED') { this.router.navigate(['/profil']); return; }
     if (n.listingId) this.router.navigate(['/chat'], { queryParams: { listing: n.listingId } });
   }
 

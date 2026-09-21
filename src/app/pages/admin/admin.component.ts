@@ -27,7 +27,19 @@ export interface AdminUser {
   banned?: boolean;
 }
 
-type Tab = 'overview' | 'listings' | 'users' | 'revenue' | 'reports' | 'security';
+type Tab = 'overview' | 'listings' | 'users' | 'revenue' | 'reports' | 'security' | 'id-verifications';
+
+export interface AdminIdVerification {
+  id: string;
+  userId: string;
+  idImageUrl: string;
+  selfieImageUrl: string;
+  status: 'PENDING' | 'APPROVED' | 'REJECTED';
+  adminNote: string | null;
+  createdAt: Date;
+  reviewedAt: Date | null;
+  user: { id: string; name: string; email: string };
+}
 type ListingFilter = 'ALL' | 'ACTIVE' | 'PENDING' | 'REJECTED' | 'SOLD' | 'RESERVED';
 
 export interface SecurityEvent {
@@ -71,6 +83,10 @@ export class AdminComponent implements OnInit {
   listingFilter = signal<ListingFilter>('ALL');
   userSearch = '';
 
+  idVerifications: AdminIdVerification[] = [];
+  idVerificationsLoading = signal(false);
+  idVerificationFilter = signal<'ALL' | 'PENDING' | 'APPROVED' | 'REJECTED'>('PENDING');
+
   actionLoading = new Set<string>();
 
   readonly CATEGORIES = CATEGORIES;
@@ -100,6 +116,15 @@ export class AdminComponent implements OnInit {
 
   get pendingReportsCount(): number {
     return this.reports.filter(r => r.status === 'PENDING').length;
+  }
+
+  get filteredIdVerifications(): AdminIdVerification[] {
+    const f = this.idVerificationFilter();
+    return f === 'ALL' ? this.idVerifications : this.idVerifications.filter(v => v.status === f);
+  }
+
+  get pendingIdVerificationsCount(): number {
+    return this.idVerifications.filter(v => v.status === 'PENDING').length;
   }
 
   get filteredSecurityEvents(): SecurityEvent[] {
@@ -164,6 +189,30 @@ export class AdminComponent implements OnInit {
     this.loadUsers();
     this.loadReports();
     this.loadSecurityEvents();
+    this.loadIdVerifications();
+  }
+
+  private async loadIdVerifications() {
+    this.idVerificationsLoading.set(true);
+    try {
+      this.idVerifications = await firstValueFrom(this.api.get<AdminIdVerification[]>('/admin/id-verifications'));
+    } catch { this.idVerifications = []; }
+    this.idVerificationsLoading.set(false);
+    this.cdr.markForCheck();
+  }
+
+  async reviewIdVerification(v: AdminIdVerification, status: 'APPROVED' | 'REJECTED') {
+    if (this.actionLoading.has(v.id)) return;
+    this.actionLoading.add(v.id);
+    try {
+      const note = status === 'REJECTED' ? (prompt(this.i18n.t('admin.id_verification_note_prompt')) ?? undefined) : undefined;
+      const updated = await firstValueFrom(this.api.patch<AdminIdVerification>(`/admin/id-verifications/${v.id}`, { status, adminNote: note }));
+      v.status = updated.status;
+      v.adminNote = updated.adminNote;
+      v.reviewedAt = updated.reviewedAt;
+    } catch { alert(this.i18n.t('auth.generic_error')); }
+    this.actionLoading.delete(v.id);
+    this.cdr.markForCheck();
   }
 
   private async loadSecurityEvents() {
@@ -239,6 +288,7 @@ export class AdminComponent implements OnInit {
   setTab(t: Tab) { this.tab.set(t); }
   setListingFilter(f: ListingFilter) { this.listingFilter.set(f); }
   setReportFilter(f: 'ALL' | 'PENDING' | 'RESOLVED' | 'DISMISSED') { this.reportFilter.set(f); }
+  setIdVerificationFilter(f: 'ALL' | 'PENDING' | 'APPROVED' | 'REJECTED') { this.idVerificationFilter.set(f); }
   setSecuritySeverityFilter(f: 'ALL' | 'HIGH' | 'MEDIUM' | 'LOW') { this.securitySeverityFilter.set(f); }
 
   securityEventLabel(type: string): string {

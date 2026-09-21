@@ -43,10 +43,10 @@
         <h2 class="profil__form-title">{{ 'profil.edit_title' | T }}</h2>
 
         @if (successMsg) {
-          <div class="profil__alert profil__alert--success">✅ {{ successMsg }}</div>
+          <div class="profil__alert profil__alert--success icon-label"><app-icon name="check" [size]="14" /> {{ successMsg }}</div>
         }
         @if (errorMsg) {
-          <div class="profil__alert profil__alert--error">❌ {{ errorMsg }}</div>
+          <div class="profil__alert profil__alert--error icon-label"><app-icon name="close" [size]="14" /> {{ errorMsg }}</div>
         }
 
         <form (ngSubmit)="saveProfile()" class="profil__form">
@@ -66,7 +66,7 @@
 
             @if (profile.phone) {
               @if (profile.phoneVerified) {
-                <div class="phone-verify phone-verify--done">✓ {{ 'profil.phone_verified' | T }}</div>
+                <div class="phone-verify phone-verify--done icon-label"><app-icon name="check" [size]="13" /> {{ 'profil.phone_verified' | T }}</div>
               } @else if (!phoneCodeSent()) {
                 <div class="phone-verify">
                   <span class="phone-verify__hint">{{ 'profil.phone_not_verified' | T }}</span>
@@ -118,15 +118,47 @@
         </form>
       </div>
 
+      <!-- Identity verification (free: manual admin review, no paid KYC) -->
+      <div class="card profil__form-card">
+        <h2 class="profil__form-title">{{ 'profil.id_verification_title' | T }}</h2>
+        <p class="id-verify__desc">{{ 'profil.id_verification_desc' | T }}</p>
+
+        @if (idVerificationStatus === 'APPROVED') {
+          <div class="phone-verify phone-verify--done icon-label"><app-icon name="check" [size]="13" /> {{ 'profil.id_verification_approved' | T }}</div>
+        } @else {
+          @if (idVerificationStatus === 'PENDING') {
+            <div class="id-verify__status id-verify__status--pending icon-label"><app-icon name="clock" [size]="13" /> {{ 'profil.id_verification_pending' | T }}</div>
+          } @else {
+            @if (idVerificationStatus === 'REJECTED') {
+              <div class="id-verify__status id-verify__status--rejected icon-label"><app-icon name="close" [size]="13" /> {{ 'profil.id_verification_rejected' | T }}</div>
+              @if (idVerificationNote) { <p class="id-verify__note">{{ idVerificationNote }}</p> }
+            }
+            <div class="form-group">
+              <label class="form-label">{{ 'profil.id_verification_id_label' | T }}</label>
+              <input type="file" accept="image/*" (change)="onIdImageChange($event)" class="form-input" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">{{ 'profil.id_verification_selfie_label' | T }}</label>
+              <input type="file" accept="image/*" (change)="onSelfieImageChange($event)" class="form-input" />
+            </div>
+            @if (idVerificationMsg) { <div class="profil__alert profil__alert--success icon-label"><app-icon name="check" [size]="14" /> {{ idVerificationMsg }}</div> }
+            @if (idVerificationErrorMsg) { <div class="profil__alert profil__alert--error icon-label"><app-icon name="close" [size]="14" /> {{ idVerificationErrorMsg }}</div> }
+            <button type="button" class="btn-primary profil__save-btn" [disabled]="submittingIdVerification() || !idImageFile || !selfieImageFile" (click)="submitIdVerification()">
+              {{ (submittingIdVerification() ? 'profil.saving' : 'profil.id_verification_submit') | T }}
+            </button>
+          }
+        }
+      </div>
+
       <!-- Change password -->
       <div class="card profil__form-card">
         <h2 class="profil__form-title">{{ 'profil.change_password_title' | T }}</h2>
 
         @if (pwSuccessMsg) {
-          <div class="profil__alert profil__alert--success">✅ {{ pwSuccessMsg }}</div>
+          <div class="profil__alert profil__alert--success icon-label"><app-icon name="check" [size]="14" /> {{ pwSuccessMsg }}</div>
         }
         @if (pwErrorMsg) {
-          <div class="profil__alert profil__alert--error">❌ {{ pwErrorMsg }}</div>
+          <div class="profil__alert profil__alert--error icon-label"><app-icon name="close" [size]="14" /> {{ pwErrorMsg }}</div>
         }
 
         <form (ngSubmit)="changePassword()" class="profil__form">

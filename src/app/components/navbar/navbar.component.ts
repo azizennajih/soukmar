@@ -16,11 +16,13 @@ import { FlagIconComponent } from '../flag-icon/flag-icon.component';
 import { GeocodeService, Coords } from '../../services/geocode.service';
 import { NotificationService } from '../../services/notification.service';
 import { SearchSuggestionsComponent } from '../search-suggestions/search-suggestions.component';
+import { IconComponent } from '../icon/icon.component';
+import { ImageSearchService } from '../../services/image-search.service';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink, FormsModule, CitySelectComponent, CatIconComponent, FlagIconComponent, TranslatePipe, SearchSuggestionsComponent],
+  imports: [CommonModule, RouterLink, FormsModule, CitySelectComponent, CatIconComponent, FlagIconComponent, TranslatePipe, SearchSuggestionsComponent, IconComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -56,7 +58,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   langMenuOpen = signal(false);
   countryMenuOpen = signal(false);
 
-  constructor(public auth: AuthService, private api: ApiService, private router: Router, public i18n: I18nService, public countryService: CountryService, private geocodeService: GeocodeService, public notifService: NotificationService) {}
+  constructor(public auth: AuthService, private api: ApiService, private router: Router, public i18n: I18nService, public countryService: CountryService, private geocodeService: GeocodeService, public notifService: NotificationService, private imageSearchService: ImageSearchService) {}
 
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
@@ -150,6 +152,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
   onGpsSelected(coords: Coords) {
     this.gpsCoords = coords;
     if (!this.radius) this.radius = '10';
+  }
+
+  onImageSearchFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (file) {
+      this.imageSearchService.setPendingFile(file);
+      this.router.navigate(['/recherche-image']);
+    }
+    input.value = '';
   }
 
   onSuggestionPick(e: { q: string; category?: string }) {

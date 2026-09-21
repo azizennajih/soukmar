@@ -129,6 +129,36 @@
                 </div>
               }
             </div>
+            @if (funnelData[listing.id]; as funnel) {
+              <span class="stats-panel__title funnel__title">{{ 'mes_annonces.funnel_title' | T }}</span>
+              <div class="funnel">
+                <div class="funnel__row">
+                  <span class="funnel__label">{{ 'mes_annonces.funnel_views' | T }}</span>
+                  <div class="funnel__track"><div class="funnel__fill" [style.width.%]="100"></div></div>
+                  <span class="funnel__count">{{ funnel.views }}</span>
+                </div>
+                <div class="funnel__row">
+                  <span class="funnel__label">{{ 'mes_annonces.funnel_favorites' | T }}</span>
+                  <div class="funnel__track"><div class="funnel__fill" [style.width.%]="funnelPct(listing, funnel.favorites)"></div></div>
+                  <span class="funnel__count">{{ funnel.favorites }}</span>
+                </div>
+                <div class="funnel__row">
+                  <span class="funnel__label">{{ 'mes_annonces.funnel_contacts' | T }}</span>
+                  <div class="funnel__track"><div class="funnel__fill" [style.width.%]="funnelPct(listing, funnel.contacts)"></div></div>
+                  <span class="funnel__count">{{ funnel.contacts }}</span>
+                </div>
+                <div class="funnel__row">
+                  <span class="funnel__label">{{ 'mes_annonces.funnel_offers' | T }}</span>
+                  <div class="funnel__track"><div class="funnel__fill" [style.width.%]="funnelPct(listing, funnel.offers)"></div></div>
+                  <span class="funnel__count">{{ funnel.offers }}</span>
+                </div>
+                <div class="funnel__row">
+                  <span class="funnel__label">{{ 'mes_annonces.funnel_accepted' | T }}</span>
+                  <div class="funnel__track"><div class="funnel__fill funnel__fill--accepted" [style.width.%]="funnelPct(listing, funnel.offersAccepted)"></div></div>
+                  <span class="funnel__count">{{ funnel.offersAccepted }}</span>
+                </div>
+              </div>
+            }
           </div>
         }
       }

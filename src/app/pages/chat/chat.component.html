@@ -1,5 +1,49 @@
 <div class="chat fade-in" [class.chat--conv-open]="!!activeConv">
 
+  <audio #remoteAudio autoplay></audio>
+
+  <!-- Incoming call -->
+  @if (callState === 'incoming' && incomingCall) {
+    <div class="call-overlay">
+      <div class="call-overlay__card">
+        <div class="call-overlay__avatar">{{ incomingCall.fromUserName[0] }}</div>
+        <div class="call-overlay__name">{{ incomingCall.fromUserName }}</div>
+        <div class="call-overlay__label icon-label"><app-icon name="phone-call" [size]="14" /> {{ 'chat.call_incoming' | T }}</div>
+        <div class="call-overlay__actions">
+          <button class="call-btn call-btn--reject" (click)="rejectCall()" [title]="'chat.call_reject' | T"><app-icon name="phone-off" [size]="20" /></button>
+          <button class="call-btn call-btn--accept" (click)="acceptCall()" [title]="'chat.call_accept' | T"><app-icon name="phone-call" [size]="20" /></button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Outgoing / active call bar -->
+  @if (callState === 'outgoing' || callState === 'active') {
+    <div class="call-bar">
+      <span class="icon-label">
+        <app-icon name="phone-call" [size]="14" />
+        {{ callState === 'outgoing' ? ('chat.call_ringing' | T) : ('chat.call_active' | T) }}
+      </span>
+      <div class="call-bar__actions">
+        @if (callState === 'active') {
+          <button class="call-bar__btn" (click)="toggleMute()" [title]="(muted ? 'chat.call_unmute' : 'chat.call_mute') | T">
+            <app-icon [name]="muted ? 'mic-off' : 'mic'" [size]="15" />
+          </button>
+        }
+        <button class="call-bar__btn call-bar__btn--end" (click)="endCall()" [title]="'chat.call_end' | T">
+          <app-icon name="phone-off" [size]="15" />
+        </button>
+      </div>
+    </div>
+  }
+
+  @if (callError) {
+    <div class="call-error-banner">
+      <app-icon name="close" [size]="14" /> {{ (callError === 'mic_denied' ? 'chat.call_mic_denied' : 'chat.call_failed') | T }}
+      <button (click)="dismissCallError()"><app-icon name="close" [size]="13" /></button>
+    </div>
+  }
+
   <!-- Sidebar: conversation list -->
   <aside class="chat__sidebar">
     <div class="chat__sidebar-header">
@@ -9,7 +53,7 @@
 
     @if (conversations.length === 0) {
       <div class="chat__empty-list">
-        <div style="font-size:2.5rem">💬</div>
+        <app-icon name="message" [size]="40" />
         <p>{{ 'chat.no_conv' | T }}</p>
         <small>{{ 'chat.no_conv_sub' | T }}</small>
       </div>
@@ -28,7 +72,7 @@
             @if (isConvBlocked(conv)) { <span class="chat__conv-blocked" [title]="'block.blocked_indicator' | T"><app-icon name="block" [size]="12" /></span> }
           </div>
           <app-star-rating [avgRating]="getConvPartnerRating(conv).avgRating" [reviewCount]="getConvPartnerRating(conv).reviewCount" size="sm" />
-          <app-verified-badge [emailVerified]="getConvPartnerVerification(conv).emailVerified" [phoneVerified]="getConvPartnerVerification(conv).phoneVerified" size="sm" />
+          <app-verified-badge [emailVerified]="getConvPartnerVerification(conv).emailVerified" [phoneVerified]="getConvPartnerVerification(conv).phoneVerified" [idVerified]="getConvPartnerVerification(conv).idVerified" size="sm" />
           <div class="chat__conv-listing">{{ conv.listing.title }}</div>
           <div class="chat__conv-last">{{ getLastMessage(conv) }}</div>
         </div>
@@ -40,7 +84,7 @@
   <main class="chat__main">
     @if (!activeConv) {
       <div class="chat__placeholder">
-        <div style="font-size:4rem">💬</div>
+        <app-icon name="message" [size]="52" />
         <h3>{{ 'chat.select' | T }}</h3>
         <p>{{ 'chat.select_sub' | T }}</p>
         <a routerLink="/annonces" class="btn-primary">{{ 'chat.browse' | T }}</a>
@@ -63,7 +107,7 @@
         <div class="chat__header-info">
           <div class="chat__header-name">{{ getPartnerName() }}</div>
           <app-star-rating [avgRating]="getPartnerRating().avgRating" [reviewCount]="getPartnerRating().reviewCount" size="sm" />
-          <app-verified-badge [emailVerified]="getPartnerVerification().emailVerified" [phoneVerified]="getPartnerVerification().phoneVerified" size="sm" />
+          <app-verified-badge [emailVerified]="getPartnerVerification().emailVerified" [phoneVerified]="getPartnerVerification().phoneVerified" [idVerified]="getPartnerVerification().idVerified" size="sm" />
           <a [routerLink]="['/annonces', activeConv.listingId]" class="chat__header-listing icon-label">
             <app-icon name="link" [size]="13" /> {{ activeConv.listing.title }}
             @if (activeConv.listing.price) {
@@ -75,6 +119,11 @@
           <div class="chat__typing">{{ 'chat.typing' | T }}</div>
         }
         <div class="chat__header-report">
+          @if (!messagingBlocked && callState === 'idle') {
+            <button type="button" class="chat__call-btn" (click)="startCall()" [title]="'chat.call_start' | T">
+              <app-icon name="phone-call" [size]="16" />
+            </button>
+          }
           <app-block-button [userId]="getPartnerId()" [blocked]="partnerBlockedByMe" (blockedChange)="onBlockToggled($event)" [compact]="true" />
           <app-report-button [reportedId]="getPartnerId()" [listingId]="activeConv.listingId" />
         </div>

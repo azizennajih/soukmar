@@ -1,0 +1,36 @@
+<div class="image-search container fade-in">
+  <div class="image-search__header">
+    <h1><app-icon name="camera" [size]="22" /> {{ 'image_search.title' | T }}</h1>
+    <p>{{ 'image_search.subtitle' | T }}</p>
+  </div>
+
+  <label class="image-search__dropzone" for="image-search-file">
+    @if (previewUrl) {
+      <img [src]="previewUrl" [alt]="'image_search.title' | T" class="image-search__preview" />
+    } @else {
+      <app-icon name="camera" [size]="32" />
+    }
+    <span>{{ 'image_search.pick_btn' | T }}</span>
+    <input id="image-search-file" type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
+  </label>
+
+  @if (loading) {
+    <div class="image-search__loading">{{ 'image_search.loading' | T }}</div>
+  } @else if (errorMsg) {
+    <div class="image-search__error">{{ errorMsg }}</div>
+  } @else if (searched && results.length === 0) {
+    <div class="empty-state">
+      <app-icon name="image" [size]="40" />
+      <p>{{ 'image_search.no_results' | T }}</p>
+      <small>{{ 'image_search.no_results_sub' | T }}</small>
+      <a routerLink="/annonces" class="btn-primary">{{ 'mes_favoris.browse_btn' | T }}</a>
+    </div>
+  } @else if (results.length > 0) {
+    <div class="image-search__results-title">{{ 'image_search.results_count' | T }} ({{ results.length }})</div>
+    <div class="grid-3">
+      @for (listing of results; track listing.id) {
+        <app-listing-card [listing]="listing" />
+      }
+    </div>
+  }
+</div>
