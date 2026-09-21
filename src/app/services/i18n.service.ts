@@ -1,8 +1,9 @@
 import { Injectable, signal, computed, effect, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BrowserStorageService } from './browser-storage.service';
+import { DEFAULT_LANG, isSupportedLang, withLang as withLangCommands, type Lang } from './locale-routing';
 
-export type Lang = 'fr' | 'en' | 'ar' | 'de' | 'es' | 'it';
+export type { Lang };
 
 const LANG_KEY = 'soukmar_lang';
 
@@ -22,18 +23,31 @@ const TRANSLATIONS: Record<Lang, Record<string, unknown>> = {
   it: itRaw as Record<string, unknown>,
 };
 
-const VALID_LANGS: Lang[] = ['fr', 'en', 'ar', 'de', 'es', 'it'];
+/** localStorage (an explicit earlier choice) wins; failing that, on the
+ * browser only, a supported language among `navigator.languages` is used
+ * so a first-time Arabic- or Spanish-speaking visitor doesn't land in
+ * French by default. The server has no request-language signal wired up
+ * (see app.routes.ts's bare-URL redirect), so it always falls back to
+ * DEFAULT_LANG — deterministic and matching the `x-default` hreflang. */
+function detectInitialLang(storage: BrowserStorageService, isBrowser: boolean): Lang {
+  const stored = storage.getItem(LANG_KEY);
+  if (isSupportedLang(stored)) return stored;
+  if (isBrowser && typeof navigator !== 'undefined') {
+    const candidates = navigator.languages?.length ? navigator.languages : [navigator.language];
+    for (const candidate of candidates) {
+      const code = candidate?.slice(0, 2).toLowerCase();
+      if (isSupportedLang(code)) return code;
+    }
+  }
+  return DEFAULT_LANG;
+}
 
 @Injectable({ providedIn: 'root' })
 export class I18nService {
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private storage = inject(BrowserStorageService);
 
-  lang = signal<Lang>(
-    (VALID_LANGS.includes(this.storage.getItem(LANG_KEY) as Lang)
-      ? this.storage.getItem(LANG_KEY) as Lang
-      : 'fr')
-  );
+  lang = signal<Lang>(detectInitialLang(this.storage, this.isBrowser));
 
   private _dict = computed(() => TRANSLATIONS[this.lang()]);
 
@@ -50,6 +64,16 @@ export class I18nService {
   }
 
   setLang(l: Lang) { this.lang.set(l); }
+
+  /** Prefixes an absolute route-command array with the current language
+   * segment, e.g. `this.i18n.withLang(['/annonces', id])` -> `['/fr/annonces', id]`.
+   * Use this on every `router.navigate(...)` call site so navigating
+   * programmatically stays within the visitor's current language's URL
+   * tree — `routerLink` templates get this automatically via
+   * LocalizedRouterLinkDirective instead. */
+  withLang(commands: ReadonlyArray<unknown>): unknown[] {
+    return withLangCommands(commands, this.lang());
+  }
 
   t(key: string, params?: Record<string, string>): string {
     const dict = this._dict();

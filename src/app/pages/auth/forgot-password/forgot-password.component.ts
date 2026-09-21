@@ -1,6 +1,7 @@
 import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../../directives/localized-router-link.directive';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { I18nService } from '../../../services/i18n.service';
@@ -8,7 +9,7 @@ import { TranslatePipe } from '../../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, TranslatePipe],
   templateUrl: './forgot-password.component.html',
   styleUrl: '../login/login.component.scss'
 })

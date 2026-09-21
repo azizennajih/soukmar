@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../../directives/localized-router-link.directive';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { I18nService } from '../../../services/i18n.service';
@@ -9,7 +10,7 @@ import { PasswordInputComponent } from '../../../components/password-input/passw
 
 @Component({
   selector: 'app-reset-password',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, PasswordInputComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, TranslatePipe, PasswordInputComponent],
   templateUrl: './reset-password.component.html',
   styleUrl: '../login/login.component.scss'
 })
@@ -42,7 +43,7 @@ export class ResetPasswordComponent implements OnInit {
     this.loading = false;
     if (result.ok) {
       this.success = true;
-      setTimeout(() => this.router.navigate(['/auth/login']), 2500);
+      setTimeout(() => this.router.navigate(this.i18n.withLang(['/auth/login'])), 2500);
     } else {
       this.error = result.error || this.i18n.t('auth.generic_error_retry');
     }

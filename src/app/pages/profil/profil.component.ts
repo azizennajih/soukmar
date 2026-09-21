@@ -76,7 +76,7 @@ export class ProfilComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (!this.auth.isLoggedIn) { this.router.navigate(['/auth/login']); return; }
+    if (!this.auth.isLoggedIn) { this.router.navigate(this.i18n.withLang(['/auth/login'])); return; }
     this.loadProfile();
     this.loadIdVerificationStatus();
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, signal, ChangeDetectorRef, HostListener, inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { SeoService } from '../../services/seo.service';
 import { FormsModule } from '@angular/forms';
 import { ListingService } from '../../services/listing.service';
@@ -22,7 +23,7 @@ import { FlagIconComponent } from '../../components/flag-icon/flag-icon.componen
 
 @Component({
   selector: 'app-annonce-detail',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, CityLabelPipe, ReportButtonComponent, ListingCardComponent, StarRatingComponent, VerifiedBadgeComponent, ListingsMapComponent, IconComponent, FlagIconComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, TranslatePipe, CityLabelPipe, ReportButtonComponent, ListingCardComponent, StarRatingComponent, VerifiedBadgeComponent, ListingsMapComponent, IconComponent, FlagIconComponent],
   templateUrl: './annonce-detail.component.html',
   styleUrl: './annonce-detail.component.scss'
 })
@@ -105,6 +106,7 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
 
     this.seo.setTitleAndDescription(title, description);
     this.seo.setCanonical(url);
+    this.seo.setHreflangAlternates(`/annonces/${listing.id}`);
     this.seo.updateTag({ property: 'og:type', content: 'website' });
     this.seo.updateTag({ property: 'og:image', content: image });
     this.seo.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
@@ -137,6 +139,7 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.seo.setTitleAndDescription('SouqMar24', '');
     this.seo.removeStructuredData('listing-structured-data');
+    this.seo.removeHreflangAlternates();
   }
 
   similarListings: Listing[] = [];
@@ -188,7 +191,7 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
   }
 
   toggleFav() {
-    if (!this.auth.isLoggedIn) { this.router.navigate(['/auth/login']); return; }
+    if (!this.auth.isLoggedIn) { this.router.navigate(this.i18n.withLang(['/auth/login'])); return; }
     if (this.favLoading() || !this.listing) return;
     const wasFav = this.favorited();
     this.favorited.set(!wasFav);

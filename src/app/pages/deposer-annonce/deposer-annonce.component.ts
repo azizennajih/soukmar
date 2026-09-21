@@ -1,6 +1,7 @@
 import { Component, inject, ChangeDetectorRef, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ListingService } from '../../services/listing.service';
@@ -25,7 +26,7 @@ interface PhotoItem { url: string; file?: File; }
 
 @Component({
   selector: 'app-deposer-annonce',
-  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, TextAutocompleteComponent, DateInputComponent, MultiSelectComponent, TranslatePipe, CityLabelPipe, TurnstileComponent, PhoneInputComponent, FlagIconComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CatIconComponent, TextAutocompleteComponent, DateInputComponent, MultiSelectComponent, TranslatePipe, CityLabelPipe, TurnstileComponent, PhoneInputComponent, FlagIconComponent],
   templateUrl: './deposer-annonce.component.html',
   styleUrl: './deposer-annonce.component.scss'
 })
@@ -128,7 +129,7 @@ export class DeposerAnnonceComponent {
       next: listing => {
         const me = this.auth.currentUser();
         if (listing.userId !== me?.id && me?.role !== 'ADMIN') {
-          this.router.navigate(['/mes-annonces']);
+          this.router.navigate(this.i18n.withLang(['/mes-annonces']));
           return;
         }
         this.form.intent = listing.intent || 'OFFER';
@@ -180,7 +181,7 @@ export class DeposerAnnonceComponent {
         this.initLoading = false;
         this.cdr.markForCheck();
       },
-      error: () => { this.initLoading = false; this.router.navigate(['/mes-annonces']); }
+      error: () => { this.initLoading = false; this.router.navigate(this.i18n.withLang(['/mes-annonces'])); }
     });
   }
 
@@ -365,12 +366,12 @@ export class DeposerAnnonceComponent {
       this.form.description || this.form.price || this.form.city || this.photos.length
     );
     if (hasProgress) { this.pendingCancel = true; return; }
-    this.router.navigate(this.isEdit ? ['/mes-annonces'] : ['/']);
+    this.router.navigate(this.i18n.withLang(this.isEdit ? ['/mes-annonces'] : ['/']));
   }
 
   confirmCancel(leave: boolean) {
     this.pendingCancel = false;
-    if (leave) this.router.navigate(this.isEdit ? ['/mes-annonces'] : ['/']);
+    if (leave) this.router.navigate(this.i18n.withLang(this.isEdit ? ['/mes-annonces'] : ['/']));
   }
 
   get canNext(): boolean {
@@ -470,7 +471,7 @@ export class DeposerAnnonceComponent {
   }
 
   async publish() {
-    if (!this.auth.isLoggedIn) { this.router.navigate(['/auth/login']); return; }
+    if (!this.auth.isLoggedIn) { this.router.navigate(this.i18n.withLang(['/auth/login'])); return; }
     if (!this.isEdit && !this.captchaToken) { this.error = this.i18n.t('auth.captcha_required'); return; }
     this.loading = true;
     this.error = '';
@@ -517,7 +518,7 @@ export class DeposerAnnonceComponent {
           this.loading = false;
           this.success = true;
           this.cdr.markForCheck();
-          setTimeout(() => this.router.navigate(['/annonces', listing.id]), 2000);
+          setTimeout(() => this.router.navigate(this.i18n.withLang(['/annonces', listing.id])), 2000);
         },
         error: () => {
           this.loading = false;

@@ -1,6 +1,7 @@
 import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../../directives/localized-router-link.directive';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { I18nService } from '../../../services/i18n.service';
@@ -12,7 +13,7 @@ import { PasswordInputComponent } from '../../../components/password-input/passw
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, TurnstileComponent, IconComponent, PhoneInputComponent, PasswordInputComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, TranslatePipe, TurnstileComponent, IconComponent, PhoneInputComponent, PasswordInputComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })

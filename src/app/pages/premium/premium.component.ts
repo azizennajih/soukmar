@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
 
 @Component({
   selector: 'app-premium',
-  imports: [CommonModule, RouterLink, TranslatePipe],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe],
   templateUrl: './premium.component.html',
   styleUrl: './premium.component.scss'
 })

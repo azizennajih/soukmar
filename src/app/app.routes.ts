@@ -1,7 +1,17 @@
-import { Routes } from '@angular/router';
+import { Router, Routes } from '@angular/router';
+import { inject } from '@angular/core';
 import { adminGuard } from './guards/admin.guard';
+import { LocaleShellComponent } from './pages/locale-shell/locale-shell.component';
+import { I18nService } from './services/i18n.service';
+import { localeUrlMatcher } from './services/locale-routing';
 
-export const routes: Routes = [
+/** The full app, unchanged, now living under a `localeUrlMatcher`-matched
+ * `:lang` segment (`/fr/annonces`, `/ar/annonces/abc123`, ...) instead of
+ * at the root. See LocaleShellComponent for how the segment drives
+ * I18nService, and locale-routing.ts for why a custom matcher is used
+ * instead of a plain `path: ':lang'` param (it must never swallow a real
+ * route segment like `/annonces` on a bare, unprefixed URL). */
+const localizedRoutes: Routes = [
   {
     path: '',
     loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
@@ -111,7 +121,38 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/legal-page/legal-page.component').then(m => m.LegalPageComponent)
   },
   {
+    // Unknown path under a *valid* language prefix (e.g. a dead link,
+    // or the harmless double-redirect that can happen for a bare URL
+    // whose path also isn't a real route) — back to that language's home.
     path: '**',
     redirectTo: ''
+  }
+];
+
+export const routes: Routes = [
+  {
+    matcher: localeUrlMatcher,
+    component: LocaleShellComponent,
+    children: localizedRoutes
+  },
+  {
+    // Anything that didn't match a `/xx/...` language prefix above: a bare
+    // URL (`/`, `/annonces/abc123`) or a stray unknown top-level path.
+    // Redirects to the same path under the visitor's detected language,
+    // preserving query params. Angular's SSR renderer turns a redirect hit
+    // during the initial navigation into a real HTTP redirect, so this
+    // works for crawlers hitting bare URLs server-side too, not just for
+    // in-app client navigation.
+    path: '**',
+    redirectTo: data => {
+      const router = inject(Router);
+      const i18n = inject(I18nService);
+      const lang = i18n.lang();
+      const segments = data.url.map(s => s.path);
+      return router.createUrlTree([`/${lang}`, ...segments], {
+        queryParams: data.queryParams,
+        fragment: data.fragment ?? undefined,
+      });
+    }
   }
 ];

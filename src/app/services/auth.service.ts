@@ -108,7 +108,7 @@ export class AuthService {
     this.currentUser.set(null);
     this.storage.removeItem(SESSION_KEY);
     this.storage.removeItem(TOKEN_KEY);
-    this.router.navigate(['/']);
+    this.router.navigate(this.i18n.withLang(['/']));
   }
 
   private setSession(user: AuthUser, token: string): void {

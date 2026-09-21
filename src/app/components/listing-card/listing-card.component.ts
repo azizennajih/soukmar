@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, signal, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { CommonModule } from '@angular/common';
 import { Listing, CATEGORIES, HIGHLIGHT_ATTR_CODES, formatPriceParts, timeAgo, isNewListing } from '../../models/listing.model';
 import { ApiService } from '../../services/api.service';
@@ -12,7 +13,7 @@ import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'app-listing-card',
-  imports: [CommonModule, RouterLink, TranslatePipe, CityLabelPipe, FlagIconComponent, IconComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, CityLabelPipe, FlagIconComponent, IconComponent],
   templateUrl: './listing-card.component.html',
   styleUrl: './listing-card.component.scss'
 })

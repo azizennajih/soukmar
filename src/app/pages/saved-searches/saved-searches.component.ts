@@ -7,6 +7,7 @@ import { SavedSearch, CATEGORIES } from '../../models/listing.model';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { IconComponent } from '../../components/icon/icon.component';
+import { I18nService } from '../../services/i18n.service';
 
 @Component({
   selector: 'app-saved-searches',
@@ -20,13 +21,14 @@ export class SavedSearchesComponent implements OnInit {
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
   public auth = inject(AuthService);
+  private i18n = inject(I18nService);
   categories = CATEGORIES;
 
   searches: SavedSearch[] = [];
   loading = true;
 
   ngOnInit() {
-    if (!this.auth.isLoggedIn) { this.router.navigate(['/auth/login']); return; }
+    if (!this.auth.isLoggedIn) { this.router.navigate(this.i18n.withLang(['/auth/login'])); return; }
     this.savedSearchService.getAll().subscribe({
       next: s => { this.searches = s; this.loading = false; this.cdr.markForCheck(); },
       error: () => { this.loading = false; this.cdr.markForCheck(); }
@@ -51,12 +53,12 @@ export class SavedSearchesComponent implements OnInit {
   }
 
   open(s: SavedSearch) {
-    this.router.navigate(['/annonces'], { queryParams: this.filterParams(s) });
+    this.router.navigate(this.i18n.withLang(['/annonces']), { queryParams: this.filterParams(s) });
   }
 
   edit(s: SavedSearch, e: Event) {
     e.stopPropagation();
-    this.router.navigate(['/annonces'], {
+    this.router.navigate(this.i18n.withLang(['/annonces']), {
       queryParams: { ...this.filterParams(s), editSearch: s.id, editSearchName: s.name }
     });
   }

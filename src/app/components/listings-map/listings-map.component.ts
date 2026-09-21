@@ -126,7 +126,7 @@ export class ListingsMapComponent implements AfterViewInit, OnChanges, OnDestroy
     city.appendChild(cityLabel);
     container.appendChild(city);
 
-    container.addEventListener('click', () => this.router.navigate(['/annonces', listing.id]));
+    container.addEventListener('click', () => this.router.navigate(this.i18n.withLang(['/annonces', listing.id])));
     return container;
   }
 

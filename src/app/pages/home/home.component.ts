@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ListingService } from '../../services/listing.service';
@@ -19,11 +20,11 @@ import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { SearchSuggestionsComponent } from '../../components/search-suggestions/search-suggestions.component';
-import { SeoService, SITE_URL } from '../../services/seo.service';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, CitySelectComponent, CatIconComponent, TranslatePipe, CityLabelPipe, SearchSuggestionsComponent, IconComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, ListingCardComponent, CitySelectComponent, CatIconComponent, TranslatePipe, CityLabelPipe, SearchSuggestionsComponent, IconComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -101,7 +102,8 @@ export class HomeComponent implements OnInit {
       'SouqMar24 — Achetez & vendez facilement',
       'La marketplace pour acheter et vendre rapidement : véhicules, immobilier, électronique, mode et plus encore.'
     );
-    this.seo.setCanonical(SITE_URL + '/');
+    this.seo.setCanonical();
+    this.seo.setHreflangAlternates('/');
     this.cdr.markForCheck();
     if (this.auth.isLoggedIn) {
       this.loadFavorites();
@@ -166,10 +168,10 @@ export class HomeComponent implements OnInit {
       } catch { /* geocoding failed — fall back to plain city-text search */ }
     }
 
-    this.router.navigate(['/annonces'], { queryParams: params });
+    this.router.navigate(this.i18n.withLang(['/annonces']), { queryParams: params });
   }
 
   goToCity(city: string) {
-    this.router.navigate(['/annonces'], { queryParams: { ville: city, pays: this.countryService.country() } });
+    this.router.navigate(this.i18n.withLang(['/annonces']), { queryParams: { ville: city, pays: this.countryService.country() } });
   }
 }

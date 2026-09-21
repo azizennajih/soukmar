@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CATEGORIES } from '../../models/listing.model';
 
 @Component({
   selector: 'app-footer',
-  imports: [RouterLink, TranslatePipe],
+  imports: [RouterLink, LocalizedRouterLinkDirective, TranslatePipe],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })

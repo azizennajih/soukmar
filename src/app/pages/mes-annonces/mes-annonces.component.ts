@@ -2,6 +2,7 @@ import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { AuthService } from '../../services/auth.service';
 import { ListingService } from '../../services/listing.service';
 import { I18nService } from '../../services/i18n.service';
@@ -14,7 +15,7 @@ type SortKey = '' | 'oldest' | 'prix_asc' | 'prix_desc';
 
 @Component({
   selector: 'app-mes-annonces',
-  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe, CityLabelPipe, IconComponent],
+  imports: [CommonModule, FormsModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, CityLabelPipe, IconComponent],
   templateUrl: './mes-annonces.component.html',
   styleUrl: './mes-annonces.component.scss'
 })
@@ -58,7 +59,7 @@ export class MesAnnoncesComponent implements OnInit {
   constructor(public auth: AuthService, private ls: ListingService, private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    if (!this.auth.isLoggedIn) { this.router.navigate(['/auth/login']); return; }
+    if (!this.auth.isLoggedIn) { this.router.navigate(this.i18n.withLang(['/auth/login'])); return; }
     this.loading = true;
     this.ls.getMyListings().subscribe({
       next: listings => { this.listings = listings; this.loading = false; this.cdr.markForCheck(); },

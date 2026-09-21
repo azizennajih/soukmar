@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { I18nService } from '../../services/i18n.service';
@@ -11,7 +12,7 @@ import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-supprimer-compte',
-  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe, PasswordInputComponent],
+  imports: [CommonModule, FormsModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, PasswordInputComponent],
   templateUrl: './supprimer-compte.component.html',
   styleUrl: './supprimer-compte.component.scss'
 })
@@ -30,7 +31,7 @@ export class SupprimerCompteComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (!this.auth.isLoggedIn) { this.router.navigate(['/auth/login']); return; }
+    if (!this.auth.isLoggedIn) { this.router.navigate(this.i18n.withLang(['/auth/login'])); return; }
   }
 
   async deleteAccount() {

@@ -2,7 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Meta, MetaDefinition, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { DEFAULT_LANG, SUPPORTED_LANGS, stripLangPrefix } from './locale-routing';
 
+export { stripLangPrefix };
 export const SITE_URL = 'https://souqmar24.com';
 
 @Injectable({ providedIn: 'root' })
@@ -46,6 +48,41 @@ export class SeoService {
     }
     link.setAttribute('href', url);
     this.meta.updateTag({ property: 'og:url', content: url });
+  }
+
+  /**
+   * Emits one `<link rel="alternate" hreflang="{code}">` per supported
+   * language plus one `hreflang="x-default"` (pointing at DEFAULT_LANG's
+   * URL) — the standard signal that tells Google these per-language URLs
+   * are translations of the same page rather than separate content, and
+   * that it should serve the right one per searcher.
+   *
+   * `path` is the page's path WITHOUT a language prefix (e.g. `/annonces/abc123`,
+   * or `/` for the homepage) — pass `this.router.url` run through
+   * `stripLangPrefix()` (re-exported here for call sites that need it) if
+   * you don't already have the bare path on hand.
+   */
+  setHreflangAlternates(path: string) {
+    this.removeHreflangAlternates();
+    const bare = stripLangPrefix(path);
+    const suffix = bare === '/' ? '' : bare;
+    for (const lang of SUPPORTED_LANGS) {
+      this.appendAlternateLink(lang, `${SITE_URL}/${lang}${suffix}`);
+    }
+    this.appendAlternateLink('x-default', `${SITE_URL}/${DEFAULT_LANG}${suffix}`);
+  }
+
+  removeHreflangAlternates() {
+    this.document.querySelectorAll('link[data-hreflang]').forEach(el => el.remove());
+  }
+
+  private appendAlternateLink(hreflang: string, href: string) {
+    const link = this.document.createElement('link');
+    link.setAttribute('rel', 'alternate');
+    link.setAttribute('hreflang', hreflang);
+    link.setAttribute('href', href);
+    link.setAttribute('data-hreflang', 'true');
+    this.document.head.appendChild(link);
   }
 
   setStructuredData(id: string, data: unknown) {

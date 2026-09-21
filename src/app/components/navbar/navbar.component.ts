@@ -1,5 +1,6 @@
 import { Component, signal, HostListener, OnInit, OnDestroy, inject, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -22,7 +23,7 @@ import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink, FormsModule, CitySelectComponent, CatIconComponent, FlagIconComponent, TranslatePipe, SearchSuggestionsComponent, IconComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CitySelectComponent, CatIconComponent, FlagIconComponent, TranslatePipe, SearchSuggestionsComponent, IconComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -95,7 +96,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   toggleLangMenu(e: Event) { e.stopPropagation(); this.langMenuOpen.update(v => !v); }
-  selectLang(code: Lang, e: Event) { e.stopPropagation(); this.i18n.setLang(code); this.langMenuOpen.set(false); }
+
+  /** Navigates to the same path (and query string) under the new
+   * language's URL prefix — LocaleShellComponent then picks up the `:lang`
+   * segment from the resulting navigation and syncs I18nService, so the
+   * URL and the displayed language never desync. `router.url` always
+   * starts with a `/xx` language segment once past the app's initial
+   * bare-URL redirect, so a plain regex swap is enough; the fallback below
+   * only matters for an edge case where it somehow doesn't. */
+  selectLang(code: Lang, e: Event) {
+    e.stopPropagation();
+    this.langMenuOpen.set(false);
+    if (code === this.i18n.lang()) return;
+    const current = this.router.url;
+    const match = current.match(/^\/[a-z]{2}(\/.*)?$/);
+    const restPath = match ? (match[1] ?? '') : (current.startsWith('/') ? current : `/${current}`);
+    this.router.navigateByUrl(`/${code}${restPath}`);
+  }
 
   get activeLang() { return this.langs.find(l => l.code === this.i18n.lang())!; }
 
@@ -159,7 +176,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     const file = input.files?.[0];
     if (file) {
       this.imageSearchService.setPendingFile(file);
-      this.router.navigate(['/recherche-image']);
+      this.router.navigate(this.i18n.withLang(['/recherche-image']));
     }
     input.value = '';
   }
@@ -189,7 +206,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       } catch { /* geocoding failed — fall back to plain city-text search */ }
     }
 
-    this.router.navigate(['/annonces'], { queryParams: params });
+    this.router.navigate(this.i18n.withLang(['/annonces']), { queryParams: params });
   }
 
   toggleMobile() { this.mobileOpen.update(v => !v); }

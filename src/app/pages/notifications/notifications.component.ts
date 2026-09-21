@@ -35,7 +35,7 @@ export class NotificationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.auth.isLoggedIn) { this.router.navigate(['/auth/login']); return; }
+    if (!this.auth.isLoggedIn) { this.router.navigate(this.i18n.withLang(['/auth/login'])); return; }
     this.loading = true;
     this.notifService.getAll().then(notifications => {
       this.notifications = notifications;
@@ -72,14 +72,14 @@ export class NotificationsComponent implements OnInit {
       this.cdr.markForCheck();
       this.notifService.markRead(n.id);
     }
-    if (n.type === 'NEW_REVIEW') { this.router.navigate(['/profil'], { queryParams: { tab: 'reviews' } }); return; }
+    if (n.type === 'NEW_REVIEW') { this.router.navigate(this.i18n.withLang(['/profil']), { queryParams: { tab: 'reviews' } }); return; }
     if (n.type === 'REPORT_RESOLVED') { return; }
-    if (n.type === 'SAVED_SEARCH_MATCH' && n.listingId) { this.router.navigate(['/annonces', n.listingId]); return; }
-    if (n.type === 'LISTING_EXPIRING_SOON') { this.router.navigate(['/mes-annonces']); return; }
-    if (n.type === 'LISTING_EXPIRED') { this.router.navigate(['/premium']); return; }
-    if (n.type === 'PRICE_DROP' && n.listingId) { this.router.navigate(['/annonces', n.listingId]); return; }
-    if (n.type === 'ID_VERIFICATION_REVIEWED') { this.router.navigate(['/profil']); return; }
-    if (n.listingId) this.router.navigate(['/chat'], { queryParams: { listing: n.listingId } });
+    if (n.type === 'SAVED_SEARCH_MATCH' && n.listingId) { this.router.navigate(this.i18n.withLang(['/annonces', n.listingId])); return; }
+    if (n.type === 'LISTING_EXPIRING_SOON') { this.router.navigate(this.i18n.withLang(['/mes-annonces'])); return; }
+    if (n.type === 'LISTING_EXPIRED') { this.router.navigate(this.i18n.withLang(['/premium'])); return; }
+    if (n.type === 'PRICE_DROP' && n.listingId) { this.router.navigate(this.i18n.withLang(['/annonces', n.listingId])); return; }
+    if (n.type === 'ID_VERIFICATION_REVIEWED') { this.router.navigate(this.i18n.withLang(['/profil'])); return; }
+    if (n.listingId) this.router.navigate(this.i18n.withLang(['/chat']), { queryParams: { listing: n.listingId } });
   }
 
   async markAllRead() {

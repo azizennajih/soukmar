@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { Subscription } from 'rxjs';
 import { ChatService, ChatMessage, Conversation, CallState, IncomingCallInfo } from '../../services/chat.service';
 import { AuthService } from '../../services/auth.service';
@@ -15,7 +16,7 @@ import { IconComponent } from '../../components/icon/icon.component';
 
 @Component({
   selector: 'app-chat',
-  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe, ReportButtonComponent, StarRatingComponent, VerifiedBadgeComponent, BlockButtonComponent, IconComponent],
+  imports: [CommonModule, FormsModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, ReportButtonComponent, StarRatingComponent, VerifiedBadgeComponent, BlockButtonComponent, IconComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -53,7 +54,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   ) {}
 
   async ngOnInit() {
-    if (!this.auth.isLoggedIn) { this.router.navigate(['/auth/login']); return; }
+    if (!this.auth.isLoggedIn) { this.router.navigate(this.i18n.withLang(['/auth/login'])); return; }
     const token = localStorage.getItem('soukmar_token')!;
     this.chatService.connect(token);
 

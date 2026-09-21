@@ -1,6 +1,7 @@
 import { Component, OnInit, signal, computed, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { ListingService } from '../../services/listing.service';
@@ -55,7 +56,7 @@ export interface SecurityEvent {
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule, RouterLink, FormsModule, CatIconComponent, IconComponent, TranslatePipe, CityLabelPipe],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CatIconComponent, IconComponent, TranslatePipe, CityLabelPipe],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })

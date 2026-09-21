@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { FormsModule } from '@angular/forms';
 import { ListingService } from '../../services/listing.service';
 import { ApiService } from '../../services/api.service';
@@ -21,12 +22,13 @@ import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { SavedSearchService } from '../../services/saved-search.service';
 import { SeoService, SITE_URL } from '../../services/seo.service';
+import { I18nService } from '../../services/i18n.service';
 
 interface SubcategoryOption { id: string; code: string; }
 
 @Component({
   selector: 'app-annonces',
-  imports: [CommonModule, RouterLink, FormsModule, ListingCardComponent, ListingsMapComponent, CitySelectComponent, CatIconComponent, MultiSelectComponent, TextAutocompleteComponent, TranslatePipe, IconComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, ListingCardComponent, ListingsMapComponent, CitySelectComponent, CatIconComponent, MultiSelectComponent, TextAutocompleteComponent, TranslatePipe, IconComponent],
   templateUrl: './annonces.component.html',
   styleUrl: './annonces.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -95,7 +97,8 @@ export class AnnoncesComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private savedSearchService: SavedSearchService,
     public countryService: CountryService,
-    private seo: SeoService
+    private seo: SeoService,
+    private i18n: I18nService
   ) {
     effect(() => {
       const country = this.countryService.country();
@@ -215,10 +218,11 @@ export class AnnoncesComponent implements OnInit {
       `${catLabel}Annonces — SouqMar24`,
       `${this.total} annonces disponibles sur SouqMar24.`
     );
-    const canonicalPath = this.filters.categorie
+    const bareCanonicalPath = this.filters.categorie
       ? `/annonces?categorie=${encodeURIComponent(this.filters.categorie)}`
       : '/annonces';
-    this.seo.setCanonical(`${SITE_URL}${canonicalPath}`);
+    this.seo.setCanonical(`${SITE_URL}/${this.i18n.lang()}${bareCanonicalPath}`);
+    this.seo.setHreflangAlternates(bareCanonicalPath);
   }
 
   isFav(listing: Listing): boolean {
@@ -345,7 +349,7 @@ export class AnnoncesComponent implements OnInit {
         this.showSaveSearchForm = false;
         this.newSearchName = '';
         if (this.editSearchId) {
-          this.router.navigate(['/recherches-sauvegardees']);
+          this.router.navigate(this.i18n.withLang(['/recherches-sauvegardees']));
           return;
         }
         this.searchSaved = true;
@@ -357,7 +361,7 @@ export class AnnoncesComponent implements OnInit {
   }
 
   cancelSaveSearch() {
-    if (this.editSearchId) { this.router.navigate(['/recherches-sauvegardees']); return; }
+    if (this.editSearchId) { this.router.navigate(this.i18n.withLang(['/recherches-sauvegardees'])); return; }
     this.showSaveSearchForm = false;
   }
 }

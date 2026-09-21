@@ -1,6 +1,7 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { ApiService } from '../../services/api.service';
@@ -11,7 +12,7 @@ import { ListingCardComponent } from '../../components/listing-card/listing-card
 
 @Component({
   selector: 'app-mes-favoris',
-  imports: [CommonModule, RouterLink, TranslatePipe, ListingCardComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, ListingCardComponent],
   templateUrl: './mes-favoris.component.html',
   styleUrl: './mes-favoris.component.scss'
 })
@@ -23,7 +24,7 @@ export class MesFavorisComponent implements OnInit {
   constructor(public auth: AuthService, private api: ApiService, private router: Router, private cdr: ChangeDetectorRef) {}
 
   async ngOnInit() {
-    if (!this.auth.isLoggedIn) { this.router.navigate(['/auth/login']); return; }
+    if (!this.auth.isLoggedIn) { this.router.navigate(this.i18n.withLang(['/auth/login'])); return; }
     this.loading = true;
     try {
       this.listings = await firstValueFrom(this.api.get<Listing[]>('/favorites'));

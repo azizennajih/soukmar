@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../../directives/localized-router-link.directive';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { I18nService } from '../../../services/i18n.service';
@@ -9,7 +10,7 @@ import { PasswordInputComponent } from '../../../components/password-input/passw
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe, PasswordInputComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, TranslatePipe, PasswordInputComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -43,7 +44,7 @@ export class LoginComponent implements OnInit {
     try {
       const result = await this.auth.login(this.email, this.password);
       if (result.ok) {
-        this.router.navigate(['/']);
+        this.router.navigate(this.i18n.withLang(['/']));
       } else if (result.unverified) {
         this.unverifiedEmail = this.email;
         this.error = result.error || this.i18n.t('auth.unverified_error');
