@@ -356,11 +356,19 @@
   background: rgba(0,0,0,.9);
   display: flex; align-items: center; justify-content: center;
   cursor: zoom-out;
-  padding: 3rem 1rem;
 
   &__img {
-    max-width: 100%; max-height: 100%;
+    // width/height (not max-width/max-height) so the image actually grows
+    // to fill most of the viewport instead of only ever rendering at its
+    // natural/intrinsic size — a plain <img> with just max-width:100% never
+    // scales UP past its own pixel dimensions, so a smaller source photo
+    // looked barely different from the inline preview. object-fit:contain
+    // still preserves aspect ratio within this box (letterboxed, not
+    // cropped or distorted) and still shrinks a genuinely huge photo down
+    // to fit, so this is safe in both directions.
+    width: 90vw; height: 85vh;
     object-fit: contain; cursor: default;
+    @media (max-width: 640px) { width: 94vw; height: 75vh; }
   }
 
   &__close {
