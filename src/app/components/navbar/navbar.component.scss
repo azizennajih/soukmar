@@ -72,8 +72,10 @@
   }
 
   &__search {
+    // No max-width: this row now belongs to the search bar alone (logo and
+    // menus moved to their own row above it), so it should fill the
+    // container's full width instead of leaving dead space next to it.
     width: 100%;
-    max-width: 900px;
     display: flex;
     align-items: stretch;
     height: 44px;
