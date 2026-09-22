@@ -44,6 +44,12 @@
         <span class="tab-badge">{{ pendingIdVerificationsCount }}</span>
       }
     </button>
+    <button class="admin-tab icon-label" [class.active]="tab() === 'boost-requests'" (click)="setTab('boost-requests')">
+      <app-icon name="rocket" [size]="14" /> {{ 'admin.tab_boost_requests' | T }}
+      @if (pendingBoostRequestsCount > 0) {
+        <span class="tab-badge">{{ pendingBoostRequestsCount }}</span>
+      }
+    </button>
     <button class="admin-tab icon-label" [class.active]="tab() === 'security'" (click)="setTab('security')">
       <app-icon name="shield" [size]="14" /> {{ 'admin.tab_security' | T }}
       @if (highSeverityEventCount > 0) {
@@ -521,6 +527,75 @@
                 </button>
                 <button class="btn-outline" [disabled]="isActionLoading(v.id)" (click)="reviewIdVerification(v, 'REJECTED')">
                   {{ 'admin.id_verifications_reject' | T }}
+                </button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  }
+
+  <!-- ══════════════ BOOST REQUESTS ══════════════ -->
+  @if (tab() === 'boost-requests') {
+    <div class="section-header">
+      <h2 class="section-title">{{ 'admin.boost_requests_title' | T }}</h2>
+      <span class="section-count">{{ filteredBoostRequests.length }}</span>
+    </div>
+
+    <div class="filter-bar">
+      @for (f of ['PENDING', 'APPROVED', 'REJECTED', 'ALL']; track f) {
+        <button class="filter-pill" [class.active]="boostRequestFilter() === f"
+                (click)="setBoostRequestFilter($any(f))">
+          {{ f === 'ALL' ? ('admin.filter_all' | T) : ('admin.reports_status_' + f.toLowerCase()) | T }}
+          <span class="filter-pill__count">
+            {{ f === 'ALL' ? boostRequests.length : boostRequests.filter(r => r.status === f).length }}
+          </span>
+        </button>
+      }
+    </div>
+
+    @if (boostRequestsLoading()) {
+      <div class="admin-loading">{{ 'admin.loading' | T }}</div>
+    } @else if (filteredBoostRequests.length === 0) {
+      <div class="empty-state">
+        <span><app-icon name="rocket" [size]="32" /></span><p>{{ 'admin.boost_requests_empty' | T }}</p>
+      </div>
+    } @else {
+      <div class="report-list">
+        @for (r of filteredBoostRequests; track r.id) {
+          <div class="report-card card" [class.report-card--pending]="r.status === 'PENDING'">
+            <div class="report-card__top">
+              <span class="badge" [ngClass]="r.status === 'PENDING' ? 'badge-pending' : r.status === 'APPROVED' ? 'badge-active' : 'badge-rejected'">
+                {{ ('admin.reports_status_' + r.status.toLowerCase()) | T }}
+              </span>
+              <span class="report-card__date">{{ timeAgo(r.createdAt) }}</span>
+            </div>
+            <div class="report-card__parties">
+              <div>
+                <span class="report-card__label">{{ 'admin.boost_requests_listing' | T }}</span>
+                <a [routerLink]="['/annonces', r.listingId]" target="_blank"><strong>{{ r.listing?.title || '—' }}</strong></a>
+              </div>
+              <div>
+                <span class="report-card__label">{{ 'admin.boost_requests_seller' | T }}</span>
+                <strong>{{ r.user?.name || '—' }}</strong>
+                <span class="table-user-email">{{ r.user?.email }}</span>
+              </div>
+            </div>
+            <p class="report-card__note">
+              <strong>{{ 'admin.boost_requests_tiers' | T }}:</strong> {{ r.tiers.map(t => boostTierLabel(t)).join(', ') }}
+              &nbsp;·&nbsp; <strong>{{ 'admin.boost_requests_price' | T }}:</strong> {{ formatPrice(r.totalPrice, r.currency) }}
+            </p>
+            @if (r.adminNote) {
+              <p class="report-card__note icon-label"><app-icon name="edit" [size]="12" /> {{ r.adminNote }}</p>
+            }
+            @if (r.status === 'PENDING') {
+              <div class="report-card__actions">
+                <button class="btn-primary" [disabled]="isActionLoading(r.id)" (click)="reviewBoostRequest(r, 'APPROVED')">
+                  {{ 'admin.boost_requests_approve' | T }}
+                </button>
+                <button class="btn-outline" [disabled]="isActionLoading(r.id)" (click)="reviewBoostRequest(r, 'REJECTED')">
+                  {{ 'admin.boost_requests_reject' | T }}
                 </button>
               </div>
             }

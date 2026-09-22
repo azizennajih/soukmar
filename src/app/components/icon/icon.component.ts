@@ -7,7 +7,8 @@ export type IconName =
   | 'trending-up' | 'trending-down' | 'image' | 'shield' | 'link'
   | 'list' | 'map' | 'zap' | 'users' | 'bar-chart' | 'id-card'
   | 'camera' | 'phone-call' | 'mic' | 'mic-off' | 'phone-off'
-  | 'chevron-left' | 'chevron-right' | 'zoom-in';
+  | 'chevron-left' | 'chevron-right' | 'zoom-in'
+  | 'arrow-up' | 'crown' | 'globe' | 'rocket';
 
 @Component({
   selector: 'app-icon',

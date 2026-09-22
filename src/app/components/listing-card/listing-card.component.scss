@@ -23,6 +23,20 @@
     box-shadow: 0 0 0 2px rgba(201,148,26,.12), var(--shadow);
   }
 
+  // Paid "Top-Platzierung" boost: a solid primary-color frame, one step
+  // stronger than Spotlight's tinted border, since it outranks it in sort.
+  &--boost-top {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(217,61,74,.15), var(--shadow);
+  }
+
+  // Paid "Spotlight" boost: a subtle tinted border/background using the
+  // existing primary-light token — never a new color.
+  &--boost-spotlight {
+    border-color: rgba(217,61,74,.35);
+    background: var(--primary-light);
+  }
+
   &--reserved {
     filter: grayscale(1) opacity(.65);
 
@@ -76,6 +90,8 @@
     // to stay legible over any photo, including dark ones, where a 12%-opacity
     // background all but disappeared.
     &--premium  { background: var(--gold); color: #fff; }
+    &--boost-top       { background: var(--primary); color: #fff; }
+    &--boost-spotlight { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(217,61,74,.3); }
     &--pro      { background: #f3e8ff; color: #6b21a8; }
     &--search   { background: rgba(30,58,95,.1); color: #1E3A5F; border: 1px solid rgba(30,58,95,.25); }
   }

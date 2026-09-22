@@ -1,0 +1,91 @@
+<div class="boost-page fade-in">
+  @if (loading) {
+    <div class="boost-page__loading">{{ 'admin.loading' | T }}</div>
+  } @else if (listing) {
+    <div class="container boost-page__inner">
+
+      <a [routerLink]="['/mes-annonces']" class="boost-page__back icon-label">
+        <app-icon name="chevron-left" [size]="16" /> {{ 'boost.back' | T }}
+      </a>
+
+      <div class="boost-page__listing card">
+        @if (listing.images?.[0]) {
+          <img [src]="listing.images[0]" [alt]="listing.title" class="boost-page__listing-img" />
+        }
+        <div>
+          <h1 class="boost-page__listing-title">{{ listing.title }}</h1>
+          @if (listing.price != null) {
+            <div class="boost-page__listing-price">{{ formatPrice(listing.price) }}</div>
+          }
+        </div>
+      </div>
+
+      <h2 class="boost-page__title">{{ 'boost.title' | T }}</h2>
+      <p class="boost-page__subtitle">{{ 'boost.subtitle' | T }}</p>
+
+      @if (status?.pendingRequest) {
+        <div class="boost-page__pending card">
+          <app-icon name="clock" [size]="20" />
+          <div>
+            <strong>{{ 'boost.pending_title' | T }}</strong>
+            <p>{{ 'boost.pending_body' | T:{ tiers: tierLabels(status!.pendingRequest!.tiers), price: formatPrice(status!.pendingRequest!.totalPrice) } }}</p>
+          </div>
+        </div>
+      } @else if (submitted) {
+        <div class="boost-page__pending card">
+          <app-icon name="check" [size]="20" />
+          <div>
+            <strong>{{ 'boost.confirm_title' | T }}</strong>
+            <p>{{ 'boost.confirm_body' | T }}</p>
+          </div>
+        </div>
+      } @else {
+        <div class="boost-tiers">
+          @for (tier of tiers; track tier.id) {
+            <label class="boost-tier" [class.boost-tier--selected]="selected.has(tier.id)">
+              <input type="checkbox" [checked]="selected.has(tier.id)" (change)="toggle(tier.id)" />
+              <div class="boost-tier__icon"><app-icon [name]="tier.icon" [size]="20" /></div>
+              <div class="boost-tier__body">
+                <div class="boost-tier__head">
+                  <span class="boost-tier__name">{{ ('boost.tier_' + tier.id + '_name') | T }}</span>
+                  <span class="boost-tier__price">{{ formatPrice(tier.priceMAD) }}</span>
+                </div>
+                <p class="boost-tier__desc">{{ ('boost.tier_' + tier.id + '_desc') | T }}</p>
+                <div class="boost-tier__meta">
+                  <span class="boost-tier__duration">{{ formatDuration(tier) }}</span>
+                  @if (isActiveUntil(tier.id); as until) {
+                    <span class="boost-tier__active">{{ 'boost.active_until' | T:{ date: (until | date:'dd.MM.yyyy') ?? '' } }}</span>
+                  }
+                </div>
+              </div>
+            </label>
+          }
+        </div>
+
+        <div class="boost-summary card">
+          <div class="boost-summary__row">
+            <span>{{ 'boost.subtotal' | T }}</span>
+            <span>{{ formatPrice(quote.subtotal) }}</span>
+          </div>
+          @if (quote.discountPercent > 0) {
+            <div class="boost-summary__row boost-summary__row--discount">
+              <span>{{ 'boost.discount' | T }}</span>
+              <span>−{{ formatPrice(quote.subtotal - quote.total) }}</span>
+            </div>
+          }
+          <div class="boost-summary__row boost-summary__row--total">
+            <span>{{ 'boost.total' | T }}</span>
+            <span>{{ formatPrice(quote.total) }}</span>
+          </div>
+          <p class="boost-summary__note">{{ 'boost.payment_note' | T }}</p>
+          @if (errorMsg) {
+            <p class="boost-summary__error">{{ errorMsg }}</p>
+          }
+          <button class="btn-primary boost-summary__submit" [disabled]="submitting" (click)="submit()">
+            {{ (submitting ? 'boost.submitting' : 'boost.submit') | T }}
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>

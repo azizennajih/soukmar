@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, signal, inject } from '
 import { RouterLink } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { CommonModule } from '@angular/common';
-import { Listing, CATEGORIES, HIGHLIGHT_ATTR_CODES, formatPriceParts, timeAgo, isNewListing } from '../../models/listing.model';
+import { Listing, CATEGORIES, HIGHLIGHT_ATTR_CODES, formatPriceParts, timeAgo, isNewListing, isBoostActive } from '../../models/listing.model';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
@@ -73,6 +73,14 @@ export class ListingCardComponent implements OnInit {
 
   get isNew(): boolean {
     return isNewListing(this.listing.createdAt);
+  }
+
+  get isBoostTop(): boolean {
+    return isBoostActive(this.listing.boostTopUntil);
+  }
+
+  get isBoostSpotlight(): boolean {
+    return isBoostActive(this.listing.boostSpotlightUntil);
   }
 
   get highlightAttr(): { code: string; display: string } | null {

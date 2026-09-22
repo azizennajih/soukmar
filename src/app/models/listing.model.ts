@@ -90,6 +90,17 @@ export interface Listing {
   createdAt: Date;
   expiresAt?: Date | null;
   expiryExtended?: boolean;
+  boostSpotlightUntil?: Date | null;
+  boostTopUntil?: Date | null;
+  boostGlobalUntil?: Date | null;
+}
+
+/** True while a boost "Until" timestamp (boostSpotlightUntil, boostTopUntil,
+ * boostGlobalUntil) is still in the future. Handles both real Date objects
+ * and the raw ISO strings the API returns before Angular's HttpClient has
+ * had a chance to touch them. */
+export function isBoostActive(until: Date | string | null | undefined): boolean {
+  return !!until && new Date(until).getTime() > Date.now();
 }
 
 export interface ListingAttributesPayload {

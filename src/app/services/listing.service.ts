@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Listing, ListingAttributesPayload, Category } from '../models/listing.model';
+import { BoostRequest, BoostStatus, BoostTierId } from '../models/boost.model';
 
 export interface ListingsResponse {
   listings: Listing[];
@@ -74,6 +75,14 @@ export class ListingService {
 
   extend(id: string): Observable<Listing> {
     return this.api.post<Listing>(`/listings/${id}/extend`, {});
+  }
+
+  getBoostStatus(id: string): Observable<BoostStatus> {
+    return this.api.get<BoostStatus>(`/listings/${id}/boost-status`);
+  }
+
+  requestBoost(id: string, tiers: BoostTierId[]): Observable<BoostRequest> {
+    return this.api.post<BoostRequest>(`/listings/${id}/boost-request`, { tiers });
   }
 
   getViewStats(id: string): Observable<{ days: { date: string; count: number }[]; total: number }> {

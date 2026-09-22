@@ -14,6 +14,7 @@ import { IconComponent } from '../../components/icon/icon.component';
 import { Listing, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.model';
 import { Report } from '../../models/report.model';
 import { ReportService } from '../../services/report.service';
+import { BoostTierId } from '../../models/boost.model';
 import { firstValueFrom } from 'rxjs';
 
 export interface AdminUser {
@@ -28,7 +29,7 @@ export interface AdminUser {
   banned?: boolean;
 }
 
-type Tab = 'overview' | 'listings' | 'users' | 'revenue' | 'reports' | 'security' | 'id-verifications';
+type Tab = 'overview' | 'listings' | 'users' | 'revenue' | 'reports' | 'security' | 'id-verifications' | 'boost-requests';
 
 export interface AdminIdVerification {
   id: string;
@@ -40,6 +41,21 @@ export interface AdminIdVerification {
   createdAt: Date;
   reviewedAt: Date | null;
   user: { id: string; name: string; email: string };
+}
+
+export interface AdminBoostRequest {
+  id: string;
+  listingId: string;
+  userId: string;
+  tiers: BoostTierId[];
+  totalPrice: number;
+  currency: string;
+  status: 'PENDING' | 'APPROVED' | 'REJECTED';
+  adminNote: string | null;
+  createdAt: Date;
+  resolvedAt: Date | null;
+  user: { id: string; name: string; email: string };
+  listing: { id: string; title: string; images: string[]; status: string };
 }
 type ListingFilter = 'ALL' | 'ACTIVE' | 'PENDING' | 'REJECTED' | 'SOLD' | 'RESERVED';
 
@@ -88,6 +104,10 @@ export class AdminComponent implements OnInit {
   idVerificationsLoading = signal(false);
   idVerificationFilter = signal<'ALL' | 'PENDING' | 'APPROVED' | 'REJECTED'>('PENDING');
 
+  boostRequests: AdminBoostRequest[] = [];
+  boostRequestsLoading = signal(false);
+  boostRequestFilter = signal<'ALL' | 'PENDING' | 'APPROVED' | 'REJECTED'>('PENDING');
+
   actionLoading = new Set<string>();
 
   readonly CATEGORIES = CATEGORIES;
@@ -126,6 +146,15 @@ export class AdminComponent implements OnInit {
 
   get pendingIdVerificationsCount(): number {
     return this.idVerifications.filter(v => v.status === 'PENDING').length;
+  }
+
+  get filteredBoostRequests(): AdminBoostRequest[] {
+    const f = this.boostRequestFilter();
+    return f === 'ALL' ? this.boostRequests : this.boostRequests.filter(r => r.status === f);
+  }
+
+  get pendingBoostRequestsCount(): number {
+    return this.boostRequests.filter(r => r.status === 'PENDING').length;
   }
 
   get filteredSecurityEvents(): SecurityEvent[] {
@@ -182,7 +211,7 @@ export class AdminComponent implements OnInit {
     return Math.max(...this.revenueMonthly, 1);
   }
 
-  formatPrice = (p: number) => formatPrice(p, 'MAD', this.i18n.lang());
+  formatPrice = (p: number, currency = 'MAD') => formatPrice(p, currency, this.i18n.lang());
   timeAgo = (d: Date) => timeAgo(d, this.i18n.lang());
 
   ngOnInit() {
@@ -191,6 +220,7 @@ export class AdminComponent implements OnInit {
     this.loadReports();
     this.loadSecurityEvents();
     this.loadIdVerifications();
+    this.loadBoostRequests();
   }
 
   private async loadIdVerifications() {
@@ -199,6 +229,29 @@ export class AdminComponent implements OnInit {
       this.idVerifications = await firstValueFrom(this.api.get<AdminIdVerification[]>('/admin/id-verifications'));
     } catch { this.idVerifications = []; }
     this.idVerificationsLoading.set(false);
+    this.cdr.markForCheck();
+  }
+
+  private async loadBoostRequests() {
+    this.boostRequestsLoading.set(true);
+    try {
+      this.boostRequests = await firstValueFrom(this.api.get<AdminBoostRequest[]>('/admin/boost-requests'));
+    } catch { this.boostRequests = []; }
+    this.boostRequestsLoading.set(false);
+    this.cdr.markForCheck();
+  }
+
+  async reviewBoostRequest(r: AdminBoostRequest, status: 'APPROVED' | 'REJECTED') {
+    if (this.actionLoading.has(r.id)) return;
+    this.actionLoading.add(r.id);
+    try {
+      const note = status === 'REJECTED' ? (prompt(this.i18n.t('admin.boost_request_note_prompt')) ?? undefined) : undefined;
+      const updated = await firstValueFrom(this.api.patch<AdminBoostRequest>(`/admin/boost-requests/${r.id}`, { status, adminNote: note }));
+      r.status = updated.status;
+      r.adminNote = updated.adminNote;
+      r.resolvedAt = updated.resolvedAt;
+    } catch { alert(this.i18n.t('auth.generic_error')); }
+    this.actionLoading.delete(r.id);
     this.cdr.markForCheck();
   }
 
@@ -290,6 +343,11 @@ export class AdminComponent implements OnInit {
   setListingFilter(f: ListingFilter) { this.listingFilter.set(f); }
   setReportFilter(f: 'ALL' | 'PENDING' | 'RESOLVED' | 'DISMISSED') { this.reportFilter.set(f); }
   setIdVerificationFilter(f: 'ALL' | 'PENDING' | 'APPROVED' | 'REJECTED') { this.idVerificationFilter.set(f); }
+  setBoostRequestFilter(f: 'ALL' | 'PENDING' | 'APPROVED' | 'REJECTED') { this.boostRequestFilter.set(f); }
+
+  boostTierLabel(id: BoostTierId): string {
+    return this.i18n.t('boost.tier_' + id + '_name');
+  }
   setSecuritySeverityFilter(f: 'ALL' | 'HIGH' | 'MEDIUM' | 'LOW') { this.securitySeverityFilter.set(f); }
 
   securityEventLabel(type: string): string {

@@ -105,6 +105,9 @@
               <button class="row-btn" [disabled]="!canBump(listing) || bumping[listing.id]" [title]="(canBump(listing) ? 'mes_annonces.bump' : 'mes_annonces.bump_cooldown') | T" (click)="bump(listing)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
               </button>
+              <a [routerLink]="['/booster-annonce', listing.id]" class="row-btn" [title]="'mes_annonces.boost' | T">
+                <app-icon name="rocket" [size]="15" />
+              </a>
             }
             @if ((listing.status === 'ACTIVE' || listing.status === 'RESERVED') && canExtend(listing)) {
               <button class="row-btn" [disabled]="extending[listing.id]" [title]="'mes_annonces.extend' | T" (click)="extend(listing)">

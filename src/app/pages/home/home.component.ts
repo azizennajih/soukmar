@@ -9,7 +9,7 @@ import { AuthService } from '../../services/auth.service';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { IconComponent } from '../../components/icon/icon.component';
-import { CATEGORIES, MOROCCO_CITIES, Listing, Category } from '../../models/listing.model';
+import { CATEGORIES, MOROCCO_CITIES, Listing, Category, isBoostActive } from '../../models/listing.model';
 import { CITIES_BY_COUNTRY, countryName } from '../../models/country.model';
 import { CountryService } from '../../services/country.service';
 import { I18nService } from '../../services/i18n.service';
@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
     effect(() => {
       const country = this.countryService.country();
       this.listingService.getAll({ limit: '20', country }).subscribe(res => {
-        this.featured = res.listings.filter(l => l.isFeatured);
+        this.featured = res.listings.filter(l => l.isFeatured || isBoostActive(l.boostGlobalUntil));
         this.latest = res.listings.slice(0, 8);
         this.cdr.markForCheck();
       });

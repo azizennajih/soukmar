@@ -57,6 +57,10 @@ const localizedRoutes: Routes = [
     loadComponent: () => import('./pages/mes-annonces/mes-annonces.component').then(m => m.MesAnnoncesComponent)
   },
   {
+    path: 'booster-annonce/:id',
+    loadComponent: () => import('./pages/boost-listing/boost-listing.component').then(m => m.BoostListingComponent)
+  },
+  {
     path: 'mes-favoris',
     loadComponent: () => import('./pages/mes-favoris/mes-favoris.component').then(m => m.MesFavorisComponent)
   },

@@ -1,4 +1,4 @@
-<a [routerLink]="['/annonces', listing.id]" class="listing-card" [class.listing-card--featured]="featured" [class.listing-card--reserved]="listing.status === 'RESERVED'">
+<a [routerLink]="['/annonces', listing.id]" class="listing-card" [class.listing-card--featured]="featured" [class.listing-card--reserved]="listing.status === 'RESERVED'" [class.listing-card--boost-top]="isBoostTop" [class.listing-card--boost-spotlight]="isBoostSpotlight && !isBoostTop">
   <!-- Image -->
   <div class="listing-card__image">
     @if (listing.images[0]) {
@@ -19,6 +19,17 @@
         <span class="listing-card__badge listing-card__badge--reserved">
           <app-icon name="lock" [size]="11" />
           {{ 'annonces.reserved' | T }}
+        </span>
+      }
+      @if (isBoostTop) {
+        <span class="listing-card__badge listing-card__badge--boost-top">
+          <app-icon name="crown" [size]="11" />
+          {{ 'listing.boost_top_badge' | T }}
+        </span>
+      } @else if (isBoostSpotlight) {
+        <span class="listing-card__badge listing-card__badge--boost-spotlight">
+          <app-icon name="zap" [size]="11" />
+          {{ 'listing.boost_spotlight_badge' | T }}
         </span>
       }
       @if (isNew && listing.status !== 'RESERVED') {
