@@ -6,7 +6,8 @@ export type IconName =
   | 'check' | 'close' | 'block' | 'trash' | 'edit' | 'bell'
   | 'trending-up' | 'trending-down' | 'image' | 'shield' | 'link'
   | 'list' | 'map' | 'zap' | 'users' | 'bar-chart' | 'id-card'
-  | 'camera' | 'phone-call' | 'mic' | 'mic-off' | 'phone-off';
+  | 'camera' | 'phone-call' | 'mic' | 'mic-off' | 'phone-off'
+  | 'chevron-left' | 'chevron-right' | 'zoom-in';
 
 @Component({
   selector: 'app-icon',

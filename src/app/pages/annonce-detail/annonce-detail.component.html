@@ -31,7 +31,19 @@
       <div class="card detail__gallery">
         <div class="detail__main-img">
           @if (listing.images[selectedImage]) {
-            <img [src]="listing.images[selectedImage]" [alt]="listing.title" />
+            <button type="button" class="detail__main-img-btn" (click)="openLightbox()" [attr.aria-label]="'listing.view_fullscreen' | T">
+              <img [src]="listing.images[selectedImage]" [alt]="listing.title" />
+              <span class="detail__zoom-hint"><app-icon name="zoom-in" [size]="16" /></span>
+            </button>
+            @if (listing.images.length > 1) {
+              <button type="button" class="detail__main-nav detail__main-nav--prev" (click)="prevImage()" [attr.aria-label]="'listing.prev_image' | T">
+                <app-icon name="chevron-left" [size]="20" />
+              </button>
+              <button type="button" class="detail__main-nav detail__main-nav--next" (click)="nextImage()" [attr.aria-label]="'listing.next_image' | T">
+                <app-icon name="chevron-right" [size]="20" />
+              </button>
+              <span class="detail__img-counter">{{ selectedImage + 1 }} / {{ listing.images.length }}</span>
+            }
           } @else {
             <div class="detail__no-img">
               @if (category?.icon) { {{ category?.icon }} } @else { <app-icon name="image" [size]="40" /> }
@@ -287,4 +299,32 @@
     </div>
   }
 </div>
+
+<!-- Lightbox — deliberately a sibling of .detail, not nested inside it:
+     .detail has the shared .fade-in animation class, and per the CSS
+     stacking spec an element with a running/declared `animation` that
+     touches transform/opacity establishes its own stacking context. Nested
+     inside that, this overlay's z-index would only compete with fade-in's
+     other children instead of the page's real top layer — the sticky
+     navbar (position:sticky, z-index:100, a sibling at the app root) would
+     then paint over the "fullscreen" overlay despite its higher z-index.
+     Sibling placement puts it back in the same stacking context as the
+     navbar, where a higher z-index actually wins. -->
+@if (lightboxOpen()) {
+  <div class="lightbox" (click)="closeLightbox()">
+    <button type="button" class="lightbox__close" (click)="closeLightbox()" [attr.aria-label]="'common.close' | T">
+      <app-icon name="close" [size]="22" />
+    </button>
+    <img [src]="listing.images[selectedImage]" [alt]="listing.title" class="lightbox__img" (click)="$event.stopPropagation()" />
+    @if (listing.images.length > 1) {
+      <button type="button" class="lightbox__nav lightbox__nav--prev" (click)="$event.stopPropagation(); prevImage()" [attr.aria-label]="'listing.prev_image' | T">
+        <app-icon name="chevron-left" [size]="28" />
+      </button>
+      <button type="button" class="lightbox__nav lightbox__nav--next" (click)="$event.stopPropagation(); nextImage()" [attr.aria-label]="'listing.next_image' | T">
+        <app-icon name="chevron-right" [size]="28" />
+      </button>
+      <span class="lightbox__counter">{{ selectedImage + 1 }} / {{ listing.images.length }}</span>
+    }
+  </div>
+}
 }

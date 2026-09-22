@@ -40,6 +40,7 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
   shareCopied = signal(false);
   shareMenuOpen = signal(false);
   showMap = signal(false);
+  lightboxOpen = signal(false);
 
   canReviewInfo: CanReviewResponse | null = null;
   showReviewForm = signal(false);
@@ -66,6 +67,35 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
     if (this.shareMenuOpen() && !(e.target as HTMLElement).closest('.detail__share-wrap')) {
       this.shareMenuOpen.set(false);
     }
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  onDocumentKeydown(e: KeyboardEvent) {
+    if (!this.lightboxOpen()) return;
+    if (e.key === 'Escape') this.closeLightbox();
+    else if (e.key === 'ArrowLeft') this.prevImage();
+    else if (e.key === 'ArrowRight') this.nextImage();
+  }
+
+  openLightbox() {
+    if (!this.listing?.images.length) return;
+    this.lightboxOpen.set(true);
+  }
+
+  closeLightbox() {
+    this.lightboxOpen.set(false);
+  }
+
+  prevImage() {
+    if (!this.listing) return;
+    const count = this.listing.images.length;
+    this.selectedImage = (this.selectedImage - 1 + count) % count;
+  }
+
+  nextImage() {
+    if (!this.listing) return;
+    const count = this.listing.images.length;
+    this.selectedImage = (this.selectedImage + 1) % count;
   }
 
   ngOnInit() {
