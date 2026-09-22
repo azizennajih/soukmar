@@ -72,7 +72,10 @@
 
     &--reserved { background: rgba(17,24,39,.85); color: #fff; border: 1px solid rgba(255,255,255,.2); }
     &--new      { background: #dcfce7; color: #15803d; }
-    &--premium  { background: rgba(201,148,26,.12); color: #A07314; border: 1px solid rgba(201,148,26,.3); }
+    // Solid fill (not the washed-out translucent gold used before) — needs
+    // to stay legible over any photo, including dark ones, where a 12%-opacity
+    // background all but disappeared.
+    &--premium  { background: var(--gold); color: #fff; }
     &--pro      { background: #f3e8ff; color: #6b21a8; }
     &--search   { background: rgba(30,58,95,.1); color: #1E3A5F; border: 1px solid rgba(30,58,95,.25); }
   }
