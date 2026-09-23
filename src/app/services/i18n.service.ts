@@ -1,7 +1,7 @@
 import { Injectable, signal, computed, effect, inject, PLATFORM_ID } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { BrowserStorageService } from './browser-storage.service';
-import { DEFAULT_LANG, isSupportedLang, withLang as withLangCommands, type Lang } from './locale-routing';
+import { DEFAULT_LANG, isSupportedLang, isRtlLang, withLang as withLangCommands, type Lang } from './locale-routing';
 
 export type { Lang };
 
@@ -13,6 +13,11 @@ import arRaw from '../../assets/i18n/ar.json';
 import deRaw from '../../assets/i18n/de.json';
 import esRaw from '../../assets/i18n/es.json';
 import itRaw from '../../assets/i18n/it.json';
+import ptRaw from '../../assets/i18n/pt.json';
+import trRaw from '../../assets/i18n/tr.json';
+import faRaw from '../../assets/i18n/fa.json';
+import urRaw from '../../assets/i18n/ur.json';
+import psRaw from '../../assets/i18n/ps.json';
 
 const TRANSLATIONS: Record<Lang, Record<string, unknown>> = {
   fr: frRaw as Record<string, unknown>,
@@ -21,6 +26,11 @@ const TRANSLATIONS: Record<Lang, Record<string, unknown>> = {
   de: deRaw as Record<string, unknown>,
   es: esRaw as Record<string, unknown>,
   it: itRaw as Record<string, unknown>,
+  pt: ptRaw as Record<string, unknown>,
+  tr: trRaw as Record<string, unknown>,
+  fa: faRaw as Record<string, unknown>,
+  ur: urRaw as Record<string, unknown>,
+  ps: psRaw as Record<string, unknown>,
 };
 
 /** localStorage (an explicit earlier choice) wins; failing that, on the
@@ -57,7 +67,7 @@ export class I18nService {
       const l = this.lang();
       this.storage.setItem(LANG_KEY, l);
       this.document.documentElement.lang = l;
-      this.document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+      this.document.documentElement.dir = isRtlLang(l) ? 'rtl' : 'ltr';
       if (!this.isBrowser) return;
       const scrollY = window.scrollY;
       requestAnimationFrame(() => window.scrollTo(0, scrollY));

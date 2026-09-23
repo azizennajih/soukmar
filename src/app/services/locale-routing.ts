@@ -1,11 +1,20 @@
 import { UrlMatchResult, UrlSegment } from '@angular/router';
 
-export type Lang = 'fr' | 'en' | 'ar' | 'de' | 'es' | 'it';
+export type Lang = 'fr' | 'en' | 'ar' | 'de' | 'es' | 'it' | 'pt' | 'tr' | 'fa' | 'ur' | 'ps';
 
 /** Single source of truth for which languages get their own URL segment
  * (`/fr/...`, `/ar/...`) — must stay in sync with I18nService's own
  * `Lang` union and with `src/assets/i18n/*.json`. */
-export const SUPPORTED_LANGS: Lang[] = ['fr', 'en', 'ar', 'de', 'es', 'it'];
+export const SUPPORTED_LANGS: Lang[] = ['fr', 'en', 'ar', 'de', 'es', 'it', 'pt', 'tr', 'fa', 'ur', 'ps'];
+
+/** Right-to-left scripts among the supported languages — Arabic, Persian,
+ * Urdu and Pashto all use RTL-written (Perso-)Arabic script, unlike every
+ * other supported language here. */
+export const RTL_LANGS: Lang[] = ['ar', 'fa', 'ur', 'ps'];
+
+export function isRtlLang(lang: Lang): boolean {
+  return (RTL_LANGS as string[]).includes(lang);
+}
 
 /** French is Morocco's primary language and the app's original default —
  * used as the `x-default`/fallback hreflang target and as the language a

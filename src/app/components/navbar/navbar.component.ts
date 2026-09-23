@@ -54,6 +54,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     { code: 'de', flag: '🇩🇪', label: 'DE' },
     { code: 'es', flag: '🇪🇸', label: 'ES' },
     { code: 'it', flag: '🇮🇹', label: 'IT' },
+    { code: 'pt', flag: '🇧🇷', label: 'PT' },
+    { code: 'tr', flag: '🇹🇷', label: 'TR' },
+    { code: 'fa', flag: '🇮🇷', label: 'فا' },
+    { code: 'ur', flag: '🇵🇰', label: 'اردو' },
+    { code: 'ps', flag: '🇦🇫', label: 'پښتو' },
   ];
 
   langMenuOpen = signal(false);
