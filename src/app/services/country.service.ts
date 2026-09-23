@@ -1,7 +1,8 @@
-import { Injectable, signal, effect, inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, signal, computed, effect, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { BrowserStorageService } from './browser-storage.service';
+import { AuthService } from './auth.service';
 import { isKnownCountry } from '../models/country.model';
 
 const COUNTRY_KEY = 'soukmar_country';
@@ -14,7 +15,17 @@ const COUNTRY_KEY = 'soukmar_country';
 export class CountryService {
   private storage = inject(BrowserStorageService);
   private http = inject(HttpClient);
+  private auth = inject(AuthService);
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+
+  /** Regular (non-ADMIN) logged-in users browse/list only in the country
+   * fixed on their account at registration — see the navbar's read-only
+   * badge vs. active dropdown. Logged-out visitors and ADMINs keep the free,
+   * localStorage-persisted choice this service already supported. */
+  isFixedForUser = computed(() => {
+    const u = this.auth.currentUser();
+    return !!u && u.role !== 'ADMIN';
+  });
 
   /** Captured before any write happens, so we know whether this is a
    * genuinely first-ever visit (no preference saved yet) vs. a returning
@@ -31,9 +42,17 @@ export class CountryService {
   constructor() {
     effect(() => this.storage.setItem(COUNTRY_KEY, this.country()));
     if (this.isBrowser && !this.hadStoredPreference) this.detectCountryFromIp();
+    // Pins the browsing country to the account's stored one on login (and
+    // whenever currentUser changes, e.g. across tabs); logging out or being
+    // an ADMIN leaves the free localStorage-based choice untouched.
+    effect(() => {
+      const u = this.auth.currentUser();
+      if (u && u.role !== 'ADMIN') this.country.set(u.country);
+    });
   }
 
   setCountry(code: string) {
+    if (this.isFixedForUser()) return;
     this.country.set(code);
   }
 

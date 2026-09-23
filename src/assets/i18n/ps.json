@@ -22,7 +22,8 @@
     "all": "ټول",
     "suggest_in_all": "په ټولو کټګوریو کې",
     "suggest_in": "په",
-    "search_by_image": "د انځور له مخې لټون"
+    "search_by_image": "د انځور له مخې لټون",
+    "country_fixed": "هیواد ستاسو د حساب لخوا ټاکل شوی"
   },
   "image_search": {
     "title": "د انځور له مخې لټون",
@@ -296,7 +297,8 @@
     "reset_mismatch": "پټ نومونه سره نه ورته کیږي.",
     "reset_too_short": "پټ نوم باید لږ تر لږه 6 توري ولري.",
     "reset_invalid_title": "ناسم لینک",
-    "reset_invalid_sub": "دا د بیا ترتیب لینک ناسم دی یا پای ته رسیدلی دی. یو نوی وغواړئ."
+    "reset_invalid_sub": "دا د بیا ترتیب لینک ناسم دی یا پای ته رسیدلی دی. یو نوی وغواړئ.",
+    "phone_invalid_length": "د دې هیواد لپاره غلط شمېره ({min}-{max} عددونه)."
   },
   "cats": {
     "VEHICLES": "موټرونه",

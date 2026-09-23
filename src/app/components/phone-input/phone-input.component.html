@@ -1,4 +1,4 @@
-<div class="phone-input">
+<div class="phone-input" [class.phone-input--invalid]="lengthError">
   <app-country-code-select [value]="iso" (valueChange)="onCountryChange($event)" />
   <input
     type="tel"
@@ -8,3 +8,6 @@
     autocomplete="tel-national"
   />
 </div>
+@if (lengthError) {
+  <div class="phone-input__error">{{ 'auth.phone_invalid_length' | T:{min: lengthError.min.toString(), max: lengthError.max.toString()} }}</div>
+}

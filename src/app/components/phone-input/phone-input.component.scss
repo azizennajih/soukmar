@@ -23,4 +23,12 @@
     border-radius: 0;
     &:focus { outline: none; box-shadow: none; }
   }
+
+  &--invalid { border-color: var(--primary); }
+}
+
+.phone-input__error {
+  margin-top: .375rem;
+  font-size: .8125rem;
+  color: var(--primary);
 }

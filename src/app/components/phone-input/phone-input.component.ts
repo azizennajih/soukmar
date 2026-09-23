@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CountryCodeSelectComponent } from '../country-code-select/country-code-select.component';
-import { parsePhone, composePhone } from '../../models/dial-codes';
+import { TranslatePipe } from '../../pipes/translate.pipe';
+import { parsePhone, composePhone, localNumberLengthRange } from '../../models/dial-codes';
 
 /** Country-code picker + local number field that together compose one
  * dial-code-prefixed string (e.g. "+212612345678") for storage — drop-in
@@ -9,7 +10,7 @@ import { parsePhone, composePhone } from '../../models/dial-codes';
  * app-city-select ([value]/(valueChange), not ngModel). */
 @Component({
   selector: 'app-phone-input',
-  imports: [CommonModule, CountryCodeSelectComponent],
+  imports: [CommonModule, CountryCodeSelectComponent, TranslatePipe],
   templateUrl: './phone-input.component.html',
   styleUrl: './phone-input.component.scss'
 })
@@ -49,6 +50,15 @@ export class PhoneInputComponent implements OnChanges {
   onCountryChange(iso: string) {
     this.iso = iso;
     this.emitValue();
+  }
+
+  /** Shown only once the user has typed something — an empty required field
+   * has its own "required" validation elsewhere, this is purely about length. */
+  get lengthError(): { min: number; max: number } | null {
+    if (!this.localNumber) return null;
+    const [min, max] = localNumberLengthRange(this.iso);
+    const len = this.localNumber.length;
+    return len >= min && len <= max ? null : { min, max };
   }
 
   onLocalNumberChange(v: string) {

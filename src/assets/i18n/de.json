@@ -22,7 +22,8 @@
     "settings": "Einstellungen",
     "suggest_in_all": "in allen Kategorien",
     "suggest_in": "in",
-    "search_by_image": "Nach Foto suchen"
+    "search_by_image": "Nach Foto suchen",
+    "country_fixed": "Land durch Ihr Konto festgelegt"
   },
   "image_search": {
     "title": "Suche per Foto",
@@ -296,7 +297,8 @@
     "reset_mismatch": "Die Passwörter stimmen nicht überein.",
     "reset_too_short": "Das Passwort muss mindestens 6 Zeichen lang sein.",
     "reset_invalid_title": "Ungültiger Link",
-    "reset_invalid_sub": "Dieser Link zum Zurücksetzen ist ungültig oder abgelaufen. Fordern Sie einen neuen an."
+    "reset_invalid_sub": "Dieser Link zum Zurücksetzen ist ungültig oder abgelaufen. Fordern Sie einen neuen an.",
+    "phone_invalid_length": "Ungültige Nummer für dieses Land ({min}-{max} Ziffern)."
   },
   "cats": {
     "VEHICLES": "Fahrzeuge",

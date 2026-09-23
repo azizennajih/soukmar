@@ -22,7 +22,8 @@
     "all": "Tümü",
     "suggest_in_all": "tüm kategorilerde",
     "suggest_in": "şurada:",
-    "search_by_image": "Fotoğrafla ara"
+    "search_by_image": "Fotoğrafla ara",
+    "country_fixed": "Ülke hesabınız tarafından sabitlendi"
   },
   "image_search": {
     "title": "Fotoğrafla arama",
@@ -296,7 +297,8 @@
     "reset_mismatch": "Şifreler eşleşmiyor.",
     "reset_too_short": "Şifre en az 6 karakter olmalıdır.",
     "reset_invalid_title": "Geçersiz bağlantı",
-    "reset_invalid_sub": "Bu sıfırlama bağlantısı geçersiz veya süresi doldu. Yeni bir tane isteyin."
+    "reset_invalid_sub": "Bu sıfırlama bağlantısı geçersiz veya süresi doldu. Yeni bir tane isteyin.",
+    "phone_invalid_length": "Bu ülke için geçersiz numara ({min}-{max} hane)."
   },
   "cats": {
     "VEHICLES": "Araçlar",

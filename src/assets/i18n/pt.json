@@ -22,7 +22,8 @@
     "all": "Todas",
     "suggest_in_all": "em todas as categorias",
     "suggest_in": "em",
-    "search_by_image": "Buscar por foto"
+    "search_by_image": "Buscar por foto",
+    "country_fixed": "País fixado pela sua conta"
   },
   "image_search": {
     "title": "Busca por foto",
@@ -296,7 +297,8 @@
     "reset_mismatch": "As senhas não coincidem.",
     "reset_too_short": "A senha deve ter pelo menos 6 caracteres.",
     "reset_invalid_title": "Link inválido",
-    "reset_invalid_sub": "Este link de redefinição é inválido ou expirou. Solicite um novo."
+    "reset_invalid_sub": "Este link de redefinição é inválido ou expirou. Solicite um novo.",
+    "phone_invalid_length": "Número inválido para este país ({min}-{max} dígitos)."
   },
   "cats": {
     "VEHICLES": "Veículos",

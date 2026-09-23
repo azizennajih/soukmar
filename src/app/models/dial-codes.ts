@@ -308,3 +308,45 @@ export function composePhone(iso: string, localNumber: string): string {
   if (!digits) return '';
   return `${dialCodeByIso(iso).dialCode}${digits}`;
 }
+
+/** Simple [min, max] digit-count check for the *local* number (dial code and
+ * leading trunk "0" already stripped, matching what's typed into the
+ * app-phone-input field) — not a full format/prefix validator. Mirrors
+ * soukmar-backend's src/lib/phone-format.ts (which checks the combined
+ * dial-code+local total instead, since it only ever sees the composed
+ * string) — both cover the same curated/soft-launch countries and fall back
+ * to a permissive generic range for everyone else. */
+const LOCAL_LENGTH: Record<string, [number, number]> = {
+  // Africa
+  MA: [9, 9], DZ: [9, 9], TN: [8, 8], LY: [9, 9], EG: [10, 10], SD: [9, 9], SS: [9, 9],
+  MR: [8, 8], ML: [8, 8], NE: [8, 8], TD: [8, 8], SN: [9, 9], GM: [7, 7], GW: [7, 7],
+  GN: [9, 9], SL: [8, 8], LR: [7, 9], CI: [10, 10], GH: [9, 9], TG: [8, 8], BJ: [8, 8],
+  NG: [10, 10], CM: [9, 9], CF: [8, 8], GQ: [9, 9], GA: [9, 9], CG: [9, 9], CD: [9, 9],
+  AO: [9, 9], ZM: [9, 9], MW: [9, 9], MZ: [9, 9], ZW: [9, 9], BW: [8, 8], NA: [9, 9],
+  ZA: [9, 9], LS: [8, 8], SZ: [8, 8], KE: [9, 9], TZ: [9, 9], UG: [9, 9], RW: [9, 9],
+  BI: [8, 8], ET: [9, 9], ER: [7, 7], DJ: [8, 8], SO: [7, 8], BF: [8, 8], CV: [7, 7],
+  ST: [7, 7], SC: [7, 7], MU: [7, 8], MG: [9, 9], KM: [7, 7],
+  // Middle East / Asia
+  TR: [10, 10], PS: [9, 9], JO: [9, 9], LB: [7, 8], SY: [9, 9], IQ: [10, 10], SA: [9, 9],
+  YE: [9, 9], OM: [8, 8], AE: [9, 9], QA: [8, 8], BH: [8, 8], KW: [8, 8], IR: [10, 10],
+  AF: [9, 9], PK: [10, 10], IN: [10, 10], BD: [10, 10], LK: [9, 9], NP: [10, 10], MM: [8, 10],
+  TH: [9, 9], VN: [9, 10], MY: [9, 10], SG: [8, 8], ID: [9, 12], PH: [10, 10], BN: [7, 7],
+  CN: [11, 11], JP: [10, 10], KR: [9, 10], KZ: [10, 10], UZ: [9, 9], TM: [8, 8], TJ: [9, 9],
+  KG: [9, 9], AZ: [9, 9], GE: [9, 9], MV: [7, 7],
+  // Europe
+  FR: [9, 9], ES: [9, 9], DE: [10, 11], IT: [9, 10], PT: [9, 9], NL: [9, 9], BE: [9, 9],
+  GB: [10, 10], CH: [9, 9], AT: [9, 11], SE: [9, 9], NO: [8, 8], DK: [8, 8], PL: [9, 9],
+  RU: [10, 10], UA: [9, 9],
+  // Americas
+  US: [10, 10], CA: [10, 10], MX: [10, 10], BR: [10, 11], AR: [10, 11], CL: [9, 9], CO: [10, 10],
+  PE: [9, 9], VE: [10, 10], EC: [9, 9], BO: [8, 8], PY: [9, 9], UY: [8, 8], GY: [7, 7],
+  SR: [7, 7],
+  // Oceania
+  AU: [9, 9], NZ: [8, 10],
+};
+
+const GENERIC_LOCAL_LENGTH: [number, number] = [4, 12];
+
+export function localNumberLengthRange(iso: string): [number, number] {
+  return LOCAL_LENGTH[iso] ?? GENERIC_LOCAL_LENGTH;
+}

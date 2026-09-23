@@ -22,7 +22,8 @@
     "settings": "Ajustes",
     "suggest_in_all": "en todas las categorías",
     "suggest_in": "en",
-    "search_by_image": "Buscar por foto"
+    "search_by_image": "Buscar por foto",
+    "country_fixed": "País fijado por tu cuenta"
   },
   "image_search": {
     "title": "Búsqueda por foto",
@@ -296,7 +297,8 @@
     "reset_mismatch": "Las contraseñas no coinciden.",
     "reset_too_short": "La contraseña debe tener al menos 6 caracteres.",
     "reset_invalid_title": "Enlace no válido",
-    "reset_invalid_sub": "Este enlace de restablecimiento no es válido o ha caducado. Solicita uno nuevo."
+    "reset_invalid_sub": "Este enlace de restablecimiento no es válido o ha caducado. Solicita uno nuevo.",
+    "phone_invalid_length": "Número no válido para este país ({min}-{max} dígitos)."
   },
   "cats": {
     "VEHICLES": "Vehículos",

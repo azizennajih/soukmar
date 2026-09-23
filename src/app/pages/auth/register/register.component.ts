@@ -12,7 +12,7 @@ import { PhoneInputComponent } from '../../../components/phone-input/phone-input
 import { PasswordInputComponent } from '../../../components/password-input/password-input.component';
 import { VISIBLE_COUNTRY_REGIONS, countryName } from '../../../models/country.model';
 import { CountryService } from '../../../services/country.service';
-import { parsePhone, composePhone } from '../../../models/dial-codes';
+import { parsePhone, composePhone, localNumberLengthRange } from '../../../models/dial-codes';
 
 @Component({
   selector: 'app-register',
@@ -71,12 +71,20 @@ export class RegisterComponent {
     if (!this.captchaToken) {
       this.error = this.i18n.t('auth.captcha_required'); return;
     }
+    if (this.form.phone) {
+      const { localNumber } = parsePhone(this.form.phone);
+      const [min, max] = localNumberLengthRange(this.form.country);
+      if (localNumber.length < min || localNumber.length > max) {
+        this.error = this.i18n.t('auth.phone_invalid_length', { min: String(min), max: String(max) }); return;
+      }
+    }
     this.loading = true;
     this.error = '';
     try {
       const result = await this.auth.register(
         this.form.name, this.form.email, this.form.password,
-        this.form.phone, this.form.city, this.captchaToken, this.form.accountType || undefined
+        this.form.phone, this.form.city, this.captchaToken, this.form.accountType || undefined,
+        this.form.country
       );
       if (result.ok) {
         this.registeredEmail = this.form.email;

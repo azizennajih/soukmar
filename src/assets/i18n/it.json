@@ -22,7 +22,8 @@
     "settings": "Impostazioni",
     "suggest_in_all": "in tutte le categorie",
     "suggest_in": "in",
-    "search_by_image": "Cerca per foto"
+    "search_by_image": "Cerca per foto",
+    "country_fixed": "Paese fissato dal tuo account"
   },
   "image_search": {
     "title": "Ricerca per foto",
@@ -296,7 +297,8 @@
     "reset_mismatch": "Le password non corrispondono.",
     "reset_too_short": "La password deve contenere almeno 6 caratteri.",
     "reset_invalid_title": "Link non valido",
-    "reset_invalid_sub": "Questo link di reimpostazione non è valido o è scaduto. Richiedine uno nuovo."
+    "reset_invalid_sub": "Questo link di reimpostazione non è valido o è scaduto. Richiedine uno nuovo.",
+    "phone_invalid_length": "Numero non valido per questo paese ({min}-{max} cifre)."
   },
   "cats": {
     "VEHICLES": "Veicoli",

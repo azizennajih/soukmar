@@ -98,36 +98,43 @@
           <a routerLink="/auth/login" class="btn-outline navbar__login-btn">{{ 'nav.login' | T }}</a>
         }
 
-        <!-- Country switcher dropdown -->
+        <!-- Country switcher dropdown (ADMIN + logged-out) / fixed badge (regular users) -->
         <div class="navbar__country-wrapper">
-          <button type="button" class="navbar__country-btn" (click)="toggleCountryMenu($event)" [title]="countryName(countryService.country(), i18n.lang())">
-            <app-flag-icon [iso]="countryService.country()" [size]="16" />
-            <span class="navbar__country-label">{{ countryName(countryService.country(), i18n.lang()) }}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          @if (countryMenuOpen()) {
-            <div class="navbar__country-dropdown">
-              <input
-                type="text"
-                class="navbar__country-search"
-                [(ngModel)]="countrySearchQuery"
-                [placeholder]="'common.search' | T"
-                autocomplete="off"
-                (click)="$event.stopPropagation()"
-              />
-              <div class="navbar__country-list">
-                @for (group of filteredCountryRegions; track group.region) {
-                  @if (group.countries.length) {
-                    <div class="navbar__country-group-label">{{ regionLabelKey(group.region) | T }}</div>
-                    @for (code of group.countries; track code) {
-                      <button type="button" class="navbar__country-option" [class.active]="countryService.country() === code" (click)="selectCountry(code, $event)">
-                        <app-flag-icon [iso]="code" [size]="16" /> {{ countryName(code, i18n.lang()) }}
-                      </button>
+          @if (countryService.isFixedForUser()) {
+            <span class="navbar__country-btn navbar__country-btn--fixed" [title]="'nav.country_fixed' | T">
+              <app-flag-icon [iso]="countryService.country()" [size]="16" />
+              <span class="navbar__country-label">{{ countryName(countryService.country(), i18n.lang()) }}</span>
+            </span>
+          } @else {
+            <button type="button" class="navbar__country-btn" (click)="toggleCountryMenu($event)" [title]="countryName(countryService.country(), i18n.lang())">
+              <app-flag-icon [iso]="countryService.country()" [size]="16" />
+              <span class="navbar__country-label">{{ countryName(countryService.country(), i18n.lang()) }}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            @if (countryMenuOpen()) {
+              <div class="navbar__country-dropdown">
+                <input
+                  type="text"
+                  class="navbar__country-search"
+                  [(ngModel)]="countrySearchQuery"
+                  [placeholder]="'common.search' | T"
+                  autocomplete="off"
+                  (click)="$event.stopPropagation()"
+                />
+                <div class="navbar__country-list">
+                  @for (group of filteredCountryRegions; track group.region) {
+                    @if (group.countries.length) {
+                      <div class="navbar__country-group-label">{{ regionLabelKey(group.region) | T }}</div>
+                      @for (code of group.countries; track code) {
+                        <button type="button" class="navbar__country-option" [class.active]="countryService.country() === code" (click)="selectCountry(code, $event)">
+                          <app-flag-icon [iso]="code" [size]="16" /> {{ countryName(code, i18n.lang()) }}
+                        </button>
+                      }
                     }
                   }
-                }
+                </div>
               </div>
-            </div>
+            }
           }
         </div>
 

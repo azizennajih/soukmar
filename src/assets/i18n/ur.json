@@ -22,7 +22,8 @@
     "all": "تمام",
     "suggest_in_all": "تمام زمروں میں",
     "suggest_in": "میں",
-    "search_by_image": "تصویر سے تلاش کریں"
+    "search_by_image": "تصویر سے تلاش کریں",
+    "country_fixed": "ملک آپ کے اکاؤنٹ کی جانب سے مقرر ہے"
   },
   "image_search": {
     "title": "تصویر سے تلاش",
@@ -296,7 +297,8 @@
     "reset_mismatch": "پاس ورڈز میل نہیں کھاتے۔",
     "reset_too_short": "پاس ورڈ کم از کم 6 حروف کا ہونا چاہیے۔",
     "reset_invalid_title": "غلط لنک",
-    "reset_invalid_sub": "یہ ری سیٹ لنک غلط ہے یا میعاد ختم ہوگئی ہے۔ نیا لنک درخواست کریں۔"
+    "reset_invalid_sub": "یہ ری سیٹ لنک غلط ہے یا میعاد ختم ہوگئی ہے۔ نیا لنک درخواست کریں۔",
+    "phone_invalid_length": "اس ملک کے لیے نمبر غلط ہے ({min}-{max} ہندسے)۔"
   },
   "cats": {
     "VEHICLES": "گاڑیاں",

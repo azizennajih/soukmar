@@ -317,6 +317,8 @@
     &:hover { background: #f1f5f9; border-color: #cbd5e1; }
 
     svg { opacity: .5; }
+
+    &--fixed { cursor: default; &:hover { background: #f8fafc; border-color: #e2e8f0; } }
   }
 
   &__country-label {

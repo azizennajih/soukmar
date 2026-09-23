@@ -12,6 +12,9 @@ export interface AuthUser {
   role: 'USER' | 'ADMIN' | 'MODERATOR';
   phone?: string;
   city?: string;
+  /** Chosen at registration, fixed for regular users — see CountryService's
+   * pinning of the browsing country for non-ADMIN accounts. */
+  country: string;
   accountType?: 'PRIVATE' | 'BUSINESS';
   phoneVerified?: boolean;
 }
@@ -53,8 +56,8 @@ export class AuthService {
       });
   }
 
-  register(name: string, email: string, password: string, phone?: string, city?: string, captchaToken?: string, accountType?: 'PRIVATE' | 'BUSINESS'): Promise<{ ok: boolean; emailSent?: boolean; error?: string }> {
-    return this.postJson<{ message: string; emailSent: boolean }>('/auth/register', { name, email, password, phone, city, captchaToken, accountType })
+  register(name: string, email: string, password: string, phone?: string, city?: string, captchaToken?: string, accountType?: 'PRIVATE' | 'BUSINESS', country?: string): Promise<{ ok: boolean; emailSent?: boolean; error?: string }> {
+    return this.postJson<{ message: string; emailSent: boolean }>('/auth/register', { name, email, password, phone, city, captchaToken, accountType, country })
       .then(res => ({ ok: true, emailSent: res.emailSent }))
       .catch(e => {
         const err = e as Record<string, unknown>;
