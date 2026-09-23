@@ -237,6 +237,34 @@ export const COUNTRY_REGIONS: { region: ContinentRegion; countries: string[] }[]
   ['MOROCCO', 'AFRICA', 'EUROPE', 'ASIA', 'NORTH_AMERICA', 'SOUTH_AMERICA', 'OCEANIA'] as ContinentRegion[]
 ).map(region => ({ region, countries: COUNTRIES.filter(c => c.region === region).map(c => c.code) }));
 
+/** Arab League / Muslim-majority countries whose region here is NOT Africa
+ * (Middle East + Central/South/Southeast Asia + the two Muslim-majority
+ * Balkan states) — combined with "all of Africa" and "all of South America"
+ * below, this is the current soft-launch market list. */
+const ARAB_ISLAMIC_OUTSIDE_AFRICA = new Set<string>([
+  'JO', 'LB', 'SY', 'IQ', 'SA', 'YE', 'OM', 'AE', 'QA', 'BH', 'KW', 'PS',
+  'TR', 'IR', 'AF', 'PK', 'BD', 'ID', 'MY', 'BN', 'MV', 'AZ', 'KZ', 'UZ', 'TM', 'KG', 'TJ',
+  'AL', 'XK',
+]);
+
+/** Countries currently shown in the country switcher/picker UI — Nutzerentscheidung
+ * (2026-09-23): soft-launch scope is Morocco + all of Africa + all of South
+ * America + Arab/Islamic countries elsewhere, everything else stays hidden
+ * for now. Deliberately a UI-only filter of COUNTRY_REGIONS: COUNTRIES/
+ * BY_CODE/currencyForCountry/isKnownCountry/countryName all keep working
+ * for every one of the ~195 countries unfiltered, so a hidden country's data
+ * is never deleted — only not offered for picking yet. Re-enabling a market
+ * later is a one-line change here (or expanding the Set above), not a
+ * data-model change. */
+export const VISIBLE_COUNTRY_REGIONS: { region: ContinentRegion; countries: string[] }[] = COUNTRY_REGIONS
+  .map(g => ({
+    region: g.region,
+    countries: (g.region === 'AFRICA' || g.region === 'MOROCCO' || g.region === 'SOUTH_AMERICA')
+      ? g.countries
+      : g.countries.filter(c => ARAB_ISLAMIC_OUTSIDE_AFRICA.has(c)),
+  }))
+  .filter(g => g.countries.length > 0);
+
 export function currencyForCountry(code: string): string {
   return BY_CODE.get(code)?.currency ?? 'USD';
 }

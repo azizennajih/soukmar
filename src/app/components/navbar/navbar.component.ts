@@ -10,7 +10,7 @@ import { I18nService, Lang } from '../../services/i18n.service';
 import { CountryService } from '../../services/country.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CATEGORIES, MOROCCO_CITIES } from '../../models/listing.model';
-import { COUNTRY_REGIONS, CITIES_BY_COUNTRY, countryName } from '../../models/country.model';
+import { VISIBLE_COUNTRY_REGIONS, CITIES_BY_COUNTRY, countryName } from '../../models/country.model';
 import { CitySelectComponent } from '../city-select/city-select.component';
 import { CatIconComponent } from '../cat-icon/cat-icon.component';
 import { FlagIconComponent } from '../flag-icon/flag-icon.component';
@@ -29,7 +29,7 @@ import { firstValueFrom } from 'rxjs';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   categories = CATEGORIES;
-  countryRegions = COUNTRY_REGIONS;
+  countryRegions = VISIBLE_COUNTRY_REGIONS;
   countryName = countryName;
   get cities(): string[] {
     const c = this.countryService.country();
