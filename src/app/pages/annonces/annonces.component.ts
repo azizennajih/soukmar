@@ -16,7 +16,7 @@ import { IconComponent } from '../../components/icon/icon.component';
 import { MultiSelectComponent } from '../../components/multi-select/multi-select.component';
 import { TextAutocompleteComponent } from '../../components/text-autocomplete/text-autocomplete.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing, Category, AttributeDefinition, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES, SHOE_SIZES_EU } from '../../models/listing.model';
-import { CITIES_BY_COUNTRY } from '../../models/country.model';
+import { CITIES_BY_COUNTRY, currencyForCountry } from '../../models/country.model';
 import { CountryService } from '../../services/country.service';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
@@ -38,6 +38,13 @@ export class AnnoncesComponent implements OnInit {
   get cities(): string[] {
     const c = this.filters.pays || this.countryService.country();
     return c === 'MA' ? MOROCCO_CITIES : (CITIES_BY_COUNTRY[c] ?? []);
+  }
+  /** The currency of the country currently being browsed — used to keep
+   * the price filter label and any currency-denominated attribute label
+   * (e.g. SALARY) in sync with the country switcher instead of a
+   * hardcoded "MAD". */
+  get currentCurrency(): string {
+    return currencyForCountry(this.filters.pays || this.countryService.country());
   }
   shoeSizes = SHOE_SIZES_EU;
   radiusOptions = ['5', '10', '20', '30', '50', '100', '150', '200'];

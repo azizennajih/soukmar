@@ -184,7 +184,7 @@
                 @for (def of attributeDefs; track def.id) {
                   <div class="form-group">
                     <label>
-                      {{ ('attrs.' + def.code) | T }}
+                      {{ ('attrs.' + def.code) | T:(def.code === 'SALARY' ? {currency: derivedCurrency} : undefined) }}
                       @if (def.required) { <span class="deposer__required">*</span> }
                     </label>
                     @switch (def.type) {

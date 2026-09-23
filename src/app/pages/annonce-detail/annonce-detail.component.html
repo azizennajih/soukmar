@@ -151,7 +151,7 @@
           <div class="detail__specs-grid">
             @for (av of specAttrs; track av.attributeDefinitionId) {
               <div class="detail__specs-row">
-                <span>{{ ('attrs.' + av.attributeDefinition!.code) | T }}</span>
+                <span>{{ ('attrs.' + av.attributeDefinition!.code) | T:(av.attributeDefinition!.code === 'SALARY' ? {currency: listing.currency || 'MAD'} : undefined) }}</span>
                 <strong>{{ formatAttrValue(av) }}</strong>
               </div>
             }
