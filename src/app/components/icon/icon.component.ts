@@ -8,7 +8,9 @@ export type IconName =
   | 'list' | 'map' | 'zap' | 'users' | 'bar-chart' | 'id-card'
   | 'camera' | 'phone-call' | 'mic' | 'mic-off' | 'phone-off'
   | 'chevron-left' | 'chevron-right' | 'zoom-in'
-  | 'arrow-up' | 'crown' | 'globe' | 'rocket';
+  | 'arrow-up' | 'crown' | 'globe' | 'rocket'
+  | 'mail' | 'check-circle' | 'clipboard' | 'search' | 'coins' | 'alert-triangle' | 'heart' | 'pause'
+  | 'user' | 'tool';
 
 @Component({
   selector: 'app-icon',

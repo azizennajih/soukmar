@@ -21,12 +21,13 @@ import { FlagIconComponent } from '../../components/flag-icon/flag-icon.componen
 import { compressListingPhoto } from '../../utils/image-compression';
 import { TurnstileComponent } from '../../components/turnstile/turnstile.component';
 import { PhoneInputComponent } from '../../components/phone-input/phone-input.component';
+import { IconComponent } from '../../components/icon/icon.component';
 
 interface PhotoItem { url: string; file?: File; }
 
 @Component({
   selector: 'app-deposer-annonce',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CatIconComponent, TextAutocompleteComponent, DateInputComponent, MultiSelectComponent, TranslatePipe, CityLabelPipe, TurnstileComponent, PhoneInputComponent, FlagIconComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CatIconComponent, TextAutocompleteComponent, DateInputComponent, MultiSelectComponent, TranslatePipe, CityLabelPipe, TurnstileComponent, PhoneInputComponent, FlagIconComponent, IconComponent],
   templateUrl: './deposer-annonce.component.html',
   styleUrl: './deposer-annonce.component.scss'
 })

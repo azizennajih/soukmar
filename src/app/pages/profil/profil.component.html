@@ -26,7 +26,8 @@
         <div class="profil__sidebar-email">{{ profile.email }}</div>
         <div class="profil__sidebar-since">{{ 'profil.member_since' | T }} {{ memberSince }}</div>
 
-        <div class="profil__sidebar-badge" [class.profil__sidebar-badge--admin]="profile.role === 'ADMIN'">
+        <div class="profil__sidebar-badge icon-label" [class.profil__sidebar-badge--admin]="profile.role === 'ADMIN'">
+          <app-icon [name]="profile.role === 'ADMIN' ? 'shield' : profile.role === 'MODERATOR' ? 'tool' : 'user'" [size]="13" />
           {{ profile.role === 'ADMIN' ? ('profil.role_admin' | T) : profile.role === 'MODERATOR' ? ('profil.role_mod' | T) : ('profil.role_user' | T) }}
         </div>
 

@@ -6,10 +6,11 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { I18nService } from '../../../services/i18n.service';
 import { TranslatePipe } from '../../../pipes/translate.pipe';
+import { IconComponent } from '../../../components/icon/icon.component';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, TranslatePipe],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, TranslatePipe, IconComponent],
   templateUrl: './forgot-password.component.html',
   styleUrl: '../login/login.component.scss'
 })

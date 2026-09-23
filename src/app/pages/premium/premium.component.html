@@ -55,7 +55,7 @@
       <div class="grid-4">
         @for (f of features; track f.title) {
           <div class="premium__feature card">
-            <div class="premium__feature-icon">{{ f.icon }}</div>
+            <div class="premium__feature-icon"><app-icon [name]="f.icon" [size]="36" /></div>
             <h3>{{ f.title }}</h3>
             <p>{{ f.desc }}</p>
           </div>

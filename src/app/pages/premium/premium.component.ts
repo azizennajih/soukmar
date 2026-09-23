@@ -4,10 +4,11 @@ import { RouterLink } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
+import { IconComponent } from '../../components/icon/icon.component';
 
 @Component({
   selector: 'app-premium',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, IconComponent],
   templateUrl: './premium.component.html',
   styleUrl: './premium.component.scss'
 })
@@ -67,10 +68,10 @@ export class PremiumComponent {
   get features() {
     const t = (k: string) => this.i18n.t(k);
     return [
-      { icon: '👁', title: t('premium.f1_title'), desc: t('premium.f1_desc') },
-      { icon: '⚡', title: t('premium.f2_title'), desc: t('premium.f2_desc') },
-      { icon: '📊', title: t('premium.f3_title'), desc: t('premium.f3_desc') },
-      { icon: '🛡️', title: t('premium.f4_title'), desc: t('premium.f4_desc') },
+      { icon: 'eye' as const, title: t('premium.f1_title'), desc: t('premium.f1_desc') },
+      { icon: 'zap' as const, title: t('premium.f2_title'), desc: t('premium.f2_desc') },
+      { icon: 'bar-chart' as const, title: t('premium.f3_title'), desc: t('premium.f3_desc') },
+      { icon: 'shield' as const, title: t('premium.f4_title'), desc: t('premium.f4_desc') },
     ];
   }
 

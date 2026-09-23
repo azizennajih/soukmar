@@ -46,7 +46,7 @@
             }
           } @else {
             <div class="detail__no-img">
-              @if (category?.icon) { {{ category?.icon }} } @else { <app-icon name="image" [size]="40" /> }
+              @if (category) { <app-cat-icon [category]="category.value" [size]="48" /> } @else { <app-icon name="image" [size]="40" /> }
             </div>
           }
           @if (listing.isFeatured) {
@@ -137,7 +137,7 @@
         }
 
         @if (category) {
-          <span class="badge" [ngClass]="category.color">{{ category.icon }} {{ ('cats.' + listing.category) | T }}</span>
+          <span class="badge" [ngClass]="category.color"><app-cat-icon [category]="category.value" [size]="14" /> {{ ('cats.' + listing.category) | T }}</span>
         }
 
         <h2 class="detail__desc-title">{{ 'listing.description' | T }}</h2>
@@ -277,7 +277,7 @@
         </div>
       }
       @if (reviewSubmitted) {
-        <div class="detail__review-thanks">✅ {{ 'listing.review_thanks' | T }}</div>
+        <div class="detail__review-thanks"><span class="icon-label"><app-icon name="check-circle" [size]="14" /> {{ 'listing.review_thanks' | T }}</span></div>
       }
 
       <!-- Report -->

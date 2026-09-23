@@ -26,7 +26,7 @@
 
   @if (listings.length === 0) {
     <div class="mes-annonces__empty">
-      <span>📋</span>
+      <app-icon name="clipboard" [size]="48" />
       <p>{{ 'mes_annonces.empty' | T }}</p>
       <small>{{ 'mes_annonces.empty_sub' | T }}</small>
       <a routerLink="/deposer-annonce" class="btn-primary">{{ 'mes_annonces.post_btn' | T }}</a>
@@ -40,7 +40,7 @@
             @if (listing.images[0]) {
               <img [src]="listing.images[0]" [alt]="listing.title" />
             } @else {
-              <span>{{ getCategory(listing.category)?.icon || '📦' }}</span>
+              <app-cat-icon [category]="listing.category" [size]="28" />
             }
           </div>
 

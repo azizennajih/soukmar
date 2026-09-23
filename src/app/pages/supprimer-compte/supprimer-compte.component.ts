@@ -8,11 +8,12 @@ import { AuthService } from '../../services/auth.service';
 import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { PasswordInputComponent } from '../../components/password-input/password-input.component';
+import { IconComponent } from '../../components/icon/icon.component';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-supprimer-compte',
-  imports: [CommonModule, FormsModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, PasswordInputComponent],
+  imports: [CommonModule, FormsModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, PasswordInputComponent, IconComponent],
   templateUrl: './supprimer-compte.component.html',
   styleUrl: './supprimer-compte.component.scss'
 })

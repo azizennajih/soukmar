@@ -2,19 +2,19 @@
 
   @if (!auth.isLoggedIn) {
     <div class="deposer__gate card">
-      <div class="deposer__gate-icon">🔐</div>
+      <div class="deposer__gate-icon"><app-icon name="lock" [size]="40" /></div>
       <h2>{{ 'deposer.gate_title' | T }}</h2>
       <p>{{ 'deposer.gate_sub' | T }}</p>
       <a routerLink="/auth/login" class="btn-primary">{{ 'deposer.gate_btn' | T }}</a>
     </div>
   } @else if (success) {
     <div class="deposer__success card">
-      <div class="deposer__success-icon">✅</div>
+      <div class="deposer__success-icon"><app-icon name="check-circle" [size]="40" /></div>
       <h2>{{ (isEdit ? 'deposer.success_title_edit' : 'deposer.success_title') | T }}</h2>
       <p>{{ (isEdit ? 'deposer.success_sub_edit' : 'deposer.success_sub') | T }}</p>
     </div>
   } @else if (initLoading) {
-    <div class="deposer__loading" style="text-align:center;padding:4rem;color:var(--text-muted)">⏳</div>
+    <div class="deposer__loading"><span class="deposer__loading-spinner"></span></div>
   } @else {
 
     <div class="deposer__header">
@@ -287,7 +287,7 @@
 
           <label class="deposer__premium-toggle">
             <input type="checkbox" [(ngModel)]="premium" name="premium" />
-            🌟 {{ 'deposer.premium_toggle' | T }}
+            <app-icon name="crown" [size]="15" /> {{ 'deposer.premium_toggle' | T }}
           </label>
 
           <label class="deposer__upload" for="fileInput">
@@ -330,7 +330,7 @@
                 </div>
               }
             </div>
-            <p class="deposer__drag-hint">🖐️ {{ 'deposer.drag_hint' | T }}</p>
+            <p class="deposer__drag-hint">{{ 'deposer.drag_hint' | T }}</p>
           }
 
           @if (isCarpooling) {
@@ -357,7 +357,7 @@
 
             <label class="deposer__premium-toggle">
               <input type="checkbox" [(ngModel)]="form.showPhone" name="showPhone" [disabled]="isCarpooling" />
-              📞 {{ 'deposer.show_phone_toggle' | T }}
+              <app-icon name="phone" [size]="15" /> {{ 'deposer.show_phone_toggle' | T }}
             </label>
             @if (isCarpooling) {
               <p class="deposer__step-sub">{{ 'deposer.carpooling_phone_hint' | T }}</p>
@@ -369,7 +369,7 @@
             <div class="deposer__summary">
               <div class="deposer__summary-title">{{ 'deposer.summary_title' | T }}</div>
               <div class="deposer__summary-row"><span>{{ 'deposer.summary_intent' | T }}</span><strong>{{ (form.intent === 'SEARCH' ? 'deposer.intent_search' : 'deposer.intent_offer') | T }}</strong></div>
-              <div class="deposer__summary-row"><span>{{ 'deposer.summary_cat' | T }}</span><strong>{{ summaryCategory?.icon }} {{ ('cats.' + summaryCategory?.value) | T }}</strong></div>
+              <div class="deposer__summary-row"><span>{{ 'deposer.summary_cat' | T }}</span><strong class="icon-label">@if (summaryCategory) { <app-cat-icon [category]="summaryCategory.value" [size]="15" /> } {{ ('cats.' + summaryCategory?.value) | T }}</strong></div>
               @if (summarySubcategory) {
                 <div class="deposer__summary-row"><span>{{ 'deposer.summary_subcat' | T }}</span><strong>{{ ('subcats.' + summarySubcategory!.code) | T }}</strong></div>
               }
@@ -401,7 +401,7 @@
       }
 
       @if (error) {
-        <div class="deposer__error">⚠️ {{ error }}</div>
+        <div class="deposer__error"><app-icon name="alert-triangle" [size]="15" /> {{ error }}</div>
       }
 
       <!-- Navigation -->

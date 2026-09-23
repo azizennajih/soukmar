@@ -10,7 +10,7 @@
     <p class="auth-sub">{{ 'auth.login_sub' | T }}</p>
 
     @if (verifiedSuccess) {
-      <div class="auth-success">✅ {{ 'auth.verified_success' | T }}</div>
+      <div class="auth-success"><app-icon name="check-circle" [size]="15" /> {{ 'auth.verified_success' | T }}</div>
     }
 
     @if (error) {

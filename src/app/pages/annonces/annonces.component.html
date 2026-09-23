@@ -205,7 +205,7 @@
         <div>
           <h1 class="annonces__title">
             @if (filters.q) { "{{ filters.q }}" }
-            @else if (activeCategory) { {{ activeCategory.icon }} {{ ('cats.' + activeCategory.value) | T }} }
+            @else if (activeCategory) { <span class="icon-label"><app-cat-icon [category]="activeCategory.value" [size]="18" /> {{ ('cats.' + activeCategory.value) | T }}</span> }
             @else { {{ 'annonces.title' | T }} }
           </h1>
           <p class="annonces__count">{{ listings.length }} {{ 'annonces.found' | T }}</p>
@@ -272,7 +272,7 @@
         }
       } @else {
         <div class="empty-state">
-          <span>🔍</span>
+          <app-icon name="search" [size]="32" />
           <p>{{ 'annonces.empty' | T }}</p>
           <small>{{ 'annonces.empty_sub' | T }}</small>
           <button class="btn-outline" (click)="resetFilters()">{{ 'annonces.reset' | T }}</button>

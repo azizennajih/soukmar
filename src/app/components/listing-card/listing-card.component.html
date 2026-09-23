@@ -5,8 +5,8 @@
       <img [src]="listing.images[0]" [alt]="listing.title" loading="lazy" />
     } @else {
       <div class="listing-card__placeholder">
-        @if (category?.icon) {
-          {{ category?.icon }}
+        @if (category) {
+          <app-cat-icon [category]="category.value" [size]="40" />
         } @else {
           <app-icon name="image" [size]="32" />
         }
@@ -76,7 +76,8 @@
 
     <div class="listing-card__meta">
       <span class="listing-card__cat" [ngClass]="category?.color">
-        {{ category?.icon }} {{ ('cats.' + listing.category) | T }}
+        <app-cat-icon [category]="listing.category" [size]="13" />
+        {{ ('cats.' + listing.category) | T }}
       </span>
       @if (highlightAttr) {
         <span class="listing-card__attr">{{ highlightAttr.display }}</span>

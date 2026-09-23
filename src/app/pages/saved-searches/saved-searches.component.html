@@ -3,7 +3,7 @@
 
   @if (!loading && searches.length === 0) {
     <div class="empty-state">
-      <span>🔔</span>
+      <app-icon name="bell" [size]="32" />
       <p>{{ 'saved_searches.empty' | T }}</p>
       <small>{{ 'saved_searches.empty_sub' | T }}</small>
     </div>
@@ -14,7 +14,7 @@
           <div class="search-row__body">
             <span class="search-row__name">{{ s.name }}</span>
             <span class="search-row__meta">
-              @if (category(s); as c) { {{ c.icon }} {{ ('cats.' + c.value) | T }} }
+              @if (category(s); as c) { <span class="icon-label"><app-cat-icon [category]="c.value" [size]="13" /> {{ ('cats.' + c.value) | T }}</span> }
               @if (s.city) { · <span class="icon-label"><app-icon name="location" [size]="12" /> {{ s.city | cityLabel }}</span> }
               @if (s.minPrice || s.maxPrice) { · {{ s.minPrice || 0 }}–{{ s.maxPrice || '∞' }} MAD }
             </span>

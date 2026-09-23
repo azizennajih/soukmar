@@ -4,14 +4,14 @@
 
   @if (done()) {
     <div class="card supprimer__card">
-      <div class="supprimer__alert supprimer__alert--success">✅ {{ 'delete_account.success' | T }}</div>
+      <div class="supprimer__alert supprimer__alert--success"><app-icon name="check-circle" [size]="15" /> {{ 'delete_account.success' | T }}</div>
     </div>
   } @else {
     <div class="card supprimer__card">
-      <p class="supprimer__warning">⚠️ {{ 'delete_account.warning' | T }}</p>
+      <p class="supprimer__warning"><app-icon name="alert-triangle" [size]="16" /> {{ 'delete_account.warning' | T }}</p>
 
       @if (errorMsg) {
-        <div class="supprimer__alert supprimer__alert--error">❌ {{ errorMsg }}</div>
+        <div class="supprimer__alert supprimer__alert--error"><app-icon name="close" [size]="15" /> {{ errorMsg }}</div>
       }
 
       <form (ngSubmit)="deleteAccount()" class="supprimer__form">

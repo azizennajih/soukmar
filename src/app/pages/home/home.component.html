@@ -50,7 +50,7 @@
       <div class="container">
         <div class="section-header">
           <div>
-            <h2 class="section-title">👋 {{ 'home.welcome_back' | T }}</h2>
+            <h2 class="section-title">{{ 'home.welcome_back' | T }}</h2>
             <p class="section-sub">{{ 'home.your_interests' | T }}</p>
           </div>
         </div>
@@ -97,7 +97,7 @@
       <div class="container">
         <div class="section-header">
           <div>
-            <h2 class="section-title">⭐ {{ 'home.featured' | T }}</h2>
+            <h2 class="section-title icon-label"><app-icon name="star" [size]="20" /> {{ 'home.featured' | T }}</h2>
           </div>
           <a routerLink="/annonces" class="section-link">{{ 'home.see_all' | T }} →</a>
         </div>
@@ -115,7 +115,7 @@
     <div class="container">
       <div class="section-header">
         <div>
-          <h2 class="section-title">🕐 {{ 'home.recent' | T }}</h2>
+          <h2 class="section-title icon-label"><app-icon name="clock" [size]="20" /> {{ 'home.recent' | T }}</h2>
         </div>
         <a routerLink="/annonces" class="section-link">{{ 'home.see_all' | T }} →</a>
       </div>
@@ -128,7 +128,7 @@
         </div>
       } @else {
         <div class="empty-state">
-          <span>📦</span>
+          <app-icon name="image" [size]="32" />
           <p>{{ 'annonces.empty' | T }}</p>
           <a routerLink="/deposer-annonce" class="btn-primary">{{ 'nav.post_full' | T }}</a>
         </div>

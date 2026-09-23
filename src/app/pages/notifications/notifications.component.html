@@ -18,7 +18,7 @@
 
   @if (notifications.length === 0) {
     <div class="notifications__empty">
-      <span>🔔</span>
+      <app-icon name="bell" [size]="48" />
       <p>{{ 'notifications.empty' | T }}</p>
       <small>{{ 'notifications.empty_sub' | T }}</small>
     </div>

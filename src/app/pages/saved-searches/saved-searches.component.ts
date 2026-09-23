@@ -7,11 +7,12 @@ import { SavedSearch, CATEGORIES } from '../../models/listing.model';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { IconComponent } from '../../components/icon/icon.component';
+import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { I18nService } from '../../services/i18n.service';
 
 @Component({
   selector: 'app-saved-searches',
-  imports: [CommonModule, TranslatePipe, CityLabelPipe, IconComponent],
+  imports: [CommonModule, TranslatePipe, CityLabelPipe, IconComponent, CatIconComponent],
   templateUrl: './saved-searches.component.html',
   styleUrl: './saved-searches.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

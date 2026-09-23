@@ -7,10 +7,11 @@ import { AuthService } from '../../../services/auth.service';
 import { I18nService } from '../../../services/i18n.service';
 import { TranslatePipe } from '../../../pipes/translate.pipe';
 import { PasswordInputComponent } from '../../../components/password-input/password-input.component';
+import { IconComponent } from '../../../components/icon/icon.component';
 
 @Component({
   selector: 'app-reset-password',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, TranslatePipe, PasswordInputComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, TranslatePipe, PasswordInputComponent, IconComponent],
   templateUrl: './reset-password.component.html',
   styleUrl: '../login/login.component.scss'
 })

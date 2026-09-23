@@ -53,9 +53,11 @@
   }
 
   &__contact-link {
-    display: block; font-size: .85rem; color: #64748b;
+    display: flex; align-items: center; gap: .4rem;
+    font-size: .85rem; color: #64748b;
     text-decoration: none; margin-bottom: .5rem;
     transition: color .15s;
+    svg { flex-shrink: 0; }
     &:hover { color: #e63946; }
   }
 

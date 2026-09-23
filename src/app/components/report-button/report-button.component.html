@@ -1,5 +1,5 @@
 @if (submitted()) {
-  <div class="report-btn__thanks" [class.report-btn--compact]="compact">✅ {{ 'report.thanks' | T }}</div>
+  <div class="report-btn__thanks icon-label" [class.report-btn--compact]="compact"><app-icon name="check-circle" [size]="14" /> {{ 'report.thanks' | T }}</div>
 } @else if (!open()) {
   <button type="button" class="report-btn__toggle icon-label" [class.report-btn--compact]="compact" (click)="open.set(true)">
     <app-icon name="report" [size]="13" /> {{ 'report.button' | T }}

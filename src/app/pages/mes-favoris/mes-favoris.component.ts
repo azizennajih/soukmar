@@ -9,10 +9,11 @@ import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { Listing } from '../../models/listing.model';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
+import { IconComponent } from '../../components/icon/icon.component';
 
 @Component({
   selector: 'app-mes-favoris',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, ListingCardComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, ListingCardComponent, IconComponent],
   templateUrl: './mes-favoris.component.html',
   styleUrl: './mes-favoris.component.scss'
 })

@@ -11,7 +11,7 @@
     <div class="mes-favoris__loading">…</div>
   } @else if (listings.length === 0) {
     <div class="empty-state">
-      <span>🤍</span>
+      <app-icon name="heart" [size]="32" />
       <p>{{ 'mes_favoris.empty' | T }}</p>
       <small>{{ 'mes_favoris.empty_sub' | T }}</small>
       <a routerLink="/annonces" class="btn-primary">{{ 'mes_favoris.browse_btn' | T }}</a>

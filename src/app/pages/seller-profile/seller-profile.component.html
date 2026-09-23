@@ -20,7 +20,7 @@
         <div class="seller-profile__badges">
           <app-star-rating [avgRating]="profile.avgRating" [reviewCount]="profile.reviewCount" />
           @if (responseLabel(profile.avgResponseHours); as label) {
-            <span class="seller-profile__response">⚡ {{ label }}</span>
+            <span class="seller-profile__response"><app-icon name="zap" [size]="12" /> {{ label }}</span>
           }
         </div>
       </div>
@@ -55,7 +55,7 @@
                 </div>
                 @if (r.comment) { <p class="review-row__comment">{{ r.comment }}</p> }
                 <span class="review-row__meta">
-                  @if (r.listing) { 📌 {{ r.listing.title }} · }
+                  @if (r.listing) { <span class="icon-label"><app-icon name="link" [size]="11" /> {{ r.listing.title }}</span> · }
                   {{ reviewTime(r.createdAt) }}
                 </span>
               </div>

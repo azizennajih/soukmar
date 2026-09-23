@@ -8,7 +8,9 @@
 
     @if (emailSent) {
       <div class="verify-sent">
-        <div class="verify-sent__icon">{{ emailSendFailed ? '⚠️' : '✉️' }}</div>
+        <div class="verify-sent__icon">
+          <app-icon [name]="emailSendFailed ? 'alert-triangle' : 'mail'" [size]="40" />
+        </div>
         <h1 class="auth-title">{{ (emailSendFailed ? 'auth.verify_email_failed_title' : 'auth.verify_email_title') | T }}</h1>
         <p class="auth-sub">{{ (emailSendFailed ? 'auth.verify_email_failed_sub' : 'auth.verify_email_sub') | T }} <strong>{{ registeredEmail }}</strong></p>
         @if (!emailSendFailed) {

@@ -120,7 +120,12 @@
   &--success::before { background: #22c55e; }
   &--gold::before    { background: linear-gradient(90deg, #f59e0b, #d97706); }
 
-  &__icon { font-size: 1.5rem; margin-bottom: .6rem; }
+  &--primary &__icon { color: #3b82f6; }
+  &--warning &__icon { color: #f59e0b; }
+  &--success &__icon { color: #22c55e; }
+  &--gold &__icon    { color: #d97706; }
+
+  &__icon { margin-bottom: .6rem; }
   &__value {
     font-size: 2rem; font-weight: 900;
     color: var(--text); line-height: 1;

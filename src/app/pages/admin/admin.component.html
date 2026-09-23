@@ -66,25 +66,25 @@
       <!-- KPI Cards -->
       <div class="kpi-grid">
         <div class="kpi-card kpi-card--primary">
-          <div class="kpi-card__icon">📋</div>
+          <div class="kpi-card__icon"><app-icon name="clipboard" [size]="22" /></div>
           <div class="kpi-card__value">{{ stats.total }}</div>
           <div class="kpi-card__label">{{ 'admin.kpi_total' | T }}</div>
           <div class="kpi-card__sub">{{ stats.active }} {{ 'admin.kpi_active' | T }}</div>
         </div>
         <div class="kpi-card kpi-card--warning">
-          <div class="kpi-card__icon">⏳</div>
+          <div class="kpi-card__icon"><app-icon name="clock" [size]="22" /></div>
           <div class="kpi-card__value">{{ stats.pending }}</div>
           <div class="kpi-card__label">{{ 'admin.kpi_pending' | T }}</div>
           <div class="kpi-card__sub">{{ 'admin.kpi_to_moderate' | T }}</div>
         </div>
         <div class="kpi-card kpi-card--success">
-          <div class="kpi-card__icon">👥</div>
+          <div class="kpi-card__icon"><app-icon name="users" [size]="22" /></div>
           <div class="kpi-card__value">{{ stats.users }}</div>
           <div class="kpi-card__label">{{ 'admin.kpi_users' | T }}</div>
           <div class="kpi-card__sub">{{ 'admin.kpi_registered' | T }}</div>
         </div>
         <div class="kpi-card kpi-card--gold">
-          <div class="kpi-card__icon">⭐</div>
+          <div class="kpi-card__icon"><app-icon name="star" [size]="22" /></div>
           <div class="kpi-card__value">{{ stats.premium }}</div>
           <div class="kpi-card__label">{{ 'admin.kpi_premium' | T }}</div>
           <div class="kpi-card__sub">{{ formatPrice(stats.premiumRevenue) }} {{ 'admin.kpi_generated' | T }}</div>
@@ -95,7 +95,7 @@
       <div class="charts-row">
         <!-- Monthly bar chart -->
         <div class="chart-card card">
-          <h3 class="chart-title">{{ 'admin.monthly_chart' | T }}</h3>
+          <h3 class="chart-title icon-label"><app-icon name="trending-up" [size]="16" /> {{ 'admin.monthly_chart' | T }}</h3>
           <div class="bar-chart">
             @for (val of monthlyData; track $index) {
               <div class="bar-chart__col">
@@ -112,7 +112,7 @@
 
         <!-- Category breakdown -->
         <div class="chart-card card">
-          <h3 class="chart-title">{{ 'admin.cat_breakdown' | T }}</h3>
+          <h3 class="chart-title icon-label"><app-icon name="bar-chart" [size]="16" /> {{ 'admin.cat_breakdown' | T }}</h3>
           <div class="cat-breakdown">
             @for (cat of categoryStats; track cat.value) {
               @if (cat.count > 0) {
@@ -186,7 +186,7 @@
       <div class="admin-loading">{{ 'admin.loading' | T }}</div>
     } @else if (filteredListings.length === 0) {
       <div class="empty-state">
-        <span>🎉</span><p>{{ 'admin.empty_listings' | T }}</p>
+        <app-icon name="check-circle" [size]="32" /><p>{{ 'admin.empty_listings' | T }}</p>
       </div>
     } @else {
       <div class="data-table card">
@@ -205,19 +205,19 @@
                 @if (listing.images?.[0]) {
                   <img [src]="listing.images[0]" alt="" loading="lazy">
                 } @else {
-                  <span>{{ getCategory(listing.category)?.icon }}</span>
+                  <app-cat-icon [category]="listing.category" [size]="20" />
                 }
               </div>
               <div>
                 <div class="table-listing-title">{{ listing.title }}</div>
                 <div class="table-listing-meta">
                   <span class="badge" [ngClass]="getCategory(listing.category)?.color">
-                    {{ getCategory(listing.category)?.icon }} {{ ('cats.' + listing.category) | T }}
+                    <app-cat-icon [category]="listing.category" [size]="13" /> {{ ('cats.' + listing.category) | T }}
                   </span>
                   <span class="table-listing-city icon-label"><app-icon name="location" [size]="12" /> {{ listing.city | cityLabel }}</span>
                 </div>
                 @if (listing.isPremium) {
-                  <span class="badge badge-premium" style="margin-top:.25rem">⭐ {{ 'listing.premium_badge' | T }}</span>
+                  <span class="badge badge-premium" style="margin-top:.25rem"><app-icon name="star" [size]="12" /> {{ 'listing.premium_badge' | T }}</span>
                 }
               </div>
             </div>
@@ -243,26 +243,26 @@
             </div>
             <!-- Actions -->
             <div class="table-cell-actions">
-              <a [routerLink]="['/annonces', listing.id]" class="action-btn action-btn--view" [title]="'common.view' | T">👁</a>
+              <a [routerLink]="['/annonces', listing.id]" class="action-btn action-btn--view" [title]="'common.view' | T"><app-icon name="eye" [size]="13" /></a>
               @if (listing.status === 'PENDING') {
                 <button class="action-btn action-btn--approve" [title]="'common.approve' | T"
                         [disabled]="isActionLoading(listing.id)"
-                        (click)="updateListingStatus(listing, 'ACTIVE')">✅</button>
+                        (click)="updateListingStatus(listing, 'ACTIVE')"><app-icon name="check" [size]="13" /></button>
                 <button class="action-btn action-btn--reject" [title]="'common.reject' | T"
                         [disabled]="isActionLoading(listing.id)"
-                        (click)="updateListingStatus(listing, 'REJECTED')">❌</button>
+                        (click)="updateListingStatus(listing, 'REJECTED')"><app-icon name="close" [size]="13" /></button>
               }
               @if (listing.status === 'ACTIVE') {
                 <button class="action-btn action-btn--reject" [title]="'common.deactivate' | T"
                         [disabled]="isActionLoading(listing.id)"
-                        (click)="updateListingStatus(listing, 'REJECTED')">⏸</button>
+                        (click)="updateListingStatus(listing, 'REJECTED')"><app-icon name="pause" [size]="13" /></button>
               }
               <button class="action-btn" [class.action-btn--gold]="listing.isPremium"
                       [title]="'common.toggle_premium' | T" [disabled]="isActionLoading(listing.id)"
-                      (click)="togglePremium(listing)">⭐</button>
+                      (click)="togglePremium(listing)"><app-icon name="star" [size]="13" /></button>
               <button class="action-btn action-btn--delete" [title]="'common.delete' | T"
                       [disabled]="isActionLoading(listing.id)"
-                      (click)="deleteListing(listing)">🗑</button>
+                      (click)="deleteListing(listing)"><app-icon name="trash" [size]="13" /></button>
             </div>
           </div>
         }
@@ -279,7 +279,7 @@
 
     <div class="users-toolbar">
       <div class="search-input-wrap">
-        <span class="search-icon">🔍</span>
+        <span class="search-icon"><app-icon name="search" [size]="15" /></span>
         <input type="text" [placeholder]="'admin.search_users' | T" [(ngModel)]="userSearch" class="search-input">
       </div>
     </div>
@@ -287,7 +287,7 @@
     @if (usersLoading()) {
       <div class="admin-loading">{{ 'admin.loading' | T }}</div>
     } @else if (filteredUsers.length === 0) {
-      <div class="empty-state"><span>👥</span><p>{{ 'admin.empty_users' | T }}</p></div>
+      <div class="empty-state"><app-icon name="users" [size]="32" /><p>{{ 'admin.empty_users' | T }}</p></div>
     } @else {
       <div class="data-table card">
         <div class="data-table__head data-table__head--users">
@@ -336,19 +336,19 @@
     <!-- Revenue KPIs -->
     <div class="kpi-grid kpi-grid--3">
       <div class="kpi-card kpi-card--gold">
-        <div class="kpi-card__icon">💰</div>
+        <div class="kpi-card__icon"><app-icon name="coins" [size]="22" /></div>
         <div class="kpi-card__value">{{ formatPrice(stats.premiumRevenue) }}</div>
         <div class="kpi-card__label">{{ 'admin.revenue_total' | T }}</div>
         <div class="kpi-card__sub">{{ stats.premium }} × 99 MAD</div>
       </div>
       <div class="kpi-card kpi-card--primary">
-        <div class="kpi-card__icon">⭐</div>
+        <div class="kpi-card__icon"><app-icon name="star" [size]="22" /></div>
         <div class="kpi-card__value">{{ stats.premium }}</div>
         <div class="kpi-card__label">{{ 'admin.revenue_active' | T }}</div>
         <div class="kpi-card__sub">{{ stats.total > 0 ? ((stats.premium / stats.total) * 100).toFixed(1) : 0 }}{{ 'admin.revenue_pct' | T }}</div>
       </div>
       <div class="kpi-card kpi-card--success">
-        <div class="kpi-card__icon">📈</div>
+        <div class="kpi-card__icon"><app-icon name="trending-up" [size]="22" /></div>
         <div class="kpi-card__value">{{ formatPrice(stats.premiumRevenue / 12) }}</div>
         <div class="kpi-card__label">{{ 'admin.revenue_monthly_avg' | T }}</div>
         <div class="kpi-card__sub">{{ 'admin.revenue_12m' | T }}</div>
@@ -357,7 +357,7 @@
 
     <!-- Revenue chart -->
     <div class="card chart-card chart-card--wide">
-      <h3 class="chart-title">{{ 'admin.revenue_chart' | T }}</h3>
+      <h3 class="chart-title icon-label"><app-icon name="coins" [size]="16" /> {{ 'admin.revenue_chart' | T }}</h3>
       <div class="bar-chart bar-chart--revenue">
         @for (val of revenueMonthly; track $index) {
           <div class="bar-chart__col">
@@ -374,11 +374,11 @@
     <!-- Premium listings table -->
     <div class="card" style="margin-top:1.25rem">
       <div class="pending-card__header">
-        <span>⭐ {{ 'admin.kpi_premium' | T }}</span>
+        <span class="icon-label"><app-icon name="star" [size]="15" /> {{ 'admin.kpi_premium' | T }}</span>
         <span class="badge badge-premium">{{ stats.premium }}</span>
       </div>
       @if (stats.premium === 0) {
-        <div class="empty-state"><span>⭐</span><p>{{ 'admin.empty_premium' | T }}</p></div>
+        <div class="empty-state"><app-icon name="star" [size]="32" /><p>{{ 'admin.empty_premium' | T }}</p></div>
       } @else {
         <div class="data-table">
           <div class="data-table__head">
@@ -629,7 +629,7 @@
       <div class="admin-loading">{{ 'admin.loading' | T }}</div>
     } @else if (filteredSecurityEvents.length === 0) {
       <div class="empty-state">
-        <span>🛡️</span><p>{{ 'admin.security_empty' | T }}</p>
+        <app-icon name="shield" [size]="32" /><p>{{ 'admin.security_empty' | T }}</p>
       </div>
     } @else {
       <div class="report-list">
@@ -641,7 +641,7 @@
             </div>
             <p class="report-card__reason"><strong>{{ securityEventLabel(event.type) }}</strong></p>
             @if (event.detail) {
-              <p class="report-card__note">📝 {{ event.detail }}</p>
+              <p class="report-card__note icon-label"><app-icon name="edit" [size]="12" /> {{ event.detail }}</p>
             }
             <div class="report-card__parties">
               @if (event.user) {

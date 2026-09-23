@@ -6,7 +6,7 @@
 .verify-sent {
   text-align: center;
 
-  &__icon { font-size: 3rem; margin-bottom: 1rem; }
+  &__icon { display: flex; justify-content: center; color: var(--primary); margin-bottom: 1rem; }
 
   &__hint {
     font-size: .9rem;
