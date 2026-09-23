@@ -249,6 +249,7 @@
     "email": "ایمیل",
     "password": "رمز عبور",
     "name": "نام کامل",
+    "country": "کشور",
     "phone": "تلفن",
     "city": "شهر",
     "account_type": "نوع حساب",

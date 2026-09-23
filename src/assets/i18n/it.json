@@ -249,6 +249,7 @@
     "email": "Email",
     "password": "Password",
     "name": "Nome completo",
+    "country": "Paese",
     "phone": "Telefono",
     "city": "Città",
     "account_type": "Tipo di account",

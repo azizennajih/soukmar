@@ -16,21 +16,34 @@ import { parsePhone, composePhone } from '../../models/dial-codes';
 export class PhoneInputComponent implements OnChanges {
   @Input() value = '';
   @Input() placeholder = '';
+  /** Which dial code to show while the field is still empty (e.g. driven by
+   * a separate "country" picker elsewhere in the same form) — composePhone()
+   * deliberately returns '' for an empty local number (so clearing the phone
+   * field never stores a bogus dial-code-only value), so that string alone
+   * can't carry this hint; a distinct input is needed instead. Ignored once
+   * there's an actual number, typed or loaded, so it never fights the real
+   * value's own embedded country code. */
+  @Input() defaultIso = 'MA';
   @Output() valueChange = new EventEmitter<string>();
 
   iso = 'MA';
   localNumber = '';
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!changes['value']) return;
-    const incoming = this.value ?? '';
-    // Skip re-parsing our own emitted value — otherwise every keystroke would
-    // round-trip through composePhone (which strips the leading "0") and
-    // immediately rewrite what the user just typed out from under them.
-    if (incoming === composePhone(this.iso, this.localNumber)) return;
-    const parsed = parsePhone(incoming);
-    this.iso = parsed.iso;
-    this.localNumber = parsed.localNumber;
+    if (changes['value']) {
+      const incoming = this.value ?? '';
+      // Skip re-parsing our own emitted value — otherwise every keystroke would
+      // round-trip through composePhone (which strips the leading "0") and
+      // immediately rewrite what the user just typed out from under them.
+      if (incoming !== composePhone(this.iso, this.localNumber)) {
+        const parsed = parsePhone(incoming);
+        this.iso = parsed.iso;
+        this.localNumber = parsed.localNumber;
+      }
+    }
+    if (changes['defaultIso'] && !this.localNumber) {
+      this.iso = this.defaultIso;
+    }
   }
 
   onCountryChange(iso: string) {

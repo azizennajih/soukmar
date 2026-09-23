@@ -10,6 +10,9 @@ import { TurnstileComponent } from '../../../components/turnstile/turnstile.comp
 import { IconComponent } from '../../../components/icon/icon.component';
 import { PhoneInputComponent } from '../../../components/phone-input/phone-input.component';
 import { PasswordInputComponent } from '../../../components/password-input/password-input.component';
+import { VISIBLE_COUNTRY_REGIONS, countryName } from '../../../models/country.model';
+import { CountryService } from '../../../services/country.service';
+import { parsePhone, composePhone } from '../../../models/dial-codes';
 
 @Component({
   selector: 'app-register',
@@ -20,9 +23,32 @@ import { PasswordInputComponent } from '../../../components/password-input/passw
 export class RegisterComponent {
   private auth = inject(AuthService);
   private cdr = inject(ChangeDetectorRef);
+  private countryService = inject(CountryService);
   i18n = inject(I18nService);
 
-  form = { name: '', email: '', phone: '', city: '', password: '', confirm: '', accountType: '' as '' | 'PRIVATE' | 'BUSINESS' };
+  countryRegions = VISIBLE_COUNTRY_REGIONS;
+  countryName = countryName;
+
+  form = {
+    name: '', email: '',
+    country: this.countryService.country(),
+    phone: '',
+    city: '', password: '', confirm: '', accountType: '' as '' | 'PRIVATE' | 'BUSINESS'
+  };
+
+  regionLabelKey(region: string): string {
+    return 'deposer.region_' + region.toLowerCase();
+  }
+
+  /** Picking a country updates app-phone-input's [defaultIso] (see there for
+   * why that's a separate input from the phone value itself), which shows
+   * the matching dial code immediately even before anything is typed. Any
+   * digits already typed keep their own prefix in sync too. */
+  onCountryChange(code: string) {
+    this.form.country = code;
+    const { localNumber } = parsePhone(this.form.phone);
+    this.form.phone = composePhone(code, localNumber);
+  }
   loading = false;
   error = '';
   emailSent = false;
