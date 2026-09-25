@@ -10,7 +10,7 @@ import { TurnstileComponent } from '../../../components/turnstile/turnstile.comp
 import { IconComponent } from '../../../components/icon/icon.component';
 import { PhoneInputComponent } from '../../../components/phone-input/phone-input.component';
 import { PasswordInputComponent } from '../../../components/password-input/password-input.component';
-import { VISIBLE_COUNTRY_REGIONS, countryName } from '../../../models/country.model';
+import { VISIBLE_COUNTRY_REGIONS, countryName, isVisibleCountry } from '../../../models/country.model';
 import { CountryService } from '../../../services/country.service';
 import { parsePhone, composePhone, localNumberLengthRange } from '../../../models/dial-codes';
 
@@ -31,7 +31,11 @@ export class RegisterComponent {
 
   form = {
     name: '', email: '',
-    country: this.countryService.country(),
+    // The browsing country can be any of the ~195 (e.g. IP-detected), but
+    // this form's <select> only offers the current soft-launch markets —
+    // falls back to MA rather than defaulting to a country with no matching
+    // <option>, which would otherwise render as blank/unselected.
+    country: isVisibleCountry(this.countryService.country()) ? this.countryService.country() : 'MA',
     phone: '',
     city: '', password: '', confirm: '', accountType: '' as '' | 'PRIVATE' | 'BUSINESS'
   };

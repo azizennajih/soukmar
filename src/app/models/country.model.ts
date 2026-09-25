@@ -273,6 +273,17 @@ export function isKnownCountry(code: string): boolean {
   return BY_CODE.has(code);
 }
 
+const VISIBLE_COUNTRY_CODES = new Set(VISIBLE_COUNTRY_REGIONS.flatMap(g => g.countries));
+
+/** Whether a country is one of the current soft-launch markets, i.e. shown
+ * as a pickable option in VISIBLE_COUNTRY_REGIONS — use this before defaulting
+ * a <select> bound to that list from a country that can be *any* of the ~195
+ * (e.g. CountryService.country(), IP-detected and unrestricted), or the
+ * default silently renders as unselected. */
+export function isVisibleCountry(code: string): boolean {
+  return VISIBLE_COUNTRY_CODES.has(code);
+}
+
 /** Localized display name via Intl.DisplayNames (CLDR) — zero-maintenance,
  * always accurate, works for all ~195 countries in every UI language. */
 export function countryName(code: string, lang: string): string {
