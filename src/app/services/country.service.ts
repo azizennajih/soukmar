@@ -1,4 +1,4 @@
-import { Injectable, signal, computed, effect, inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, signal, computed, effect, inject, PLATFORM_ID, REQUEST } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { BrowserStorageService } from './browser-storage.service';
@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { isKnownCountry } from '../models/country.model';
 
 const COUNTRY_KEY = 'soukmar_country';
+const COUNTRY_COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
 /** The country a visitor is browsing/listing in — deliberately independent
  * of I18nService (country ≠ language: a French speaker might browse
@@ -17,6 +18,11 @@ export class CountryService {
   private http = inject(HttpClient);
   private auth = inject(AuthService);
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  /** Only populated during SSR (null in the browser) — lets the very first
+   * server-rendered paint already know the visitor's country from the
+   * cookie mirror below, instead of always defaulting to 'MA' because the
+   * server has no access to localStorage (see readInitialCountry()). */
+  private request = inject(REQUEST, { optional: true });
 
   /** Only ADMINs may switch the browsing country manually (navbar dropdown).
    * Everyone else sees a fixed country they cannot change: IP-detected while
@@ -24,14 +30,17 @@ export class CountryService {
    * navbar's read-only badge vs. active dropdown. */
   canSwitchCountry = computed(() => this.auth.currentUser()?.role === 'ADMIN');
 
-  country = signal<string>(
-    isKnownCountry(this.storage.getItem(COUNTRY_KEY) ?? '')
-      ? this.storage.getItem(COUNTRY_KEY)!
-      : 'MA'
-  );
+  country = signal<string>(this.readInitialCountry());
 
   constructor() {
-    effect(() => this.storage.setItem(COUNTRY_KEY, this.country()));
+    // localStorage stays the source of truth in the browser; the cookie is
+    // only a mirror so SSR can read it (see readInitialCountry()) — writing
+    // it here, alongside localStorage, keeps both in sync on every change.
+    effect(() => {
+      const code = this.country();
+      this.storage.setItem(COUNTRY_KEY, code);
+      this.writeCountryCookie(code);
+    });
     // Pins the browsing country to the account's stored one for regular
     // users on login. For anyone NOT logged in — a fresh visit, or right
     // after logging out — always re-detects via IP instead, since they have
@@ -75,5 +84,30 @@ export class CountryService {
       },
       error: () => {},
     });
+  }
+
+  /** In the browser, localStorage (as before). During SSR, the server has no
+   * access to that, so it reads the `soukmar_country` cookie sent with the
+   * incoming request instead — set client-side by writeCountryCookie()
+   * below on every change — so the very first server-rendered paint already
+   * shows the right country rather than always flashing 'MA' before
+   * hydration corrects it. A genuinely first-ever visit (no cookie yet)
+   * still shows the 'MA' fallback until IP detection resolves client-side —
+   * unavoidable without a server-side geo-IP lookup, out of scope here. */
+  private readInitialCountry(): string {
+    const stored = this.isBrowser ? this.storage.getItem(COUNTRY_KEY) : this.readCountryFromRequestCookie();
+    return stored && isKnownCountry(stored) ? stored : 'MA';
+  }
+
+  private readCountryFromRequestCookie(): string | null {
+    const cookieHeader = this.request?.headers.get('cookie');
+    if (!cookieHeader) return null;
+    const match = cookieHeader.match(/(?:^|;\s*)soukmar_country=([^;]+)/);
+    return match ? decodeURIComponent(match[1]) : null;
+  }
+
+  private writeCountryCookie(code: string) {
+    if (!this.isBrowser) return;
+    document.cookie = `${COUNTRY_KEY}=${encodeURIComponent(code)}; path=/; max-age=${COUNTRY_COOKIE_MAX_AGE}; samesite=lax`;
   }
 }
