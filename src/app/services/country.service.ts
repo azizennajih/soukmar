@@ -24,12 +24,6 @@ export class CountryService {
    * navbar's read-only badge vs. active dropdown. */
   canSwitchCountry = computed(() => this.auth.currentUser()?.role === 'ADMIN');
 
-  /** Captured before any write happens, so we know whether this is a
-   * genuinely first-ever visit (no preference saved yet) vs. a returning
-   * visitor whose choice — including an explicit 'MA' — must never be
-   * silently overridden by IP detection. */
-  private hadStoredPreference = this.storage.getItem(COUNTRY_KEY) !== null;
-
   country = signal<string>(
     isKnownCountry(this.storage.getItem(COUNTRY_KEY) ?? '')
       ? this.storage.getItem(COUNTRY_KEY)!
@@ -38,13 +32,22 @@ export class CountryService {
 
   constructor() {
     effect(() => this.storage.setItem(COUNTRY_KEY, this.country()));
-    if (this.isBrowser && !this.hadStoredPreference) this.detectCountryFromIp();
-    // Pins the browsing country to the account's stored one on login (and
-    // whenever currentUser changes, e.g. across tabs); logging out or being
-    // an ADMIN leaves the free localStorage-based choice untouched.
+    // Pins the browsing country to the account's stored one for regular
+    // users on login. For anyone NOT logged in — a fresh visit, or right
+    // after logging out — always re-detects via IP instead, since they have
+    // no way to set a preference manually: a stale value left in
+    // localStorage from a previous account's pinned country (or an earlier
+    // ADMIN's manual pick in this same browser) must never linger past
+    // logout. Re-runs whenever currentUser() itself changes (login/logout),
+    // not on every reload while already logged in as the same user/admin —
+    // an ADMIN's own manual choice is left untouched.
     effect(() => {
       const u = this.auth.currentUser();
-      if (u && u.role !== 'ADMIN') this.country.set(u.country);
+      if (u && u.role !== 'ADMIN') {
+        this.country.set(u.country);
+      } else if (!u && this.isBrowser) {
+        this.detectCountryFromIp();
+      }
     });
   }
 
@@ -56,14 +59,14 @@ export class CountryService {
     this.country.set(code);
   }
 
-  /** Best-effort: on a first-ever visit (nothing in localStorage yet), ask a
-   * free IP-geolocation lookup which country the visitor is browsing from
-   * and pre-select it, instead of always defaulting to Morocco. Silently
-   * keeps the 'MA' default on any failure (network error, unknown/unsupported
-   * country code, ad-blocker) — this is a convenience default, not something
-   * worth showing an error for. Sets the signal directly (not via
-   * setCountry()) since this is automatic, not a manual switch, and must
-   * still run for logged-out visitors even though they can't switch by hand. */
+  /** Best-effort: asks a free IP-geolocation lookup which country the visitor
+   * is browsing from and pre-selects it, instead of defaulting to (or
+   * leaking) some other value. Silently keeps whatever value was already
+   * there on any failure (network error, unknown/unsupported country code,
+   * ad-blocker) — this is a convenience default, not something worth
+   * showing an error for. Sets the signal directly (not via setCountry())
+   * since this is automatic, not a manual switch, and must still run for
+   * logged-out visitors even though they can't switch by hand. */
   private detectCountryFromIp() {
     this.http.get<{ country_code?: string }>('https://ipapi.co/json/').subscribe({
       next: (res) => {
