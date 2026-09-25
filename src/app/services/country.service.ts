@@ -18,14 +18,11 @@ export class CountryService {
   private auth = inject(AuthService);
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  /** Regular (non-ADMIN) logged-in users browse/list only in the country
-   * fixed on their account at registration — see the navbar's read-only
-   * badge vs. active dropdown. Logged-out visitors and ADMINs keep the free,
-   * localStorage-persisted choice this service already supported. */
-  isFixedForUser = computed(() => {
-    const u = this.auth.currentUser();
-    return !!u && u.role !== 'ADMIN';
-  });
+  /** Only ADMINs may switch the browsing country manually (navbar dropdown).
+   * Everyone else sees a fixed country they cannot change: IP-detected while
+   * logged out, or the one chosen at registration once logged in — see the
+   * navbar's read-only badge vs. active dropdown. */
+  canSwitchCountry = computed(() => this.auth.currentUser()?.role === 'ADMIN');
 
   /** Captured before any write happens, so we know whether this is a
    * genuinely first-ever visit (no preference saved yet) vs. a returning
@@ -51,8 +48,11 @@ export class CountryService {
     });
   }
 
+  /** Manual switch, gated to ADMINs only — the navbar only calls this from
+   * the interactive dropdown, which itself is only rendered for ADMINs, but
+   * this guard is the actual enforcement (defense in depth). */
   setCountry(code: string) {
-    if (this.isFixedForUser()) return;
+    if (!this.canSwitchCountry()) return;
     this.country.set(code);
   }
 
@@ -61,12 +61,14 @@ export class CountryService {
    * and pre-select it, instead of always defaulting to Morocco. Silently
    * keeps the 'MA' default on any failure (network error, unknown/unsupported
    * country code, ad-blocker) — this is a convenience default, not something
-   * worth showing an error for. */
+   * worth showing an error for. Sets the signal directly (not via
+   * setCountry()) since this is automatic, not a manual switch, and must
+   * still run for logged-out visitors even though they can't switch by hand. */
   private detectCountryFromIp() {
     this.http.get<{ country_code?: string }>('https://ipapi.co/json/').subscribe({
       next: (res) => {
         const code = res.country_code?.toUpperCase();
-        if (code && isKnownCountry(code)) this.setCountry(code);
+        if (code && isKnownCountry(code)) this.country.set(code);
       },
       error: () => {},
     });

@@ -23,7 +23,8 @@
     "suggest_in_all": "dans toutes les catégories",
     "suggest_in": "dans",
     "search_by_image": "Rechercher par photo",
-    "country_fixed": "Pays fixé par votre compte"
+    "country_fixed": "Pays fixé par votre compte",
+    "country_auto_detected": "Pays détecté automatiquement selon votre position"
   },
   "image_search": {
     "title": "Recherche par photo",

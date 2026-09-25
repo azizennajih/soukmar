@@ -23,7 +23,8 @@
     "suggest_in_all": "تمام زمروں میں",
     "suggest_in": "میں",
     "search_by_image": "تصویر سے تلاش کریں",
-    "country_fixed": "ملک آپ کے اکاؤنٹ کی جانب سے مقرر ہے"
+    "country_fixed": "ملک آپ کے اکاؤنٹ کی جانب سے مقرر ہے",
+    "country_auto_detected": "ملک آپ کے مقام کی بنیاد پر خودکار طور پر معلوم کیا گیا ہے"
   },
   "image_search": {
     "title": "تصویر سے تلاش",

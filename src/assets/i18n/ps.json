@@ -23,7 +23,8 @@
     "suggest_in_all": "په ټولو کټګوریو کې",
     "suggest_in": "په",
     "search_by_image": "د انځور له مخې لټون",
-    "country_fixed": "هیواد ستاسو د حساب لخوا ټاکل شوی"
+    "country_fixed": "هیواد ستاسو د حساب لخوا ټاکل شوی",
+    "country_auto_detected": "هیواد ستاسو د موقعیت پر بنسټ په اتوماتيک ډول کشف شوی"
   },
   "image_search": {
     "title": "د انځور له مخې لټون",

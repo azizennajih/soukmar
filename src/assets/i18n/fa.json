@@ -23,7 +23,8 @@
     "suggest_in_all": "در همه دسته‌بندی‌ها",
     "suggest_in": "در",
     "search_by_image": "جستجو با عکس",
-    "country_fixed": "کشور توسط حساب شما ثابت شده است"
+    "country_fixed": "کشور توسط حساب شما ثابت شده است",
+    "country_auto_detected": "کشور به‌صورت خودکار بر اساس موقعیت مکانی شما تشخیص داده شده است"
   },
   "image_search": {
     "title": "جستجو با عکس",

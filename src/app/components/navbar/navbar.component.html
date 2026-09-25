@@ -98,10 +98,10 @@
           <a routerLink="/auth/login" class="btn-outline navbar__login-btn">{{ 'nav.login' | T }}</a>
         }
 
-        <!-- Country switcher dropdown (ADMIN + logged-out) / fixed badge (regular users) -->
+        <!-- Country switcher dropdown (ADMIN only) / fixed badge (everyone else) -->
         <div class="navbar__country-wrapper">
-          @if (countryService.isFixedForUser()) {
-            <span class="navbar__country-btn navbar__country-btn--fixed" [title]="'nav.country_fixed' | T">
+          @if (!countryService.canSwitchCountry()) {
+            <span class="navbar__country-btn navbar__country-btn--fixed" [title]="(auth.currentUser() ? 'nav.country_fixed' : 'nav.country_auto_detected') | T">
               <app-flag-icon [iso]="countryService.country()" [size]="16" />
               <span class="navbar__country-label">{{ countryName(countryService.country(), i18n.lang()) }}</span>
             </span>
