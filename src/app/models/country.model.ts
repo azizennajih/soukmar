@@ -12,7 +12,7 @@
 // which continent group a country's flag sorts under, and its primary
 // currency.
 
-export type ContinentRegion = 'MOROCCO' | 'AFRICA' | 'EUROPE' | 'ASIA' | 'NORTH_AMERICA' | 'SOUTH_AMERICA' | 'OCEANIA';
+export type ContinentRegion = 'AFRICA' | 'EUROPE' | 'ASIA' | 'NORTH_AMERICA' | 'SOUTH_AMERICA' | 'OCEANIA';
 
 export interface CountryInfo {
   code: string;
@@ -21,9 +21,9 @@ export interface CountryInfo {
 }
 
 export const COUNTRIES: CountryInfo[] = [
-  { code: 'MA', region: 'MOROCCO', currency: 'MAD' },
-
-  // Africa
+  // Africa (Morocco first as the platform's home market, not its own group —
+  // Nutzerentscheidung 2026-09-25: Morocco listed inside Africa, not separately)
+  { code: 'MA', region: 'AFRICA', currency: 'MAD' },
   { code: 'DZ', region: 'AFRICA', currency: 'DZD' },
   { code: 'TN', region: 'AFRICA', currency: 'TND' },
   { code: 'LY', region: 'AFRICA', currency: 'LYD' },
@@ -230,16 +230,18 @@ export const COUNTRIES: CountryInfo[] = [
 
 const BY_CODE = new Map(COUNTRIES.map(c => [c.code, c]));
 
-/** Groups the full country list into <optgroup>s for pickers — Morocco
- * pinned first as the platform's home market (matching dial-codes.ts's own
- * "Morocco first" convention), then continents in a fixed, stable order. */
+/** Groups the full country list into <optgroup>s for pickers — Morocco is
+ * filed under Africa (not its own group, Nutzerentscheidung 2026-09-25) but
+ * pinned first within it (matching dial-codes.ts's own "Morocco first"
+ * convention, since it's first in COUNTRIES and filter() preserves order),
+ * then continents in a fixed, stable order. */
 export const COUNTRY_REGIONS: { region: ContinentRegion; countries: string[] }[] = (
-  ['MOROCCO', 'AFRICA', 'EUROPE', 'ASIA', 'NORTH_AMERICA', 'SOUTH_AMERICA', 'OCEANIA'] as ContinentRegion[]
+  ['AFRICA', 'EUROPE', 'ASIA', 'NORTH_AMERICA', 'SOUTH_AMERICA', 'OCEANIA'] as ContinentRegion[]
 ).map(region => ({ region, countries: COUNTRIES.filter(c => c.region === region).map(c => c.code) }));
 
 /** Continents shown in full in the country switcher/picker UI — no per-country
  * curation needed, every country in these regions is pickable. */
-const FULLY_VISIBLE_REGIONS: ContinentRegion[] = ['MOROCCO', 'AFRICA', 'SOUTH_AMERICA', 'EUROPE', 'NORTH_AMERICA'];
+const FULLY_VISIBLE_REGIONS: ContinentRegion[] = ['AFRICA', 'SOUTH_AMERICA', 'EUROPE', 'NORTH_AMERICA'];
 
 /** Individually curated countries in the remaining (not-fully-open) regions:
  * Arab League / Muslim-majority countries in Asia (Middle East + Central/
@@ -253,10 +255,10 @@ const ADDITIONAL_VISIBLE_COUNTRIES = new Set<string>([
 ]);
 
 /** Countries currently shown in the country switcher/picker UI — Nutzerentscheidung
- * (2026-09-23, erweitert 2026-09-25 um Europa/Nordamerika/Australien): Morocco
- * + all of Africa + all of South America + all of Europe + all of North
- * America + Arab/Islamic countries elsewhere + Australia; everything else
- * (rest of Oceania, Asia outside the curated list) stays hidden for now.
+ * (2026-09-23, erweitert 2026-09-25 um Europa/Nordamerika/Australien): all of
+ * Africa (incl. Morocco) + all of South America + all of Europe + all of
+ * North America + Arab/Islamic countries elsewhere + Australia; everything
+ * else (rest of Oceania, Asia outside the curated list) stays hidden for now.
  * Deliberately a UI-only filter of COUNTRY_REGIONS: COUNTRIES/BY_CODE/
  * currencyForCountry/isKnownCountry/countryName all keep working for every
  * one of the ~195 countries unfiltered, so a hidden country's data is never
