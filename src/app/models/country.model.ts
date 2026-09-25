@@ -237,31 +237,38 @@ export const COUNTRY_REGIONS: { region: ContinentRegion; countries: string[] }[]
   ['MOROCCO', 'AFRICA', 'EUROPE', 'ASIA', 'NORTH_AMERICA', 'SOUTH_AMERICA', 'OCEANIA'] as ContinentRegion[]
 ).map(region => ({ region, countries: COUNTRIES.filter(c => c.region === region).map(c => c.code) }));
 
-/** Arab League / Muslim-majority countries whose region here is NOT Africa
- * (Middle East + Central/South/Southeast Asia + the two Muslim-majority
- * Balkan states) — combined with "all of Africa" and "all of South America"
- * below, this is the current soft-launch market list. */
-const ARAB_ISLAMIC_OUTSIDE_AFRICA = new Set<string>([
+/** Continents shown in full in the country switcher/picker UI — no per-country
+ * curation needed, every country in these regions is pickable. */
+const FULLY_VISIBLE_REGIONS: ContinentRegion[] = ['MOROCCO', 'AFRICA', 'SOUTH_AMERICA', 'EUROPE', 'NORTH_AMERICA'];
+
+/** Individually curated countries in the remaining (not-fully-open) regions:
+ * Arab League / Muslim-majority countries in Asia (Middle East + Central/
+ * South/Southeast Asia + the two Muslim-majority Balkan states, filed under
+ * ASIA/EUROPE in COUNTRY_REGIONS) plus Australia in Oceania. */
+const ADDITIONAL_VISIBLE_COUNTRIES = new Set<string>([
   'JO', 'LB', 'SY', 'IQ', 'SA', 'YE', 'OM', 'AE', 'QA', 'BH', 'KW', 'PS',
   'TR', 'IR', 'AF', 'PK', 'BD', 'ID', 'MY', 'BN', 'MV', 'AZ', 'KZ', 'UZ', 'TM', 'KG', 'TJ',
   'AL', 'XK',
+  'AU',
 ]);
 
 /** Countries currently shown in the country switcher/picker UI — Nutzerentscheidung
- * (2026-09-23): soft-launch scope is Morocco + all of Africa + all of South
- * America + Arab/Islamic countries elsewhere, everything else stays hidden
- * for now. Deliberately a UI-only filter of COUNTRY_REGIONS: COUNTRIES/
- * BY_CODE/currencyForCountry/isKnownCountry/countryName all keep working
- * for every one of the ~195 countries unfiltered, so a hidden country's data
- * is never deleted — only not offered for picking yet. Re-enabling a market
- * later is a one-line change here (or expanding the Set above), not a
- * data-model change. */
+ * (2026-09-23, erweitert 2026-09-25 um Europa/Nordamerika/Australien): Morocco
+ * + all of Africa + all of South America + all of Europe + all of North
+ * America + Arab/Islamic countries elsewhere + Australia; everything else
+ * (rest of Oceania, Asia outside the curated list) stays hidden for now.
+ * Deliberately a UI-only filter of COUNTRY_REGIONS: COUNTRIES/BY_CODE/
+ * currencyForCountry/isKnownCountry/countryName all keep working for every
+ * one of the ~195 countries unfiltered, so a hidden country's data is never
+ * deleted — only not offered for picking yet. Re-enabling a market later is
+ * a one-line change here (add to FULLY_VISIBLE_REGIONS or the Set above),
+ * not a data-model change. */
 export const VISIBLE_COUNTRY_REGIONS: { region: ContinentRegion; countries: string[] }[] = COUNTRY_REGIONS
   .map(g => ({
     region: g.region,
-    countries: (g.region === 'AFRICA' || g.region === 'MOROCCO' || g.region === 'SOUTH_AMERICA')
+    countries: FULLY_VISIBLE_REGIONS.includes(g.region)
       ? g.countries
-      : g.countries.filter(c => ARAB_ISLAMIC_OUTSIDE_AFRICA.has(c)),
+      : g.countries.filter(c => ADDITIONAL_VISIBLE_COUNTRIES.has(c)),
   }))
   .filter(g => g.countries.length > 0);
 
