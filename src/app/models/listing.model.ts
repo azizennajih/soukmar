@@ -76,6 +76,10 @@ export interface Listing {
   lng?: number;
   images: string[];
   status: ListingStatus;
+  /** Set only when lib/moderation.ts (backend) auto-flagged the listing at
+   * creation, routing it to PENDING instead of ACTIVE — shown to admins in
+   * the Pending queue so they know why it was held. */
+  moderationNote?: string | null;
   isPremium: boolean;
   isFeatured: boolean;
   views: number;

@@ -304,7 +304,7 @@ export class AdminComponent implements OnInit {
   private async loadListings() {
     this.loading.set(true);
     try {
-      const res = await firstValueFrom(this.api.get<any>('/listings', { limit: '500' }));
+      const res = await firstValueFrom(this.api.get<any>('/listings', { limit: '500', status: 'ALL' }));
       this.allListings = res.listings ?? res;
     } catch { this.allListings = []; }
     this.loading.set(false);

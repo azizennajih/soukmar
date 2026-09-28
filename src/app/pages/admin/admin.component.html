@@ -142,6 +142,9 @@
                 <div class="pending-row__info">
                   <span class="pending-row__title">{{ listing.title }}</span>
                   <span class="pending-row__meta">{{ listing.city | cityLabel }} · {{ listing.user?.name || '—' }}</span>
+                  @if (listing.moderationNote) {
+                    <span class="pending-row__flag icon-label"><app-icon name="alert-triangle" [size]="11" /> {{ listing.moderationNote }}</span>
+                  }
                 </div>
                 <div class="pending-row__actions">
                   <button class="action-btn action-btn--approve"
@@ -218,6 +221,9 @@
                 </div>
                 @if (listing.isPremium) {
                   <span class="badge badge-premium" style="margin-top:.25rem"><app-icon name="star" [size]="12" /> {{ 'listing.premium_badge' | T }}</span>
+                }
+                @if (listing.moderationNote) {
+                  <div class="table-listing-flag icon-label"><app-icon name="alert-triangle" [size]="12" /> {{ listing.moderationNote }}</div>
                 }
               </div>
             </div>

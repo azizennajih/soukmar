@@ -274,6 +274,7 @@
   &__info { flex: 1; min-width: 0; }
   &__title { font-size: .875rem; font-weight: 600; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   &__meta  { font-size: .75rem; color: var(--text-muted); margin-top: .15rem; }
+  &__flag  { display: flex; font-size: .75rem; color: #b45309; margin-top: .3rem; line-height: 1.4; }
   &__actions { display: flex; gap: .4rem; flex-shrink: 0; }
 }
 
@@ -405,6 +406,15 @@
 .table-listing-city {
   font-size: .72rem;
   color: var(--text-muted);
+}
+
+.table-listing-flag {
+  display: flex;
+  font-size: .72rem;
+  color: #b45309;
+  margin-top: .3rem;
+  max-width: 220px;
+  line-height: 1.4;
 }
 
 .table-cell-user {
