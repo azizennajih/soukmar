@@ -3,14 +3,16 @@ import { inject } from '@angular/core';
 import { adminGuard } from './guards/admin.guard';
 import { LocaleShellComponent } from './pages/locale-shell/locale-shell.component';
 import { I18nService } from './services/i18n.service';
-import { localeUrlMatcher } from './services/locale-routing';
+import { localeCanMatch } from './services/locale-routing';
 
-/** The full app, unchanged, now living under a `localeUrlMatcher`-matched
- * `:lang` segment (`/fr/annonces`, `/ar/annonces/abc123`, ...) instead of
- * at the root. See LocaleShellComponent for how the segment drives
- * I18nService, and locale-routing.ts for why a custom matcher is used
- * instead of a plain `path: ':lang'` param (it must never swallow a real
- * route segment like `/annonces` on a bare, unprefixed URL). */
+/** The full app, unchanged, now living under a `:lang` segment
+ * (`/fr/annonces`, `/ar/annonces/abc123`, ...) instead of at the root. See
+ * LocaleShellComponent for how the segment drives I18nService, and
+ * locale-routing.ts's `localeCanMatch` for why a `canMatch` guard is used
+ * alongside the plain `path: ':lang'` param (it must never swallow a real
+ * route segment like `/annonces` on a bare, unprefixed URL — and per
+ * `localeCanMatch`'s own doc comment, a custom `UrlMatcher` achieves the
+ * same thing but breaks `@angular/ssr`'s server-route-config matching). */
 const localizedRoutes: Routes = [
   {
     path: '',
@@ -139,7 +141,8 @@ const localizedRoutes: Routes = [
 
 export const routes: Routes = [
   {
-    matcher: localeUrlMatcher,
+    path: ':lang',
+    canMatch: [localeCanMatch],
     component: LocaleShellComponent,
     children: localizedRoutes
   },

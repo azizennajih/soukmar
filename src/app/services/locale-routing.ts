@@ -1,4 +1,4 @@
-import { UrlMatchResult, UrlSegment } from '@angular/router';
+import { CanMatchFn, UrlSegment } from '@angular/router';
 
 export type Lang = 'fr' | 'en' | 'ar' | 'de' | 'es' | 'it' | 'pt' | 'tr' | 'fa' | 'ur' | 'ps';
 
@@ -26,18 +26,25 @@ export function isSupportedLang(value: string | null | undefined): value is Lang
   return !!value && (SUPPORTED_LANGS as string[]).includes(value);
 }
 
-/** Custom `UrlMatcher` for the locale-prefixed route tree. A plain
+/** `canMatch` guard for the locale-prefixed route tree. A plain
  * `path: ':lang'` param would happily swallow ANY first segment (including
  * real routes like `/annonces` when someone lands on a bare URL) — this
- * matcher only consumes the segment when it is one of the six real
+ * guard only lets the route match when the segment is one of the real
  * language codes, so unprefixed URLs correctly fall through to the
- * root-level redirect route instead. */
-export function localeUrlMatcher(segments: UrlSegment[]): UrlMatchResult | null {
-  if (!segments.length) return null;
+ * root-level redirect route instead.
+ *
+ * This used to be a custom `UrlMatcher`, which achieves the same client-side
+ * behavior but silently breaks `@angular/ssr`'s server-route-config
+ * matching: `ServerRoute`s are matched by walking `route.path` strings, and
+ * a `matcher`-based route has no static `path` for that walk to follow (it
+ * falls back to a literal `'**'`, which then poisons every descendant path
+ * computed from it). Keeping `path: ':lang'` as a real path segment and
+ * gating it with `canMatch` instead keeps `app.routes.server.ts`'s
+ * `:lang/...` entries meaningful. */
+export const localeCanMatch: CanMatchFn = (_route, segments: UrlSegment[]) => {
   const first = segments[0];
-  if (!isSupportedLang(first.path)) return null;
-  return { consumed: [first], posParams: { lang: first } };
-}
+  return !!first && isSupportedLang(first.path);
+};
 
 /** Prefixes an absolute routerLink/router.navigate command array with a
  * language segment, e.g. `withLang(['/annonces', id], 'ar')` ->

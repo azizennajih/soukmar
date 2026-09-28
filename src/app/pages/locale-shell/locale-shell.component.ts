@@ -5,10 +5,11 @@ import { I18nService } from '../../services/i18n.service';
 import { isSupportedLang } from '../../services/locale-routing';
 
 /**
- * Component for the locale-matched parent route (`app.routes.ts`'s
- * `localeUrlMatcher`) — its only job is making the URL's `:lang`-equivalent
- * segment the source of truth for I18nService, then getting out of the way
- * via a plain `<router-outlet>` for the real page underneath.
+ * Component for the locale-matched parent route (`app.routes.ts`'s `:lang`
+ * route, gated by `locale-routing.ts`'s `localeCanMatch`) — its only job is
+ * making the URL's `:lang` segment the source of truth for I18nService,
+ * then getting out of the way via a plain `<router-outlet>` for the real
+ * page underneath.
  *
  * Subscribing to `ActivatedRoute.paramMap` (rather than reading the
  * snapshot once in the constructor) is what makes this correct whether or
