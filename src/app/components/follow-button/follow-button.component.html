@@ -1,0 +1,11 @@
+<button
+  type="button"
+  class="follow-btn"
+  [class.btn-primary]="!following"
+  [class.btn-outline]="following"
+  [disabled]="submitting()"
+  (click)="toggle()"
+>
+  <app-icon [name]="following ? 'user-check' : 'user-plus'" [size]="15" />
+  {{ (following ? 'seller.unfollow' : 'seller.follow') | T }}
+</button>

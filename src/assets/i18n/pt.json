@@ -24,7 +24,8 @@
     "suggest_in": "em",
     "search_by_image": "Buscar por foto",
     "country_fixed": "País fixado pela sua conta",
-    "country_auto_detected": "País detetado automaticamente com base na sua localização"
+    "country_auto_detected": "País detetado automaticamente com base na sua localização",
+    "my_follows": "A seguir"
   },
   "image_search": {
     "title": "Busca por foto",
@@ -241,7 +242,8 @@
     "listing_expired": "Seu anúncio expirou. Passe para o Premium para reativá-lo.",
     "price_drop": "Queda de preço ({name}) em um anúncio que você segue.",
     "id_verification_reviewed": "O status da sua verificação de identidade foi atualizado.",
-    "boost_reviewed": "Seu pedido de visibilidade foi processado"
+    "boost_reviewed": "Seu pedido de visibilidade foi processado",
+    "new_listing_from_followed": "{name} publicou um novo anúncio."
   },
   "auth": {
     "login_title": "Bem-vindo de volta!",
@@ -1619,7 +1621,10 @@
     "phone_verified": "Número de telefone verificado",
     "phone_verified_short": "Telefone",
     "id_verified": "Identidade verificada pela nossa equipe",
-    "id_verified_short": "Identidade"
+    "id_verified_short": "Identidade",
+    "follow": "Seguir",
+    "unfollow": "Deixar de seguir",
+    "followers": "seguidores"
   },
   "saved_searches": {
     "title": "Buscas salvas",
@@ -1668,5 +1673,11 @@
     "confirm_title": "Solicitação enviada!",
     "confirm_body": "Vamos verificar sua solicitação e ativá-la assim que o pagamento for confirmado. Você receberá uma notificação.",
     "back": "Voltar aos meus anúncios"
+  },
+  "mes_abonnements": {
+    "title": "A seguir",
+    "empty": "Ainda não segue nenhum vendedor",
+    "empty_sub": "Siga um vendedor para ser avisado assim que publicar um novo anúncio.",
+    "browse_btn": "Ver anúncios"
   }
 }

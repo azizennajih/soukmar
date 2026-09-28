@@ -1,20 +1,23 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { UserService } from '../../services/user.service';
 import { ReviewService } from '../../services/review.service';
+import { AuthService } from '../../services/auth.service';
 import { Listing, Review, SellerProfile, timeAgo } from '../../models/listing.model';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { StarRatingComponent } from '../../components/star-rating/star-rating.component';
 import { VerifiedBadgeComponent } from '../../components/verified-badge/verified-badge.component';
 import { IconComponent } from '../../components/icon/icon.component';
+import { FollowButtonComponent } from '../../components/follow-button/follow-button.component';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { I18nService } from '../../services/i18n.service';
 
 @Component({
   selector: 'app-seller-profile',
-  imports: [CommonModule, ListingCardComponent, StarRatingComponent, VerifiedBadgeComponent, IconComponent, TranslatePipe, CityLabelPipe],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, ListingCardComponent, StarRatingComponent, VerifiedBadgeComponent, IconComponent, FollowButtonComponent, TranslatePipe, CityLabelPipe],
   templateUrl: './seller-profile.component.html',
   styleUrl: './seller-profile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -23,6 +26,7 @@ export class SellerProfileComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private userService = inject(UserService);
   private reviewService = inject(ReviewService);
+  public auth = inject(AuthService);
   public i18n = inject(I18nService);
   private cdr = inject(ChangeDetectorRef);
 
@@ -66,4 +70,13 @@ export class SellerProfileComponent implements OnInit {
     return timeAgo(date, this.i18n.lang());
   }
 
+  onFollowingChange(following: boolean) {
+    if (this.profile) this.profile.isFollowing = following;
+    this.cdr.markForCheck();
+  }
+
+  onFollowerCountChange(count: number) {
+    if (this.profile) this.profile.followerCount = count;
+    this.cdr.markForCheck();
+  }
 }

@@ -24,7 +24,8 @@
     "suggest_in": "in",
     "search_by_image": "Search by photo",
     "country_fixed": "Country fixed by your account",
-    "country_auto_detected": "Country automatically detected from your location"
+    "country_auto_detected": "Country automatically detected from your location",
+    "my_follows": "Following"
   },
   "image_search": {
     "title": "Search by photo",
@@ -241,7 +242,8 @@
     "listing_expired": "Your listing has expired. Go Premium to reactivate it.",
     "price_drop": "Price drop ({name}) on a listing you're following.",
     "id_verification_reviewed": "Your identity verification status has been updated.",
-    "boost_reviewed": "Your visibility boost request has been reviewed"
+    "boost_reviewed": "Your visibility boost request has been reviewed",
+    "new_listing_from_followed": "{name} posted a new listing."
   },
   "auth": {
     "login_title": "Welcome back!",
@@ -1619,7 +1621,10 @@
     "phone_verified": "Phone number verified",
     "phone_verified_short": "Phone",
     "id_verified": "Identity verified by our team",
-    "id_verified_short": "Identity"
+    "id_verified_short": "Identity",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "followers": "followers"
   },
   "saved_searches": {
     "title": "Saved Searches",
@@ -1668,5 +1673,11 @@
     "confirm_title": "Request sent!",
     "confirm_body": "We’re reviewing your request and will activate it once payment is confirmed. You’ll get a notification.",
     "back": "Back to my listings"
+  },
+  "mes_abonnements": {
+    "title": "Following",
+    "empty": "You're not following any seller yet",
+    "empty_sub": "Follow a seller to get notified as soon as they post a new listing.",
+    "browse_btn": "Browse listings"
   }
 }

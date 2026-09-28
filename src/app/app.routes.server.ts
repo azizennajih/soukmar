@@ -8,7 +8,7 @@ import { RenderMode, ServerRoute } from '@angular/ssr';
 // the moment they refresh or open the URL directly. Rendering them
 // client-side only sidesteps the problem entirely and matches the private
 // route list already used for robots.txt (soukmar-backend/src/lib/sitemap.ts).
-const CLIENT_ONLY_PATHS = ['admin', 'parametres', 'chat', 'mes-annonces', 'mes-favoris', 'notifications', 'profil', 'recherches-sauvegardees', 'supprimer-compte'];
+const CLIENT_ONLY_PATHS = ['admin', 'parametres', 'chat', 'mes-annonces', 'mes-favoris', 'mes-abonnements', 'notifications', 'profil', 'recherches-sauvegardees', 'supprimer-compte'];
 
 // Everything now lives under a `/:lang` prefix (see app.routes.ts's
 // localeUrlMatcher) — this table matches against the actual request URL,

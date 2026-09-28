@@ -58,6 +58,7 @@ export class NotificationsComponent implements OnInit {
       : n.type === 'LISTING_EXPIRED' ? 'notifications.listing_expired'
       : n.type === 'PRICE_DROP' ? 'notifications.price_drop'
       : n.type === 'ID_VERIFICATION_REVIEWED' ? 'notifications.id_verification_reviewed'
+      : n.type === 'NEW_LISTING_FROM_FOLLOWED' ? 'notifications.new_listing_from_followed'
       : 'notifications.new_message';
     return this.i18n.t(key, { name: n.actorName || '' });
   }
@@ -79,6 +80,7 @@ export class NotificationsComponent implements OnInit {
     if (n.type === 'LISTING_EXPIRED') { this.router.navigate(this.i18n.withLang(['/premium'])); return; }
     if (n.type === 'PRICE_DROP' && n.listingId) { this.router.navigate(this.i18n.withLang(['/annonces', n.listingId])); return; }
     if (n.type === 'ID_VERIFICATION_REVIEWED') { this.router.navigate(this.i18n.withLang(['/profil'])); return; }
+    if (n.type === 'NEW_LISTING_FROM_FOLLOWED' && n.listingId) { this.router.navigate(this.i18n.withLang(['/annonces', n.listingId])); return; }
     if (n.listingId) this.router.navigate(this.i18n.withLang(['/chat']), { queryParams: { listing: n.listingId } });
   }
 

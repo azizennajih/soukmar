@@ -133,6 +133,23 @@ export interface SellerProfile {
   emailVerified?: boolean;
   phoneVerified?: boolean;
   idVerified?: boolean;
+  followerCount?: number;
+  isFollowing?: boolean;
+}
+
+/** Row shape returned by GET /users/me/following — a followed seller/buyer's
+ * basic public info plus their current active-listing count, for the "Mes
+ * abonnements" page. */
+export interface FollowedUser {
+  id: string;
+  name: string;
+  city?: string | null;
+  image?: string | null;
+  accountType?: AccountType;
+  emailVerified?: boolean;
+  phoneVerified?: boolean;
+  idVerified?: boolean;
+  activeListingsCount: number;
 }
 
 export interface SavedSearch {

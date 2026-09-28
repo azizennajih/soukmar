@@ -1,0 +1,5 @@
+.follow-btn {
+  padding: .45rem 1rem;
+  font-size: .82rem;
+  &:disabled { opacity: .6; cursor: default; }
+}

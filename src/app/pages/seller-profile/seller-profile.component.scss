@@ -23,6 +23,10 @@
 
   &__badges { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; }
 
+  &__follow-row { display: flex; align-items: center; gap: .9rem; margin-top: .75rem; }
+  &__followers { font-size: .85rem; color: var(--text-muted); font-weight: 600; }
+  &__follow-login { padding: .45rem 1rem; font-size: .82rem; }
+
   &__response {
     display: inline-flex; align-items: center; gap: .3rem;
     font-size: .8rem; font-weight: 700; color: #16a34a;

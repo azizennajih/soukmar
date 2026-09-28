@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
-import { Listing, SellerProfile } from '../models/listing.model';
+import { Listing, SellerProfile, FollowedUser } from '../models/listing.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -21,5 +21,17 @@ export class UserService {
 
   unblockUser(id: string): Observable<{ blocked: boolean }> {
     return this.api.delete<{ blocked: boolean }>(`/users/${id}/block`);
+  }
+
+  followUser(id: string): Observable<{ following: boolean; followerCount: number }> {
+    return this.api.post<{ following: boolean; followerCount: number }>(`/users/${id}/follow`, {});
+  }
+
+  unfollowUser(id: string): Observable<{ following: boolean; followerCount: number }> {
+    return this.api.delete<{ following: boolean; followerCount: number }>(`/users/${id}/follow`);
+  }
+
+  getFollowing(): Observable<FollowedUser[]> {
+    return this.api.get<FollowedUser[]>('/users/me/following');
   }
 }

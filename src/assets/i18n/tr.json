@@ -24,7 +24,8 @@
     "suggest_in": "şurada:",
     "search_by_image": "Fotoğrafla ara",
     "country_fixed": "Ülke hesabınız tarafından sabitlendi",
-    "country_auto_detected": "Ülke, konumunuza göre otomatik olarak algılandı"
+    "country_auto_detected": "Ülke, konumunuza göre otomatik olarak algılandı",
+    "my_follows": "Takip edilenler"
   },
   "image_search": {
     "title": "Fotoğrafla arama",
@@ -241,7 +242,8 @@
     "listing_expired": "İlanınızın süresi doldu. Yeniden etkinleştirmek için Premium'a geçin.",
     "price_drop": "Takip ettiğiniz bir ilanda fiyat düşüşü ({name}).",
     "id_verification_reviewed": "Kimlik doğrulama durumunuz güncellendi.",
-    "boost_reviewed": "Görünürlük talebiniz işlendi"
+    "boost_reviewed": "Görünürlük talebiniz işlendi",
+    "new_listing_from_followed": "{name} yeni bir ilan yayınladı."
   },
   "auth": {
     "login_title": "Tekrar hoş geldiniz!",
@@ -1619,7 +1621,10 @@
     "phone_verified": "Telefon numarası doğrulandı",
     "phone_verified_short": "Telefon",
     "id_verified": "Kimlik ekibimiz tarafından doğrulandı",
-    "id_verified_short": "Kimlik"
+    "id_verified_short": "Kimlik",
+    "follow": "Takip et",
+    "unfollow": "Takibi bırak",
+    "followers": "takipçi"
   },
   "saved_searches": {
     "title": "Kayıtlı aramalar",
@@ -1668,5 +1673,11 @@
     "confirm_title": "Talep gönderildi!",
     "confirm_body": "Talebinizi kontrol ediyoruz ve ödeme onaylanır onaylanmaz etkinleştiriyoruz. Bir bildirim alacaksınız.",
     "back": "İlanlarıma dön"
+  },
+  "mes_abonnements": {
+    "title": "Takip Edilenler",
+    "empty": "Henüz hiçbir satıcıyı takip etmiyorsunuz",
+    "empty_sub": "Yeni bir ilan yayınladığında haberdar olmak için bir satıcıyı takip edin.",
+    "browse_btn": "İlanlara göz at"
   }
 }

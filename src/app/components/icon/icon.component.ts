@@ -10,7 +10,7 @@ export type IconName =
   | 'chevron-left' | 'chevron-right' | 'zoom-in'
   | 'arrow-up' | 'crown' | 'globe' | 'rocket'
   | 'mail' | 'check-circle' | 'clipboard' | 'search' | 'coins' | 'alert-triangle' | 'heart' | 'pause'
-  | 'user' | 'tool';
+  | 'user' | 'tool' | 'user-plus' | 'user-check';
 
 @Component({
   selector: 'app-icon',

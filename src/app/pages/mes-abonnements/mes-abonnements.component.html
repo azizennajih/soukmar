@@ -1,0 +1,37 @@
+<div class="mes-abonnements container fade-in">
+
+  <div class="mes-abonnements__header">
+    <div>
+      <h1>{{ 'mes_abonnements.title' | T }}</h1>
+      <p>{{ users.length }}</p>
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="mes-abonnements__loading">…</div>
+  } @else if (users.length === 0) {
+    <div class="empty-state">
+      <app-icon name="user-plus" [size]="32" />
+      <p>{{ 'mes_abonnements.empty' | T }}</p>
+      <small>{{ 'mes_abonnements.empty_sub' | T }}</small>
+      <a routerLink="/annonces" class="btn-primary">{{ 'mes_abonnements.browse_btn' | T }}</a>
+    </div>
+  } @else {
+    <div class="mes-abonnements__list">
+      @for (u of users; track u.id) {
+        <div class="follow-row">
+          <a [routerLink]="['/vendeur', u.id]" class="follow-row__avatar">{{ u.name[0]?.toUpperCase() }}</a>
+          <div class="follow-row__body">
+            <a [routerLink]="['/vendeur', u.id]" class="follow-row__name">{{ u.name }}</a>
+            <app-verified-badge [emailVerified]="!!u.emailVerified" [phoneVerified]="!!u.phoneVerified" [idVerified]="!!u.idVerified" />
+            <div class="follow-row__meta">
+              @if (u.city) { <span class="icon-label"><app-icon name="location" [size]="12" /> {{ u.city | cityLabel }}</span> }
+              <span>{{ u.activeListingsCount }} {{ 'seller.listings_title' | T }}</span>
+            </div>
+          </div>
+          <app-follow-button [userId]="u.id" [following]="true" (followingChange)="onUnfollow(u.id, $event)" />
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -24,7 +24,8 @@
     "suggest_in": "in",
     "search_by_image": "Nach Foto suchen",
     "country_fixed": "Land durch Ihr Konto festgelegt",
-    "country_auto_detected": "Land automatisch anhand Ihres Standorts erkannt"
+    "country_auto_detected": "Land automatisch anhand Ihres Standorts erkannt",
+    "my_follows": "Abonnements"
   },
   "image_search": {
     "title": "Suche per Foto",
@@ -241,7 +242,8 @@
     "listing_expired": "Ihre Anzeige ist abgelaufen. Werden Sie Premium, um sie wieder zu aktivieren.",
     "price_drop": "Preissenkung ({name}) bei einer beobachteten Anzeige.",
     "id_verification_reviewed": "Der Status Ihrer Identitätsprüfung wurde aktualisiert.",
-    "boost_reviewed": "Deine Boost-Anfrage wurde bearbeitet"
+    "boost_reviewed": "Deine Boost-Anfrage wurde bearbeitet",
+    "new_listing_from_followed": "{name} hat eine neue Anzeige veröffentlicht."
   },
   "auth": {
     "login_title": "Willkommen zurück!",
@@ -1619,7 +1621,10 @@
     "phone_verified": "Telefonnummer verifiziert",
     "phone_verified_short": "Telefon",
     "id_verified": "Identität von unserem Team verifiziert",
-    "id_verified_short": "Identität"
+    "id_verified_short": "Identität",
+    "follow": "Folgen",
+    "unfollow": "Nicht mehr folgen",
+    "followers": "Abonnenten"
   },
   "saved_searches": {
     "title": "Gespeicherte Suchen",
@@ -1668,5 +1673,11 @@
     "confirm_title": "Anfrage gesendet!",
     "confirm_body": "Wir prüfen deine Anfrage und aktivieren sie, sobald die Zahlung bestätigt ist. Du bekommst eine Benachrichtigung.",
     "back": "Zurück zu meinen Anzeigen"
+  },
+  "mes_abonnements": {
+    "title": "Meine Abonnements",
+    "empty": "Du folgst noch keinem Verkäufer",
+    "empty_sub": "Folge einem Verkäufer, um benachrichtigt zu werden, sobald er eine neue Anzeige veröffentlicht.",
+    "browse_btn": "Anzeigen durchsuchen"
   }
 }

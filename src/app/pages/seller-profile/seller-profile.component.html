@@ -23,6 +23,23 @@
             <span class="seller-profile__response"><app-icon name="zap" [size]="12" /> {{ label }}</span>
           }
         </div>
+        <div class="seller-profile__follow-row">
+          <span class="seller-profile__followers">{{ profile.followerCount || 0 }} {{ 'seller.followers' | T }}</span>
+          @if (auth.currentUser()?.id !== profile.id) {
+            @if (auth.isLoggedIn) {
+              <app-follow-button
+                [userId]="profile.id"
+                [following]="!!profile.isFollowing"
+                (followingChange)="onFollowingChange($event)"
+                (followerCountChange)="onFollowerCountChange($event)"
+              />
+            } @else {
+              <a routerLink="/auth/login" class="btn-outline seller-profile__follow-login">
+                <app-icon name="user-plus" [size]="15" /> {{ 'seller.follow' | T }}
+              </a>
+            }
+          }
+        </div>
       </div>
     </div>
 

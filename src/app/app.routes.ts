@@ -65,6 +65,10 @@ const localizedRoutes: Routes = [
     loadComponent: () => import('./pages/mes-favoris/mes-favoris.component').then(m => m.MesFavorisComponent)
   },
   {
+    path: 'mes-abonnements',
+    loadComponent: () => import('./pages/mes-abonnements/mes-abonnements.component').then(m => m.MesAbonnementsComponent)
+  },
+  {
     path: 'chat',
     loadComponent: () => import('./pages/chat/chat.component').then(m => m.ChatComponent)
   },

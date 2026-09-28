@@ -24,7 +24,8 @@
     "suggest_in": "في",
     "search_by_image": "البحث بالصورة",
     "country_fixed": "الدولة مثبتة حسب حسابك",
-    "country_auto_detected": "الدولة مكتشفة تلقائيًا حسب موقعك"
+    "country_auto_detected": "الدولة مكتشفة تلقائيًا حسب موقعك",
+    "my_follows": "المتابَعون"
   },
   "image_search": {
     "title": "البحث بالصورة",
@@ -241,7 +242,8 @@
     "listing_expired": "انتهت صلاحية إعلانك. اشترك في Premium لإعادة تفعيله.",
     "price_drop": "انخفاض السعر ({name}) على إعلان تتابعه.",
     "id_verification_reviewed": "تم تحديث حالة التحقق من هويتك.",
-    "boost_reviewed": "تمت مراجعة طلب تعزيز الظهور الخاص بك"
+    "boost_reviewed": "تمت مراجعة طلب تعزيز الظهور الخاص بك",
+    "new_listing_from_followed": "نشر {name} إعلانًا جديدًا."
   },
   "auth": {
     "login_title": "مرحبًا بعودتك!",
@@ -1619,7 +1621,10 @@
     "phone_verified": "رقم الهاتف موثق",
     "phone_verified_short": "الهاتف",
     "id_verified": "تم التحقق من الهوية من قبل فريقنا",
-    "id_verified_short": "الهوية"
+    "id_verified_short": "الهوية",
+    "follow": "متابعة",
+    "unfollow": "إلغاء المتابعة",
+    "followers": "متابعون"
   },
   "saved_searches": {
     "title": "عمليات البحث المحفوظة",
@@ -1668,5 +1673,11 @@
     "confirm_title": "تم إرسال الطلب!",
     "confirm_body": "نقوم بمراجعة طلبك وسنفعّله فور تأكيد الدفع. ستصلك إشعار.",
     "back": "العودة إلى إعلاناتي"
+  },
+  "mes_abonnements": {
+    "title": "المتابَعون",
+    "empty": "أنت لا تتابع أي بائع حتى الآن",
+    "empty_sub": "تابع بائعًا لتصلك إشعار بمجرد نشره إعلانًا جديدًا.",
+    "browse_btn": "تصفح الإعلانات"
   }
 }
