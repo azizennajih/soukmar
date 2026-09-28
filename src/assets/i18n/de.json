@@ -1679,5 +1679,11 @@
     "empty": "Du folgst noch keinem Verkäufer",
     "empty_sub": "Folge einem Verkäufer, um benachrichtigt zu werden, sobald er eine neue Anzeige veröffentlicht.",
     "browse_btn": "Anzeigen durchsuchen"
+  },
+  "cookie_consent": {
+    "message": "Wir verwenden Cookies, die für den Betrieb der Website notwendig sind (Anmeldung, Sprache, Land), sowie, falls du zustimmst, Cookies zur Reichweitenmessung.",
+    "learn_more": "Mehr erfahren",
+    "essential_only": "Nur notwendige",
+    "accept_all": "Alle akzeptieren"
   }
 }

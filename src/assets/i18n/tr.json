@@ -1679,5 +1679,11 @@
     "empty": "Henüz hiçbir satıcıyı takip etmiyorsunuz",
     "empty_sub": "Yeni bir ilan yayınladığında haberdar olmak için bir satıcıyı takip edin.",
     "browse_btn": "İlanlara göz at"
+  },
+  "cookie_consent": {
+    "message": "Sitenin çalışması için gerekli çerezleri (oturum açma, dil, ülke) ve kabul etmeniz halinde kitle ölçüm çerezlerini kullanıyoruz.",
+    "learn_more": "Daha fazla bilgi",
+    "essential_only": "Yalnızca gerekli olanlar",
+    "accept_all": "Tümünü kabul et"
   }
 }

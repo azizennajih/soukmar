@@ -1679,5 +1679,11 @@
     "empty": "Vous ne suivez encore aucun vendeur",
     "empty_sub": "Suivez un vendeur pour être averti dès qu’il publie une nouvelle annonce.",
     "browse_btn": "Parcourir les annonces"
+  },
+  "cookie_consent": {
+    "message": "Nous utilisons des cookies essentiels au fonctionnement du site (connexion, langue, pays) et, si vous l'acceptez, des cookies de mesure d'audience.",
+    "learn_more": "En savoir plus",
+    "essential_only": "Uniquement nécessaires",
+    "accept_all": "Tout accepter"
   }
 }
