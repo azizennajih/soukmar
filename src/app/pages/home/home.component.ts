@@ -122,7 +122,7 @@ export class HomeComponent implements OnInit {
   }
 
   loadInterests() {
-    this.listingService.getInterests().subscribe({
+    this.listingService.getInterests(this.countryService.country()).subscribe({
       next: interests => { this.interests = interests; this.cdr.markForCheck(); },
       error: () => { /* non-essential section — fail silently */ }
     });

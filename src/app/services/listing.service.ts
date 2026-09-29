@@ -107,7 +107,7 @@ export class ListingService {
     return this.api.get<Listing[]>(`/listings/${id}/similar`);
   }
 
-  getInterests(): Observable<{ category: Category; newListingsCount: number }[]> {
-    return this.api.get(`/listings/interests`);
+  getInterests(country: string): Observable<{ category: Category; newListingsCount: number }[]> {
+    return this.api.get(`/listings/interests`, { country });
   }
 }
