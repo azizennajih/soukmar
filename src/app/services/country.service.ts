@@ -3,9 +3,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { BrowserStorageService } from './browser-storage.service';
 import { AuthService } from './auth.service';
-import { isKnownCountry } from '../models/country.model';
+import { I18nService } from './i18n.service';
+import { isKnownCountry, COUNTRY_STORAGE_KEY as COUNTRY_KEY } from '../models/country.model';
 
-const COUNTRY_KEY = 'soukmar_country';
 const COUNTRY_COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
 /** The country a visitor is browsing/listing in — deliberately independent
@@ -17,6 +17,7 @@ export class CountryService {
   private storage = inject(BrowserStorageService);
   private http = inject(HttpClient);
   private auth = inject(AuthService);
+  private i18n = inject(I18nService);
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   /** Only populated during SSR (null in the browser) — lets the very first
    * server-rendered paint already know the visitor's country from the
@@ -80,7 +81,13 @@ export class CountryService {
     this.http.get<{ country_code?: string }>('https://ipapi.co/json/').subscribe({
       next: (res) => {
         const code = res.country_code?.toUpperCase();
-        if (code && isKnownCountry(code)) this.country.set(code);
+        if (code && isKnownCountry(code)) {
+          this.country.set(code);
+          // Corrects a first-ever visit's language guess (made before this
+          // resolved) to match the now-known country — no-op once the
+          // visitor has explicitly picked a language. See I18nService.
+          this.i18n.setLangFromCountry(code);
+        }
       },
       error: () => {},
     });

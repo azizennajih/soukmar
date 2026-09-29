@@ -113,6 +113,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     e.stopPropagation();
     this.langMenuOpen.set(false);
     if (code === this.i18n.lang()) return;
+    this.i18n.markLangExplicit();
     const current = this.router.url;
     const match = current.match(/^\/[a-z]{2}(\/.*)?$/);
     const restPath = match ? (match[1] ?? '') : (current.startsWith('/') ? current : `/${current}`);

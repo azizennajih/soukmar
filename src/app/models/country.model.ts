@@ -12,6 +12,8 @@
 // which continent group a country's flag sorts under, and its primary
 // currency.
 
+import type { Lang } from '../services/locale-routing';
+
 export type ContinentRegion = 'AFRICA' | 'EUROPE' | 'ASIA' | 'NORTH_AMERICA' | 'SOUTH_AMERICA' | 'OCEANIA';
 
 export interface CountryInfo {
@@ -301,6 +303,58 @@ export function countryName(code: string, lang: string): string {
   } catch {
     return code;
   }
+}
+
+/** localStorage/cookie key for the browsing country — defined here (not in
+ * country.service.ts) so I18nService can read the same value without
+ * injecting CountryService itself: CountryService already injects
+ * AuthService, which injects I18nService, so I18nService -> CountryService
+ * would be a circular DI dependency. Both services import this constant
+ * instead of hand-duplicating the literal string. */
+export const COUNTRY_STORAGE_KEY = 'soukmar_country';
+
+/** Best-guess UI language for a country's majority/official language, among
+ * only the 11 languages this app actually supports (see locale-routing.ts's
+ * `SUPPORTED_LANGS`) — used to default a first-time visitor's language to
+ * match where they're browsing from (e.g. USA -> English) instead of always
+ * falling back to French, until they explicitly pick a different language
+ * via the switcher (see I18nService's `markLangExplicit`/`chooseLang`).
+ * Deliberately coarse: real countries are far more linguistically diverse
+ * than one code each, this is only ever a *default*, never enforced.
+ * Morocco keeps 'fr' (not 'ar') to match the app's pre-existing
+ * DEFAULT_LANG/original audience; every country not listed here — the
+ * majority of the ~195, including all of North America/Northern Europe/
+ * East Asia/South Asia where none of the 11 supported languages is the
+ * primary one — falls back to 'en' as the most broadly understood choice. */
+const COUNTRY_LANG: Record<string, Lang> = {
+  // Arabic
+  DZ: 'ar', TN: 'ar', LY: 'ar', EG: 'ar', SD: 'ar', MR: 'ar', ER: 'ar', DJ: 'ar', SO: 'ar', KM: 'ar',
+  SA: 'ar', YE: 'ar', OM: 'ar', AE: 'ar', QA: 'ar', BH: 'ar', KW: 'ar', JO: 'ar', LB: 'ar', SY: 'ar', IQ: 'ar', PS: 'ar',
+  // French
+  MA: 'fr', FR: 'fr', BE: 'fr', LU: 'fr', MC: 'fr',
+  ML: 'fr', NE: 'fr', TD: 'fr', SN: 'fr', GN: 'fr', CI: 'fr', TG: 'fr', BJ: 'fr', CM: 'fr', CF: 'fr',
+  GA: 'fr', CG: 'fr', CD: 'fr', BF: 'fr', MG: 'fr', RW: 'fr', BI: 'fr', SC: 'fr', MU: 'fr', HT: 'fr',
+  // German
+  DE: 'de', AT: 'de', CH: 'de', LI: 'de',
+  // Spanish
+  ES: 'es', MX: 'es', AR: 'es', CO: 'es', PE: 'es', VE: 'es', CL: 'es', EC: 'es', BO: 'es', PY: 'es',
+  UY: 'es', CR: 'es', PA: 'es', GT: 'es', HN: 'es', NI: 'es', SV: 'es', DO: 'es', CU: 'es', GQ: 'es', AD: 'es',
+  // Italian
+  IT: 'it', SM: 'it', VA: 'it',
+  // Portuguese
+  PT: 'pt', BR: 'pt', AO: 'pt', MZ: 'pt', CV: 'pt', GW: 'pt', ST: 'pt', TL: 'pt', MO: 'pt',
+  // Turkish
+  TR: 'tr',
+  // Persian / Dari
+  IR: 'fa',
+  // Pashto
+  AF: 'ps',
+  // Urdu
+  PK: 'ur',
+};
+
+export function defaultLangForCountry(code: string): Lang {
+  return COUNTRY_LANG[code] ?? 'en';
 }
 
 /** Major/mid-size cities for the ~30 countries curated in the previous
