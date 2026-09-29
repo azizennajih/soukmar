@@ -50,7 +50,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   langs: { code: Lang; flag: string; label: string }[] = [
     { code: 'fr', flag: '🇫🇷', label: 'FR' },
     { code: 'en', flag: '🇬🇧', label: 'EN' },
-    { code: 'ar', flag: '🇲🇦', label: 'عر' },
+    { code: 'ar', flag: '🇸🇦', label: 'AR' },
     { code: 'de', flag: '🇩🇪', label: 'DE' },
     { code: 'es', flag: '🇪🇸', label: 'ES' },
     { code: 'it', flag: '🇮🇹', label: 'IT' },
