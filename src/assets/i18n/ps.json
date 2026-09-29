@@ -38,7 +38,7 @@
     "results_count": "ورته اعلانونه"
   },
   "home": {
-    "hero_badge": "له 50,000 څخه ډېر فعال اعلانونه",
+    "hero_badge": "{count} فعال اعلانونه",
     "hero_title": "پیرود او پلورل",
     "hero_highlight": "په اسانۍ سره",
     "hero_desc": "SouqMar24 — ستاسو ځایي بازار ترڅو ستاسو نږدې ښې پیشکشونه ومومئ.",
@@ -61,8 +61,8 @@
     "feature_fast_desc": "خپل اعلان له 2 دقیقو کم وخت کې خپور کړئ",
     "feature_secure_title": "100٪ خوندي",
     "feature_secure_desc": "ټول اعلانونه زموږ ډلې لخوا تایید شوي دي",
-    "feature_community_title": "لویه ټولنه",
-    "feature_community_desc": "له 120,000 څخه ډېر فعال پیرودونکي او پلورونکي",
+    "feature_community_title": "فعاله ټولنه",
+    "feature_community_desc": "د خپل ځان په څیر پیرودونکو او پلورونکو سره په اسانۍ سره اړیکه ونیسئ",
     "feature_boost_title": "خپل پلور زیات کړئ",
     "feature_boost_desc": "د لیدونې زیاتوالي لپاره ممتاز اختیارونه",
     "premium_cta": "ممتاز"

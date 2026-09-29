@@ -38,7 +38,7 @@
     "results_count": "Benzer ilanlar"
   },
   "home": {
-    "hero_badge": "50.000'den fazla aktif ilan",
+    "hero_badge": "{count} aktif ilan",
     "hero_title": "Al & Sat",
     "hero_highlight": "kolayca",
     "hero_desc": "SouqMar24 — yakınınızdaki fırsatları bulmak için yerel pazar yeriniz.",
@@ -61,8 +61,8 @@
     "feature_fast_desc": "İlanınızı 2 dakikadan kısa sürede yayınlayın",
     "feature_secure_title": "%100 Güvenli",
     "feature_secure_desc": "Tüm ilanlar ekibimiz tarafından doğrulanır",
-    "feature_community_title": "Büyük topluluk",
-    "feature_community_desc": "120.000'den fazla aktif alıcı ve satıcı",
+    "feature_community_title": "Aktif Topluluk",
+    "feature_community_desc": "Sizin gibi alıcı ve satıcılarla kolayca bağlantı kurun",
     "feature_boost_title": "Satışlarınızı artırın",
     "feature_boost_desc": "Görünürlüğü en üst düzeye çıkarmak için premium seçenekler",
     "premium_cta": "Premium"

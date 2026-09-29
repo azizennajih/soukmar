@@ -38,7 +38,7 @@
     "results_count": "Similar listings"
   },
   "home": {
-    "hero_badge": "Over 50,000 active listings",
+    "hero_badge": "{count} active listings",
     "hero_title": "Buy & Sell",
     "hero_highlight": "easily",
     "hero_desc": "SouqMar24 — your local marketplace to find the best deals near you.",
@@ -61,8 +61,8 @@
     "feature_fast_desc": "Post your listing in under 2 minutes",
     "feature_secure_title": "100% Secure",
     "feature_secure_desc": "All listings are verified by our team",
-    "feature_community_title": "Large community",
-    "feature_community_desc": "Over 120,000 active buyers and sellers",
+    "feature_community_title": "Active Community",
+    "feature_community_desc": "Connect easily with buyers and sellers like you",
     "feature_boost_title": "Boost your sales",
     "feature_boost_desc": "Premium options to maximize visibility",
     "premium_cta": "Premium"

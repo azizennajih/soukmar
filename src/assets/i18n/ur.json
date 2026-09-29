@@ -38,7 +38,7 @@
     "results_count": "ملتے جلتے اشتہارات"
   },
   "home": {
-    "hero_badge": "50,000 سے زیادہ فعال اشتہارات",
+    "hero_badge": "{count} فعال اشتہارات",
     "hero_title": "خریدیں اور بیچیں",
     "hero_highlight": "آسانی سے",
     "hero_desc": "SouqMar24 — اپنے قریب اچھی ڈیلز تلاش کرنے کے لیے آپ کی مقامی مارکیٹ پلیس۔",
@@ -61,8 +61,8 @@
     "feature_fast_desc": "اپنا اشتہار 2 منٹ سے کم میں شائع کریں",
     "feature_secure_title": "100٪ محفوظ",
     "feature_secure_desc": "تمام اشتہارات ہماری ٹیم کی طرف سے تصدیق شدہ ہیں",
-    "feature_community_title": "بڑی کمیونٹی",
-    "feature_community_desc": "120,000 سے زیادہ فعال خریدار اور فروخت کنندگان",
+    "feature_community_title": "فعال کمیونٹی",
+    "feature_community_desc": "اپنے جیسے خریداروں اور بیچنے والوں کے ساتھ آسانی سے رابطہ کریں",
     "feature_boost_title": "اپنی فروخت بڑھائیں",
     "feature_boost_desc": "نمایاں ہونے کے لیے پریمیم آپشنز",
     "premium_cta": "پریمیم"

@@ -38,7 +38,7 @@
     "results_count": "Annonces similaires"
   },
   "home": {
-    "hero_badge": "Plus de 50 000 annonces actives",
+    "hero_badge": "{count} annonces actives",
     "hero_title": "Achetez & Vendez",
     "hero_highlight": "facilement",
     "hero_desc": "SouqMar24 — votre marketplace locale pour trouver des bonnes affaires près de chez vous.",
@@ -61,8 +61,8 @@
     "feature_fast_desc": "Publiez votre annonce en moins de 2 minutes",
     "feature_secure_title": "100% Sécurisé",
     "feature_secure_desc": "Toutes les annonces sont vérifiées par notre équipe",
-    "feature_community_title": "Grande communauté",
-    "feature_community_desc": "Plus de 120,000 acheteurs et vendeurs actifs",
+    "feature_community_title": "Communauté active",
+    "feature_community_desc": "Échangez facilement avec des acheteurs et vendeurs comme vous",
     "feature_boost_title": "Boostez vos ventes",
     "feature_boost_desc": "Options premium pour maximiser la visibilité",
     "premium_cta": "Premium"

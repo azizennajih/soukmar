@@ -47,12 +47,20 @@ export class HomeComponent implements OnInit {
   favoriteIds = new Set<string>();
   interests: { category: Category; newListingsCount: number }[] = [];
 
+  // Placeholder until loadStats() resolves (see ngOnInit) — real counts from
+  // GET /api/stats/public, not hand-picked marketing numbers, so this bar
+  // stays honest as the platform actually grows instead of needing a
+  // manual edit before every "the numbers don't match reality" moment.
   stats = [
-    { labelKey: 'home.stat_active_listings', value: '50K+' },
-    { labelKey: 'home.stat_registered_users', value: '120K+' },
-    { labelKey: 'home.stat_cities_covered', value: '50+' },
-    { labelKey: 'home.stat_monthly_listings', value: '5K+' },
+    { labelKey: 'home.stat_active_listings', value: '—' },
+    { labelKey: 'home.stat_registered_users', value: '—' },
+    { labelKey: 'home.stat_cities_covered', value: '—' },
+    { labelKey: 'home.stat_monthly_listings', value: '—' },
   ];
+  /** Raw (unabbreviated) active-listings count for the hero badge — null
+   * until loadStats() resolves, hiding the badge rather than briefly
+   * flashing "0 annonces actives". */
+  heroActiveListingsCount: number | null = null;
 
   features = [
     { icon: 'zap' as const, titleKey: 'home.feature_fast_title', descKey: 'home.feature_fast_desc', bg: '#fef9c3', color: '#a16207' },
@@ -96,6 +104,21 @@ export class HomeComponent implements OnInit {
       this.loadFavorites();
       this.loadInterests();
     }
+    this.loadStats();
+  }
+
+  private async loadStats() {
+    try {
+      const s = await firstValueFrom(this.api.get<{ activeListings: number; registeredUsers: number; citiesCovered: number; monthlyListings: number }>('/stats/public'));
+      this.stats = [
+        { labelKey: 'home.stat_active_listings', value: formatStatValue(s.activeListings) },
+        { labelKey: 'home.stat_registered_users', value: formatStatValue(s.registeredUsers) },
+        { labelKey: 'home.stat_cities_covered', value: formatStatValue(s.citiesCovered) },
+        { labelKey: 'home.stat_monthly_listings', value: formatStatValue(s.monthlyListings) },
+      ];
+      this.heroActiveListingsCount = s.activeListings;
+      this.cdr.markForCheck();
+    } catch { /* non-essential section — keeps the "—" placeholders */ }
   }
 
   loadInterests() {
@@ -124,4 +147,14 @@ export class HomeComponent implements OnInit {
   goToCity(city: string) {
     this.router.navigate(this.i18n.withLang(['/annonces']), { queryParams: { ville: city, pays: this.countryService.country() } });
   }
+}
+
+/** Abbreviates a real count for the stats bar — "50K+"/"1.2M+" once it's
+ * large enough that an exact figure would be unreadable, but the literal
+ * number (e.g. "33") while the platform is still small, since "33+" would
+ * falsely imply an approximation of a number that's actually known exactly. */
+function formatStatValue(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(n % 1_000_000 === 0 ? 0 : 1)}M+`;
+  if (n >= 1_000) return `${Math.floor(n / 1000)}K+`;
+  return `${n}`;
 }

@@ -38,7 +38,7 @@
     "results_count": "آگهی‌های مشابه"
   },
   "home": {
-    "hero_badge": "بیش از ۵۰٬۰۰۰ آگهی فعال",
+    "hero_badge": "{count} آگهی فعال",
     "hero_title": "خرید و فروش",
     "hero_highlight": "آسان",
     "hero_desc": "SouqMar24 — بازار محلی شما برای یافتن معاملات خوب در نزدیکی شما.",
@@ -61,8 +61,8 @@
     "feature_fast_desc": "آگهی خود را در کمتر از ۲ دقیقه منتشر کنید",
     "feature_secure_title": "۱۰۰٪ امن",
     "feature_secure_desc": "همه آگهی‌ها توسط تیم ما بررسی می‌شوند",
-    "feature_community_title": "جامعه بزرگ",
-    "feature_community_desc": "بیش از ۱۲۰٬۰۰۰ خریدار و فروشنده فعال",
+    "feature_community_title": "جامعه فعال",
+    "feature_community_desc": "به‌راحتی با خریداران و فروشندگانی مانند خودتان در ارتباط باشید",
     "feature_boost_title": "فروش خود را افزایش دهید",
     "feature_boost_desc": "گزینه‌های ویژه برای به حداکثر رساندن دیده‌شدن",
     "premium_cta": "ویژه"

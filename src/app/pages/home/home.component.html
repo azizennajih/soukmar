@@ -7,10 +7,12 @@
     <div class="hero__circle hero__circle--bl"></div>
 
     <div class="container hero__content">
-      <div class="hero__badge">
-        <span class="hero__badge-dot"></span>
-        {{ 'home.hero_badge' | T }}
-      </div>
+      @if (heroActiveListingsCount !== null) {
+        <div class="hero__badge">
+          <span class="hero__badge-dot"></span>
+          {{ 'home.hero_badge' | T:{count: heroActiveListingsCount.toString()} }}
+        </div>
+      }
 
       <h1 class="hero__title">
         {{ 'home.hero_title' | T }}<br />
