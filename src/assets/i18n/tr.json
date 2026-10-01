@@ -1092,7 +1092,7 @@
     "SPORTS_CLUB": "Spor kulübü / Akademi"
   },
   "footer": {
-    "tagline": "Fas'ın ilk pazar yeri. Basit, hızlı ve güvenli.",
+    "tagline": "Yerel pazar yeriniz — {country}. Basit, hızlı ve güvenli.",
     "categories": "Kategoriler",
     "about": "Hakkımızda",
     "how": "Nasıl çalışır",
