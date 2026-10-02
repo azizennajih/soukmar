@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CookieConsentBannerComponent } from './components/cookie-consent-banner/cookie-consent-banner.component';
+import { AppReadyService } from './services/app-ready.service';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +13,18 @@ import { CookieConsentBannerComponent } from './components/cookie-consent-banner
     <main class="main-content">
       <router-outlet />
     </main>
-    <app-footer />
+    <div class="footer-slot" [class.footer-slot--pending]="!appReady.ready()">
+      <app-footer />
+    </div>
     <app-cookie-consent-banner />
   `,
   styles: [`
     :host { display: flex; flex-direction: column; min-height: 100vh; }
     .main-content { flex: 1; }
+    .footer-slot { transition: opacity .25s ease; }
+    .footer-slot--pending { opacity: 0; visibility: hidden; }
   `]
 })
-export class App {}
+export class App {
+  appReady = inject(AppReadyService);
+}
