@@ -24,4 +24,11 @@ export class CookieConsentService {
     this.consent.set(choice);
     this.storage.setItem(CONSENT_KEY, choice);
   }
+
+  /** Re-opens the banner so a visitor can change an earlier choice (footer
+   * "Manage cookie settings" link) — mirrors the withdraw-as-easy-as-give rule. */
+  reopen() {
+    this.consent.set(null);
+    this.storage.removeItem(CONSENT_KEY);
+  }
 }

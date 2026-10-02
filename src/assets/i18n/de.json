@@ -337,7 +337,7 @@
     "rights": "Alle Rechte vorbehalten.",
     "cgu": "AGB",
     "privacy": "Datenschutz",
-    "cookies": "Cookies",
+    "cookies": "Cookie-Einstellungen verwalten",
     "legal_notice": "Impressum"
   },
   "common": {
@@ -1681,9 +1681,9 @@
     "browse_btn": "Anzeigen durchsuchen"
   },
   "cookie_consent": {
-    "message": "Wir verwenden Cookies, die für den Betrieb der Website notwendig sind (Anmeldung, Sprache, Land), sowie, falls du zustimmst, Cookies zur Reichweitenmessung.",
+    "message": "Wir verwenden Cookies, die für den Betrieb der Website erforderlich sind (Anmeldung, Sprache, Land). Wenn Sie „Akzeptieren“ wählen, setzen wir zusätzlich Cookies zur Reichweitenmessung ein, um die Website zu verbessern. Wenn Sie „Ablehnen“ wählen, werden nur die erforderlichen Cookies verwendet. Sie können Ihre Wahl jederzeit über „Cookie-Einstellungen verwalten“ in der Fußzeile ändern.",
     "learn_more": "Mehr erfahren",
-    "essential_only": "Nur notwendige",
-    "accept_all": "Alle akzeptieren"
+    "decline": "Ablehnen",
+    "accept": "Akzeptieren"
   }
 }

@@ -337,7 +337,7 @@
     "rights": "All rights reserved.",
     "cgu": "Terms",
     "privacy": "Privacy",
-    "cookies": "Cookies",
+    "cookies": "Manage cookie settings",
     "legal_notice": "Legal Notice"
   },
   "premium": {
@@ -1681,9 +1681,9 @@
     "browse_btn": "Browse listings"
   },
   "cookie_consent": {
-    "message": "We use cookies essential to the site's operation (login, language, country) and, if you accept, audience measurement cookies.",
+    "message": "We use cookies that are essential to the operation of the site (login, language, country). If you select “Accept”, we also use audience measurement cookies to improve the site. If you select “Decline”, only essential cookies are used. You can change your choice at any time via “Manage cookie settings” in the footer.",
     "learn_more": "Learn more",
-    "essential_only": "Essential only",
-    "accept_all": "Accept all"
+    "decline": "Decline",
+    "accept": "Accept"
   }
 }

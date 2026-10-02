@@ -337,7 +337,7 @@
     "rights": "Tutti i diritti riservati.",
     "cgu": "Termini",
     "privacy": "Privacy",
-    "cookies": "Cookie",
+    "cookies": "Gestisci impostazioni cookie",
     "legal_notice": "Note legali"
   },
   "common": {
@@ -1681,9 +1681,9 @@
     "browse_btn": "Sfoglia gli annunci"
   },
   "cookie_consent": {
-    "message": "Utilizziamo cookie essenziali per il funzionamento del sito (accesso, lingua, paese) e, se lo accetti, cookie di misurazione del pubblico.",
+    "message": "Utilizziamo cookie essenziali per il funzionamento del sito (accesso, lingua, paese). Se scegli «Accetta», utilizzeremo anche cookie di misurazione del pubblico per migliorare il sito. Se scegli «Rifiuta», vengono usati solo i cookie essenziali. Puoi modificare la tua scelta in qualsiasi momento da «Gestisci impostazioni cookie» nel piè di pagina.",
     "learn_more": "Scopri di più",
-    "essential_only": "Solo essenziali",
-    "accept_all": "Accetta tutto"
+    "decline": "Rifiuta",
+    "accept": "Accetta"
   }
 }

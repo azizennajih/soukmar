@@ -7,6 +7,7 @@ import { countryName } from '../../models/country.model';
 import { IconComponent } from '../icon/icon.component';
 import { I18nService } from '../../services/i18n.service';
 import { CountryService } from '../../services/country.service';
+import { CookieConsentService } from '../../services/cookie-consent.service';
 
 @Component({
   selector: 'app-footer',
@@ -19,5 +20,9 @@ export class FooterComponent {
   readonly categories = CATEGORIES;
   countryName = countryName;
 
-  constructor(public i18n: I18nService, public countryService: CountryService) {}
+  constructor(
+    public i18n: I18nService,
+    public countryService: CountryService,
+    public cookieConsent: CookieConsentService
+  ) {}
 }

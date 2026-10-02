@@ -6,8 +6,8 @@
         <a routerLink="/politique-confidentialite">{{ 'cookie_consent.learn_more' | T }}</a>
       </p>
       <div class="cookie-banner__actions">
-        <button type="button" class="btn-outline" (click)="choose('essential')">{{ 'cookie_consent.essential_only' | T }}</button>
-        <button type="button" class="btn-primary" (click)="choose('all')">{{ 'cookie_consent.accept_all' | T }}</button>
+        <button type="button" class="btn-primary" (click)="choose('essential')">{{ 'cookie_consent.decline' | T }}</button>
+        <button type="button" class="btn-primary" (click)="choose('all')">{{ 'cookie_consent.accept' | T }}</button>
       </div>
     </div>
   </div>

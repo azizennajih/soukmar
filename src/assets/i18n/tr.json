@@ -1105,7 +1105,7 @@
     "rights": "Tüm hakları saklıdır.",
     "cgu": "Kullanım Koşulları",
     "privacy": "Gizlilik",
-    "cookies": "Çerezler",
+    "cookies": "Çerez ayarlarını yönet",
     "legal_notice": "Yasal Bildirim"
   },
   "common": {
@@ -1681,9 +1681,9 @@
     "browse_btn": "İlanlara göz at"
   },
   "cookie_consent": {
-    "message": "Sitenin çalışması için gerekli çerezleri (oturum açma, dil, ülke) ve kabul etmeniz halinde kitle ölçüm çerezlerini kullanıyoruz.",
+    "message": "Sitenin çalışması için gerekli çerezleri (oturum açma, dil, ülke) kullanıyoruz. “Kabul et” seçeneğini seçerseniz siteyi geliştirmek için ayrıca kitle ölçüm çerezlerini de kullanırız. “Reddet” seçeneğini seçerseniz yalnızca gerekli çerezler kullanılır. Seçiminizi istediğiniz zaman alt bilgideki “Çerez ayarlarını yönet” bölümünden değiştirebilirsiniz.",
     "learn_more": "Daha fazla bilgi",
-    "essential_only": "Yalnızca gerekli olanlar",
-    "accept_all": "Tümünü kabul et"
+    "decline": "Reddet",
+    "accept": "Kabul et"
   }
 }

@@ -1105,7 +1105,7 @@
     "rights": "Tous droits réservés.",
     "cgu": "CGU",
     "privacy": "Confidentialité",
-    "cookies": "Cookies",
+    "cookies": "Gérer les paramètres des cookies",
     "legal_notice": "Mentions légales"
   },
   "common": {
@@ -1681,9 +1681,9 @@
     "browse_btn": "Parcourir les annonces"
   },
   "cookie_consent": {
-    "message": "Nous utilisons des cookies essentiels au fonctionnement du site (connexion, langue, pays) et, si vous l'acceptez, des cookies de mesure d'audience.",
+    "message": "Nous utilisons des cookies essentiels au fonctionnement du site (connexion, langue, pays). Si vous choisissez « Accepter », nous utilisons en plus des cookies de mesure d'audience afin d'améliorer le site. Si vous choisissez « Refuser », seuls les cookies essentiels sont utilisés. Vous pouvez modifier votre choix à tout moment via « Gérer les paramètres des cookies » en bas de page.",
     "learn_more": "En savoir plus",
-    "essential_only": "Uniquement nécessaires",
-    "accept_all": "Tout accepter"
+    "decline": "Refuser",
+    "accept": "Accepter"
   }
 }

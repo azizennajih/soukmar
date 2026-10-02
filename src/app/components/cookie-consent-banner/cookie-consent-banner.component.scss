@@ -22,12 +22,13 @@
   &__actions {
     display: flex; gap: .75rem; flex-shrink: 0;
 
-    .btn-outline, .btn-primary { padding: .55rem 1.1rem; font-size: .85rem; white-space: nowrap; }
+    .btn-primary { padding: .55rem 1.1rem; font-size: .85rem; white-space: nowrap; }
   }
 
   @media (max-width: 640px) {
-    &__inner { flex-direction: column; align-items: stretch; }
+    &__inner { flex-direction: column; align-items: stretch; gap: 1rem; }
+    &__text { flex: 0 0 auto; }
     &__actions { justify-content: stretch; }
-    &__actions .btn-outline, &__actions .btn-primary { flex: 1; }
+    &__actions .btn-primary { flex: 1; }
   }
 }
