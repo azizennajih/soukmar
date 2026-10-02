@@ -21,7 +21,7 @@
           <div class="plan-card__header">
             <h3 [style.color]="plan.color">{{ plan.name }}</h3>
             <div class="plan-card__price">
-              <span class="plan-card__amount">{{ plan.price }} MAD</span>
+              <span class="plan-card__amount">{{ formatPrice(plan.price) }}</span>
               <span class="plan-card__period">/ {{ plan.period }}</span>
             </div>
           </div>

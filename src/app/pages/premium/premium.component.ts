@@ -5,6 +5,9 @@ import { LocalizedRouterLinkDirective } from '../../directives/localized-router-
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
 import { IconComponent } from '../../components/icon/icon.component';
+import { CountryService } from '../../services/country.service';
+import { currencyForCountry } from '../../models/country.model';
+import { formatPrice } from '../../models/listing.model';
 
 @Component({
   selector: 'app-premium',
@@ -14,13 +17,18 @@ import { IconComponent } from '../../components/icon/icon.component';
 })
 export class PremiumComponent {
   i18n = inject(I18nService);
+  private countryService = inject(CountryService);
+
+  formatPrice(amount: number): string {
+    return formatPrice(amount, currencyForCountry(this.countryService.country()), this.i18n.lang());
+  }
 
   get plans() {
     const t = (k: string) => this.i18n.t(k);
     return [
       {
         name: t('premium.plan_free'),
-        price: '0',
+        price: 0,
         period: t('premium.plan_free_period'),
         color: '#64748b',
         popular: false,
@@ -34,7 +42,7 @@ export class PremiumComponent {
       },
       {
         name: 'Pro',
-        price: '99',
+        price: 99,
         period: t('premium.plan_pro_period'),
         color: '#e63946',
         popular: true,
@@ -49,7 +57,7 @@ export class PremiumComponent {
       },
       {
         name: 'Business',
-        price: '299',
+        price: 299,
         period: t('premium.plan_biz_period'),
         color: '#7e22ce',
         popular: false,

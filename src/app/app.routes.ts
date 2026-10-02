@@ -96,10 +96,6 @@ const localizedRoutes: Routes = [
     loadComponent: () => import('./pages/admin/admin.component').then(m => m.AdminComponent)
   },
   {
-    path: 'premium',
-    loadComponent: () => import('./pages/premium/premium.component').then(m => m.PremiumComponent)
-  },
-  {
     path: 'parametres',
     loadComponent: () => import('./pages/parametres/parametres.component').then(m => m.ParametresComponent)
   },

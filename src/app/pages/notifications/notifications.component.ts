@@ -77,7 +77,7 @@ export class NotificationsComponent implements OnInit {
     if (n.type === 'REPORT_RESOLVED') { return; }
     if (n.type === 'SAVED_SEARCH_MATCH' && n.listingId) { this.router.navigate(this.i18n.withLang(['/annonces', n.listingId])); return; }
     if (n.type === 'LISTING_EXPIRING_SOON') { this.router.navigate(this.i18n.withLang(['/mes-annonces'])); return; }
-    if (n.type === 'LISTING_EXPIRED') { this.router.navigate(this.i18n.withLang(['/premium'])); return; }
+    if (n.type === 'LISTING_EXPIRED') { this.router.navigate(this.i18n.withLang(['/mes-annonces'])); return; }
     if (n.type === 'PRICE_DROP' && n.listingId) { this.router.navigate(this.i18n.withLang(['/annonces', n.listingId])); return; }
     if (n.type === 'ID_VERIFICATION_REVIEWED') { this.router.navigate(this.i18n.withLang(['/profil'])); return; }
     if (n.type === 'NEW_LISTING_FROM_FOLLOWED' && n.listingId) { this.router.navigate(this.i18n.withLang(['/annonces', n.listingId])); return; }
