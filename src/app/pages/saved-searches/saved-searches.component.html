@@ -16,7 +16,7 @@
             <span class="search-row__meta">
               @if (category(s); as c) { <span class="icon-label"><app-cat-icon [category]="c.value" [size]="13" /> {{ ('cats.' + c.value) | T }}</span> }
               @if (s.city) { · <span class="icon-label"><app-icon name="location" [size]="12" /> {{ s.city | cityLabel }}</span> }
-              @if (s.minPrice || s.maxPrice) { · {{ s.minPrice || 0 }}–{{ s.maxPrice || '∞' }} MAD }
+              @if (s.minPrice || s.maxPrice) { · {{ s.minPrice || 0 }}–{{ s.maxPrice || '∞' }} {{ currency }} }
             </span>
           </div>
           <div class="search-row__actions">

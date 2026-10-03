@@ -9,6 +9,8 @@ import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { IconComponent } from '../../components/icon/icon.component';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { I18nService } from '../../services/i18n.service';
+import { CountryService } from '../../services/country.service';
+import { currencyForCountry } from '../../models/country.model';
 
 @Component({
   selector: 'app-saved-searches',
@@ -23,7 +25,10 @@ export class SavedSearchesComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   public auth = inject(AuthService);
   private i18n = inject(I18nService);
+  private countryService = inject(CountryService);
   categories = CATEGORIES;
+
+  get currency(): string { return currencyForCountry(this.countryService.country()); }
 
   searches: SavedSearch[] = [];
   loading = true;

@@ -150,7 +150,7 @@
               </div>
               <div class="chat__offer" [class.mine]="isMine(msg)" [class.offer-accepted]="msg.offerStatus === 'ACCEPTED'" [class.offer-rejected]="msg.offerStatus === 'REJECTED'" [class.offer-cancelled]="msg.offerStatus === 'REJECTED' && isMine(msg)">
                 <div class="chat__offer-label icon-label"><app-icon name="offer" [size]="13" /> {{ 'chat.offer_price' | T }}</div>
-                <div class="chat__offer-amount">{{ msg.offerAmount | number }} <span class="chat__offer-currency">MAD</span></div>
+                <div class="chat__offer-amount">{{ msg.offerAmount | number }} <span class="chat__offer-currency">{{ activeConv?.listing?.currency }}</span></div>
                 <div class="chat__offer-status">
                   @if (msg.offerStatus === 'PENDING') { <span class="badge-pending icon-label"><app-icon name="clock" [size]="12" /> {{ 'chat.pending' | T }}</span> }
                   @if (msg.offerStatus === 'ACCEPTED') { <span class="badge-accepted icon-label"><app-icon name="check" [size]="12" /> {{ 'chat.accepted' | T }}</span> }

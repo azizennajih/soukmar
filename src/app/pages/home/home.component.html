@@ -27,7 +27,7 @@
            second search form here would just duplicate it right below,
            which read as redundant/cluttered once that row became prominent. -->
       <div class="hero__tags">
-        @for (tag of ['iPhone', 'Toyota', 'Appartement Casablanca', 'Emploi Rabat', 'MacBook']; track tag) {
+        @for (tag of ['iPhone', 'Toyota', 'Samsung', 'PlayStation', 'MacBook']; track tag) {
           <a [routerLink]="['/annonces']" [queryParams]="{q: tag}" class="hero__tag">{{ tag }}</a>
         }
       </div>
