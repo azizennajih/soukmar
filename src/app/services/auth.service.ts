@@ -45,7 +45,7 @@ export class AuthService {
   }
 
   login(email: string, password: string): Promise<{ ok: boolean; unverified?: boolean; error?: string }> {
-    return this.postJson<{ user: AuthUser; token: string }>('/auth/login', { email, password })
+    return this.postJson<{ user: AuthUser; token: string }>('/auth/login', { email, password, lang: this.i18n.lang() })
       .then(res => { this.setSession(res.user, res.token); return { ok: true }; })
       .catch(e => {
         const err = e as Record<string, unknown>;
@@ -58,7 +58,7 @@ export class AuthService {
   }
 
   register(name: string, email: string, password: string, phone?: string, city?: string, captchaToken?: string, accountType?: 'PRIVATE' | 'BUSINESS', country?: string): Promise<{ ok: boolean; emailSent?: boolean; error?: string }> {
-    return this.postJson<{ message: string; emailSent: boolean }>('/auth/register', { name, email, password, phone, city, captchaToken, accountType, country })
+    return this.postJson<{ message: string; emailSent: boolean }>('/auth/register', { name, email, password, phone, city, captchaToken, accountType, country, lang: this.i18n.lang() })
       .then(res => ({ ok: true, emailSent: res.emailSent }))
       .catch(e => {
         const err = e as Record<string, unknown>;
@@ -70,7 +70,7 @@ export class AuthService {
   }
 
   resendVerification(email: string): Promise<{ ok: boolean; error?: string }> {
-    return this.postJson<{ message: string }>('/auth/resend-verification', { email })
+    return this.postJson<{ message: string }>('/auth/resend-verification', { email, lang: this.i18n.lang() })
       .then(() => ({ ok: true }))
       .catch(e => {
         const err = e as Record<string, unknown>;
@@ -79,7 +79,7 @@ export class AuthService {
   }
 
   forgotPassword(email: string): Promise<{ ok: boolean; error?: string }> {
-    return this.postJson<{ message: string }>('/auth/forgot-password', { email })
+    return this.postJson<{ message: string }>('/auth/forgot-password', { email, lang: this.i18n.lang() })
       .then(() => ({ ok: true }))
       .catch(e => {
         const err = e as Record<string, unknown>;
