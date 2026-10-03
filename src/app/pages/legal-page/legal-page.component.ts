@@ -14,5 +14,6 @@ export class LegalPageComponent {
   private route = inject(ActivatedRoute);
   titleKey = this.route.snapshot.data['titleKey'] as string;
   namespace = this.route.snapshot.data['namespace'] as string;
+  isInfoPage = !!this.route.snapshot.data['info'];
   sections = Array.from({ length: this.route.snapshot.data['sectionCount'] as number }, (_, i) => i + 1);
 }

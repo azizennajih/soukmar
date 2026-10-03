@@ -1685,5 +1685,41 @@
     "learn_more": "Mehr erfahren",
     "decline": "Ablehnen",
     "accept": "Akzeptieren"
+  },
+  "info": {
+    "about": {
+      "s1_title": "Der Name: Souq",
+      "s1_body": "„Souq“ (سوق) ist das arabische Wort für Markt. In den Altstädten Marokkos und der arabischen Welt sind die Souks seit Jahrhunderten mehr als Orte zum Einkaufen: Hier treffen sich Menschen, tauschen Neuigkeiten aus, feilschen um den Preis und besiegeln Geschäfte oft mit einem Handschlag. Wer einmal durch die Gassen eines Souks gegangen ist, kennt das Gefühl: Jeder Stand hat ein Gesicht, jede Ware eine Geschichte.",
+      "s2_title": "Vom Souq ins Internet",
+      "s2_body": "SouqMar24 überträgt diese Idee ins digitale Zeitalter. Was im Souk das Gespräch am Stand ist, ist bei uns der Chat. Das Feilschen heißt bei uns Preisangebot. Und das Vertrauen, das dort aus Blickkontakt und gutem Ruf entsteht, bauen bei uns verifizierte Profile und Bewertungen auf. Der Marktplatz bleibt lokal und persönlich – nur dass er jetzt in die Hosentasche passt und rund um die Uhr geöffnet hat.",
+      "s3_title": "Was das für Menschen bewirken kann",
+      "s3_body": "Ein Marktplatz verändert oft mehr als nur den Kontostand:\n\nDinge bekommen ein zweites Leben: Was bei dir im Schrank liegt, ist für jemand anderen genau das, was er sucht – das spart Geld und schont Ressourcen.\n\nKleine Einkünfte, große Wirkung: Ob Privatperson oder kleines Unternehmen – mit einer Anzeige erreichst du Menschen in deiner Nachbarschaft.\n\nNähe statt Anonymität: Käufer und Verkäufer aus derselben Stadt begegnen sich, sprechen miteinander und helfen sich gegenseitig.\n\nChancen vor Ort: Wohnungen, Jobs, Mitfahrgelegenheiten – vieles, was den Alltag leichter macht, findet man direkt in der eigenen Umgebung.",
+      "s4_title": "SouqMar24 heute",
+      "s4_body": "SouqMar24 ist ein Online-Marktplatz für Kleinanzeigen: Privatpersonen und Unternehmen kaufen, verkaufen, vermieten oder verschenken hier Waren und Dienstleistungen – von Fahrzeugen und Immobilien bis zu Elektronik, Mode, Jobs und Mitfahrgelegenheiten. In Marokko gestartet, steht SouqMar24 inzwischen Nutzern in vielen Ländern offen.\n\nEinfach: Eine Anzeige ist in wenigen Minuten erstellt.\n\nLokal: Du siehst Angebote aus deinem Land und deiner Stadt, auf Wunsch auch auf der Karte.\n\nSicher: Anzeigen werden automatisch geprüft, Nutzer können ihr Profil verifizieren, und Bewertungen sowie Meldungen helfen, Betrug schnell zu erkennen.\n\nMehrsprachig: Die Website ist in 11 Sprachen verfügbar.",
+      "s5_title": "Kontakt und Feedback",
+      "s5_body": "Fragen, Anregungen oder einen Fehler gefunden? Über die Kontaktseite erreichst du uns direkt – wir freuen uns über jede Rückmeldung."
+    },
+    "how": {
+      "s1_title": "1. Konto erstellen",
+      "s1_body": "Registriere dich mit deiner E-Mail-Adresse oder mit deinem Google-Konto und wähle, ob du als Privatperson oder als Unternehmen auftrittst. Das Land, in dem du inserierst, legst du bei der Registrierung fest.",
+      "s2_title": "2. Anzeige aufgeben",
+      "s2_body": "Wähle Kategorie und Unterkategorie, beschreibe deinen Artikel, lege den Preis fest, gib den Ort an und lade Fotos hoch. Neue Anzeigen werden automatisch geprüft; auffällige Anzeigen sieht sich unser Team an, bevor sie erscheinen.",
+      "s3_title": "3. Finden und Kontakt aufnehmen",
+      "s3_body": "Käufer durchsuchen Kategorien, filtern nach Preis, Ort und Eigenschaften oder suchen auf der Karte. Im Chat kannst du Fragen stellen und Preisangebote machen. Mit gespeicherten Suchen und dem Folgen von Verkäufern verpasst du keine neue Anzeige.",
+      "s4_title": "4. Übergabe und Bewertung",
+      "s4_body": "Vereinbart die Übergabe und bezahle erst, wenn du den Artikel geprüft hast. Markiere deine Anzeige nach dem Verkauf als verkauft; anschließend könnt ihr euch gegenseitig bewerten."
+    },
+    "safety": {
+      "s1_title": "Persönlich und öffentlich treffen",
+      "s1_body": "Triff dich für die Übergabe an einem belebten, öffentlichen Ort und nimm nach Möglichkeit eine Begleitung mit. Prüfe den Artikel vor Ort gründlich, bevor du bezahlst.",
+      "s2_title": "Nie im Voraus bezahlen",
+      "s2_body": "Überweise kein Geld, bevor du den Artikel gesehen hast. Sei besonders vorsichtig bei Vorkasse, Geldtransfer-Diensten, Gutscheincodes und Bitten um eine „Anzahlung zur Reservierung“.",
+      "s3_title": "Zu gut, um wahr zu sein",
+      "s3_body": "Auffällig niedrige Preise, Zeitdruck, angebliche Kuriere oder Treuhanddienste und Nachrichten mit Links zu fremden Seiten sind typische Anzeichen für Betrug.",
+      "s4_title": "Daten schützen",
+      "s4_body": "Gib niemals Passwörter, Bankdaten oder Bestätigungscodes an andere Nutzer weiter. Schreibe nach Möglichkeit im Chat der Plattform: Dort bleibt deine Telefonnummer privat, solange du sie nicht selbst freigibst.",
+      "s5_title": "Melden und blockieren",
+      "s5_body": "Verdächtige Anzeigen und Nutzer kannst du melden – unser Team prüft jede Meldung. Unerwünschte Kontakte kannst du im Chat blockieren. Profile mit geprüfter E-Mail-Adresse, Telefonnummer oder Ausweis sind gekennzeichnet."
+    }
   }
 }

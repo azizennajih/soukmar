@@ -112,6 +112,21 @@ const localizedRoutes: Routes = [
     loadComponent: () => import('./pages/supprimer-compte/supprimer-compte.component').then(m => m.SupprimerCompteComponent)
   },
   {
+    path: 'a-propos',
+    data: { titleKey: 'footer.about', namespace: 'info.about', sectionCount: 5, info: true },
+    loadComponent: () => import('./pages/legal-page/legal-page.component').then(m => m.LegalPageComponent)
+  },
+  {
+    path: 'comment-ca-marche',
+    data: { titleKey: 'footer.how', namespace: 'info.how', sectionCount: 4, info: true },
+    loadComponent: () => import('./pages/legal-page/legal-page.component').then(m => m.LegalPageComponent)
+  },
+  {
+    path: 'securite',
+    data: { titleKey: 'footer.safety', namespace: 'info.safety', sectionCount: 5, info: true },
+    loadComponent: () => import('./pages/legal-page/legal-page.component').then(m => m.LegalPageComponent)
+  },
+  {
     path: 'politique-confidentialite',
     data: { titleKey: 'legal.privacy_title', namespace: 'legal.privacy', sectionCount: 11 },
     loadComponent: () => import('./pages/legal-page/legal-page.component').then(m => m.LegalPageComponent)

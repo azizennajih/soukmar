@@ -1,7 +1,11 @@
 <div class="legal-page container fade-in">
-  <a routerLink="/mentions-legales" class="legal-page__back">← {{ 'parametres.legal' | T }}</a>
+  @if (!isInfoPage) {
+    <a routerLink="/mentions-legales" class="legal-page__back">← {{ 'parametres.legal' | T }}</a>
+  }
   <h1 class="legal-page__title">{{ titleKey | T }}</h1>
-  <p class="legal-page__updated">{{ 'legal.last_updated' | T }}</p>
+  @if (!isInfoPage) {
+    <p class="legal-page__updated">{{ 'legal.last_updated' | T }}</p>
+  }
 
   @for (n of sections; track n) {
     <section class="legal-page__section">
