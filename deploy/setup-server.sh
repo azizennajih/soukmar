@@ -88,6 +88,7 @@ set_env DATABASE_URL "postgresql://soukmar:${DB_PASS}@localhost:5432/soukmar"
 set_env JWT_SECRET "$(openssl rand -hex 48)"
 set_env PORT 3000
 set_env APP_URL "https://${DOMAIN}"
+set_env API_URL "https://${DOMAIN}/api"
 set_env ALLOWED_ORIGINS "https://${DOMAIN},https://www.${DOMAIN}"
 set_env VAPID_SUBJECT "mailto:contact@${DOMAIN}"
 grep -q '^SMTP_FROM=.*onboarding@resend.dev' "$ENV_FILE" && echo "HINWEIS: SMTP_FROM ist noch die Resend-Testadresse - nach der Domain-Verifizierung in Resend auf no-reply@${DOMAIN} aendern."

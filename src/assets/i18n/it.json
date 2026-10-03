@@ -284,6 +284,7 @@
     "verify_resend_error": "Impossibile reinviare l'email. Riprova più tardi.",
     "captcha_required": "Completa la verifica anti-robot.",
     "verified_success": "Email confermata! Puoi ora accedere.",
+    "verify_link_invalid": "Il link di conferma non è valido o è scaduto. Accedi per richiederne uno nuovo.",
     "unverified_error": "Account non verificato. Controlla la tua email.",
     "unverified_resend": "Reinvia email di conferma",
     "forgot_title": "Password dimenticata?",

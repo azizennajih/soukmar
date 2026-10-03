@@ -284,6 +284,7 @@
     "verify_resend_error": "L'email n'a pas pu être renvoyé. Réessayez plus tard.",
     "captcha_required": "Merci de valider la vérification anti-robot.",
     "verified_success": "Email confirmé ! Vous pouvez maintenant vous connecter.",
+    "verify_link_invalid": "Le lien de confirmation est invalide ou a expiré. Connectez-vous pour en demander un nouveau.",
     "unverified_error": "Compte non vérifié. Vérifiez votre email.",
     "unverified_resend": "Renvoyer l'email de confirmation",
     "forgot_title": "Mot de passe oublié ?",

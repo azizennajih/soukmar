@@ -12,6 +12,9 @@
     @if (verifiedSuccess) {
       <div class="auth-success"><app-icon name="check-circle" [size]="15" /> {{ 'auth.verified_success' | T }}</div>
     }
+    @if (verifyLinkInvalid) {
+      <div class="auth-error">{{ 'auth.verify_link_invalid' | T }}</div>
+    }
 
     @if (error) {
       <div class="auth-error">{{ error }}</div>

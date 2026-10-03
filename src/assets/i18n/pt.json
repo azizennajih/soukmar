@@ -284,6 +284,7 @@
     "verify_resend_error": "O e-mail não pôde ser reenviado. Tente novamente mais tarde.",
     "captcha_required": "Confirme a verificação anti-robô.",
     "verified_success": "E-mail confirmado! Agora você pode entrar.",
+    "verify_link_invalid": "O link de confirmação é inválido ou expirou. Inicia sessão para pedir um novo.",
     "unverified_error": "Conta não verificada. Verifique seu e-mail.",
     "unverified_resend": "Reenviar e-mail de confirmação",
     "forgot_title": "Esqueceu a senha?",

@@ -284,6 +284,7 @@
     "verify_resend_error": "E-posta yeniden gönderilemedi. Daha sonra tekrar deneyin.",
     "captcha_required": "Lütfen robot karşıtı doğrulamayı onaylayın.",
     "verified_success": "E-posta onaylandı! Artık giriş yapabilirsiniz.",
+    "verify_link_invalid": "Onay bağlantısı geçersiz veya süresi dolmuş. Yeni bir bağlantı istemek için giriş yapın.",
     "unverified_error": "Hesap doğrulanmadı. E-postanızı kontrol edin.",
     "unverified_resend": "Onay e-postasını yeniden gönder",
     "forgot_title": "Şifrenizi mi unuttunuz?",

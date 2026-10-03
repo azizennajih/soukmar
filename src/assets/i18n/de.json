@@ -284,6 +284,7 @@
     "verify_resend_error": "Die E-Mail konnte nicht erneut gesendet werden. Bitte versuchen Sie es später erneut.",
     "captcha_required": "Bitte bestätigen Sie die Anti-Roboter-Prüfung.",
     "verified_success": "E-Mail bestätigt! Sie können sich jetzt anmelden.",
+    "verify_link_invalid": "Der Bestätigungslink ist ungültig oder abgelaufen. Melde dich an, um einen neuen Link anzufordern.",
     "unverified_error": "Konto nicht verifiziert. Bitte prüfen Sie Ihre E-Mail.",
     "unverified_resend": "Bestätigungs-E-Mail erneut senden",
     "forgot_title": "Passwort vergessen?",

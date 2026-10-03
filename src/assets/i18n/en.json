@@ -284,6 +284,7 @@
     "verify_resend_error": "The email couldn't be resent. Please try again later.",
     "captcha_required": "Please complete the anti-bot verification.",
     "verified_success": "Email confirmed! You can now sign in.",
+    "verify_link_invalid": "The confirmation link is invalid or has expired. Sign in to request a new one.",
     "unverified_error": "Account not verified. Please check your email.",
     "unverified_resend": "Resend confirmation email",
     "forgot_title": "Forgot your password?",

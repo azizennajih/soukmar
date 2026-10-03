@@ -28,12 +28,14 @@ export class LoginComponent implements OnInit {
   error = '';
   unverifiedEmail = '';
   verifiedSuccess = false;
+  verifyLinkInvalid = false;
   resendLoading = false;
   resendOk = false;
 
   ngOnInit() {
     this.route.queryParams.subscribe(p => {
       if (p['verified'] === '1') this.verifiedSuccess = true;
+      if (p['verifyError'] === '1') this.verifyLinkInvalid = true;
     });
   }
 

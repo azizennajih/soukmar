@@ -284,6 +284,7 @@
     "verify_resend_error": "No se pudo reenviar el correo. Inténtalo de nuevo más tarde.",
     "captcha_required": "Por favor completa la verificación anti-robots.",
     "verified_success": "¡Correo confirmado! Ya puedes iniciar sesión.",
+    "verify_link_invalid": "El enlace de confirmación no es válido o ha caducado. Inicia sesión para solicitar uno nuevo.",
     "unverified_error": "Cuenta no verificada. Revisa tu correo.",
     "unverified_resend": "Reenviar correo de confirmación",
     "forgot_title": "¿Olvidaste tu contraseña?",
