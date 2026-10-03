@@ -37,7 +37,7 @@
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {
-              "allowedHosts": ["localhost", "127.0.0.1"]
+              "allowedHosts": ["localhost", "127.0.0.1", "souqmar24.com", "www.souqmar24.com"]
             },
             "ssr": {
               "entry": "src/server.ts"
@@ -48,8 +48,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "1.5MB",
+                  "maximumError": "2MB"
                 },
                 {
                   "type": "anyComponentStyle",

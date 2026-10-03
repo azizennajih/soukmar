@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { apiBase } from '../config/api.config';
 
-const BASE_URL = 'http://localhost:3000/api';
+const BASE_URL = apiBase();
 
 @Injectable({ providedIn: 'root' })
 export class UploadService {

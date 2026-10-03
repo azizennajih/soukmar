@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
+import { backendOrigin } from '../config/api.config';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from './api.service';
 import { firstValueFrom } from 'rxjs';
@@ -70,7 +71,7 @@ export class ChatService {
 
   connect(token: string) {
     if (this.socket?.connected) return;
-    this.socket = io('http://127.0.0.1:3000', { auth: { token } });
+    this.socket = io(backendOrigin(), { auth: { token } });
     this.socket.on('connect', () => console.log('Socket connected'));
     this.socket.on('new_message', (msg: ChatMessage) => {
       this.messages$.next([...this.messages$.getValue(), msg]);

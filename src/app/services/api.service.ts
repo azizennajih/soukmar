@@ -2,8 +2,9 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BrowserStorageService } from './browser-storage.service';
+import { apiBase } from '../config/api.config';
 
-const BASE_URL = 'http://127.0.0.1:3000/api';
+const BASE_URL = apiBase();
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {

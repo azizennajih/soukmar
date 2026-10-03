@@ -2,8 +2,9 @@ import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18nService } from './i18n.service';
 import { BrowserStorageService } from './browser-storage.service';
+import { apiBase } from '../config/api.config';
 
-const BASE = 'http://127.0.0.1:3000/api';
+const BASE = apiBase();
 
 export interface AuthUser {
   id: string;
