@@ -47,18 +47,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
   searchFocused = signal(false);
   private pollInterval: ReturnType<typeof setInterval> | null = null;
 
-  langs: { code: Lang; flag: string; label: string }[] = [
-    { code: 'fr', flag: '🇫🇷', label: 'FR' },
-    { code: 'en', flag: '🇬🇧', label: 'EN' },
-    { code: 'ar', flag: '🇸🇦', label: 'AR' },
-    { code: 'de', flag: '🇩🇪', label: 'DE' },
-    { code: 'es', flag: '🇪🇸', label: 'ES' },
-    { code: 'it', flag: '🇮🇹', label: 'IT' },
-    { code: 'pt', flag: '🇧🇷', label: 'PT' },
-    { code: 'tr', flag: '🇹🇷', label: 'TR' },
-    { code: 'fa', flag: '🇮🇷', label: 'فا' },
-    { code: 'ur', flag: '🇵🇰', label: 'اردو' },
-    { code: 'ps', flag: '🇦🇫', label: 'پښتو' },
+  // iso = flag image shown next to the language (Windows can't render flag emoji: they show as two letters).
+  langs: { code: Lang; iso: string; label: string }[] = [
+    { code: 'fr', iso: 'fr', label: 'FR' },
+    { code: 'en', iso: 'gb', label: 'EN' },
+    { code: 'ar', iso: 'sa', label: 'AR' },
+    { code: 'de', iso: 'de', label: 'DE' },
+    { code: 'es', iso: 'es', label: 'ES' },
+    { code: 'it', iso: 'it', label: 'IT' },
+    { code: 'pt', iso: 'br', label: 'PT' },
+    { code: 'tr', iso: 'tr', label: 'TR' },
+    { code: 'fa', iso: 'ir', label: 'فا' },
+    { code: 'ur', iso: 'pk', label: 'اردو' },
+    { code: 'ps', iso: 'af', label: 'پښتو' },
   ];
 
   langMenuOpen = signal(false);
