@@ -45,7 +45,8 @@ export class AuthService {
     if (!token) return;
     fetch(`${BASE}/auth/me`, { headers: { Authorization: `Bearer ${token}` } })
       .then(async res => {
-        if (res.status === 401) {
+        // 401: token expired; 404: the account no longer exists — either way the saved login is useless.
+        if (res.status === 401 || res.status === 404) {
           this.currentUser.set(null);
           this.storage.removeItem(SESSION_KEY);
           this.storage.removeItem(TOKEN_KEY);

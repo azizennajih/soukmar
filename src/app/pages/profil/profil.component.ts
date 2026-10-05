@@ -133,7 +133,10 @@ export class ProfilComponent implements OnInit {
       this.form.phone = this.profile.phone || '';
       this.form.city = this.profile.city || '';
       this.form.accountType = this.profile.accountType;
-    } catch {
+    } catch (e) {
+      const status = (e as { status?: number }).status;
+      // The login is invalid (expired token, or the account no longer exists): end it instead of showing an empty page.
+      if (status === 401 || status === 404) { this.auth.logout(); return; }
       this.errorMsg = this.i18n.t('profil.load_error');
     } finally {
       this.loading = false;
