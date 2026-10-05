@@ -21,6 +21,8 @@ export interface AuthUser {
 }
 
 const SESSION_KEY = 'soukmar_session';
+/** Email just registered with in this browser — pre-fills the login form once the confirmation link is opened. */
+export const SIGNUP_EMAIL_KEY = 'soukmar_signup_email';
 const TOKEN_KEY = 'soukmar_token';
 
 @Injectable({ providedIn: 'root' })

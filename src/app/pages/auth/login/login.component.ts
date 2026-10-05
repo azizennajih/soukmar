@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../../directives/localized-router-link.directive';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService, SIGNUP_EMAIL_KEY } from '../../../services/auth.service';
+import { BrowserStorageService } from '../../../services/browser-storage.service';
 import { I18nService } from '../../../services/i18n.service';
 import { TranslatePipe } from '../../../pipes/translate.pipe';
 import { PasswordInputComponent } from '../../../components/password-input/password-input.component';
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
+  private storage = inject(BrowserStorageService);
   i18n = inject(I18nService);
 
   email = '';
@@ -34,7 +36,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(p => {
-      if (p['verified'] === '1') this.verifiedSuccess = true;
+      if (p['verified'] === '1') {
+        this.verifiedSuccess = true;
+        // Offer the address that was just confirmed instead of leaving the field to the browser's autofill.
+        const signupEmail = this.storage.getItem(SIGNUP_EMAIL_KEY);
+        if (signupEmail && !this.email) this.email = signupEmail;
+      }
       if (p['verifyError'] === '1') this.verifyLinkInvalid = true;
     });
   }
@@ -47,6 +54,7 @@ export class LoginComponent implements OnInit {
     try {
       const result = await this.auth.login(this.email, this.password);
       if (result.ok) {
+        this.storage.removeItem(SIGNUP_EMAIL_KEY);
         this.router.navigate(this.i18n.withLang(['/']));
       } else if (result.unverified) {
         this.unverifiedEmail = this.email;
