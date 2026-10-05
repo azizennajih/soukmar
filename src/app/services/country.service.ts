@@ -7,6 +7,7 @@ import { I18nService } from './i18n.service';
 import { isKnownCountry, COUNTRY_STORAGE_KEY as COUNTRY_KEY } from '../models/country.model';
 
 const COUNTRY_COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
+const IP_DETECTED_KEY = 'soukmar_country_ip_detected';
 
 /** The country a visitor is browsing/listing in — deliberately independent
  * of I18nService (country ≠ language: a French speaker might browse
@@ -85,14 +86,34 @@ export class CountryService {
         const code = res.country_code?.toUpperCase();
         if (code && isKnownCountry(code)) {
           this.country.set(code);
+          this.storage.setItem(IP_DETECTED_KEY, '1');
           // Corrects a first-ever visit's language guess (made before this
           // resolved) to match the now-known country — no-op once the
           // visitor has explicitly picked a language. See I18nService.
           this.i18n.setLangFromCountry(code);
+        } else {
+          this.detectCountryFromBrowserLocale();
         }
       },
-      error: () => {},
+      error: () => this.detectCountryFromBrowserLocale(),
     });
+  }
+
+  /** Fallback when the IP lookup fails (ad-blocker, offline, rate limit):
+   * the region of the browser language ("de-DE" -> DE) is a far better guess
+   * than the hard-coded 'MA' default. Skipped once an IP lookup has ever
+   * succeeded in this browser, so a good earlier result is never replaced by
+   * this weaker guess. */
+  private detectCountryFromBrowserLocale() {
+    if (typeof navigator === 'undefined' || this.storage.getItem(IP_DETECTED_KEY)) return;
+    for (const tag of navigator.languages?.length ? navigator.languages : [navigator.language]) {
+      const code = tag?.match(/-([A-Za-z]{2})(?:-|$)/)?.[1]?.toUpperCase();
+      if (code && isKnownCountry(code)) {
+        this.country.set(code);
+        this.i18n.setLangFromCountry(code);
+        return;
+      }
+    }
   }
 
   /** In the browser, localStorage (as before). During SSR, the server has no
