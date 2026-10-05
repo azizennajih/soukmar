@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ApiService } from '../../services/api.service';
 import { I18nService, Lang } from '../../services/i18n.service';
@@ -65,7 +65,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
   langMenuOpen = signal(false);
   countryMenuOpen = signal(false);
 
-  constructor(public auth: AuthService, private api: ApiService, private router: Router, public i18n: I18nService, public countryService: CountryService, private geocodeService: GeocodeService, public notifService: NotificationService, private imageSearchService: ImageSearchService) {}
+  constructor(public auth: AuthService, private api: ApiService, private router: Router, public i18n: I18nService, public countryService: CountryService, private geocodeService: GeocodeService, public notifService: NotificationService, private imageSearchService: ImageSearchService) {
+    this.updatePostQuery(this.router.url);
+    this.router.events.subscribe(e => { if (e instanceof NavigationEnd) this.updatePostQuery(e.urlAfterRedirects); });
+  }
+
+  /** On a category's listing page the "post a listing" buttons carry that category,
+   * so the wizard doesn't ask for it again. */
+  postQuery = signal<Record<string, string>>({});
+
+  private updatePostQuery(url: string) {
+    const [path, query = ''] = url.split('#')[0].split('?');
+    const category = path.endsWith('/annonces') ? new URLSearchParams(query).get('categorie') : null;
+    this.postQuery.set(category && CATEGORIES.some(c => c.value === category) ? { categorie: category } : {});
+  }
 
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 

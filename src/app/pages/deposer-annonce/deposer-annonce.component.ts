@@ -55,6 +55,8 @@ export class DeposerAnnonceComponent {
   captchaToken = '';
 
   editId: string | null = null;
+  /** Category the visitor was browsing when they pressed "post a listing" (?categorie=…) — chosen for them. */
+  private presetCategory: Category | null = null;
   initLoading = false;
 
   subcategories: Subcategory[] = [];
@@ -99,6 +101,8 @@ export class DeposerAnnonceComponent {
       this.editId = id;
       this.loadForEdit(id);
     } else {
+      const preset = this.route.snapshot.queryParamMap.get('categorie');
+      if (preset && CATEGORIES.some(c => c.value === preset)) this.presetCategory = preset as Category;
       // New listing: country is centrally controlled by the navbar switcher,
       // never a separate choice within this form — kept in sync live (not
       // just defaulted once) so switching country while the wizard is open
@@ -256,6 +260,7 @@ export class DeposerAnnonceComponent {
 
   selectIntent(val: ListingIntent) {
     this.form.intent = val;
+    if (this.presetCategory) { this.selectCategory(this.presetCategory); return; }
     this.step = 1;
   }
 

@@ -220,10 +220,10 @@ export class AnnoncesComponent implements OnInit {
   // genuine, worth-indexing page) if one is selected, /annonces otherwise —
   // and drop every other filter from both the canonical URL and og:url.
   private updateSeo() {
-    const catLabel = this.filters.categorie ? `${this.filters.categorie} — ` : '';
+    const heading = this.filters.categorie ? this.i18n.t('cats.' + this.filters.categorie) : this.i18n.t('annonces.title');
     this.seo.setTitleAndDescription(
-      `${catLabel}Annonces — SouqMar24`,
-      `${this.total} annonces disponibles sur SouqMar24.`
+      `${heading} — SouqMar24`,
+      `${this.total} ${this.i18n.t('annonces.found')} — SouqMar24`
     );
     const bareCanonicalPath = this.filters.categorie
       ? `/annonces?categorie=${encodeURIComponent(this.filters.categorie)}`
