@@ -34,6 +34,29 @@ export class AuthService {
     if (saved) {
       try { this.currentUser.set(JSON.parse(saved)); } catch { }
     }
+    this.refreshFromServer();
+  }
+
+  /** The saved session can be stale (e.g. saved before accounts had a
+   * country, or verification flags changed since) — reload it from the
+   * server once on startup. Only runs in the browser, where a token exists. */
+  private refreshFromServer(): void {
+    const token = this.token;
+    if (!token) return;
+    fetch(`${BASE}/auth/me`, { headers: { Authorization: `Bearer ${token}` } })
+      .then(async res => {
+        if (res.status === 401) {
+          this.currentUser.set(null);
+          this.storage.removeItem(SESSION_KEY);
+          this.storage.removeItem(TOKEN_KEY);
+          return;
+        }
+        if (!res.ok) return;
+        const fresh = await res.json() as AuthUser;
+        this.currentUser.set(fresh);
+        this.storage.setItem(SESSION_KEY, JSON.stringify(fresh));
+      })
+      .catch(() => { /* offline or backend down: keep the saved session */ });
   }
 
   get isLoggedIn(): boolean {

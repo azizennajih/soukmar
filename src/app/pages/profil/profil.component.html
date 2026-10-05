@@ -63,7 +63,7 @@
 
           <div class="form-group">
             <label class="form-label">{{ 'profil.phone' | T }}</label>
-            <app-phone-input [value]="form.phone" (valueChange)="form.phone = $event" placeholder="6xx xxx xxx" />
+            <app-phone-input [value]="form.phone" [defaultIso]="profile?.country || 'MA'" (valueChange)="form.phone = $event" placeholder="6xx xxx xxx" />
 
             @if (profile.phone) {
               @if (profile.phoneVerified) {

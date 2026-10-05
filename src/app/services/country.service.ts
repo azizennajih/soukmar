@@ -39,6 +39,7 @@ export class CountryService {
     // it here, alongside localStorage, keeps both in sync on every change.
     effect(() => {
       const code = this.country();
+      if (!isKnownCountry(code)) return;
       this.storage.setItem(COUNTRY_KEY, code);
       this.writeCountryCookie(code);
     });
@@ -54,7 +55,8 @@ export class CountryService {
     effect(() => {
       const u = this.auth.currentUser();
       if (u && u.role !== 'ADMIN') {
-        this.country.set(u.country);
+        // A session saved before accounts had a country has none — keep the current one instead of blanking it.
+        if (isKnownCountry(u.country)) this.country.set(u.country);
       } else if (!u && this.isBrowser) {
         this.detectCountryFromIp();
       }

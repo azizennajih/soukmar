@@ -19,6 +19,7 @@ interface ProfileData {
   email: string;
   phone?: string;
   city?: string;
+  country?: string;
   image?: string;
   accountType: 'PRIVATE' | 'BUSINESS';
   role: string;

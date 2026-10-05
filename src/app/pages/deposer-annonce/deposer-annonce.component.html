@@ -343,11 +343,11 @@
           <div class="deposer__form">
             <div class="form-group">
               <label>{{ 'deposer.label_phone' | T }}</label>
-              <app-phone-input [value]="form.phone" (valueChange)="form.phone = $event" placeholder="6 00 00 00 00" />
+              <app-phone-input [value]="form.phone" [defaultIso]="form.country || 'MA'" (valueChange)="form.phone = $event" placeholder="6 00 00 00 00" />
             </div>
             <div class="form-group">
               <label>{{ 'deposer.label_whatsapp' | T }}</label>
-              <app-phone-input [value]="form.whatsapp" (valueChange)="form.whatsapp = $event" placeholder="6 00 00 00 00" />
+              <app-phone-input [value]="form.whatsapp" [defaultIso]="form.country || 'MA'" (valueChange)="form.whatsapp = $event" placeholder="6 00 00 00 00" />
             </div>
 
             <label class="deposer__premium-toggle">
