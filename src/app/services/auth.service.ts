@@ -43,7 +43,7 @@ export class AuthService {
   private refreshFromServer(): void {
     const token = this.token;
     if (!token) return;
-    fetch(`${BASE}/auth/me`, { headers: { Authorization: `Bearer ${token}` } })
+    fetch(`${BASE}/auth/me`, { headers: { Authorization: `Bearer ${token}`, 'Accept-Language': this.i18n.lang() } })
       .then(async res => {
         // 401: token expired; 404: the account no longer exists — either way the saved login is useless.
         if (res.status === 401 || res.status === 404) {
@@ -123,7 +123,7 @@ export class AuthService {
   private postJson<T>(path: string, body: unknown): Promise<T> {
     return fetch(`${BASE}${path}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Accept-Language': this.i18n.lang() },
       body: JSON.stringify(body),
     }).then(async res => {
       const data = await res.json();

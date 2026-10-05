@@ -3,6 +3,7 @@ import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
 import { appReadyInterceptor } from './services/app-ready.service';
+import { langInterceptor } from './services/lang.interceptor';
 import { provideClientHydration } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
@@ -10,7 +11,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' })),
-    provideHttpClient(withFetch(), withInterceptors([appReadyInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([appReadyInterceptor, langInterceptor])),
     // Only in production: the Vite dev-server's SSR + HMR combo can leave a
     // component's hydrated TView out of sync with its post-edit template
     // (surfaces as "ASSERTION ERROR: Unexpected value of the `ssrId`" in the
