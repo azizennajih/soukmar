@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../../directives/localized-router-link.directive';
 import { FormsModule } from '@angular/forms';
-import { AuthService, SIGNUP_EMAIL_KEY } from '../../../services/auth.service';
+import { AuthService, SIGNUP_EMAIL_KEY, RETURN_URL_KEY } from '../../../services/auth.service';
 import { BrowserStorageService } from '../../../services/browser-storage.service';
 import { I18nService } from '../../../services/i18n.service';
 import { TranslatePipe } from '../../../pipes/translate.pipe';
@@ -95,6 +95,8 @@ export class RegisterComponent {
       if (result.ok) {
         this.registeredEmail = this.form.email;
         this.storage.setItem(SIGNUP_EMAIL_KEY, this.form.email.trim().toLowerCase());
+        const back = this.auth.peekReturnUrl();
+        if (back) this.storage.setItem(RETURN_URL_KEY, back);
         this.emailSent = true;
         this.emailSendFailed = !result.emailSent;
       } else {

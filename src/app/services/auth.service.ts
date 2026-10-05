@@ -1,5 +1,5 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { I18nService } from './i18n.service';
 import { BrowserStorageService } from './browser-storage.service';
 import { apiBase } from '../config/api.config';
@@ -23,6 +23,9 @@ export interface AuthUser {
 const SESSION_KEY = 'soukmar_session';
 /** Email just registered with in this browser — pre-fills the login form once the confirmation link is opened. */
 export const SIGNUP_EMAIL_KEY = 'soukmar_signup_email';
+/** Page the visitor wanted before registering — the confirmation link is usually opened in another tab, where the in-memory value is gone. */
+export const RETURN_URL_KEY = 'soukmar_return_url';
+const AUTH_PAGE = /\/auth\/(login|register|forgot-password|reset-password)(\?|#|$)/;
 const TOKEN_KEY = 'soukmar_token';
 
 @Injectable({ providedIn: 'root' })
@@ -31,7 +34,23 @@ export class AuthService {
   private storage = inject(BrowserStorageService);
   currentUser = signal<AuthUser | null>(null);
 
+  /** Last page visited before the login/register pages (internal router URL, language prefix included) —
+   * where to send the visitor once they are signed in. In memory only: a fresh visit to the login page has none. */
+  private lastPageBeforeAuth: string | null = null;
+
+  /** Returns that page once and forgets it. */
+  takeReturnUrl(): string | null {
+    const url = this.lastPageBeforeAuth;
+    this.lastPageBeforeAuth = null;
+    return url;
+  }
+
+  peekReturnUrl(): string | null { return this.lastPageBeforeAuth; }
+
   constructor(private router: Router) {
+    this.router.events.subscribe(e => {
+      if (e instanceof NavigationEnd && !AUTH_PAGE.test(e.urlAfterRedirects)) this.lastPageBeforeAuth = e.urlAfterRedirects;
+    });
     const saved = this.storage.getItem(SESSION_KEY);
     if (saved) {
       try { this.currentUser.set(JSON.parse(saved)); } catch { }

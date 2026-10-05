@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../../directives/localized-router-link.directive';
 import { FormsModule } from '@angular/forms';
-import { AuthService, SIGNUP_EMAIL_KEY } from '../../../services/auth.service';
+import { AuthService, SIGNUP_EMAIL_KEY, RETURN_URL_KEY } from '../../../services/auth.service';
 import { BrowserStorageService } from '../../../services/browser-storage.service';
 import { I18nService } from '../../../services/i18n.service';
 import { TranslatePipe } from '../../../pipes/translate.pipe';
@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
   unverifiedEmail = '';
   verifiedSuccess = false;
   verifyLinkInvalid = false;
+  private cameFromConfirmation = false;
   resendLoading = false;
   resendOk = false;
 
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit {
     this.route.queryParams.subscribe(p => {
       if (p['verified'] === '1') {
         this.verifiedSuccess = true;
+        this.cameFromConfirmation = true;
         // Offer the address that was just confirmed instead of leaving the field to the browser's autofill.
         const signupEmail = this.storage.getItem(SIGNUP_EMAIL_KEY);
         if (signupEmail && !this.email) this.email = signupEmail;
@@ -55,7 +57,12 @@ export class LoginComponent implements OnInit {
       const result = await this.auth.login(this.email, this.password);
       if (result.ok) {
         this.storage.removeItem(SIGNUP_EMAIL_KEY);
-        this.router.navigate(this.i18n.withLang(['/']));
+        // Back to the page the visitor wanted (e.g. the listing wizard) instead of always the home page.
+        const saved = this.cameFromConfirmation ? this.storage.getItem(RETURN_URL_KEY) : null;
+        const back = this.auth.takeReturnUrl() ?? saved;
+        this.storage.removeItem(RETURN_URL_KEY);
+        if (back) this.router.navigateByUrl(back);
+        else this.router.navigate(this.i18n.withLang(['/']));
       } else if (result.unverified) {
         this.unverifiedEmail = this.email;
         this.error = result.error || this.i18n.t('auth.unverified_error');
