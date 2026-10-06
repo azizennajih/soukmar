@@ -11,17 +11,16 @@
   <!-- Fallback Open Graph tags for pages Angular's Meta service hasn't overridden yet
        (e.g. the homepage) and for crawlers that don't run JavaScript. Listing pages get
        a dedicated preview server-side — see soukmar-backend/src/routes/ogPreview.ts.
-       TODO: replace the relative og:image once a real production domain + a proper
-       1200x630 social banner image exist — OG images should be absolute URLs. -->
+       The images must be absolute URLs; swap in a 1200x630 banner when one exists. -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="SouqMar24">
   <meta property="og:title" content="SouqMar24 — Achetez & Vendez facilement">
   <meta property="og:description" content="La marketplace de petites annonces : véhicules, immobilier, électronique et plus près de chez vous.">
-  <meta property="og:image" content="/favicon.ico">
+  <meta property="og:image" content="https://souqmar24.com/favicon.ico">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="SouqMar24 — Achetez & Vendez facilement">
   <meta name="twitter:description" content="La marketplace de petites annonces.">
-  <meta name="twitter:image" content="/favicon.ico">
+  <meta name="twitter:image" content="https://souqmar24.com/favicon.ico">
 </head>
 <body>
   <app-root></app-root>

@@ -123,6 +123,13 @@ echo "==> 9/9 HTTPS und Weiterleitung (Caddy)"
 cat > /etc/caddy/Caddyfile <<EOF
 ${DOMAIN} {
   encode gzip zstd
+  header {
+    X-Content-Type-Options nosniff
+    X-Frame-Options SAMEORIGIN
+    Referrer-Policy strict-origin-when-cross-origin
+    Strict-Transport-Security "max-age=31536000"
+    -Server
+  }
   @backend path /api/* /socket.io/*
   reverse_proxy @backend 127.0.0.1:3000
   reverse_proxy 127.0.0.1:4000
