@@ -98,6 +98,7 @@ set_env APP_URL "https://${DOMAIN}"
 set_env API_URL "https://${DOMAIN}/api"
 set_env ALLOWED_ORIGINS "https://${DOMAIN},https://www.${DOMAIN}"
 set_env VAPID_SUBJECT "mailto:contact@${DOMAIN}"
+grep -q '^OPERATOR_NAME=.+' "$ENV_FILE" || echo "HINWEIS: OPERATOR_NAME und OPERATOR_ADDRESS fehlen in der .env - sie erscheinen im Fuss jeder E-Mail (Betreiber-Angaben, rechtlich noetig). Eintragen und 'sudo -u soukmar -H pm2 restart soukmar-api'."
 grep -q '^SMTP_FROM=.*onboarding@resend.dev' "$ENV_FILE" && echo "HINWEIS: SMTP_FROM ist noch die Resend-Testadresse - nach der Domain-Verifizierung in Resend auf no-reply@${DOMAIN} aendern."
 
 cd "$APP_DIR/soukmar-backend"
