@@ -103,14 +103,14 @@
         <!-- Country switcher dropdown (ADMIN only) / fixed badge (everyone else) -->
         <div class="navbar__country-wrapper">
           @if (!countryService.canSwitchCountry()) {
-            <span class="navbar__country-btn navbar__country-btn--fixed" [title]="(auth.currentUser() ? 'nav.country_fixed' : 'nav.country_auto_detected') | T">
+            <span class="navbar__country-btn navbar__country-btn--fixed"
+                  [title]="countryName(countryService.country(), i18n.lang()) + ' · ' + ((auth.currentUser() ? 'nav.country_fixed' : 'nav.country_auto_detected') | T)"
+                  [attr.aria-label]="countryName(countryService.country(), i18n.lang())">
               <app-flag-icon [iso]="countryService.country()" [size]="16" />
-              <span class="navbar__country-label">{{ countryName(countryService.country(), i18n.lang()) }}</span>
             </span>
           } @else {
-            <button type="button" class="navbar__country-btn" (click)="toggleCountryMenu($event)" [title]="countryName(countryService.country(), i18n.lang())">
+            <button type="button" class="navbar__country-btn" (click)="toggleCountryMenu($event)" [title]="countryName(countryService.country(), i18n.lang())" [attr.aria-label]="countryName(countryService.country(), i18n.lang())">
               <app-flag-icon [iso]="countryService.country()" [size]="16" />
-              <span class="navbar__country-label">{{ countryName(countryService.country(), i18n.lang()) }}</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
             </button>
             @if (countryMenuOpen()) {

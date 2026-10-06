@@ -321,16 +321,6 @@
     &--fixed { cursor: default; &:hover { background: #f8fafc; border-color: #e2e8f0; } }
   }
 
-  &__country-label {
-    font-size: .78rem;
-    letter-spacing: .01em;
-    max-width: 8rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    @media (max-width: 1024px) { display: none; }
-  }
-
   // Up to ~195 entries — a search box up top plus a scrolling list, instead
   // of the ~6-item language dropdown's plain fixed-height list.
   &__country-dropdown {
