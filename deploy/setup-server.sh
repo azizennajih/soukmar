@@ -108,7 +108,8 @@ npm run build
 echo "==> 8/9 Prozesse starten"
 cat > "$APP_DIR/ecosystem.config.cjs" <<EOF
 module.exports = { apps: [
-  { name: 'soukmar-api', cwd: '$APP_DIR/soukmar-backend', script: 'dist/index.js' },
+  { name: 'soukmar-api', cwd: '$APP_DIR/soukmar-backend', script: 'dist/index.js',
+    env: { NODE_ENV: 'production' } },
   { name: 'soukmar-web', cwd: '$APP_DIR/soukmar', script: 'dist/soukmar/server/server.mjs',
     env: { NODE_ENV: 'production', PORT: 4000, BACKEND_URL: 'http://127.0.0.1:3000' } }
 ] };
