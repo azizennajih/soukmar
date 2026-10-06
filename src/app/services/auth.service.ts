@@ -160,6 +160,11 @@ export class AuthService {
     this.router.navigate(this.i18n.withLang(['/']));
   }
 
+  /** Swaps the stored login token (the server issues a fresh one after a password change and revokes all older ones). */
+  replaceToken(token: string): void {
+    this.storage.setItem(TOKEN_KEY, token);
+  }
+
   private setSession(user: AuthUser, token: string): void {
     this.currentUser.set(user);
     this.storage.setItem(SESSION_KEY, JSON.stringify(user));

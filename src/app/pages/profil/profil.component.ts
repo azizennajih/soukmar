@@ -247,10 +247,11 @@ export class ProfilComponent implements OnInit {
 
     this.pwSaving.set(true);
     try {
-      await firstValueFrom(this.api.put('/auth/change-password', {
+      const result = await firstValueFrom(this.api.put<{ token?: string }>('/auth/change-password', {
         currentPassword: this.pwForm.currentPassword,
         newPassword: this.pwForm.newPassword,
       }));
+      if (result?.token) this.auth.replaceToken(result.token);
       this.pwSuccessMsg = this.i18n.t('profil.password_changed');
       this.pwForm = { currentPassword: '', newPassword: '', confirmPassword: '' };
     } catch (e) {

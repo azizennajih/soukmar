@@ -16,7 +16,7 @@ DEPLOY_KEY=/root/.ssh/soukmar_deploy
 echo "==> 1/9 Pakete installieren"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
-apt-get install -y postgresql git curl openssl ufw gnupg debian-keyring debian-archive-keyring apt-transport-https
+apt-get install -y postgresql git curl openssl ufw fail2ban unattended-upgrades gnupg debian-keyring debian-archive-keyring apt-transport-https
 
 if ! command -v node >/dev/null || [ "$(node -p 'process.versions.node.split(".")[0]')" -lt 22 ]; then
   curl -fsSL https://deb.nodesource.com/setup_24.x | bash -
@@ -36,6 +36,11 @@ ufw allow OpenSSH >/dev/null
 ufw allow 80/tcp >/dev/null
 ufw allow 443/tcp >/dev/null
 ufw --force enable >/dev/null
+# SSH-Brute-Force sperren (fail2ban) und Sicherheitsupdates automatisch einspielen
+systemctl enable --now fail2ban >/dev/null 2>&1 || true
+printf 'APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Unattended-Upgrade "1";
+' > /etc/apt/apt.conf.d/20auto-upgrades
 if [ -z "$(swapon --show)" ]; then
   fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile >/dev/null && swapon /swapfile
   grep -q '/swapfile' /etc/fstab || echo '/swapfile none swap sw 0 0' >> /etc/fstab
@@ -75,6 +80,8 @@ fi
 
 echo "==> 5/9 Code herunterladen"
 mkdir -p "$APP_DIR" && cd "$APP_DIR"
+# Spaeter gehoert das Verzeichnis dem Benutzer 'soukmar', git laeuft aber als root (Deploy-Key)
+git config --global --add safe.directory '*'
 [ -d soukmar-backend/.git ] || git clone "$BACK_REPO" soukmar-backend
 [ -d soukmar/.git ] || git clone "$FRONT_REPO" soukmar
 
@@ -114,10 +121,15 @@ module.exports = { apps: [
     env: { NODE_ENV: 'production', PORT: 4000, BACKEND_URL: 'http://127.0.0.1:3000' } }
 ] };
 EOF
-pm2 delete all >/dev/null 2>&1 || true
-pm2 start "$APP_DIR/ecosystem.config.cjs"
-pm2 save
-pm2 startup systemd -u root --hp /root >/dev/null 2>&1 || true
+# Die Anwendung laeuft NICHT als root: ein eigener Benutzer ohne Login und ohne sudo
+# begrenzt den Schaden, falls je eine Luecke in der App ausgenutzt wird.
+id soukmar >/dev/null 2>&1 || useradd --system --create-home --shell /usr/sbin/nologin soukmar
+chown -R soukmar:soukmar "$APP_DIR"
+chmod 600 "$ENV_FILE"
+sudo -u soukmar -H pm2 delete all >/dev/null 2>&1 || true
+sudo -u soukmar -H pm2 start "$APP_DIR/ecosystem.config.cjs"
+sudo -u soukmar -H pm2 save
+env PATH="$PATH:/usr/bin" pm2 startup systemd -u soukmar --hp /home/soukmar >/dev/null 2>&1 || true
 
 echo "==> 9/9 HTTPS und Weiterleitung (Caddy)"
 cat > /etc/caddy/Caddyfile <<EOF
@@ -144,4 +156,4 @@ systemctl reload caddy || systemctl restart caddy
 echo
 echo "FERTIG. Oeffne https://${DOMAIN}"
 echo "(Das HTTPS-Zertifikat holt Caddy automatisch, sobald die DNS-Eintraege auf diesen Server zeigen.)"
-pm2 status
+sudo -u soukmar -H pm2 status

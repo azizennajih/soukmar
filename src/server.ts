@@ -12,6 +12,47 @@ const BACKEND_URL = process.env['BACKEND_URL'] || 'http://127.0.0.1:3000';
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
+const IS_PRODUCTION = process.env['NODE_ENV'] === 'production';
+
+app.disable('x-powered-by');
+
+// Browser-side hardening for every page (production only — the dev server's live
+// reload needs eval/websockets that this policy would block).
+//
+// The policy pins every place the page may load code or data from: our own
+// origin, Cloudflare Turnstile (bot check), Cloudinary (photos), OpenStreetMap
+// (map tiles), Google Fonts and the ipapi.co country lookup. Even if some HTML
+// were ever injected, a stolen login token could not be sent to an attacker's
+// server (connect-src) and no foreign script could be pulled in (script-src).
+// 'unsafe-inline' remains for scripts/styles because Angular's server rendering
+// emits inline hydration and style blocks.
+const CSP = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' data: https://fonts.gstatic.com",
+  "img-src 'self' data: blob: https://res.cloudinary.com https://*.tile.openstreetmap.org",
+  "connect-src 'self' https://ipapi.co https://challenges.cloudflare.com",
+  "frame-src https://challenges.cloudflare.com",
+  "worker-src 'self' blob:",
+  "manifest-src 'self'",
+  "media-src 'self' blob:",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'self'",
+].join('; ');
+
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(self), geolocation=(self), payment=(), usb=()');
+  if (IS_PRODUCTION) {
+    const https = req.headers['x-forwarded-proto'] === 'https';
+    res.setHeader('Content-Security-Policy', https ? CSP + '; upgrade-insecure-requests' : CSP);
+  }
+  next();
+});
 
 // robots.txt and sitemap.xml must live at this app's own domain root to be
 // found by crawlers, but the data (live listings) lives in the backend —
@@ -58,13 +99,16 @@ app.use((req, res, next) => {
  */
 if (isMainModule(import.meta.url) || process.env['pm_id']) {
   const port = process.env['PORT'] || 4000;
-  app.listen(port, (error) => {
+  // Behind the reverse proxy the site only needs to listen locally.
+  const host = process.env['HOST'] || (IS_PRODUCTION ? '127.0.0.1' : undefined);
+  const onListening = (error?: Error) => {
     if (error) {
       throw error;
     }
 
-    console.log(`Node Express server listening on http://localhost:${port}`);
-  });
+    console.log(`Node Express server listening on http://${host ?? 'localhost'}:${port}`);
+  };
+  if (host) app.listen(Number(port), host, onListening); else app.listen(port, onListening);
 }
 
 /**

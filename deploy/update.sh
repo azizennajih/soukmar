@@ -2,6 +2,7 @@
 # Neue Version auf dem Server einspielen (als root ausfuehren): bash /opt/soukmar/soukmar/deploy/update.sh
 set -euo pipefail
 APP_DIR=/opt/soukmar
+git config --global --add safe.directory '*'
 
 cd "$APP_DIR/soukmar-backend"
 git pull --ff-only
@@ -15,5 +16,7 @@ git pull --ff-only
 npm ci
 npm run build
 
-pm2 restart all
-pm2 status
+# git/npm laufen als root, die Anwendung als 'soukmar'
+chown -R soukmar:soukmar "$APP_DIR"
+sudo -u soukmar -H pm2 restart all
+sudo -u soukmar -H pm2 status

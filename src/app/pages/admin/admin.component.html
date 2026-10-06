@@ -520,8 +520,12 @@
               </div>
             </div>
             <div class="id-verification-photos">
-              <a [href]="v.idImageUrl" target="_blank" rel="noopener">{{ 'admin.id_verifications_id_photo' | T }}</a>
-              <a [href]="v.selfieImageUrl" target="_blank" rel="noopener">{{ 'admin.id_verifications_selfie_photo' | T }}</a>
+              @if (v.idImageUrl) {
+                <a [href]="v.idImageUrl" target="_blank" rel="noopener">{{ 'admin.id_verifications_id_photo' | T }}</a>
+              }
+              @if (v.selfieImageUrl) {
+                <a [href]="v.selfieImageUrl" target="_blank" rel="noopener">{{ 'admin.id_verifications_selfie_photo' | T }}</a>
+              }
             </div>
             @if (v.adminNote) {
               <p class="report-card__note icon-label"><app-icon name="edit" [size]="12" /> {{ v.adminNote }}</p>

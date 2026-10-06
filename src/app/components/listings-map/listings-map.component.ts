@@ -44,7 +44,9 @@ export class ListingsMapComponent implements AfterViewInit, OnChanges, OnDestroy
     // Leaflet touches window/document at import time — never load it during
     // SSR, where a map widget wouldn't make sense to render anyway.
     if (!this.isBrowser) return;
-    this.L = await import('leaflet');
+    // Leaflet is a CommonJS module: the production bundle wraps it as { default: L }, the dev server hands out L itself.
+    const leafletModule = await import('leaflet');
+    this.L = ((leafletModule as unknown as { default?: typeof Leaflet }).default ?? leafletModule) as typeof Leaflet;
     this.map = this.L.map(this.mapEl.nativeElement, { center: MOROCCO_CENTER, zoom: DEFAULT_ZOOM });
     this.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
