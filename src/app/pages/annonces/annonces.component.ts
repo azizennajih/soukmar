@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, ActivatedRoute, Router } from '@angular/router';
+import { RouterLink, ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { FormsModule } from '@angular/forms';
 import { ListingService } from '../../services/listing.service';
@@ -116,6 +116,9 @@ export class AnnoncesComponent implements OnInit {
   }
 
   ngOnInit() {
+    // The router's title strategy runs just before NavigationEnd and would overwrite the page's own
+    // title (category name) when the results arrive faster than the navigation finishes — re-apply it.
+    this.router.events.subscribe(e => { if (e instanceof NavigationEnd && this.seoApplied) this.updateSeo(); });
     this.route.queryParams.subscribe(params => {
       this.filters.q             = params['q']             || '';
       this.filters.categorie     = params['categorie']     || '';
@@ -219,7 +222,10 @@ export class AnnoncesComponent implements OnInit {
   // real landing page this search reduces to — the category alone (a
   // genuine, worth-indexing page) if one is selected, /annonces otherwise —
   // and drop every other filter from both the canonical URL and og:url.
+  private seoApplied = false;
+
   private updateSeo() {
+    this.seoApplied = true;
     const heading = this.filters.categorie ? this.i18n.t('cats.' + this.filters.categorie) : this.i18n.t('annonces.title');
     this.seo.setTitleAndDescription(
       `SouqMar24 — ${heading}`,

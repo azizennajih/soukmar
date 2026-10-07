@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, signal, ChangeDetectorRef, HostListener, inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { RouterLink, ActivatedRoute, Router } from '@angular/router';
+import { RouterLink, ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { SeoService, SITE_URL } from '../../services/seo.service';
 import { FormsModule } from '@angular/forms';
@@ -100,6 +100,8 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // Same race as on the listings page: re-apply the listing's own title after the router's default one.
+    this.router.events.subscribe(e => { if (e instanceof NavigationEnd && this.listing) this.updateMetaTags(this.listing); });
     // A route-to-route navigation between two listing detail pages (e.g.
     // clicking a "you might also like" card below) reuses this component
     // instead of recreating it, so ngOnInit only runs once — subscribing to
