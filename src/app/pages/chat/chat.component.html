@@ -208,7 +208,9 @@
 
         <!-- Input bar -->
         <div class="chat__input-bar">
-          <button class="chat__offer-btn" (click)="showOfferInput=!showOfferInput" [title]="'listing.offer' | T"><app-icon name="offer" [size]="19" /></button>
+          @if (isBuyer) {
+            <button class="chat__offer-btn" (click)="showOfferInput=!showOfferInput" [title]="'listing.offer' | T"><app-icon name="offer" [size]="19" /></button>
+          }
           <textarea
             [(ngModel)]="messageText"
             (input)="onTyping()"

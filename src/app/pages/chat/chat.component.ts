@@ -195,6 +195,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     return { emailVerified: partner.emailVerified, phoneVerified: partner.phoneVerified, idVerified: partner.idVerified };
   }
 
+  /** Offers go from the buyer to the listing's owner only (the server drops any other direction). */
+  get isBuyer(): boolean {
+    const me = this.auth.currentUser()?.id;
+    return !!this.activeConv && this.activeConv.listing.userId !== me;
+  }
+
   isMine(msg: ChatMessage): boolean {
     return msg.senderId === this.auth.currentUser()?.id;
   }
