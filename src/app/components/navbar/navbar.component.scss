@@ -15,10 +15,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: .75rem;
+      // The tagline gives way (ellipsis) so it never collides with the login links on narrow phones.
+      > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     }
 
     &-links {
       display: flex;
+      flex: none;
       gap: 1rem;
       a { color: #fff; opacity: .9; &:hover { opacity: 1; text-decoration: underline; } }
     }
@@ -391,6 +395,8 @@
   &__mobile {
     border-top: 1px solid #f1f5f9;
     padding: .75rem;
+    max-width: 100%;
+    overflow-x: hidden;
 
     @media (min-width: 769px) { display: none; }
   }
@@ -448,19 +454,21 @@
     text-align: center;
   }
 
+  // 11 languages: a wrapping grid, never one overflowing row (which stretched the whole page on phones).
   &__mobile-lang {
-    display: flex;
-    gap: .5rem;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .4rem;
     margin-bottom: .25rem;
   }
 
   &__mobile-lang-btn {
-    flex: 1;
+    min-width: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: .4rem;
-    padding: .55rem;
+    gap: .3rem;
+    padding: .5rem .25rem;
     border-radius: .65rem;
     border: 1.5px solid #e2e8f0;
     background: #f8fafc;

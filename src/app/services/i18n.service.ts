@@ -1,7 +1,7 @@
 import { Injectable, signal, computed, effect, inject, PLATFORM_ID, REQUEST } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { BrowserStorageService } from './browser-storage.service';
-import { DEFAULT_LANG, isSupportedLang, isRtlLang, withLang as withLangCommands, type Lang } from './locale-routing';
+import { DEFAULT_LANG, isSupportedLang, isRtlLang, langFromAcceptLanguage, withLang as withLangCommands, type Lang } from './locale-routing';
 import { COUNTRY_STORAGE_KEY, defaultLangForCountry } from '../models/country.model';
 
 export type { Lang };
@@ -87,6 +87,12 @@ function detectInitialLang(storage: BrowserStorageService, isBrowser: boolean, r
 
   const countryHint = detectCountryHint(storage, isBrowser, request);
   if (countryHint) return defaultLangForCountry(countryHint);
+
+  // Server side, first-ever visit (no cookies yet): the browser's own Accept-Language header.
+  if (!isBrowser) {
+    const fromHeader = langFromAcceptLanguage(request?.headers.get('accept-language'));
+    if (fromHeader) return fromHeader;
+  }
 
   if (isBrowser && typeof navigator !== 'undefined') {
     const candidates = navigator.languages?.length ? navigator.languages : [navigator.language];

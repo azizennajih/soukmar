@@ -22,6 +22,24 @@ export function isRtlLang(lang: Lang): boolean {
  * detection there; see I18nService for the browser-side detection). */
 export const DEFAULT_LANG: Lang = 'fr';
 
+/** Best supported language from an HTTP Accept-Language header ("de-DE,de;q=0.9,en;q=0.8"),
+ * honouring q-values; null when the header is missing or lists no supported language. The server
+ * uses this for a first-ever visit (no cookie yet), so a German browser lands on /de, not /fr. */
+export function langFromAcceptLanguage(header: string | null | undefined): Lang | null {
+  if (!header) return null;
+  const ranked = header
+    .split(',')
+    .map((part, index) => {
+      const [tag, ...params] = part.trim().split(';');
+      const q = params.map(p => p.trim()).find(p => p.startsWith('q='));
+      const weight = q ? parseFloat(q.slice(2)) : 1;
+      return { code: (tag ?? '').slice(0, 2).toLowerCase(), weight: Number.isFinite(weight) ? weight : 0, index };
+    })
+    .filter(c => c.weight > 0 && isSupportedLang(c.code))
+    .sort((a, b) => b.weight - a.weight || a.index - b.index);
+  return (ranked[0]?.code as Lang | undefined) ?? null;
+}
+
 export function isSupportedLang(value: string | null | undefined): value is Lang {
   return !!value && (SUPPORTED_LANGS as string[]).includes(value);
 }
