@@ -40,7 +40,26 @@
 
   <div class="footer__bottom">
     <div class="container footer__bottom-inner">
-      <span>© {{ year }} SouqMar24. {{ 'footer.rights' | T }}</span>
+      <div class="footer__bottom-left">
+        <span class="footer__country"
+              [title]="countryName(countryService.country(), i18n.lang()) + ' · ' + ((auth.currentUser() ? 'nav.country_fixed' : 'nav.country_auto_detected') | T)">
+          <app-flag-icon [iso]="countryService.country()" [size]="14" />
+          @if (countryService.canSwitchCountry()) {
+            <select class="footer__country-select" [attr.aria-label]="countryName(countryService.country(), i18n.lang())" (change)="onCountryChange($any($event.target).value)">
+              @for (group of countryRegions; track group.region) {
+                <optgroup [label]="regionLabelKey(group.region) | T">
+                  @for (code of group.countries; track code) {
+                    <option [value]="code" [selected]="countryService.country() === code">{{ countryName(code, i18n.lang()) }}</option>
+                  }
+                </optgroup>
+              }
+            </select>
+          } @else {
+            {{ countryName(countryService.country(), i18n.lang()) }}
+          }
+        </span>
+        <span>© {{ year }} SouqMar24. {{ 'footer.rights' | T }}</span>
+      </div>
       <div class="footer__bottom-links">
         <a routerLink="/mentions-legales">{{ 'footer.legal_notice' | T }}</a>
         <a routerLink="/conditions-utilisation">{{ 'footer.cgu' | T }}</a>

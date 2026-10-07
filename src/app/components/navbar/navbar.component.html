@@ -2,7 +2,7 @@
   <!-- Top bar -->
   <div class="navbar__topbar">
     <div class="container navbar__topbar-inner">
-      <span><app-flag-icon [iso]="countryService.country()" [size]="14" /> {{ 'nav.topbar_tagline' | T }} · {{ countryName(countryService.country(), i18n.lang()) }}</span>
+      <span>{{ 'nav.topbar_tagline' | T }}</span>
       <div class="navbar__topbar-links">
         @if (!auth.isLoggedIn) {
           <a routerLink="/auth/login">{{ 'nav.login' | T }}</a>
@@ -99,46 +99,6 @@
             }
           </div>
         }
-
-        <!-- Country switcher dropdown (ADMIN only) / fixed badge (everyone else) -->
-        <div class="navbar__country-wrapper">
-          @if (!countryService.canSwitchCountry()) {
-            <span class="navbar__country-btn navbar__country-btn--fixed"
-                  [title]="countryName(countryService.country(), i18n.lang()) + ' · ' + ((auth.currentUser() ? 'nav.country_fixed' : 'nav.country_auto_detected') | T)"
-                  [attr.aria-label]="countryName(countryService.country(), i18n.lang())">
-              <app-flag-icon [iso]="countryService.country()" [size]="16" />
-            </span>
-          } @else {
-            <button type="button" class="navbar__country-btn" (click)="toggleCountryMenu($event)" [title]="countryName(countryService.country(), i18n.lang())" [attr.aria-label]="countryName(countryService.country(), i18n.lang())">
-              <app-flag-icon [iso]="countryService.country()" [size]="16" />
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-            @if (countryMenuOpen()) {
-              <div class="navbar__country-dropdown">
-                <input
-                  type="text"
-                  class="navbar__country-search"
-                  [(ngModel)]="countrySearchQuery"
-                  [placeholder]="'common.search' | T"
-                  autocomplete="off"
-                  (click)="$event.stopPropagation()"
-                />
-                <div class="navbar__country-list">
-                  @for (group of filteredCountryRegions; track group.region) {
-                    @if (group.countries.length) {
-                      <div class="navbar__country-group-label">{{ regionLabelKey(group.region) | T }}</div>
-                      @for (code of group.countries; track code) {
-                        <button type="button" class="navbar__country-option" [class.active]="countryService.country() === code" (click)="selectCountry(code, $event)">
-                          <app-flag-icon [iso]="code" [size]="16" /> {{ countryName(code, i18n.lang()) }}
-                        </button>
-                      }
-                    }
-                  }
-                </div>
-              </div>
-            }
-          }
-        </div>
 
         <!-- Language switcher dropdown -->
         <div class="navbar__lang-wrapper">
