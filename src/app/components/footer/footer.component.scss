@@ -80,10 +80,6 @@
     display: inline-flex; align-items: center; gap: .4rem; color: #94a3b8;
     padding: .2rem .55rem; border: 1px solid #1e293b; border-radius: 999px;
   }
-  &__country-select {
-    background: transparent; color: #94a3b8; border: 0; font: inherit; cursor: pointer; max-width: 11rem;
-    option, optgroup { color: #111827; background: #fff; }
-  }
 
   &__bottom {
     border-top: 1px solid #1e293b;
