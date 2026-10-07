@@ -132,6 +132,13 @@ sudo -u soukmar -H pm2 start "$APP_DIR/ecosystem.config.cjs"
 sudo -u soukmar -H pm2 save
 env PATH="$PATH:/usr/bin" pm2 startup systemd -u soukmar --hp /home/soukmar >/dev/null 2>&1 || true
 
+echo "==> Taegliche Datenbank-Sicherung einrichten"
+install -m 700 "$APP_DIR/soukmar/deploy/backup.sh" /usr/local/bin/soukmar-backup
+# jede Nacht um 03:15 Uhr, Protokoll in /var/log/soukmar-backup.log
+echo '15 3 * * * root /usr/local/bin/soukmar-backup >> /var/log/soukmar-backup.log 2>&1' > /etc/cron.d/soukmar-backup
+chmod 644 /etc/cron.d/soukmar-backup
+/usr/local/bin/soukmar-backup || echo "WARNUNG: Die erste Sicherung ist fehlgeschlagen - siehe Meldung oben."
+
 echo "==> 9/9 HTTPS und Weiterleitung (Caddy)"
 cat > /etc/caddy/Caddyfile <<EOF
 ${DOMAIN} {
@@ -156,5 +163,6 @@ systemctl reload caddy || systemctl restart caddy
 
 echo
 echo "FERTIG. Oeffne https://${DOMAIN}"
+echo "Datenbank-Sicherung: taeglich 03:15 Uhr nach /var/backups/soukmar (14 Tage + 8 Wochen). Zusaetzlich das IONOS-Backup buchen oder den Ordner regelmaessig auf deinen Rechner kopieren."
 echo "(Das HTTPS-Zertifikat holt Caddy automatisch, sobald die DNS-Eintraege auf diesen Server zeigen.)"
 sudo -u soukmar -H pm2 status

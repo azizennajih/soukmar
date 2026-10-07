@@ -4,6 +4,9 @@ set -euo pipefail
 APP_DIR=/opt/soukmar
 git config --global --add safe.directory '*'
 
+# Vor jedem Update eine frische Datenbank-Sicherung (falls ein Update die Daten veraendert)
+/usr/local/bin/soukmar-backup || { echo "ABBRUCH: Sicherung fehlgeschlagen - Update nicht durchgefuehrt."; exit 1; }
+
 cd "$APP_DIR/soukmar-backend"
 git pull --ff-only
 npm ci
@@ -13,6 +16,7 @@ npm run build
 
 cd "$APP_DIR/soukmar"
 git pull --ff-only
+install -m 700 "$APP_DIR/soukmar/deploy/backup.sh" /usr/local/bin/soukmar-backup
 npm ci
 npm run build
 
