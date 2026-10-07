@@ -10,7 +10,7 @@ import { ListingCardComponent } from '../../components/listing-card/listing-card
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { IconComponent } from '../../components/icon/icon.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing, Category, isBoostActive } from '../../models/listing.model';
-import { CITIES_BY_COUNTRY, countryName } from '../../models/country.model';
+import { CITIES_BY_COUNTRY } from '../../models/country.model';
 import { CountryService } from '../../services/country.service';
 import { I18nService } from '../../services/i18n.service';
 import { firstValueFrom } from 'rxjs';
@@ -31,16 +31,6 @@ export class HomeComponent implements OnInit {
     const c = this.countryService.country();
     const all = c === 'MA' ? MOROCCO_CITIES : (CITIES_BY_COUNTRY[c] ?? []);
     return all.slice(0, 12);
-  }
-  /** Localized name of the currently browsed country, for the hero heading.
-   * Deliberately not "in {country}"/"au {country}"/etc. — the required
-   * preposition's grammatical gender varies per country in French (and to a
-   * lesser extent Italian/Spanish), so a single static template would read
-   * correctly for Morocco but wrong for most other selectable countries. A
-   * plain country name after a dash sidesteps that without a 195-country
-   * gender table. */
-  get heroCountryName(): string {
-    return countryName(this.countryService.country(), this.i18n.lang());
   }
   featured: Listing[] = [];
   latest: Listing[] = [];
