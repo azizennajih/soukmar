@@ -198,6 +198,14 @@ export const CATEGORIES: CategoryConfig[] = [
   { value: 'OTHER',          label: 'Autres',           icon: '📦', color: 'cat-gray' },
 ];
 
+/** Homepage grouping of the categories (labels: i18n 'home.cat_group_<key>'). */
+export const CATEGORY_GROUPS: { key: 'market' | 'work' | 'mobility' | 'family'; categories: Category[] }[] = [
+  { key: 'market',   categories: ['VEHICLES', 'REAL_ESTATE', 'ELECTRONICS', 'HOME_GARDEN', 'FASHION', 'SPORTS_LEISURE'] },
+  { key: 'work',     categories: ['JOBS', 'SERVICES', 'LESSONS_COURSES'] },
+  { key: 'mobility', categories: ['CARPOOLING', 'TRANSPORT', 'RENTAL', 'MOVING'] },
+  { key: 'family',   categories: ['BABY_KIDS', 'PETS', 'TICKETS', 'GIVEAWAY_SWAP', 'OTHER'] },
+];
+
 // Suggested values for the free-text "Beruf"/"Profession" attribute on job
 // listings (labelPrefix `job_professions.`) — a datalist, not an enum: the
 // seller can always type something not on this list. Grouped by INDUSTRY

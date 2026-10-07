@@ -65,7 +65,13 @@
     "feature_community_desc": "Sizin gibi alıcı ve satıcılarla kolayca bağlantı kurun",
     "feature_boost_title": "Satışlarınızı artırın",
     "feature_boost_desc": "Görünürlüğü en üst düzeye çıkarmak için premium seçenekler",
-    "premium_cta": "Premium"
+    "premium_cta": "Premium",
+    "cat_group_market": "Al ve sat",
+    "cat_group_work": "Hizmetler ve işler",
+    "cat_group_mobility": "Yolda",
+    "cat_group_family": "Aile ve daha fazlası",
+    "category_count": "{count} ilan",
+    "category_count_one": "1 ilan"
   },
   "annonces": {
     "title": "Tüm ilanlar",

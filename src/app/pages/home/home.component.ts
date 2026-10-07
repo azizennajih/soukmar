@@ -9,7 +9,7 @@ import { AuthService } from '../../services/auth.service';
 import { ListingCardComponent } from '../../components/listing-card/listing-card.component';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { IconComponent } from '../../components/icon/icon.component';
-import { CATEGORIES, MOROCCO_CITIES, Listing, Category, isBoostActive } from '../../models/listing.model';
+import { CATEGORIES, CATEGORY_GROUPS, MOROCCO_CITIES, Listing, Category, isBoostActive } from '../../models/listing.model';
 import { CITIES_BY_COUNTRY } from '../../models/country.model';
 import { CountryService } from '../../services/country.service';
 import { I18nService } from '../../services/i18n.service';
@@ -27,6 +27,13 @@ import { SeoService, SITE_URL } from '../../services/seo.service';
 })
 export class HomeComponent implements OnInit {
   categories = CATEGORIES;
+  /** The 18 categories grouped by theme — easier to scan than one long grid. */
+  categoryGroups = CATEGORY_GROUPS.map(g => ({
+    key: g.key,
+    items: g.categories.map(value => CATEGORIES.find(c => c.value === value)!),
+  }));
+  /** Live listing count per category in the current country (empty until loaded). */
+  categoryCounts: Record<string, number> = {};
   get cities(): string[] {
     const c = this.countryService.country();
     const all = c === 'MA' ? MOROCCO_CITIES : (CITIES_BY_COUNTRY[c] ?? []);
@@ -74,6 +81,10 @@ export class HomeComponent implements OnInit {
     // not just on their next navigation.
     effect(() => {
       const country = this.countryService.country();
+      this.api.get<Record<string, number>>('/stats/categories', { country }).subscribe({
+        next: counts => { this.categoryCounts = counts; this.cdr.markForCheck(); },
+        error: () => { this.categoryCounts = {}; this.cdr.markForCheck(); },
+      });
       this.listingService.getAll({ limit: '20', country }).subscribe(res => {
         this.featured = res.listings.filter(l => l.isFeatured || isBoostActive(l.boostGlobalUntil));
         this.latest = res.listings.slice(0, 8);

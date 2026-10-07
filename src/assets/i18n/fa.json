@@ -65,7 +65,13 @@
     "feature_community_desc": "به‌راحتی با خریداران و فروشندگانی مانند خودتان در ارتباط باشید",
     "feature_boost_title": "فروش خود را افزایش دهید",
     "feature_boost_desc": "گزینه‌های ویژه برای به حداکثر رساندن دیده‌شدن",
-    "premium_cta": "ویژه"
+    "premium_cta": "ویژه",
+    "cat_group_market": "خرید و فروش",
+    "cat_group_work": "خدمات و مشاغل",
+    "cat_group_mobility": "جابه‌جایی",
+    "cat_group_family": "خانواده و بیشتر",
+    "category_count": "{count} آگهی",
+    "category_count_one": "1 آگهی"
   },
   "annonces": {
     "title": "همه آگهی‌ها",

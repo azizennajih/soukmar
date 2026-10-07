@@ -65,7 +65,13 @@
     "feature_community_desc": "اپنے جیسے خریداروں اور بیچنے والوں کے ساتھ آسانی سے رابطہ کریں",
     "feature_boost_title": "اپنی فروخت بڑھائیں",
     "feature_boost_desc": "نمایاں ہونے کے لیے پریمیم آپشنز",
-    "premium_cta": "پریمیم"
+    "premium_cta": "پریمیم",
+    "cat_group_market": "خریدیں اور بیچیں",
+    "cat_group_work": "خدمات اور ملازمتیں",
+    "cat_group_mobility": "سفر اور نقل و حمل",
+    "cat_group_family": "خاندان اور مزید",
+    "category_count": "{count} اشتہارات",
+    "category_count_one": "1 اشتہار"
   },
   "annonces": {
     "title": "تمام اشتہارات",

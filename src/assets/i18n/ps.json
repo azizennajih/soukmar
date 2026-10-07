@@ -65,7 +65,13 @@
     "feature_community_desc": "د خپل ځان په څیر پیرودونکو او پلورونکو سره په اسانۍ سره اړیکه ونیسئ",
     "feature_boost_title": "خپل پلور زیات کړئ",
     "feature_boost_desc": "د لیدونې زیاتوالي لپاره ممتاز اختیارونه",
-    "premium_cta": "ممتاز"
+    "premium_cta": "ممتاز",
+    "cat_group_market": "پیرل او پلورل",
+    "cat_group_work": "خدمتونه او دندې",
+    "cat_group_mobility": "په سفر کې",
+    "cat_group_family": "کورنۍ او نور",
+    "category_count": "{count} اعلانونه",
+    "category_count_one": "1 اعلان"
   },
   "annonces": {
     "title": "ټول اعلانونه",
