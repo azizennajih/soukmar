@@ -1731,5 +1731,9 @@
       "s5_title": "Melden und blockieren",
       "s5_body": "Verdächtige Anzeigen und Nutzer kannst du melden – unser Team prüft jede Meldung. Unerwünschte Kontakte kannst du im Chat blockieren. Profile mit geprüfter E-Mail-Adresse, Telefonnummer oder Ausweis sind gekennzeichnet."
     }
+  },
+  "seo": {
+    "default_title": "SouqMar24 — Kaufen und verkaufen, ganz einfach",
+    "default_description": "SouqMar24 — der Marktplatz für Kleinanzeigen: Fahrzeuge, Immobilien, Elektronik, Mode und vieles mehr in deiner Nähe."
   }
 }

@@ -1731,5 +1731,9 @@
       "s5_title": "Denunciar y bloquear",
       "s5_body": "Puedes denunciar anuncios y usuarios sospechosos; nuestro equipo revisa cada denuncia. Puedes bloquear contactos no deseados en el chat. Los perfiles con correo, teléfono o documento de identidad verificados llevan una insignia."
     }
+  },
+  "seo": {
+    "default_title": "SouqMar24 — Compra y vende fácilmente",
+    "default_description": "SouqMar24, el marketplace de anuncios clasificados: vehículos, inmobiliaria, electrónica, moda y mucho más cerca de ti."
   }
 }

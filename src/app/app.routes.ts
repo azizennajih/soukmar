@@ -32,30 +32,37 @@ const localizedRoutes: Routes = [
   },
   {
     path: 'deposer-annonce',
+    data: { titleKey: 'nav.post_full' },
     loadComponent: () => import('./pages/deposer-annonce/deposer-annonce.component').then(m => m.DeposerAnnonceComponent)
   },
   {
     path: 'deposer-annonce/:id',
+    data: { titleKey: 'nav.post_full' },
     loadComponent: () => import('./pages/deposer-annonce/deposer-annonce.component').then(m => m.DeposerAnnonceComponent)
   },
   {
     path: 'auth/login',
+    data: { titleKey: 'nav.login' },
     loadComponent: () => import('./pages/auth/login/login.component').then(m => m.LoginComponent)
   },
   {
     path: 'auth/register',
+    data: { titleKey: 'nav.register' },
     loadComponent: () => import('./pages/auth/register/register.component').then(m => m.RegisterComponent)
   },
   {
     path: 'auth/forgot-password',
+    data: { titleKey: 'auth.forgot_title' },
     loadComponent: () => import('./pages/auth/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent)
   },
   {
     path: 'auth/reset-password',
+    data: { titleKey: 'auth.reset_title' },
     loadComponent: () => import('./pages/auth/reset-password/reset-password.component').then(m => m.ResetPasswordComponent)
   },
   {
     path: 'mes-annonces',
+    data: { titleKey: 'nav.my_listings' },
     loadComponent: () => import('./pages/mes-annonces/mes-annonces.component').then(m => m.MesAnnoncesComponent)
   },
   {
@@ -64,6 +71,7 @@ const localizedRoutes: Routes = [
   },
   {
     path: 'mes-favoris',
+    data: { titleKey: 'nav.my_favorites' },
     loadComponent: () => import('./pages/mes-favoris/mes-favoris.component').then(m => m.MesFavorisComponent)
   },
   {
@@ -72,10 +80,12 @@ const localizedRoutes: Routes = [
   },
   {
     path: 'chat',
+    data: { titleKey: 'nav.messages' },
     loadComponent: () => import('./pages/chat/chat.component').then(m => m.ChatComponent)
   },
   {
     path: 'notifications',
+    data: { titleKey: 'nav.notifications' },
     loadComponent: () => import('./pages/notifications/notifications.component').then(m => m.NotificationsComponent)
   },
   {
@@ -84,10 +94,12 @@ const localizedRoutes: Routes = [
   },
   {
     path: 'recherches-sauvegardees',
+    data: { titleKey: 'nav.saved_searches' },
     loadComponent: () => import('./pages/saved-searches/saved-searches.component').then(m => m.SavedSearchesComponent)
   },
   {
     path: 'profil',
+    data: { titleKey: 'nav.profile' },
     loadComponent: () => import('./pages/profil/profil.component').then(m => m.ProfilComponent)
   },
   {
@@ -97,14 +109,17 @@ const localizedRoutes: Routes = [
   },
   {
     path: 'parametres',
+    data: { titleKey: 'parametres.title' },
     loadComponent: () => import('./pages/parametres/parametres.component').then(m => m.ParametresComponent)
   },
   {
     path: 'mentions-legales',
+    data: { titleKey: 'legal.notice_title' },
     loadComponent: () => import('./pages/mentions-legales/mentions-legales.component').then(m => m.MentionsLegalesComponent)
   },
   {
     path: 'aide',
+    data: { titleKey: 'footer.contact_us' },
     loadComponent: () => import('./pages/aide/aide.component').then(m => m.AideComponent)
   },
   {

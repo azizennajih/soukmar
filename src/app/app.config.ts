@@ -1,5 +1,6 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, isDevMode } from '@angular/core';
-import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideRouter, withInMemoryScrolling, TitleStrategy } from '@angular/router';
+import { LocalizedTitleStrategy } from './services/localized-title.strategy';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
 import { appReadyInterceptor } from './services/app-ready.service';
@@ -11,6 +12,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' })),
+    { provide: TitleStrategy, useClass: LocalizedTitleStrategy },
     provideHttpClient(withFetch(), withInterceptors([appReadyInterceptor, langInterceptor])),
     // Only in production: the Vite dev-server's SSR + HMR combo can leave a
     // component's hydrated TView out of sync with its post-edit template

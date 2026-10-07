@@ -1731,5 +1731,9 @@
       "s5_title": "Signaler et bloquer",
       "s5_body": "Vous pouvez signaler les annonces et utilisateurs suspects – notre équipe examine chaque signalement. Vous pouvez bloquer les contacts indésirables dans le chat. Les profils dont l'e-mail, le téléphone ou la pièce d'identité sont vérifiés sont signalés par un badge."
     }
+  },
+  "seo": {
+    "default_title": "SouqMar24 — Achetez et vendez facilement",
+    "default_description": "SouqMar24, la marketplace de petites annonces : véhicules, immobilier, électronique, mode et plus encore près de chez vous."
   }
 }

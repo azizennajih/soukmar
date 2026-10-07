@@ -1731,5 +1731,9 @@
       "s5_title": "Segnalare e bloccare",
       "s5_body": "Puoi segnalare annunci e utenti sospetti: il nostro team esamina ogni segnalazione. Puoi bloccare i contatti indesiderati nella chat. I profili con e-mail, telefono o documento d'identità verificati sono contrassegnati da un badge."
     }
+  },
+  "seo": {
+    "default_title": "SouqMar24 — Compra e vendi facilmente",
+    "default_description": "SouqMar24, il marketplace di annunci: veicoli, immobili, elettronica, moda e molto altro vicino a te."
   }
 }

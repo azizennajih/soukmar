@@ -1731,5 +1731,9 @@
       "s5_title": "Bildirin ve engelleyin",
       "s5_body": "Şüpheli ilanları ve kullanıcıları bildirebilirsiniz – ekibimiz her bildirimi inceler. İstenmeyen kişileri sohbette engelleyebilirsiniz. E-postası, telefonu veya kimliği doğrulanmış profiller bir rozetle işaretlenir."
     }
+  },
+  "seo": {
+    "default_title": "SouqMar24 — Kolayca al ve sat",
+    "default_description": "SouqMar24, ilan pazar yeri: araçlar, emlak, elektronik, moda ve çok daha fazlası yakınınızda."
   }
 }

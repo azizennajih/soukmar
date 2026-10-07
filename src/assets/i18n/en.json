@@ -1731,5 +1731,9 @@
       "s5_title": "Report and block",
       "s5_body": "You can report suspicious ads and users – our team reviews every report. You can block unwanted contacts in the chat. Profiles with a verified email address, phone number or ID are marked with a badge."
     }
+  },
+  "seo": {
+    "default_title": "SouqMar24 — Buy and sell with ease",
+    "default_description": "SouqMar24 — the classifieds marketplace: vehicles, real estate, electronics, fashion and much more near you."
   }
 }

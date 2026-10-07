@@ -94,10 +94,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.seo.setTitleAndDescription(
-      'SouqMar24 — Achetez & vendez facilement',
-      'La marketplace pour acheter et vendre rapidement : véhicules, immobilier, électronique, mode et plus encore.'
-    );
+    this.seo.setTitleAndDescription(this.i18n.t('seo.default_title'), this.i18n.t('seo.default_description'));
     this.seo.setCanonical(`${SITE_URL}/${this.i18n.lang()}`);
     this.seo.setHreflangAlternates('/');
     this.cdr.markForCheck();
