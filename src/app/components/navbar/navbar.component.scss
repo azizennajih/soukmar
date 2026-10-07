@@ -199,14 +199,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.2rem;
-    height: 2.2rem;
-    border-radius: .75rem;
-    border: 1.5px solid #e2e8f0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 0;
     color: #64748b;
     text-decoration: none;
     transition: all .2s;
-    &:hover { background: #f8fafc; color: #e63946; border-color: #e63946; }
+    &:hover { background: #f1f5f9; color: #e63946; }
     // Redundant with the mobile menu's own Messages link, and the header
     // runs out of room for it once the user is logged in (chat + avatar +
     // post + burger no longer fit 375px without it).
@@ -231,14 +231,15 @@
     display: flex;
     align-items: center;
     gap: .45rem;
-    padding: .4rem .75rem;
-    border: 1.5px solid #e2e8f0;
-    border-radius: .75rem;
+    height: 2.5rem;
+    padding: 0 .6rem 0 .25rem;
+    border: 0;
+    border-radius: 999px;
     background: transparent;
     cursor: pointer;
     transition: background .15s;
 
-    &:hover { background: #f8fafc; }
+    &:hover { background: #f1f5f9; }
   }
 
   &__user-avatar {
@@ -309,17 +310,18 @@
     display: flex;
     align-items: center;
     gap: .35rem;
-    padding: .35rem .65rem;
+    height: 2.5rem;
+    padding: 0 .75rem;
     border-radius: 999px;
-    border: 1.5px solid #e2e8f0;
-    background: #f8fafc;
+    border: 0;
+    background: transparent;
     font-size: .82rem;
     font-weight: 600;
     cursor: pointer;
     color: #374151;
     transition: background .15s, border-color .15s;
 
-    &:hover { background: #f1f5f9; border-color: #cbd5e1; }
+    &:hover { background: #f1f5f9; }
 
     svg { opacity: .5; }
   }
