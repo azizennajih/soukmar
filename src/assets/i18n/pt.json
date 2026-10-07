@@ -1516,7 +1516,7 @@
     "last_updated": "Última atualização: 7 de outubro de 2026",
     "notice": {
       "s1_title": "Prestador",
-      "s1_body": "Informações nos termos do § 5 DDG (lei alemã dos serviços digitais):\n\n{op_name}\nProprietário, empresário em nome individual — operador da plataforma «SouqMar24»\n{op_street}\n{op_zipcity}\n{op_country}",
+      "s1_body": "Informações nos termos do § 5 DDG (lei alemã dos serviços digitais):\n\n{op_name}\n{op_street}\n{op_zipcity}\n{op_country}",
       "s2_title": "Contacto",
       "s2_body": "E-mail: {op_email}\nTelefone: {op_phone}\n\nProcuramos responder aos pedidos num prazo de poucos dias úteis.",
       "s3_title": "Hospedagem",
@@ -1550,7 +1550,7 @@
       "s9_title": "Segurança dos dados",
       "s9_body": "Implementamos medidas técnicas e organizacionais razoáveis (criptografia de senhas, conexões seguras HTTPS, controle de acesso) para proteger seus dados contra acesso não autorizado, perda ou divulgação.",
       "s10_title": "Transferências para países terceiros",
-      "s10_body": "Os nossos servidores estão na União Europeia. Alguns dos prestadores referidos (p. ex. Resend, Twilio, Cloudflare, Cloudinary, OpenAI) têm sede em países terceiros, em especial nos EUA, ou tratam dados aí. A transferência baseia-se numa decisão de adequação da Comissão Europeia (p. ex. o Quadro de Privacidade de Dados UE-EUA) ou em cláusulas contratuais-tipo nos termos do art. 46.º RGPD.",
+      "s10_body": "Os nossos servidores estão na União Europeia. Alguns dos prestadores referidos (p. ex. Resend, Twilio, Cloudflare, Cloudinary, OpenAI) têm sede em países terceiros, em especial nos EUA, ou tratam dados aí. A transferência baseia-se numa decisão de adequação da Comissão Europeia (p. ex. o Quadro de Privacidade de Dados UE-EUA) ou em cláusulas contratuais-tipo nos termos do art. 46.º RGPD.\n\nO serviço destina-se a utilizadores de todo o mundo. Tratamos os dados de todos os utilizadores segundo as normas do RGPD, independentemente do local de residência.",
       "s11_title": "Alteração da política",
       "s11_body": "Esta política de privacidade pode ser atualizada a qualquer momento. A data da última atualização é indicada no topo desta página. Recomendamos que a consulte regularmente."
     },
@@ -1560,7 +1560,7 @@
       "s2_title": "Aceitação dos Termos",
       "s2_body": "O acesso e a utilização do Site implicam a aceitação plena e integral destes Termos. Se você não aceita estas condições, deve se abster de utilizar o Site.",
       "s3_title": "Cadastro e conta de usuário",
-      "s3_body": "A criação de uma conta requer o fornecimento de informações exatas e atualizadas (nome, e-mail, telefone). Você é responsável pela confidencialidade das suas credenciais e por qualquer atividade realizada a partir da sua conta. Uma conta é estritamente pessoal e não pode ser cedida nem compartilhada.",
+      "s3_body": "A criação de uma conta requer o fornecimento de informações exatas e atualizadas (nome, e-mail, telefone). Você é responsável pela confidencialidade das suas credenciais e por qualquer atividade realizada a partir da sua conta. Uma conta é estritamente pessoal e não pode ser cedida nem compartilhada. O registo é reservado a pessoas com 18 anos ou mais.",
       "s4_title": "Descrição do serviço",
       "s4_body": "O SouqMar24 disponibiliza um espaço de conexão entre usuários que desejam vender, comprar, alugar ou oferecer bens e serviços. O SouqMar24 não é parte nas transações concluídas entre usuários e não intervém na negociação, no pagamento nem na entrega dos bens ou serviços anunciados.",
       "s5_title": "Regras de publicação dos anúncios",
@@ -1580,7 +1580,7 @@
       "s12_title": "Alteração dos Termos",
       "s12_body": "O SouqMar24 reserva-se o direito de alterar estes Termos a qualquer momento. Os usuários serão informados de qualquer alteração substancial. A continuidade do uso do Site após a alteração implica a aceitação dos novos Termos.",
       "s13_title": "Lei aplicável e disputas",
-      "s13_body": "Os presentes Termos e a utilização do Site regem-se pelo direito da República Federal da Alemanha, com exclusão da Convenção das Nações Unidas sobre a Compra e Venda Internacional de Mercadorias. Se for consumidor com residência habitual noutro Estado, as normas imperativas de proteção do consumidor desse Estado permanecem inalteradas.\n\nEm caso de litígio procura-se, em primeiro lugar, uma solução amigável. Para os consumidores aplicam-se os foros legais; relativamente a empresários, o foro competente é a sede do operador. Não estamos dispostos nem obrigados a participar em procedimentos de resolução de litígios perante uma entidade de arbitragem de consumo.",
+      "s13_body": "Os presentes Termos e a utilização do Site regem-se pelo direito da República Federal da Alemanha, com exclusão da Convenção das Nações Unidas sobre a Compra e Venda Internacional de Mercadorias. Se for consumidor com residência habitual noutro Estado, as normas imperativas de proteção do consumidor desse Estado permanecem inalteradas.\n\nEm caso de litígio procura-se, em primeiro lugar, uma solução amigável. Para os consumidores aplicam-se os foros legais; relativamente a empresários, o foro competente é a sede do operador. Não estamos dispostos nem obrigados a participar em procedimentos de resolução de litígios perante uma entidade de arbitragem de consumo.\n\nPrevalece a versão alemã destes Termos; as traduções servem apenas para facilitar a compreensão.",
       "s14_title": "Contato",
       "s14_body": "Para questões sobre estes Termos, pode contactar-nos em {op_email}."
     },

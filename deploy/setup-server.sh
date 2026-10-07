@@ -88,6 +88,7 @@ git config --global --add safe.directory '*'
 echo "==> 6/9 Backend konfigurieren und bauen"
 ENV_FILE="$APP_DIR/soukmar-backend/.env"
 cp "$ENV_UPLOAD" "$ENV_FILE"
+chmod 600 "$ENV_UPLOAD"
 sed -i 's/\r$//' "$ENV_FILE"
 chmod 600 "$ENV_FILE"
 set_env() { if grep -q "^$1=" "$ENV_FILE"; then sed -i "s|^$1=.*|$1=$2|" "$ENV_FILE"; else echo "$1=$2" >> "$ENV_FILE"; fi; }
@@ -163,6 +164,7 @@ systemctl reload caddy || systemctl restart caddy
 
 echo
 echo "FERTIG. Oeffne https://${DOMAIN}"
+echo "Naechster Schritt: SSH nur noch per Schluessel erlauben - siehe deploy/harden-ssh.sh"
 echo "Datenbank-Sicherung: taeglich 03:15 Uhr nach /var/backups/soukmar (14 Tage + 8 Wochen). Zusaetzlich das IONOS-Backup buchen oder den Ordner regelmaessig auf deinen Rechner kopieren."
 echo "(Das HTTPS-Zertifikat holt Caddy automatisch, sobald die DNS-Eintraege auf diesen Server zeigen.)"
 sudo -u soukmar -H pm2 status

@@ -1516,7 +1516,7 @@
     "last_updated": "Son güncelleme: 7 Ekim 2026",
     "notice": {
       "s1_title": "Hizmet sağlayıcı",
-      "s1_body": "DDG (Alman Dijital Hizmetler Yasası) § 5 uyarınca bilgiler:\n\n{op_name}\nSahip, şahıs işletmesi — \"SouqMar24\" platformunun işletmecisi\n{op_street}\n{op_zipcity}\n{op_country}",
+      "s1_body": "DDG (Alman Dijital Hizmetler Yasası) § 5 uyarınca bilgiler:\n\n{op_name}\n{op_street}\n{op_zipcity}\n{op_country}",
       "s2_title": "İletişim",
       "s2_body": "E-posta: {op_email}\nTelefon: {op_phone}\n\nTalepleri birkaç iş günü içinde yanıtlamaya çalışırız.",
       "s3_title": "Barındırma",
@@ -1550,7 +1550,7 @@
       "s9_title": "Veri güvenliği",
       "s9_body": "Verilerinizi yetkisiz erişime, kayba veya ifşaya karşı korumak için makul teknik ve organizasyonel önlemler (şifre şifreleme, güvenli HTTPS bağlantıları, erişim kontrolü) uyguluyoruz.",
       "s10_title": "Üçüncü ülkelere aktarım",
-      "s10_body": "Sunucularımız Avrupa Birliği'ndedir. Adı geçen hizmet sağlayıcıların bir kısmı (ör. Resend, Twilio, Cloudflare, Cloudinary, OpenAI) üçüncü ülkelerde, özellikle ABD'de yerleşiktir veya verileri orada işler. Aktarım, Avrupa Komisyonu'nun bir yeterlilik kararına (ör. AB-ABD Veri Gizliliği Çerçevesi) veya GVKT m. 46 uyarınca standart sözleşme hükümlerine dayanır.",
+      "s10_body": "Sunucularımız Avrupa Birliği'ndedir. Adı geçen hizmet sağlayıcıların bir kısmı (ör. Resend, Twilio, Cloudflare, Cloudinary, OpenAI) üçüncü ülkelerde, özellikle ABD'de yerleşiktir veya verileri orada işler. Aktarım, Avrupa Komisyonu'nun bir yeterlilik kararına (ör. AB-ABD Veri Gizliliği Çerçevesi) veya GVKT m. 46 uyarınca standart sözleşme hükümlerine dayanır.\n\nHizmet dünya genelindeki kullanıcılara sunulmaktadır. Tüm kullanıcıların verilerini yaşadıkları yerden bağımsız olarak GVKT standartlarına göre işleriz.",
       "s11_title": "Politika değişikliği",
       "s11_body": "İşbu gizlilik politikası herhangi bir zamanda güncellenebilir. Son güncelleme tarihi bu sayfanın üstünde belirtilmiştir. Düzenli olarak kontrol etmenizi öneririz."
     },
@@ -1560,7 +1560,7 @@
       "s2_title": "Koşulların kabulü",
       "s2_body": "Siteye erişim ve kullanım, işbu Koşulların tam ve eksiksiz kabulünü ifade eder. Bu koşulları kabul etmiyorsanız, Siteyi kullanmaktan kaçınmalısınız.",
       "s3_title": "Kayıt ve kullanıcı hesabı",
-      "s3_body": "Bir hesap oluşturmak, doğru ve güncel bilgilerin (ad, e-posta, telefon numarası) sağlanmasını gerektirir. Kimlik bilgilerinizin gizliliğinden ve hesabınızdan yapılan her türlü etkinlikten siz sorumlusunuz. Bir hesap kesinlikle kişiseldir ve devredilemez veya paylaşılamaz.",
+      "s3_body": "Bir hesap oluşturmak, doğru ve güncel bilgilerin (ad, e-posta, telefon numarası) sağlanmasını gerektirir. Kimlik bilgilerinizin gizliliğinden ve hesabınızdan yapılan her türlü etkinlikten siz sorumlusunuz. Bir hesap kesinlikle kişiseldir ve devredilemez veya paylaşılamaz. Kayıt yalnızca 18 yaş ve üzerindeki kişilere açıktır.",
       "s4_title": "Hizmet tanımı",
       "s4_body": "SouqMar24, mal ve hizmet satmak, satın almak, kiralamak veya sunmak isteyen kullanıcılar arasında bir bağlantı alanı sunar. SouqMar24, kullanıcılar arasında yapılan işlemlere taraf değildir ve pazarlığa, ödemeye veya ilan edilen mal veya hizmetlerin teslimatına müdahale etmez.",
       "s5_title": "İlan yayınlama kuralları",
@@ -1580,7 +1580,7 @@
       "s12_title": "Koşulların değiştirilmesi",
       "s12_body": "SouqMar24, işbu Koşulları herhangi bir zamanda değiştirme hakkını saklı tutar. Kullanıcılar her türlü önemli değişiklik hakkında bilgilendirilecektir. Değişiklikten sonra Sitenin kullanılmaya devam edilmesi, yeni Koşulların kabulü anlamına gelir.",
       "s13_title": "Uygulanabilir hukuk ve uyuşmazlıklar",
-      "s13_body": "Bu Koşullar ve Site'nin kullanımı, BM Mal Satımına İlişkin Sözleşmesi hariç olmak üzere Almanya Federal Cumhuriyeti hukukuna tabidir. Başka bir devlette mutat meskeni olan bir tüketiciyseniz, o devletin zorunlu tüketici koruma hükümleri saklıdır.\n\nUyuşmazlık halinde öncelikle dostane çözüm aranır. Tüketiciler için yasal yetkili mahkemeler geçerlidir; işletmecilere karşı yetkili yer, işletmecinin merkezidir. Tüketici tahkim kurulu önündeki uyuşmazlık çözüm usullerine katılmaya ne istekliyiz ne de zorunluyuz.",
+      "s13_body": "Bu Koşullar ve Site'nin kullanımı, BM Mal Satımına İlişkin Sözleşmesi hariç olmak üzere Almanya Federal Cumhuriyeti hukukuna tabidir. Başka bir devlette mutat meskeni olan bir tüketiciyseniz, o devletin zorunlu tüketici koruma hükümleri saklıdır.\n\nUyuşmazlık halinde öncelikle dostane çözüm aranır. Tüketiciler için yasal yetkili mahkemeler geçerlidir; işletmecilere karşı yetkili yer, işletmecinin merkezidir. Tüketici tahkim kurulu önündeki uyuşmazlık çözüm usullerine katılmaya ne istekliyiz ne de zorunluyuz.\n\nBu Koşulların Almanca sürümü esas alınır; çeviriler yalnızca anlaşılırlığı kolaylaştırmak içindir.",
       "s14_title": "İletişim",
       "s14_body": "Bu Koşullarla ilgili sorularınız için bize {op_email} adresinden ulaşabilirsiniz."
     },
