@@ -5,6 +5,7 @@ import { BrowserStorageService } from './browser-storage.service';
 import { AuthService } from './auth.service';
 import { I18nService } from './i18n.service';
 import { isKnownCountry, COUNTRY_STORAGE_KEY as COUNTRY_KEY } from '../models/country.model';
+import { apiBase } from '../config/api.config';
 
 const COUNTRY_COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 const IP_DETECTED_KEY = 'soukmar_country_ip_detected';
@@ -81,9 +82,11 @@ export class CountryService {
    * since this is automatic, not a manual switch, and must still run for
    * logged-out visitors even though they can't switch by hand. */
   private detectCountryFromIp() {
-    this.http.get<{ country_code?: string }>('https://ipapi.co/json/').subscribe({
+    // Our own backend looks the country up locally from the request IP — the visitor's address
+    // is never sent to a third-party service.
+    this.http.get<{ country: string | null }>(`${apiBase()}/geo/country`).subscribe({
       next: (res) => {
-        const code = res.country_code?.toUpperCase();
+        const code = res.country?.toUpperCase();
         if (code && isKnownCountry(code)) {
           this.country.set(code);
           this.storage.setItem(IP_DETECTED_KEY, '1');

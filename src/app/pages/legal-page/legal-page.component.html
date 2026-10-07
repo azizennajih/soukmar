@@ -10,7 +10,7 @@
   @for (n of sections; track n) {
     <section class="legal-page__section">
       <h2>{{ (namespace + '.s' + n + '_title') | T }}</h2>
-      <p>{{ (namespace + '.s' + n + '_body') | T }}</p>
+      <p>{{ text(namespace + '.s' + n + '_body') }}</p>
     </section>
   }
 </div>

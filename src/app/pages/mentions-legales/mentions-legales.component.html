@@ -6,7 +6,7 @@
   @for (n of noticeSections; track n) {
     <section class="parametres__section">
       <h2>{{ ('legal.notice.s' + n + '_title') | T }}</h2>
-      <p>{{ ('legal.notice.s' + n + '_body') | T }}</p>
+      <p>{{ text('legal.notice.s' + n + '_body') }}</p>
     </section>
   }
 

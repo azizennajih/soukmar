@@ -21,7 +21,7 @@ app.disable('x-powered-by');
 //
 // The policy pins every place the page may load code or data from: our own
 // origin, Cloudflare Turnstile (bot check), Cloudinary (photos), OpenStreetMap
-// (map tiles), Google Fonts and the ipapi.co country lookup. Even if some HTML
+// (map tiles). Fonts and the country lookup are served by ourselves. Even if some HTML
 // were ever injected, a stolen login token could not be sent to an attacker's
 // server (connect-src) and no foreign script could be pulled in (script-src).
 // 'unsafe-inline' remains for scripts/styles because Angular's server rendering
@@ -29,10 +29,10 @@ app.disable('x-powered-by');
 const CSP = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
-  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  "font-src 'self' data: https://fonts.gstatic.com",
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self' data:",
   "img-src 'self' data: blob: https://res.cloudinary.com https://*.tile.openstreetmap.org",
-  "connect-src 'self' https://ipapi.co https://challenges.cloudflare.com",
+  "connect-src 'self' https://challenges.cloudflare.com",
   "frame-src https://challenges.cloudflare.com",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
