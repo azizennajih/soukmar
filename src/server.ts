@@ -6,6 +6,7 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
+import { DEFAULT_LANG, isSupportedLang, langFromAcceptLanguage } from './app/services/locale-routing';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 const BACKEND_URL = process.env['BACKEND_URL'] || 'http://127.0.0.1:3000';
@@ -80,6 +81,24 @@ app.use(
     redirect: false,
   }),
 );
+
+/**
+ * Old or hand-typed links without a language prefix (/auth/login, /annonces/abc123) get the
+ * prefix added with the full path and query kept: /de/auth/login. The router's own wildcard
+ * redirect only handled one-segment URLs correctly (it cut /auth/login down to /auth).
+ * Language: an explicit earlier choice (cookie) wins, then the browser's Accept-Language.
+ */
+app.use((req, res, next) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') { next(); return; }
+  const segments = req.path.split('/').filter(Boolean);
+  if (segments.length < 2 || isSupportedLang(segments[0]) || segments[0].includes('.')) { next(); return; }
+
+  const cookies = req.headers.cookie ?? '';
+  const read = (name: string) => decodeURIComponent(cookies.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]+)'))?.[1] ?? '');
+  const explicit = read('soukmar_lang_explicit') === '1' ? read('soukmar_lang') : '';
+  const lang = isSupportedLang(explicit) ? explicit : (langFromAcceptLanguage(req.headers['accept-language']) ?? DEFAULT_LANG);
+  res.redirect(302, '/' + lang + req.originalUrl);
+});
 
 /**
  * Handle all other requests by rendering the Angular application.

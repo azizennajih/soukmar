@@ -186,7 +186,10 @@ export const routes: Routes = [
       const router = inject(Router);
       const i18n = inject(I18nService);
       const lang = i18n.lang();
-      const segments = data.url.map(s => s.path);
+      // Take the segments from the URL being navigated to — `data.url` only carried the first one,
+      // which turned /auth/login into /auth and /annonces/<id> into /annonces.
+      const primary = router.getCurrentNavigation()?.extractedUrl.root.children['primary'];
+      const segments = (primary?.segments ?? data.url).map(s => s.path);
       return router.createUrlTree([`/${lang}`, ...segments], {
         queryParams: data.queryParams,
         fragment: data.fragment ?? undefined,

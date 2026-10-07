@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit, signal, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { CommonModule } from '@angular/common';
 import { Listing, CATEGORIES, HIGHLIGHT_ATTR_CODES, formatPriceParts, timeAgo, isNewListing, isBoostActive } from '../../models/listing.model';
@@ -28,6 +28,7 @@ export class ListingCardComponent implements OnInit {
   private api = inject(ApiService);
   private auth = inject(AuthService);
   private i18n = inject(I18nService);
+  private router = inject(Router);
 
   favorited = signal(false);
   favLoading = signal(false);
@@ -102,7 +103,9 @@ export class ListingCardComponent implements OnInit {
     e.preventDefault();
     e.stopPropagation();
     if (!this.auth.isLoggedIn) {
-      window.location.href = '/auth/login';
+      // In-app navigation to the login page of the current language (a full page load lost the
+      // language and, via the bare URL, even the target); the login flow returns here afterwards.
+      this.router.navigate(this.i18n.withLang(['/auth/login']));
       return;
     }
     if (this.favLoading()) return;
