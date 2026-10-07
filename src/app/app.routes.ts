@@ -20,6 +20,7 @@ const localizedRoutes: Routes = [
   },
   {
     path: 'annonces',
+    data: { titleKey: 'annonces.title' },
     loadComponent: () => import('./pages/annonces/annonces.component').then(m => m.AnnoncesComponent)
   },
   {

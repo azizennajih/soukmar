@@ -222,7 +222,7 @@ export class AnnoncesComponent implements OnInit {
   private updateSeo() {
     const heading = this.filters.categorie ? this.i18n.t('cats.' + this.filters.categorie) : this.i18n.t('annonces.title');
     this.seo.setTitleAndDescription(
-      `${heading} — SouqMar24`,
+      `SouqMar24 — ${heading}`,
       `${this.total} ${this.i18n.t('annonces.found')} — SouqMar24`
     );
     const bareCanonicalPath = this.filters.categorie

@@ -17,7 +17,7 @@ export class LocalizedTitleStrategy extends TitleStrategy {
     while (route.firstChild) route = route.firstChild;
     const key = route.data?.['titleKey'] as string | undefined;
     const name = key ? this.i18n.t(key) : '';
-    this.title.setTitle(name && name !== key ? name + ' — SouqMar24' : this.i18n.t('seo.default_title'));
+    this.title.setTitle(name && name !== key ? 'SouqMar24 — ' + name : this.i18n.t('seo.default_title'));
     // Same for the description crawlers and link previews read (pages with their own text override it later).
     this.meta.updateTag({ name: 'description', content: this.i18n.t('seo.default_description') });
   }

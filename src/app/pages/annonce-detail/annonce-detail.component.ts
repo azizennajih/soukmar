@@ -130,7 +130,7 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   private updateMetaTags(listing: Listing) {
-    const title = `${listing.title} — SouqMar24`;
+    const title = `SouqMar24 — ${listing.title}`;
     const description = listing.description?.slice(0, 160) || '';
     const image = listing.images?.[0] || '';
     // Built explicitly (not this.seo.canonicalUrl) so a stray query param
