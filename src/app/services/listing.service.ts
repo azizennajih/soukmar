@@ -82,7 +82,8 @@ export class ListingService {
   }
 
   requestBoost(id: string, tiers: BoostTierId[]): Observable<BoostRequest> {
-    return this.api.post<BoostRequest>(`/listings/${id}/boost-request`, { tiers });
+    // The buyer has to tick the withdrawal-consent box (§ 356 (4) BGB) before this is reachable in the UI.
+    return this.api.post<BoostRequest>(`/listings/${id}/boost-request`, { tiers, withdrawalConsent: true });
   }
 
   getViewStats(id: string): Observable<{ days: { date: string; count: number }[]; total: number }> {

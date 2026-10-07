@@ -1675,7 +1675,8 @@
     "pending_body": "Sua seleção ({tiers}) por {price} está em verificação. Você receberá uma notificação assim que for ativada.",
     "confirm_title": "Solicitação enviada!",
     "confirm_body": "Vamos verificar sua solicitação e ativá-la assim que o pagamento for confirmado. Você receberá uma notificação.",
-    "back": "Voltar aos meus anúncios"
+    "back": "Voltar aos meus anúncios",
+    "withdrawal_consent": "Ao enviar, faz um pedido de reserva pago. Aceito expressamente que a SouqMar24 inicie o serviço antes do fim do prazo de livre resolução e reconheço que perco o direito de livre resolução quando o serviço estiver totalmente executado."
   },
   "mes_abonnements": {
     "title": "A seguir",

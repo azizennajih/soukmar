@@ -1675,7 +1675,8 @@
     "pending_body": "Deine Auswahl ({tiers}) für {price} wird geprüft. Du bekommst eine Benachrichtigung, sobald sie aktiviert ist.",
     "confirm_title": "Anfrage gesendet!",
     "confirm_body": "Wir prüfen deine Anfrage und aktivieren sie, sobald die Zahlung bestätigt ist. Du bekommst eine Benachrichtigung.",
-    "back": "Zurück zu meinen Anzeigen"
+    "back": "Zurück zu meinen Anzeigen",
+    "withdrawal_consent": "Mit dem Absenden gibst du eine kostenpflichtige Buchungsanfrage ab. Ich stimme ausdrücklich zu, dass SouqMar24 vor Ablauf der Widerrufsfrist mit der Leistung beginnt, und nehme zur Kenntnis, dass ich mein Widerrufsrecht verliere, sobald die Leistung vollständig erbracht ist."
   },
   "mes_abonnements": {
     "title": "Meine Abonnements",

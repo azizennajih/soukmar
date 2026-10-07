@@ -176,6 +176,19 @@
     margin: .75rem 0 0;
   }
 
+  &__consent {
+    display: flex;
+    align-items: flex-start;
+    gap: .6rem;
+    margin: 1rem 0 0;
+    font-size: .8rem;
+    line-height: 1.5;
+    color: var(--text);
+    cursor: pointer;
+
+    input { margin-top: .2rem; flex-shrink: 0; accent-color: var(--primary); }
+  }
+
   &__error {
     color: var(--primary);
     font-size: .85rem;

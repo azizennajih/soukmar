@@ -27,6 +27,7 @@ export class BoostListingComponent implements OnInit {
   loading = true;
   submitting = false;
   submitted = false;
+  withdrawalConsent = false;
   errorMsg = '';
 
   constructor(
@@ -99,7 +100,7 @@ export class BoostListingComponent implements OnInit {
 
   async submit() {
     if (this.selected.size === 0) { this.errorMsg = this.i18n.t('boost.select_at_least_one'); return; }
-    if (!this.listing || this.submitting) return;
+    if (!this.listing || this.submitting || !this.withdrawalConsent) return;
     this.submitting = true;
     this.errorMsg = '';
     try {

@@ -81,7 +81,11 @@
           @if (errorMsg) {
             <p class="boost-summary__error">{{ errorMsg }}</p>
           }
-          <button class="btn-primary boost-summary__submit" [disabled]="submitting" (click)="submit()">
+          <label class="boost-summary__consent">
+            <input type="checkbox" [checked]="withdrawalConsent" (change)="withdrawalConsent = $any($event.target).checked" />
+            <span>{{ 'boost.withdrawal_consent' | T }}</span>
+          </label>
+          <button class="btn-primary boost-summary__submit" [disabled]="submitting || !withdrawalConsent" (click)="submit()">
             {{ (submitting ? 'boost.submitting' : 'boost.submit') | T }}
           </button>
         </div>

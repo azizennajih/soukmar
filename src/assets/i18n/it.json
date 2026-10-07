@@ -1675,7 +1675,8 @@
     "pending_body": "La tua selezione ({tiers}) per {price} è in fase di revisione. Riceverai una notifica non appena sarà attivata.",
     "confirm_title": "Richiesta inviata!",
     "confirm_body": "Stiamo verificando la tua richiesta e la attiveremo non appena il pagamento sarà confermato. Riceverai una notifica.",
-    "back": "Torna alle mie inserzioni"
+    "back": "Torna alle mie inserzioni",
+    "withdrawal_consent": "Inviando, effettui una richiesta di prenotazione a pagamento. Acconsento espressamente che SouqMar24 inizi il servizio prima della scadenza del termine di recesso e riconosco di perdere il diritto di recesso una volta eseguito completamente il servizio."
   },
   "mes_abonnements": {
     "title": "I miei seguiti",

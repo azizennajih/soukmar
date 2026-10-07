@@ -1675,7 +1675,8 @@
     "pending_body": "Ta sélection ({tiers}) pour {price} est en cours de vérification. Tu recevras une notification dès son activation.",
     "confirm_title": "Demande envoyée !",
     "confirm_body": "On vérifie ta demande et on l'active dès la confirmation du paiement. Tu recevras une notification.",
-    "back": "Retour à mes annonces"
+    "back": "Retour à mes annonces",
+    "withdrawal_consent": "L'envoi constitue une demande de réservation payante. J'accepte expressément que SouqMar24 commence la prestation avant la fin du délai de rétractation et je reconnais perdre mon droit de rétractation dès que la prestation est entièrement exécutée."
   },
   "mes_abonnements": {
     "title": "Mes abonnements",

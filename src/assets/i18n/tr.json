@@ -1675,7 +1675,8 @@
     "pending_body": "{price} için seçiminiz ({tiers}) doğrulanıyor. Etkinleştirildiğinde bir bildirim alacaksınız.",
     "confirm_title": "Talep gönderildi!",
     "confirm_body": "Talebinizi kontrol ediyoruz ve ödeme onaylanır onaylanmaz etkinleştiriyoruz. Bir bildirim alacaksınız.",
-    "back": "İlanlarıma dön"
+    "back": "İlanlarıma dön",
+    "withdrawal_consent": "Göndermekle ücretli bir rezervasyon talebinde bulunursunuz. SouqMar24'ün cayma süresi dolmadan hizmete başlamasına açıkça onay veriyorum ve hizmet tamamen ifa edildiğinde cayma hakkımı kaybettiğimi kabul ediyorum."
   },
   "mes_abonnements": {
     "title": "Takip Edilenler",

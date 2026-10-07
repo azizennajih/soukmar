@@ -1675,7 +1675,8 @@
     "pending_body": "Your selection ({tiers}) for {price} is being reviewed. You’ll get a notification once it’s activated.",
     "confirm_title": "Request sent!",
     "confirm_body": "We’re reviewing your request and will activate it once payment is confirmed. You’ll get a notification.",
-    "back": "Back to my listings"
+    "back": "Back to my listings",
+    "withdrawal_consent": "Submitting this is a paid booking request. I expressly agree that SouqMar24 starts the service before the withdrawal period ends, and I acknowledge that I lose my right of withdrawal once the service has been fully performed."
   },
   "mes_abonnements": {
     "title": "Following",

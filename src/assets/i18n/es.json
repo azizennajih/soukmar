@@ -1675,7 +1675,8 @@
     "pending_body": "Tu seleccion ({tiers}) por {price} esta siendo revisada. Recibiras una notificacion en cuanto se active.",
     "confirm_title": "Solicitud enviada!",
     "confirm_body": "Estamos revisando tu solicitud y la activaremos en cuanto se confirme el pago. Recibiras una notificacion.",
-    "back": "Volver a mis anuncios"
+    "back": "Volver a mis anuncios",
+    "withdrawal_consent": "Al enviar, realizas una solicitud de reserva de pago. Acepto expresamente que SouqMar24 comience la prestación antes de que termine el plazo de desistimiento y reconozco que pierdo mi derecho de desistimiento cuando el servicio se haya prestado por completo."
   },
   "mes_abonnements": {
     "title": "Mis suscripciones",
