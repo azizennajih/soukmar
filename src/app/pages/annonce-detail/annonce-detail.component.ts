@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { ListingService } from '../../services/listing.service';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
+import { CountryService } from '../../services/country.service';
+import { formatDateForCountry } from '../../models/date-format';
 import { Listing, ListingAttributeValue, CATEGORIES, formatPriceParts, timeAgo, isNewListing, exactDateTime, localeForLang } from '../../models/listing.model';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
@@ -130,6 +132,7 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
   }
 
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private countryService = inject(CountryService);
 
   private updateMetaTags(listing: Listing) {
     const title = `SouqMar24 — ${listing.title}`;
@@ -335,8 +338,7 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
     if (def.type === 'BOOLEAN') return this.i18n.t(av.valueBoolean ? 'common.yes' : 'common.no');
     if (def.type === 'NUMBER') return String(av.valueNumber);
     if (def.type === 'DATE' && av.valueText) {
-      const locale = localeForLang(this.i18n.lang());
-      return new Date(av.valueText).toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
+      return formatDateForCountry(av.valueText, this.countryService.country());
     }
     return av.valueText ?? '';
   }

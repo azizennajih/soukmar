@@ -54,7 +54,7 @@
                 <div class="boost-tier__meta">
                   <span class="boost-tier__duration">{{ formatDuration(tier) }}</span>
                   @if (isActiveUntil(tier.id); as until) {
-                    <span class="boost-tier__active">{{ 'boost.active_until' | T:{ date: (until | date:'dd.MM.yyyy') ?? '' } }}</span>
+                    <span class="boost-tier__active">{{ 'boost.active_until' | T:{ date: (until | countryDate) ?? '' } }}</span>
                   }
                 </div>
               </div>

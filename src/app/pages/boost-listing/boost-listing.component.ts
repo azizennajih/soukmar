@@ -6,6 +6,7 @@ import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { ListingService } from '../../services/listing.service';
 import { I18nService } from '../../services/i18n.service';
+import { CountryDatePipe } from '../../pipes/country-date.pipe';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { IconComponent } from '../../components/icon/icon.component';
 import { Listing, formatPrice } from '../../models/listing.model';
@@ -13,7 +14,7 @@ import { BoostStatus, BoostTier, BoostTierId, BOOST_TIERS, boostCurrency, quoteB
 
 @Component({
   selector: 'app-boost-listing',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, IconComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, CountryDatePipe, IconComponent],
   templateUrl: './boost-listing.component.html',
   styleUrl: './boost-listing.component.scss'
 })

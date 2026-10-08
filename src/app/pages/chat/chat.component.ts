@@ -6,6 +6,7 @@ import { LocalizedRouterLinkDirective } from '../../directives/localized-router-
 import { Subscription } from 'rxjs';
 import { ChatService, ChatMessage, Conversation, CallState, IncomingCallInfo } from '../../services/chat.service';
 import { AuthService } from '../../services/auth.service';
+import { CountryDatePipe } from '../../pipes/country-date.pipe';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
 import { ReportButtonComponent } from '../../components/report-button/report-button.component';
@@ -16,7 +17,7 @@ import { IconComponent } from '../../components/icon/icon.component';
 
 @Component({
   selector: 'app-chat',
-  imports: [CommonModule, FormsModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, ReportButtonComponent, StarRatingComponent, VerifiedBadgeComponent, BlockButtonComponent, IconComponent],
+  imports: [CommonModule, FormsModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, CountryDatePipe, ReportButtonComponent, StarRatingComponent, VerifiedBadgeComponent, BlockButtonComponent, IconComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

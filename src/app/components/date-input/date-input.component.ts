@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { I18nService } from '../../services/i18n.service';
 import { localeForLang } from '../../models/listing.model';
+import { CountryService } from '../../services/country.service';
+import { dateFormatForCountry } from '../../models/date-format';
 
 interface PanelStyle {
   top: string;
@@ -25,7 +27,8 @@ interface DayCell {
 // limitation, not something fixable via HTML attributes), so a user who
 // switches SouqMar24 to Arabic or English still saw the picker in whatever
 // format their OS happens to use. Here the numeric field order and the
-// calendar's month/weekday names both follow `I18nService.lang()` instead.
+// calendar's month/weekday names follow `I18nService.lang()`, while the order of the
+// numeric fields and their separator follow the browsing country (DE 05.12.2026, US 12/05/2026).
 @Component({
   selector: 'app-date-input',
   imports: [CommonModule, FormsModule],
@@ -40,6 +43,7 @@ export class DateInputComponent implements OnChanges {
 
   private host = inject(ElementRef<HTMLElement>);
   private i18n = inject(I18nService);
+  private countryService = inject(CountryService);
 
   day = '';
   month = '';
@@ -70,8 +74,13 @@ export class DateInputComponent implements OnChanges {
     ar: { day: '−−', month: '−−', year: '−−−−' },
   };
 
-  get isEnglish(): boolean {
-    return this.i18n.lang() === 'en';
+  /** Field order and separator of the browsing country (DE 05.12.2026, US 12/05/2026, JP 2026/12/05). */
+  get format() {
+    return dateFormatForCountry(this.countryService.country());
+  }
+
+  valueOf(part: 'day' | 'month' | 'year'): string {
+    return this[part];
   }
 
   get placeholders(): { day: string; month: string; year: string } {

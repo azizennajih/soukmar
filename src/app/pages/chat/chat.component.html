@@ -145,7 +145,7 @@
           @else if (isOffer(msg)) {
             <div class="chat__bubble-wrap" [class.mine]="isMine(msg)">
               <div class="chat__time">
-                <span>{{ msg.createdAt | date:'dd.MM.' }}</span>
+                <span>{{ msg.createdAt | countryDate:false }}</span>
                 <span>{{ msg.createdAt | date:'HH:mm' }}</span>
               </div>
               <div class="chat__offer" [class.mine]="isMine(msg)" [class.offer-accepted]="msg.offerStatus === 'ACCEPTED'" [class.offer-rejected]="msg.offerStatus === 'REJECTED'" [class.offer-cancelled]="msg.offerStatus === 'REJECTED' && isMine(msg)">
@@ -176,7 +176,7 @@
           @else {
             <div class="chat__bubble-wrap" [class.mine]="isMine(msg)">
               <div class="chat__time">
-                <span>{{ msg.createdAt | date:'dd.MM.' }}</span>
+                <span>{{ msg.createdAt | countryDate:false }}</span>
                 <span>{{ msg.createdAt | date:'HH:mm' }}</span>
               </div>
               <div class="chat__bubble" [class.mine]="isMine(msg)">{{ msg.content }}</div>
