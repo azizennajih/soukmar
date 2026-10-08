@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, computed, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, signal, computed, inject, effect, untracked, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
@@ -15,6 +15,9 @@ import { Listing, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.
 import { Report } from '../../models/report.model';
 import { ReportService } from '../../services/report.service';
 import { BoostTierId } from '../../models/boost.model';
+import { countryName } from '../../models/country.model';
+import { CountryService } from '../../services/country.service';
+import { FlagIconComponent } from '../../components/flag-icon/flag-icon.component';
 import { firstValueFrom } from 'rxjs';
 
 export interface AdminUser {
@@ -23,6 +26,7 @@ export interface AdminUser {
   email: string;
   role: 'USER' | 'ADMIN' | 'MODERATOR';
   city?: string;
+  country?: string;
   phone?: string;
   createdAt: Date;
   _count?: { listings: number };
@@ -72,7 +76,7 @@ export interface SecurityEvent {
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CatIconComponent, IconComponent, TranslatePipe, CityLabelPipe],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CatIconComponent, IconComponent, TranslatePipe, CityLabelPipe, FlagIconComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })
@@ -83,6 +87,16 @@ export class AdminComponent implements OnInit {
   public auth = inject(AuthService);
   public i18n = inject(I18nService);
   private cdr = inject(ChangeDetectorRef);
+  public countryService = inject(CountryService);
+  countryName = countryName;
+
+  constructor() {
+    // The dashboard shows the country the admin has switched to (footer): users, listings, stats and revenue.
+    effect(() => {
+      this.countryService.country();
+      untracked(() => { this.loadListings(); this.loadUsers(); });
+    });
+  }
 
   tab = signal<Tab>('overview');
   loading = signal(true);
@@ -215,8 +229,6 @@ export class AdminComponent implements OnInit {
   timeAgo = (d: Date) => timeAgo(d, this.i18n.lang());
 
   ngOnInit() {
-    this.loadListings();
-    this.loadUsers();
     this.loadReports();
     this.loadSecurityEvents();
     this.loadIdVerifications();
@@ -304,7 +316,7 @@ export class AdminComponent implements OnInit {
   private async loadListings() {
     this.loading.set(true);
     try {
-      const res = await firstValueFrom(this.api.get<any>('/listings', { limit: '500', status: 'ALL' }));
+      const res = await firstValueFrom(this.api.get<any>('/listings', { limit: '500', status: 'ALL', country: this.countryService.country() }));
       this.allListings = res.listings ?? res;
     } catch { this.allListings = []; }
     this.loading.set(false);
@@ -314,7 +326,7 @@ export class AdminComponent implements OnInit {
   private async loadUsers() {
     this.usersLoading.set(true);
     try {
-      const res = await firstValueFrom(this.api.get<AdminUser[]>('/admin/users'));
+      const res = await firstValueFrom(this.api.get<AdminUser[]>('/admin/users', { country: this.countryService.country() }));
       this.users = res;
     } catch {
       // fallback: extract unique users from listings
