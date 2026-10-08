@@ -371,7 +371,8 @@
     text-transform: uppercase;
     letter-spacing: .05em;
 
-    &--users { grid-template-columns: 2fr 1fr 1fr 1fr 1.2fr; }
+    &--listings { grid-template-columns: 2.3fr 1.2fr 1fr 1.1fr 1fr 1.4fr; }
+    &--users { grid-template-columns: 2fr 1fr 1.1fr .8fr 1fr 1.2fr; }
 
     @media (max-width: 900px) { display: none; }
   }
@@ -386,7 +387,8 @@
     transition: background .12s;
     gap: .5rem;
 
-    &--users { grid-template-columns: 2fr 1fr 1fr 1fr 1.2fr; }
+    &--listings { grid-template-columns: 2.3fr 1.2fr 1fr 1.1fr 1fr 1.4fr; }
+    &--users { grid-template-columns: 2fr 1fr 1.1fr .8fr 1fr 1.2fr; }
     &--pending { background: #fffbeb; }
 
     &:last-child { border-bottom: none; }
@@ -400,6 +402,12 @@
 }
 
 /* ── Table cells ─────────────────────────── */
+.table-cell-date {
+  display: flex; flex-direction: column; gap: .1rem; white-space: nowrap;
+  font-size: .85rem; color: var(--text); font-variant-numeric: tabular-nums;
+  small { color: var(--text-muted); font-size: .75rem; }
+}
+
 .table-cell-listing {
   display: flex;
   align-items: center;

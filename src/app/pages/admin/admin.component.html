@@ -227,15 +227,16 @@
       </div>
     } @else {
       <div class="data-table card">
-        <div class="data-table__head">
+        <div class="data-table__head data-table__head--listings">
           <span>{{ 'admin.col_listing' | T }}</span>
           <span>{{ 'admin.col_seller' | T }}</span>
           <span>{{ 'admin.col_price' | T }}</span>
+          <span>{{ 'admin.created_at' | T }}</span>
           <span>{{ 'admin.col_status' | T }}</span>
           <span>{{ 'admin.col_actions' | T }}</span>
         </div>
         @for (listing of filteredListings; track listing.id) {
-          <div class="data-table__row" [class.data-table__row--pending]="listing.status === 'PENDING'">
+          <div class="data-table__row data-table__row--listings" [class.data-table__row--pending]="listing.status === 'PENDING'">
             <!-- Annonce -->
             <div class="table-cell-listing">
               <div class="table-listing-thumb">
@@ -247,7 +248,6 @@
               </div>
               <div>
                 <div class="table-listing-title">{{ listing.title }}</div>
-                <div class="table-user-email">{{ 'admin.created_at' | T }} {{ dateTime(listing.createdAt) }}</div>
                 <div class="table-listing-meta">
                   <span class="badge" [ngClass]="getCategory(listing.category)?.color">
                     <app-cat-icon [category]="listing.category" [size]="13" /> {{ ('cats.' + listing.category) | T }}
@@ -277,6 +277,11 @@
               } @else {
                 <span style="color:var(--text-muted);font-size:.8rem">{{ 'admin.negotiate' | T }}</span>
               }
+            </div>
+            <!-- Erstellt -->
+            <div class="table-cell-date">
+              <span>{{ dateOnly(listing.createdAt) }}</span>
+              <small>{{ timeOnly(listing.createdAt) }}</small>
             </div>
             <!-- Statut -->
             <div class="table-cell-status">
@@ -412,6 +417,7 @@
         <div class="data-table__head data-table__head--users">
           <span>{{ 'admin.tab_users' | T }}</span>
           <span>{{ 'admin.col_city' | T }}</span>
+          <span>{{ 'admin.registered_at' | T }}</span>
           <span>{{ 'admin.col_listings' | T }}</span>
           <span>{{ 'admin.col_role' | T }}</span>
           <span>{{ 'admin.col_actions' | T }}</span>
@@ -423,10 +429,13 @@
               <div>
                 <div class="table-user-name">{{ user.name }}</div>
                 <div class="table-user-email">{{ user.email }}</div>
-                <div class="table-user-email">{{ 'admin.registered_at' | T }} {{ dateTime(user.createdAt) }}</div>
               </div>
             </div>
             <div class="table-cell-muted">{{ (user.city | cityLabel) || '—' }}@if (user.country) { · {{ countryName(user.country, i18n.lang()) }} }</div>
+            <div class="table-cell-date">
+              <span>{{ dateOnly(user.createdAt) }}</span>
+              <small>{{ timeOnly(user.createdAt) }}</small>
+            </div>
             <div class="table-cell-muted" style="font-variant-numeric: tabular-nums">
               {{ user._count?.listings ?? '—' }}
             </div>

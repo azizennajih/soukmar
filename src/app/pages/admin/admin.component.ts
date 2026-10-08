@@ -16,7 +16,7 @@ import { Report } from '../../models/report.model';
 import { ReportService } from '../../services/report.service';
 import { BoostTierId } from '../../models/boost.model';
 import { countryName, currencyForCountry } from '../../models/country.model';
-import { formatDateTimeForCountry } from '../../models/date-format';
+import { formatDateTimeForCountry, formatDateForCountry } from '../../models/date-format';
 import { CountryService } from '../../services/country.service';
 import { FlagIconComponent } from '../../components/flag-icon/flag-icon.component';
 import { firstValueFrom } from 'rxjs';
@@ -136,6 +136,19 @@ export class AdminComponent implements OnInit, OnDestroy {
   /** Date and time of an event in the browsing country's own format. */
   dateTime(value: string | Date | null | undefined): string {
     return value ? formatDateTimeForCountry(value, this.countryService.country()) : '';
+  }
+
+  /** Just the day, in the browsing country's format (own table column, never cut off). */
+  dateOnly(value: string | Date | null | undefined): string {
+    return value ? formatDateForCountry(value, this.countryService.country()) : '—';
+  }
+
+  /** Just the time of day (24 h). */
+  timeOnly(value: string | Date | null | undefined): string {
+    if (!value) return '';
+    const d = new Date(value);
+    if (isNaN(d.getTime())) return '';
+    return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
   }
 
   private async loadActivity() {
