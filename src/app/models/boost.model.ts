@@ -4,7 +4,6 @@ export type BoostTierId = 'bump' | 'spotlight' | 'top' | 'global';
 
 export interface BoostTier {
   id: BoostTierId;
-  priceMAD: number;
   durationDays: number | null;
   icon: IconName;
 }
@@ -13,11 +12,29 @@ export interface BoostTier {
 // is the source of truth for pricing (it re-validates and re-quotes on
 // submit), this copy only drives the instant on-screen price preview.
 export const BOOST_TIERS: BoostTier[] = [
-  { id: 'bump', priceMAD: 15, durationDays: null, icon: 'arrow-up' },
-  { id: 'spotlight', priceMAD: 39, durationDays: 7, icon: 'zap' },
-  { id: 'top', priceMAD: 59, durationDays: 7, icon: 'crown' },
-  { id: 'global', priceMAD: 89, durationDays: 10, icon: 'globe' },
+  { id: 'bump', durationDays: null, icon: 'arrow-up' },
+  { id: 'spotlight', durationDays: 7, icon: 'zap' },
+  { id: 'top', durationDays: 7, icon: 'crown' },
+  { id: 'global', durationDays: 10, icon: 'globe' },
 ];
+
+/** Boost prices per currency. A listing in a currency without its own price list is charged in EUR. */
+export const BOOST_PRICES: Record<string, Record<BoostTierId, number>> = {
+  MAD: { bump: 15, spotlight: 39, top: 59, global: 89 },
+  EUR: { bump: 1.49, spotlight: 3.99, top: 5.99, global: 8.99 },
+  USD: { bump: 1.59, spotlight: 4.29, top: 6.49, global: 9.99 },
+  GBP: { bump: 1.29, spotlight: 3.49, top: 4.99, global: 7.49 },
+  CHF: { bump: 1.49, spotlight: 3.99, top: 5.99, global: 8.99 },
+};
+
+/** The currency a boost for a listing in `listingCurrency` is charged in. */
+export function boostCurrency(listingCurrency: string | null | undefined): string {
+  return listingCurrency && BOOST_PRICES[listingCurrency] ? listingCurrency : 'EUR';
+}
+
+export function tierPrice(id: BoostTierId, currency: string): number {
+  return (BOOST_PRICES[currency] ?? BOOST_PRICES['EUR']!)[id];
+}
 
 export interface BoostRequest {
   id: string;
@@ -39,10 +56,11 @@ export interface BoostStatus {
   pendingRequest: BoostRequest | null;
 }
 
-export function quoteBoostPrice(tierIds: BoostTierId[]): { subtotal: number; discountPercent: number; total: number } {
-  const byId = new Map(BOOST_TIERS.map(t => [t.id, t]));
-  const subtotal = tierIds.reduce((sum, id) => sum + (byId.get(id)?.priceMAD ?? 0), 0);
+export function quoteBoostPrice(tierIds: BoostTierId[], currency = 'MAD'): { subtotal: number; discountPercent: number; total: number } {
+  const cents = (n: number) => Math.round(n * 100) / 100;
+  const subtotal = cents(tierIds.reduce((sum, id) => sum + tierPrice(id, currency), 0));
   const discountPercent = tierIds.length >= 2 ? 10 : 0;
-  const total = Math.round(subtotal * (1 - discountPercent / 100));
+  const discounted = subtotal * (1 - discountPercent / 100);
+  const total = currency === 'MAD' ? Math.round(discounted) : cents(discounted);
   return { subtotal, discountPercent, total };
 }

@@ -1272,7 +1272,7 @@
     "revenue_pct": "له ټول څخه ٪",
     "revenue_monthly_avg": "اوسط میاشتنی عاید",
     "revenue_12m": "په تیرو 12 میاشتو کې",
-    "revenue_chart": "میاشتنی ممتاز عاید (MAD)",
+    "revenue_chart": "میاشتنی ممتاز عاید ({currency})",
     "tab_boost_requests": "لیدونه زیاتول",
     "boost_requests_title": "د لیدونې زیاتوالي غوښتنې",
     "boost_requests_empty": "اوس مهال هیڅ غوښتنه نشته.",

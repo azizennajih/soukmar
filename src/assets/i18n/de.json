@@ -467,7 +467,7 @@
     "revenue_pct": "% des Gesamten",
     "revenue_monthly_avg": "Durchschnittliche Monatseinnahmen",
     "revenue_12m": "Über 12 Monate",
-    "revenue_chart": "Premium-Einnahmen pro Monat (MAD)",
+    "revenue_chart": "Premium-Einnahmen pro Monat ({currency})",
     "tab_reports": "Meldungen",
     "tab_security": "Sicherheit",
     "reports_title": "Meldungen",

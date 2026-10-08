@@ -1272,7 +1272,7 @@
     "revenue_pct": "% do total",
     "revenue_monthly_avg": "Receita mensal média",
     "revenue_12m": "Nos últimos 12 meses",
-    "revenue_chart": "Receita Premium por mês (MAD)",
+    "revenue_chart": "Receita Premium por mês ({currency})",
     "tab_boost_requests": "Impulsos",
     "boost_requests_title": "Pedidos de visibilidade",
     "boost_requests_empty": "Nenhum pedido de impulso no momento.",

@@ -9,7 +9,7 @@ import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { IconComponent } from '../../components/icon/icon.component';
 import { Listing, formatPrice } from '../../models/listing.model';
-import { BoostStatus, BoostTier, BoostTierId, BOOST_TIERS, quoteBoostPrice } from '../../models/boost.model';
+import { BoostStatus, BoostTier, BoostTierId, BOOST_TIERS, boostCurrency, quoteBoostPrice, tierPrice } from '../../models/boost.model';
 
 @Component({
   selector: 'app-boost-listing',
@@ -81,7 +81,7 @@ export class BoostListingComponent implements OnInit {
   }
 
   get quote() {
-    return quoteBoostPrice([...this.selected]);
+    return quoteBoostPrice([...this.selected], this.boostCurrency);
   }
 
   tierLabels(tiers: BoostTierId[]): string {
@@ -96,6 +96,19 @@ export class BoostListingComponent implements OnInit {
 
   formatPrice(amount: number): string {
     return formatPrice(amount, this.listing?.currency ?? 'MAD', this.i18n.lang());
+  }
+
+  /** Boosts are charged in the listing's currency (EUR if there is no price list for it). */
+  get boostCurrency(): string {
+    return boostCurrency(this.listing?.currency);
+  }
+
+  tierPrice(id: BoostTierId): string {
+    return this.formatBoost(tierPrice(id, this.boostCurrency));
+  }
+
+  formatBoost(amount: number, currency = this.boostCurrency): string {
+    return formatPrice(amount, currency, this.i18n.lang());
   }
 
   async submit() {

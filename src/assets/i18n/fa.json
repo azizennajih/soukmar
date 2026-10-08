@@ -1272,7 +1272,7 @@
     "revenue_pct": "٪ از کل",
     "revenue_monthly_avg": "میانگین درآمد ماهانه",
     "revenue_12m": "در ۱۲ ماه گذشته",
-    "revenue_chart": "درآمد ویژه بر اساس ماه (MAD)",
+    "revenue_chart": "درآمد ویژه بر اساس ماه ({currency})",
     "tab_boost_requests": "افزایش دیده‌شدن",
     "boost_requests_title": "درخواست‌های افزایش دیده‌شدن",
     "boost_requests_empty": "در حال حاضر درخواستی وجود ندارد.",

@@ -28,7 +28,7 @@
           <app-icon name="clock" [size]="20" />
           <div>
             <strong>{{ 'boost.pending_title' | T }}</strong>
-            <p>{{ 'boost.pending_body' | T:{ tiers: tierLabels(status!.pendingRequest!.tiers), price: formatPrice(status!.pendingRequest!.totalPrice) } }}</p>
+            <p>{{ 'boost.pending_body' | T:{ tiers: tierLabels(status!.pendingRequest!.tiers), price: formatBoost(status!.pendingRequest!.totalPrice, status!.pendingRequest!.currency) } }}</p>
           </div>
         </div>
       } @else if (submitted) {
@@ -48,7 +48,7 @@
               <div class="boost-tier__body">
                 <div class="boost-tier__head">
                   <span class="boost-tier__name">{{ ('boost.tier_' + tier.id + '_name') | T }}</span>
-                  <span class="boost-tier__price">{{ formatPrice(tier.priceMAD) }}</span>
+                  <span class="boost-tier__price">{{ tierPrice(tier.id) }}</span>
                 </div>
                 <p class="boost-tier__desc">{{ ('boost.tier_' + tier.id + '_desc') | T }}</p>
                 <div class="boost-tier__meta">
@@ -65,17 +65,17 @@
         <div class="boost-summary card">
           <div class="boost-summary__row">
             <span>{{ 'boost.subtotal' | T }}</span>
-            <span>{{ formatPrice(quote.subtotal) }}</span>
+            <span>{{ formatBoost(quote.subtotal) }}</span>
           </div>
           @if (quote.discountPercent > 0) {
             <div class="boost-summary__row boost-summary__row--discount">
               <span>{{ 'boost.discount' | T }}</span>
-              <span>−{{ formatPrice(quote.subtotal - quote.total) }}</span>
+              <span>−{{ formatBoost(quote.subtotal - quote.total) }}</span>
             </div>
           }
           <div class="boost-summary__row boost-summary__row--total">
             <span>{{ 'boost.total' | T }}</span>
-            <span>{{ formatPrice(quote.total) }}</span>
+            <span>{{ formatBoost(quote.total) }}</span>
           </div>
           <p class="boost-summary__note">{{ 'boost.payment_note' | T }}</p>
           @if (errorMsg) {

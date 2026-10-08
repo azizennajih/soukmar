@@ -467,7 +467,7 @@
     "revenue_pct": "% del totale",
     "revenue_monthly_avg": "Entrate mensili medie",
     "revenue_12m": "In 12 mesi",
-    "revenue_chart": "Entrate Premium al mese (MAD)",
+    "revenue_chart": "Entrate Premium al mese ({currency})",
     "tab_reports": "Segnalazioni",
     "tab_security": "Sicurezza",
     "reports_title": "Segnalazioni",

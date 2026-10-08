@@ -1272,7 +1272,7 @@
     "revenue_pct": "کل کا ٪",
     "revenue_monthly_avg": "اوسط ماہانہ آمدنی",
     "revenue_12m": "پچھلے 12 ماہ میں",
-    "revenue_chart": "ماہانہ پریمیم آمدنی (MAD)",
+    "revenue_chart": "ماہانہ پریمیم آمدنی ({currency})",
     "tab_boost_requests": "نمایاں کاری",
     "boost_requests_title": "نمایاں کاری کی درخواستیں",
     "boost_requests_empty": "فی الحال کوئی درخواست نہیں۔",

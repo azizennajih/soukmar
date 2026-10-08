@@ -1272,7 +1272,7 @@
     "revenue_pct": "% du total",
     "revenue_monthly_avg": "Revenu mensuel moyen",
     "revenue_12m": "Sur 12 mois",
-    "revenue_chart": "Revenus Premium par mois (MAD)",
+    "revenue_chart": "Revenus Premium par mois ({currency})",
     "tab_boost_requests": "Boosts",
     "boost_requests_title": "Demandes de visibilité",
     "boost_requests_empty": "Aucune demande de boost pour le moment.",

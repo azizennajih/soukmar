@@ -467,7 +467,7 @@
     "revenue_pct": "% del total",
     "revenue_monthly_avg": "Ingresos mensuales medios",
     "revenue_12m": "En 12 meses",
-    "revenue_chart": "Ingresos Premium por mes (MAD)",
+    "revenue_chart": "Ingresos Premium por mes ({currency})",
     "tab_reports": "Denuncias",
     "tab_security": "Seguridad",
     "reports_title": "Denuncias",

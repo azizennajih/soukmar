@@ -439,7 +439,7 @@
     "revenue_pct": "% من الإجمالي",
     "revenue_monthly_avg": "متوسط الإيرادات الشهرية",
     "revenue_12m": "على مدى 12 شهراً",
-    "revenue_chart": "إيرادات Premium شهرياً (درهم)",
+    "revenue_chart": "إيرادات Premium شهرياً ({currency})",
     "tab_reports": "البلاغات",
     "tab_security": "الأمان",
     "reports_title": "البلاغات",

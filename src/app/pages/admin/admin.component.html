@@ -346,7 +346,7 @@
         <div class="kpi-card__icon"><app-icon name="coins" [size]="22" /></div>
         <div class="kpi-card__value">{{ formatPrice(stats.premiumRevenue) }}</div>
         <div class="kpi-card__label">{{ 'admin.revenue_total' | T }}</div>
-        <div class="kpi-card__sub">{{ stats.premium }} × 99 MAD</div>
+        <div class="kpi-card__sub">{{ stats.premium }} × 99 {{ revenueCurrency }}</div>
       </div>
       <div class="kpi-card kpi-card--primary">
         <div class="kpi-card__icon"><app-icon name="star" [size]="22" /></div>
@@ -364,7 +364,7 @@
 
     <!-- Revenue chart -->
     <div class="card chart-card chart-card--wide">
-      <h3 class="chart-title icon-label"><app-icon name="coins" [size]="16" /> {{ 'admin.revenue_chart' | T }}</h3>
+      <h3 class="chart-title icon-label"><app-icon name="coins" [size]="16" /> {{ 'admin.revenue_chart' | T:{ currency: revenueCurrency } }}</h3>
       <div class="bar-chart bar-chart--revenue">
         @for (val of revenueMonthly; track $index) {
           <div class="bar-chart__col">
@@ -399,7 +399,7 @@
                 <div class="table-cell-muted" style="font-variant-numeric: tabular-nums">
                   {{ listing.price != null ? formatPrice(listing.price) : '—' }}
                 </div>
-                <div class="table-cell-price" style="font-variant-numeric: tabular-nums">99 MAD</div>
+                <div class="table-cell-price" style="font-variant-numeric: tabular-nums">99 {{ revenueCurrency }}</div>
               </div>
             }
           }

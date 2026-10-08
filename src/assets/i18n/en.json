@@ -439,7 +439,7 @@
     "revenue_pct": "% of total",
     "revenue_monthly_avg": "Average monthly revenue",
     "revenue_12m": "Over 12 months",
-    "revenue_chart": "Premium revenue by month (MAD)",
+    "revenue_chart": "Premium revenue by month ({currency})",
     "tab_reports": "Reports",
     "tab_security": "Security",
     "reports_title": "Reports",

@@ -1272,7 +1272,7 @@
     "revenue_pct": "Toplamın %'si",
     "revenue_monthly_avg": "Ortalama aylık gelir",
     "revenue_12m": "Son 12 ayda",
-    "revenue_chart": "Aylık Premium geliri (MAD)",
+    "revenue_chart": "Aylık Premium geliri ({currency})",
     "tab_boost_requests": "Görünürlük Artırma",
     "boost_requests_title": "Görünürlük talepleri",
     "boost_requests_empty": "Şu anda görünürlük talebi yok.",

@@ -15,7 +15,7 @@ import { Listing, CATEGORIES, formatPrice, timeAgo } from '../../models/listing.
 import { Report } from '../../models/report.model';
 import { ReportService } from '../../services/report.service';
 import { BoostTierId } from '../../models/boost.model';
-import { countryName } from '../../models/country.model';
+import { countryName, currencyForCountry } from '../../models/country.model';
 import { CountryService } from '../../services/country.service';
 import { FlagIconComponent } from '../../components/flag-icon/flag-icon.component';
 import { firstValueFrom } from 'rxjs';
@@ -225,7 +225,9 @@ export class AdminComponent implements OnInit {
     return Math.max(...this.revenueMonthly, 1);
   }
 
-  formatPrice = (p: number, currency = 'MAD') => formatPrice(p, currency, this.i18n.lang());
+  /** Currency of the country the dashboard is showing. */
+  get revenueCurrency(): string { return currencyForCountry(this.countryService.country()); }
+  formatPrice = (p: number, currency = this.revenueCurrency) => formatPrice(p, currency, this.i18n.lang());
   timeAgo = (d: Date) => timeAgo(d, this.i18n.lang());
 
   ngOnInit() {
