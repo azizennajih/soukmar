@@ -9,8 +9,15 @@
         <p class="admin-header__sub">{{ 'admin.subtitle' | T }}</p>
       </div>
     </div>
+    <div class="admin-scope" role="group" [attr.aria-label]="'admin.scope_all' | T">
+      <button type="button" class="admin-scope__btn" [class.admin-scope__btn--active]="scope() === 'country'" (click)="setScope('country')">
+        <app-flag-icon [iso]="countryService.country()" [size]="14" /> {{ countryName(countryService.country(), i18n.lang()) }}
+      </button>
+      <button type="button" class="admin-scope__btn" [class.admin-scope__btn--active]="scope() === 'all'" (click)="setScope('all')">
+        <app-icon name="globe" [size]="14" /> {{ 'admin.scope_all' | T }}
+      </button>
+    </div>
     <div class="admin-header__user">
-      <span class="admin-header__country"><app-flag-icon [iso]="countryService.country()" [size]="14" /> {{ countryName(countryService.country(), i18n.lang()) }}</span>
       <span class="role-badge role-admin">{{ auth.currentUser()?.role }}</span>
       <span class="admin-header__name">{{ auth.currentUser()?.name }}</span>
     </div>
@@ -29,6 +36,9 @@
     </button>
     <button class="admin-tab icon-label" [class.active]="tab() === 'users'" (click)="setTab('users')">
       <app-icon name="users" [size]="14" /> {{ 'admin.tab_users' | T }}
+    </button>
+    <button class="admin-tab icon-label" [class.active]="tab() === 'visitors'" (click)="setTab('visitors')">
+      <app-icon name="globe" [size]="14" /> {{ 'admin.tab_visitors' | T }}
     </button>
     <button class="admin-tab icon-label" [class.active]="tab() === 'revenue'" (click)="setTab('revenue')">
       <app-icon name="offer" [size]="14" /> {{ 'admin.tab_revenue' | T }}
@@ -130,6 +140,29 @@
         </div>
       </div>
 
+      <!-- What was created when -->
+      <div class="chart-card card activity-card">
+        <h3 class="chart-title icon-label"><app-icon name="clock" [size]="16" /> {{ 'admin.activity_title' | T }}</h3>
+        @if (activity.length === 0) {
+          <p class="activity-empty">{{ 'admin.activity_empty' | T }}</p>
+        } @else {
+          <ul class="activity-list">
+            @for (a of activity; track $index) {
+              <li class="activity-item">
+                <span class="activity-item__type activity-item__type--{{ a.type }}">{{ ('admin.activity_' + a.type) | T }}</span>
+                <span class="activity-item__main">
+                  <strong>{{ a.title }}</strong>
+                  @if (a.detail) { <span class="activity-item__detail">· {{ a.detail }}</span> }
+                  @if (a.amount != null) { <span class="activity-item__detail">· {{ formatPrice(a.amount, a.currency) }}</span> }
+                </span>
+                @if (a.country) { <span class="activity-item__country"><app-flag-icon [iso]="a.country" [size]="12" /> {{ a.country }}</span> }
+                <time class="activity-item__time">{{ dateTime(a.at) }}</time>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+
       <!-- Pending moderation quick view -->
       @if (stats.pending > 0) {
         <div class="card pending-card">
@@ -214,6 +247,7 @@
               </div>
               <div>
                 <div class="table-listing-title">{{ listing.title }}</div>
+                <div class="table-user-email">{{ 'admin.created_at' | T }} {{ dateTime(listing.createdAt) }}</div>
                 <div class="table-listing-meta">
                   <span class="badge" [ngClass]="getCategory(listing.category)?.color">
                     <app-cat-icon [category]="listing.category" [size]="13" /> {{ ('cats.' + listing.category) | T }}
@@ -277,6 +311,84 @@
     }
   }
 
+  <!-- ══════════════ VISITORS ══════════════ -->
+  @if (tab() === 'visitors') {
+    <div class="section-header">
+      <h2 class="section-title">{{ 'admin.tab_visitors' | T }}</h2>
+    </div>
+    @if (analytics; as a) {
+      <div class="kpi-grid kpi-grid--3">
+        <div class="kpi-card kpi-card--success">
+          <div class="kpi-card__icon"><app-icon name="eye" [size]="22" /></div>
+          <div class="kpi-card__value">{{ a.activeNow.total }}</div>
+          <div class="kpi-card__label">{{ 'admin.visitors_active_now' | T }}</div>
+          <div class="kpi-card__sub">{{ 'admin.visitors_active_hint' | T }}</div>
+        </div>
+        <div class="kpi-card kpi-card--primary">
+          <div class="kpi-card__icon"><app-icon name="users" [size]="22" /></div>
+          <div class="kpi-card__value">{{ a.today.total }}</div>
+          <div class="kpi-card__label">{{ 'admin.visitors_today' | T }}</div>
+          <div class="kpi-card__sub">{{ 'admin.tab_visitors' | T }}</div>
+        </div>
+        <div class="kpi-card kpi-card--gold">
+          <div class="kpi-card__icon"><app-icon name="globe" [size]="22" /></div>
+          <div class="kpi-card__value">{{ a.byCountry.length }}</div>
+          <div class="kpi-card__label">{{ 'admin.visitors_by_country' | T }}</div>
+          <div class="kpi-card__sub">{{ 'admin.visitors_period' | T:{ days: '' + a.days } }}</div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-card card">
+          <h3 class="chart-title icon-label"><app-icon name="eye" [size]="16" /> {{ 'admin.visitors_active_now' | T }}</h3>
+          @if (a.activeNow.byCountry.length === 0) {
+            <p class="activity-empty">—</p>
+          }
+          <div class="cat-breakdown">
+            @for (c of a.activeNow.byCountry; track c.country) {
+              <div class="cat-row">
+                <span class="cat-row__name">@if (c.country !== 'ZZ') { <app-flag-icon [iso]="c.country" [size]="14" /> } {{ countryLabel(c.country) }}</span>
+                <div class="cat-row__bar"><div class="cat-row__fill" [style.width.%]="c.count / activeByCountryMax * 100" style="background: var(--secondary)"></div></div>
+                <span class="cat-row__pct" style="font-variant-numeric: tabular-nums">{{ c.count }}</span>
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="chart-card card">
+          <h3 class="chart-title icon-label"><app-icon name="globe" [size]="16" /> {{ 'admin.visitors_period' | T:{ days: '' + a.days } }}</h3>
+          @if (a.byCountry.length === 0) {
+            <p class="activity-empty">—</p>
+          }
+          <div class="cat-breakdown">
+            @for (c of a.byCountry; track c.country) {
+              <div class="cat-row">
+                <span class="cat-row__name">@if (c.country !== 'ZZ') { <app-flag-icon [iso]="c.country" [size]="14" /> } {{ countryLabel(c.country) }}</span>
+                <div class="cat-row__bar"><div class="cat-row__fill" [style.width.%]="c.visitors / visitorsByCountryMax * 100"></div></div>
+                <span class="cat-row__pct" style="font-variant-numeric: tabular-nums">{{ c.visitors }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-card card chart-card--wide">
+        <h3 class="chart-title icon-label"><app-icon name="trending-up" [size]="16" /> {{ 'admin.visitors_daily' | T }}</h3>
+        <div class="bar-chart bar-chart--revenue">
+          @for (d of a.daily; track d.date) {
+            <div class="bar-chart__col" [title]="d.date + ': ' + d.visitors">
+              <div class="bar-chart__bar" [style.height.%]="d.visitors / visitorsMax * 100" [class.bar-chart__bar--active]="$last"></div>
+              <span class="bar-chart__label">{{ $index % 5 === 0 || $last ? shortDay(d.date) : '' }}</span>
+            </div>
+          }
+        </div>
+      </div>
+      <p class="visitors-privacy">{{ 'admin.visitors_privacy' | T }}</p>
+    } @else {
+      <div class="admin-loading">{{ 'admin.loading' | T }}</div>
+    }
+  }
+
   <!-- ══════════════ USERS ══════════════ -->
   @if (tab() === 'users') {
     <div class="section-header">
@@ -311,6 +423,7 @@
               <div>
                 <div class="table-user-name">{{ user.name }}</div>
                 <div class="table-user-email">{{ user.email }}</div>
+                <div class="table-user-email">{{ 'admin.registered_at' | T }} {{ dateTime(user.createdAt) }}</div>
               </div>
             </div>
             <div class="table-cell-muted">{{ (user.city | cityLabel) || '—' }}@if (user.country) { · {{ countryName(user.country, i18n.lang()) }} }</div>
@@ -441,7 +554,7 @@
               <span class="badge" [ngClass]="report.status === 'PENDING' ? 'badge-pending' : report.status === 'RESOLVED' ? 'badge-active' : 'badge-rejected'">
                 {{ ('admin.reports_status_' + report.status.toLowerCase()) | T }}
               </span>
-              <span class="report-card__date">{{ timeAgo(report.createdAt) }}</span>
+              <span class="report-card__date">{{ dateTime(report.createdAt) }} · {{ timeAgo(report.createdAt) }}</span>
             </div>
             <div class="report-card__parties">
               <div>
@@ -511,7 +624,7 @@
               <span class="badge" [ngClass]="v.status === 'PENDING' ? 'badge-pending' : v.status === 'APPROVED' ? 'badge-active' : 'badge-rejected'">
                 {{ ('admin.reports_status_' + v.status.toLowerCase()) | T }}
               </span>
-              <span class="report-card__date">{{ timeAgo(v.createdAt) }}</span>
+              <span class="report-card__date">{{ dateTime(v.createdAt) }} · {{ timeAgo(v.createdAt) }}</span>
             </div>
             <div class="report-card__parties">
               <div>
@@ -580,7 +693,7 @@
               <span class="badge" [ngClass]="r.status === 'PENDING' ? 'badge-pending' : r.status === 'APPROVED' ? 'badge-active' : 'badge-rejected'">
                 {{ ('admin.reports_status_' + r.status.toLowerCase()) | T }}
               </span>
-              <span class="report-card__date">{{ timeAgo(r.createdAt) }}</span>
+              <span class="report-card__date">{{ dateTime(r.createdAt) }} · {{ timeAgo(r.createdAt) }}</span>
             </div>
             <div class="report-card__parties">
               <div>
@@ -648,7 +761,7 @@
           <div class="report-card card" [class.report-card--pending]="event.severity === 'HIGH'">
             <div class="report-card__top">
               <span class="badge" [ngClass]="severityClass(event.severity)">{{ event.severity }}</span>
-              <span class="report-card__date">{{ timeAgo(event.createdAt) }}</span>
+              <span class="report-card__date">{{ dateTime(event.createdAt) }} · {{ timeAgo(event.createdAt) }}</span>
             </div>
             <p class="report-card__reason"><strong>{{ securityEventLabel(event.type) }}</strong></p>
             @if (event.detail) {

@@ -136,6 +136,43 @@
 }
 
 /* ── Charts ──────────────────────────────── */
+.admin-scope {
+  display: inline-flex; gap: .25rem; padding: .25rem; border-radius: 999px; background: var(--bg);
+  &__btn {
+    display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .85rem; border: 0; border-radius: 999px;
+    background: transparent; color: var(--text-muted); font: inherit; font-size: .82rem; font-weight: 600; cursor: pointer;
+    &--active { background: #fff; color: var(--text); box-shadow: var(--shadow); }
+  }
+}
+
+.activity-card { margin-bottom: 1.5rem; }
+.activity-empty { color: var(--text-muted); font-size: .85rem; }
+.activity-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.activity-item {
+  display: grid; grid-template-columns: 9.5rem 1fr auto auto; align-items: center; gap: .75rem;
+  padding: .6rem 0; border-top: 1px solid var(--border); font-size: .85rem;
+  &:first-child { border-top: 0; }
+  &__type {
+    justify-self: start; padding: .15rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 700;
+    background: var(--bg); color: var(--text-muted);
+    &--USER { background: #dbeafe; color: #1d4ed8; }
+    &--LISTING { background: #dcfce7; color: #15803d; }
+    &--REVENUE { background: var(--gold-light); color: var(--gold); }
+    &--BOOST_REQUEST { background: var(--primary-light); color: var(--primary); }
+    &--REPORT, &--ID_VERIFICATION { background: #fef3c7; color: #b45309; }
+  }
+  &__main { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  &__detail { color: var(--text-muted); }
+  &__country { display: inline-flex; align-items: center; gap: .3rem; color: var(--text-muted); font-size: .78rem; }
+  &__time { color: var(--text-muted); font-size: .78rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr auto;
+    &__type { grid-column: 1 / -1; }
+    &__country { display: none; }
+  }
+}
+.visitors-privacy { margin-top: 1rem; color: var(--text-muted); font-size: .78rem; }
+
 .charts-row {
   display: grid;
   grid-template-columns: 1fr 1fr;

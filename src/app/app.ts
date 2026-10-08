@@ -4,6 +4,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CookieConsentBannerComponent } from './components/cookie-consent-banner/cookie-consent-banner.component';
 import { AppReadyService } from './services/app-ready.service';
+import { VisitPingService } from './services/visit-ping.service';
 
 @Component({
   selector: 'app-root',
@@ -27,4 +28,8 @@ import { AppReadyService } from './services/app-ready.service';
 })
 export class App {
   appReady = inject(AppReadyService);
+
+  constructor() {
+    inject(VisitPingService).start();
+  }
 }

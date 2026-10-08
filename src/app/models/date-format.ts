@@ -29,6 +29,15 @@ export function dateFormatForCountry(country: string | null | undefined): DateFo
   return format;
 }
 
+/** Numeric date plus the time (24 h) — for "when exactly did this happen" lists. */
+export function formatDateTimeForCountry(value: Date | string | number, country: string | null | undefined): string {
+  const d = value instanceof Date ? value : new Date(value);
+  const day = formatDateForCountry(d, country);
+  if (!day) return '';
+  const two = (n: number) => String(n).padStart(2, '0');
+  return `${day} ${two(d.getHours())}:${two(d.getMinutes())}`;
+}
+
 /** Formats a date numerically the way the country writes it. Without a year (chat timestamps) the trailing separator stays out. */
 export function formatDateForCountry(value: Date | string | number, country: string | null | undefined, withYear = true): string {
   // A plain 'YYYY-MM-DD' (date fields) is a calendar day, not a UTC instant: read it as local so no timezone can shift it.

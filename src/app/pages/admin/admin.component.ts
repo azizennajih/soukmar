@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, computed, inject, effect, untracked, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, computed, inject, effect, untracked, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
@@ -16,6 +16,7 @@ import { Report } from '../../models/report.model';
 import { ReportService } from '../../services/report.service';
 import { BoostTierId } from '../../models/boost.model';
 import { countryName, currencyForCountry } from '../../models/country.model';
+import { formatDateTimeForCountry } from '../../models/date-format';
 import { CountryService } from '../../services/country.service';
 import { FlagIconComponent } from '../../components/flag-icon/flag-icon.component';
 import { firstValueFrom } from 'rxjs';
@@ -33,7 +34,26 @@ export interface AdminUser {
   banned?: boolean;
 }
 
-type Tab = 'overview' | 'listings' | 'users' | 'revenue' | 'reports' | 'security' | 'id-verifications' | 'boost-requests';
+type Tab = 'overview' | 'listings' | 'users' | 'revenue' | 'visitors' | 'reports' | 'security' | 'id-verifications' | 'boost-requests';
+
+export interface AdminActivity {
+  type: 'USER' | 'LISTING' | 'BOOST_REQUEST' | 'REVENUE' | 'REPORT' | 'ID_VERIFICATION';
+  at: string;
+  country: string | null;
+  title: string;
+  detail?: string;
+  amount?: number;
+  currency?: string;
+  status?: string;
+}
+
+export interface AdminAnalytics {
+  days: number;
+  activeNow: { total: number; byCountry: { country: string; count: number }[] };
+  today: { total: number; byCountry: { country: string; visitors: number }[] };
+  daily: { date: string; visitors: number }[];
+  byCountry: { country: string; visitors: number }[];
+}
 
 export interface AdminIdVerification {
   id: string;
@@ -80,7 +100,7 @@ export interface SecurityEvent {
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnDestroy {
   private api = inject(ApiService);
   private ls = inject(ListingService);
   private reportService = inject(ReportService);
@@ -90,12 +110,79 @@ export class AdminComponent implements OnInit {
   public countryService = inject(CountryService);
   countryName = countryName;
 
+  /** What the dashboard covers: the country chosen in the footer, or every country at once. */
+  scope = signal<'country' | 'all'>('country');
+  activity: AdminActivity[] = [];
+  analytics: AdminAnalytics | null = null;
+  analyticsLoading = signal(false);
+  private analyticsTimer?: ReturnType<typeof setInterval>;
+
   constructor() {
-    // The dashboard shows the country the admin has switched to (footer): users, listings, stats and revenue.
+    // The dashboard follows the chosen scope: users, listings, stats, revenue and the activity feed.
     effect(() => {
       this.countryService.country();
-      untracked(() => { this.loadListings(); this.loadUsers(); });
+      this.scope();
+      untracked(() => { this.loadListings(); this.loadUsers(); this.loadActivity(); this.loadAnalytics(); });
     });
+  }
+
+  /** Country the dashboard data is limited to; undefined while showing all countries. */
+  private get scopeCountry(): string | undefined {
+    return this.scope() === 'all' ? undefined : this.countryService.country();
+  }
+
+  setScope(s: 'country' | 'all') { this.scope.set(s); }
+
+  /** Date and time of an event in the browsing country's own format. */
+  dateTime(value: string | Date | null | undefined): string {
+    return value ? formatDateTimeForCountry(value, this.countryService.country()) : '';
+  }
+
+  private async loadActivity() {
+    try {
+      const params: Record<string, string> = { limit: '40' };
+      const c = this.scopeCountry;
+      if (c) params['country'] = c;
+      this.activity = await firstValueFrom(this.api.get<AdminActivity[]>('/admin/activity', params));
+    } catch { this.activity = []; }
+    this.cdr.markForCheck();
+  }
+
+  async loadAnalytics() {
+    this.analyticsLoading.set(true);
+    try {
+      const params: Record<string, string> = { days: '30' };
+      const c = this.scopeCountry;
+      if (c) params['country'] = c;
+      this.analytics = await firstValueFrom(this.api.get<AdminAnalytics>('/admin/analytics', params));
+    } catch { this.analytics = null; }
+    this.analyticsLoading.set(false);
+    this.cdr.markForCheck();
+  }
+
+  /** Tallest bar of the daily visitor chart, so the others scale against it. */
+  get visitorsMax(): number {
+    return Math.max(...(this.analytics?.daily.map(d => d.visitors) ?? [0]), 1);
+  }
+
+  get visitorsByCountryMax(): number {
+    return Math.max(...(this.analytics?.byCountry.map(c => c.visitors) ?? [0]), 1);
+  }
+
+  get activeByCountryMax(): number {
+    return Math.max(...(this.analytics?.activeNow.byCountry.map(c => c.count) ?? [0]), 1);
+  }
+
+  countryLabel(code: string): string {
+    return code === 'ZZ' ? this.i18n.t('admin.unknown_country') : countryName(code, this.i18n.lang());
+  }
+
+  shortDay(iso: string): string {
+    return iso.slice(8) + '.' + iso.slice(5, 7);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.analyticsTimer);
   }
 
   tab = signal<Tab>('overview');
@@ -226,7 +313,7 @@ export class AdminComponent implements OnInit {
   }
 
   /** Currency of the country the dashboard is showing. */
-  get revenueCurrency(): string { return currencyForCountry(this.countryService.country()); }
+  get revenueCurrency(): string { return this.scope() === 'all' ? 'EUR' : currencyForCountry(this.countryService.country()); }
   formatPrice = (p: number, currency = this.revenueCurrency) => formatPrice(p, currency, this.i18n.lang());
   timeAgo = (d: Date) => timeAgo(d, this.i18n.lang());
 
@@ -318,7 +405,7 @@ export class AdminComponent implements OnInit {
   private async loadListings() {
     this.loading.set(true);
     try {
-      const res = await firstValueFrom(this.api.get<any>('/listings', { limit: '500', status: 'ALL', country: this.countryService.country() }));
+      const res = await firstValueFrom(this.api.get<any>('/listings', { limit: '500', status: 'ALL', country: this.scopeCountry ?? '' }));
       this.allListings = res.listings ?? res;
     } catch { this.allListings = []; }
     this.loading.set(false);
@@ -328,7 +415,7 @@ export class AdminComponent implements OnInit {
   private async loadUsers() {
     this.usersLoading.set(true);
     try {
-      const res = await firstValueFrom(this.api.get<AdminUser[]>('/admin/users', { country: this.countryService.country() }));
+      const res = await firstValueFrom(this.api.get<AdminUser[]>('/admin/users', { country: this.scopeCountry ?? '' }));
       this.users = res;
     } catch {
       // fallback: extract unique users from listings
@@ -353,7 +440,15 @@ export class AdminComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  setTab(t: Tab) { this.tab.set(t); }
+  setTab(t: Tab) {
+    this.tab.set(t);
+    // The visitors tab refreshes by itself while it is open ("active now" changes by the minute).
+    clearInterval(this.analyticsTimer);
+    if (t === 'visitors') {
+      this.loadAnalytics();
+      this.analyticsTimer = setInterval(() => this.loadAnalytics(), 30_000);
+    }
+  }
   setListingFilter(f: ListingFilter) { this.listingFilter.set(f); }
   setReportFilter(f: 'ALL' | 'PENDING' | 'RESOLVED' | 'DISMISSED') { this.reportFilter.set(f); }
   setIdVerificationFilter(f: 'ALL' | 'PENDING' | 'APPROVED' | 'REJECTED') { this.idVerificationFilter.set(f); }
