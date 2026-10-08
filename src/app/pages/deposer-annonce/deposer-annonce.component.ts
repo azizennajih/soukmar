@@ -15,7 +15,7 @@ import { TextAutocompleteComponent } from '../../components/text-autocomplete/te
 import { CitySelectComponent } from '../../components/city-select/city-select.component';
 import { DateInputComponent } from '../../components/date-input/date-input.component';
 import { MultiSelectComponent } from '../../components/multi-select/multi-select.component';
-import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES, Category, Subcategory, AttributeDefinition, Condition, ListingIntent, PriceType, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR, TRANSPORT_COUNTRY_REGIONS, TRANSPORT_CITIES_BY_COUNTRY } from '../../models/listing.model';
+import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES, Category, Subcategory, AttributeDefinition, Condition, ListingIntent, PriceType, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR, TRANSPORT_COUNTRY_REGIONS, TRANSPORT_CITIES_BY_COUNTRY, cityLabel } from '../../models/listing.model';
 import { CITIES_BY_COUNTRY, currencyForCountry, countryName } from '../../models/country.model';
 import { CountryService } from '../../services/country.service';
 import { FlagIconComponent } from '../../components/flag-icon/flag-icon.component';
@@ -219,6 +219,26 @@ export class DeposerAnnonceComponent {
     return DeposerAnnonceComponent.PLACEHOLDER_CATEGORY_KEYS.includes(cat)
       ? `deposer.placeholder_title_${cat.toLowerCase()}`
       : 'deposer.placeholder_title';
+  }
+
+  /** Example cities for the title placeholders ("{from} → {to}"): two big cities of the listing's country, never another country's. */
+  get titlePlaceholderParams(): Record<string, string> {
+    const lang = this.i18n.lang();
+    const list = this.form.country === 'MA' ? ['Casablanca', 'Marrakech'] : (CITIES_BY_COUNTRY[this.form.country] ?? []);
+    return {
+      from: list[0] ? cityLabel(list[0], lang) : this.i18n.t('deposer.example_city_a'),
+      to: list[1] ? cityLabel(list[1], lang) : this.i18n.t('deposer.example_city_b'),
+    };
+  }
+
+  /** City suggestions for the listing's own country (start and, without a destination country, destination). */
+  get listingCities(): string[] {
+    return this.form.country === 'MA' ? this.cities : this.citiesForCountry;
+  }
+
+  /** Start/destination listings (carpooling, transport…) call the first city the start city. */
+  get hasDestinationCity(): boolean {
+    return this.attributeDefs.some(d => d.code === 'DESTINATION_CITY');
   }
 
   get descPlaceholderKey(): string {

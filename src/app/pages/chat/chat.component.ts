@@ -270,7 +270,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   getLastMessage(conv: Conversation): string {
     const last = conv.messages[0];
     if (!last) return this.i18n.t('chat.no_message');
-    if (last.type === 'OFFER') return this.i18n.t('chat.offer_short', { amount: String(last.offerAmount) });
+    if (last.type === 'OFFER') return this.i18n.t('chat.offer_short', { amount: String(last.offerAmount), currency: conv.listing?.currency ?? '' });
     return last.content.slice(0, 40);
   }
 
