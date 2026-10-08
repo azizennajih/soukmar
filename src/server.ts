@@ -97,6 +97,8 @@ app.use((req, res, next) => {
   const read = (name: string) => decodeURIComponent(cookies.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]+)'))?.[1] ?? '');
   const explicit = read('soukmar_lang_explicit') === '1' ? read('soukmar_lang') : '';
   const lang = isSupportedLang(explicit) ? explicit : (langFromAcceptLanguage(req.headers['accept-language']) ?? DEFAULT_LANG);
+  // The target depends on the visitor's cookie / browser language, so caches and crawlers must not reuse it for others.
+  res.setHeader('Vary', 'Accept-Language, Cookie');
   res.redirect(302, '/' + lang + req.originalUrl);
 });
 

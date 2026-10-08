@@ -1759,5 +1759,11 @@
   "seo": {
     "default_title": "SouqMar24 — Compra e vendi facilmente",
     "default_description": "SouqMar24, il marketplace di annunci: veicoli, immobili, elettronica, moda e molto altro vicino a te."
+  },
+  "not_found": {
+    "title": "Pagina non trovata",
+    "body": "Questa pagina non esiste (più). L'annuncio potrebbe essere stato rimosso o il link è errato.",
+    "home": "Vai alla home page",
+    "browse": "Sfoglia gli annunci"
   }
 }

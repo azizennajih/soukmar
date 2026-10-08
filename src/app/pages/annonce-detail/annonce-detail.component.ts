@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, signal, ChangeDetectorRef, HostListener, inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, ChangeDetectorRef, HostListener, inject, PLATFORM_ID, RESPONSE_INIT } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
@@ -126,25 +126,34 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
           if (this.auth.isLoggedIn) { this.checkFavorite(); this.checkCanReview(id); }
           this.loadSimilar(id);
         },
-        error: (e) => { console.error('Detail error:', e); this.loading = false; this.loadError = true; this.cdr.markForCheck(); }
+        error: (e) => {
+          console.error('Detail error:', e);
+          this.loading = false;
+          this.loadError = true;
+          // Gone or never existed: answer 404 (not 200) so search engines drop the URL instead of keeping an empty page.
+          if (e?.status === 404 || e?.status === 400) {
+            if (this.responseInit) this.responseInit.status = 404;
+            this.seo.markNotFound();
+          }
+          this.cdr.markForCheck();
+        }
       });
     });
   }
 
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private countryService = inject(CountryService);
+  private responseInit = inject(RESPONSE_INIT, { optional: true });
 
   private updateMetaTags(listing: Listing) {
     const title = `SouqMar24 — ${listing.title}`;
-    const description = listing.description?.slice(0, 160) || '';
+    const description = (listing.description || '').replace(/\s+/g, ' ').trim().slice(0, 160) || `${listing.title} — ${listing.city}`;
     const image = listing.images?.[0] || '';
     // Built explicitly (not this.seo.canonicalUrl) so a stray query param
     // (referrer tags, etc.) never leaks into the canonical/hreflang URLs.
     const url = `${SITE_URL}/${this.i18n.lang()}/annonces/${listing.id}`;
 
     this.seo.setTitleAndDescription(title, description);
-    this.seo.setCanonical(url);
-    this.seo.setHreflangAlternates(`/annonces/${listing.id}`);
     this.seo.updateTag({ property: 'og:type', content: 'website' });
     this.seo.updateTag({ property: 'og:image', content: image });
     this.seo.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
@@ -162,22 +171,34 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
       description: listing.description || listing.title,
       image: listing.images?.length ? listing.images : undefined,
       url,
+      category: this.i18n.t('cats.' + listing.category),
+      itemCondition: listing.condition === 'NEW' ? 'https://schema.org/NewCondition' : listing.condition === 'USED' ? 'https://schema.org/UsedCondition' : undefined,
       offers: {
         '@type': 'Offer',
         price: listing.price ?? undefined,
         priceCurrency: listing.currency || 'MAD',
-        availability: listing.status === 'ACTIVE'
+        availability: listing.status === 'ACTIVE' || listing.status === 'RESERVED'
           ? 'https://schema.org/InStock'
           : 'https://schema.org/OutOfStock',
         url,
       },
+    });
+    this.seo.setStructuredData('breadcrumb-structured-data', {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'SouqMar24', item: `${SITE_URL}/${this.i18n.lang()}` },
+        { '@type': 'ListItem', position: 2, name: this.i18n.t('annonces.title'), item: `${SITE_URL}/${this.i18n.lang()}/annonces` },
+        { '@type': 'ListItem', position: 3, name: this.i18n.t('cats.' + listing.category), item: `${SITE_URL}/${this.i18n.lang()}/annonces?categorie=${encodeURIComponent(listing.category)}` },
+        { '@type': 'ListItem', position: 4, name: listing.title, item: url },
+      ],
     });
   }
 
   ngOnDestroy() {
     this.seo.setTitleAndDescription('SouqMar24', '');
     this.seo.removeStructuredData('listing-structured-data');
-    this.seo.removeHreflangAlternates();
+    this.seo.removeStructuredData('breadcrumb-structured-data');
   }
 
   similarListings: Listing[] = [];

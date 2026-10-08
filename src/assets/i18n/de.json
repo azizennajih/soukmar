@@ -1759,5 +1759,11 @@
   "seo": {
     "default_title": "SouqMar24 — Kaufen und verkaufen, ganz einfach",
     "default_description": "SouqMar24 — der Marktplatz für Kleinanzeigen: Fahrzeuge, Immobilien, Elektronik, Mode und vieles mehr in deiner Nähe."
+  },
+  "not_found": {
+    "title": "Seite nicht gefunden",
+    "body": "Diese Seite gibt es nicht (mehr). Vielleicht wurde die Anzeige gelöscht oder der Link ist falsch.",
+    "home": "Zur Startseite",
+    "browse": "Anzeigen durchsuchen"
   }
 }

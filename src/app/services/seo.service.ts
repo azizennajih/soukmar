@@ -2,10 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Meta, MetaDefinition, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { DEFAULT_LANG, SUPPORTED_LANGS, stripLangPrefix } from './locale-routing';
+import { DEFAULT_LANG, INDEXABLE_LANGS, stripLangPrefix } from './locale-routing';
+import { SITE_URL, SeoDecision } from './seo-rules';
 
-export { stripLangPrefix };
-export const SITE_URL = 'https://souqmar24.com';
+export { stripLangPrefix, SITE_URL };
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
@@ -32,6 +32,30 @@ export class SeoService {
     this.meta.updateTag({ name: 'description', content: description });
     this.meta.updateTag({ property: 'og:title', content: title });
     this.meta.updateTag({ property: 'og:description', content: description });
+    // The static twitter:* defaults in index.html are French; keep them in step with the page's own text.
+    this.meta.updateTag({ name: 'twitter:title', content: title });
+    this.meta.updateTag({ name: 'twitter:description', content: description });
+  }
+
+  /** `<meta name="robots">` for the current page (e.g. "noindex, follow"). */
+  setRobots(content: string) {
+    this.meta.updateTag({ name: 'robots', content });
+  }
+
+  /** Applies canonical, robots and hreflang as decided by seo-rules.ts for the current URL. */
+  applyDecision(d: SeoDecision, lang: string) {
+    if (d.canonical) this.setCanonical(d.canonical);
+    this.setRobots(d.robots);
+    this.removeHreflangAlternates();
+    for (const alt of d.hreflang) this.appendAlternateLink(alt.lang, alt.href);
+    this.meta.updateTag({ property: 'og:locale', content: lang });
+  }
+
+  /** Marks the response as "not found": a real 404 status for crawlers during SSR (set by the caller via
+   * RESPONSE_INIT) plus noindex for the rendered page. */
+  markNotFound() {
+    this.setRobots('noindex, nofollow');
+    this.removeHreflangAlternates();
   }
 
   /** Points crawlers at one canonical URL per page — critical on
@@ -66,7 +90,7 @@ export class SeoService {
     this.removeHreflangAlternates();
     const bare = stripLangPrefix(path);
     const suffix = bare === '/' ? '' : bare;
-    for (const lang of SUPPORTED_LANGS) {
+    for (const lang of INDEXABLE_LANGS) {
       this.appendAlternateLink(lang, `${SITE_URL}/${lang}${suffix}`);
     }
     this.appendAlternateLink('x-default', `${SITE_URL}/${DEFAULT_LANG}${suffix}`);

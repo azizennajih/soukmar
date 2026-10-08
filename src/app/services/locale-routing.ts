@@ -7,6 +7,17 @@ export type Lang = 'fr' | 'en' | 'ar' | 'de' | 'es' | 'it' | 'pt' | 'tr' | 'fa' 
  * `Lang` union and with `src/assets/i18n/*.json`. */
 export const SUPPORTED_LANGS: Lang[] = ['fr', 'en', 'ar', 'de', 'es', 'it', 'pt', 'tr', 'fa', 'ur', 'ps'];
 
+/** Languages whose pages search engines may index and that form the hreflang cluster. Only languages
+ * with complete, reviewed translations belong here: the other supported languages stay usable for
+ * visitors but are marked `noindex` (see seo-rules.ts) so unreviewed machine translations are not
+ * what Google shows. Keep in sync with the backend's sitemap (soukmar-backend/src/lib/sitemap.ts).
+ * Add a language here once a native speaker has reviewed it. */
+export const INDEXABLE_LANGS: Lang[] = ['fr', 'en', 'ar', 'de', 'es', 'it'];
+
+export function isIndexableLang(value: string | null | undefined): boolean {
+  return !!value && (INDEXABLE_LANGS as string[]).includes(value);
+}
+
 /** Right-to-left scripts among the supported languages — Arabic, Persian,
  * Urdu and Pashto all use RTL-written (Perso-)Arabic script, unlike every
  * other supported language here. */

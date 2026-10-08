@@ -1759,5 +1759,11 @@
   "seo": {
     "default_title": "SouqMar24 — Kolayca al ve sat",
     "default_description": "SouqMar24, ilan pazar yeri: araçlar, emlak, elektronik, moda ve çok daha fazlası yakınınızda."
+  },
+  "not_found": {
+    "title": "Sayfa bulunamadı",
+    "body": "Bu sayfa yok (ya da artık yok). İlan kaldırılmış olabilir veya bağlantı yanlış olabilir.",
+    "home": "Ana sayfaya git",
+    "browse": "İlanlara göz at"
   }
 }

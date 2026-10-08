@@ -1759,5 +1759,11 @@
   "seo": {
     "default_title": "SouqMar24 — Achetez et vendez facilement",
     "default_description": "SouqMar24, la marketplace de petites annonces : véhicules, immobilier, électronique, mode et plus encore près de chez vous."
+  },
+  "not_found": {
+    "title": "Page introuvable",
+    "body": "Cette page n'existe pas (ou plus). L'annonce a peut-être été supprimée ou le lien est incorrect.",
+    "home": "Retour à l'accueil",
+    "browse": "Parcourir les annonces"
   }
 }

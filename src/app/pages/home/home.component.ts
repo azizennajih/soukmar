@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, effect } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
@@ -25,7 +25,7 @@ import { SeoService, SITE_URL } from '../../services/seo.service';
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   categories = CATEGORIES;
   /** The 18 categories grouped by theme — easier to scan than one long grid. */
   categoryGroups = CATEGORY_GROUPS.map(g => ({
@@ -95,8 +95,19 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.seo.setTitleAndDescription(this.i18n.t('seo.default_title'), this.i18n.t('seo.default_description'));
-    this.seo.setCanonical(`${SITE_URL}/${this.i18n.lang()}`);
-    this.seo.setHreflangAlternates('/');
+    // Tells search engines who runs the site and that it has a search — a prerequisite for a site name /
+    // sitelinks search box in results (no guarantee that Google shows them).
+    this.seo.setStructuredData('site-structured-data', {
+      '@context': 'https://schema.org',
+      '@graph': [
+        { '@type': 'Organization', '@id': `${SITE_URL}/#organization`, name: 'SouqMar24', url: SITE_URL, logo: `${SITE_URL}/icon-512.png`, email: 'contact@souqmar24.com' },
+        {
+          '@type': 'WebSite', '@id': `${SITE_URL}/#website`, name: 'SouqMar24', url: SITE_URL,
+          inLanguage: this.i18n.lang(), publisher: { '@id': `${SITE_URL}/#organization` },
+          potentialAction: { '@type': 'SearchAction', target: `${SITE_URL}/${this.i18n.lang()}/annonces?q={search_term_string}`, 'query-input': 'required name=search_term_string' },
+        },
+      ],
+    });
     this.cdr.markForCheck();
     if (this.auth.isLoggedIn) {
       this.loadFavorites();
@@ -144,6 +155,10 @@ export class HomeComponent implements OnInit {
 
   goToCity(city: string) {
     this.router.navigate(this.i18n.withLang(['/annonces']), { queryParams: { ville: city, pays: this.countryService.country() } });
+  }
+
+  ngOnDestroy() {
+    this.seo.removeStructuredData('site-structured-data');
   }
 }
 

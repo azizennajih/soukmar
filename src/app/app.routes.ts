@@ -158,13 +158,26 @@ const localizedRoutes: Routes = [
     loadComponent: () => import('./pages/legal-page/legal-page.component').then(m => m.LegalPageComponent)
   },
   {
-    // Unknown path under a *valid* language prefix (e.g. a dead link,
-    // or the harmless double-redirect that can happen for a bare URL
-    // whose path also isn't a real route) — back to that language's home.
+    // Unknown path under a *valid* language prefix: a real "page not found" with an HTTP 404 status (not a
+    // redirect to the home page, which search engines treat as a soft 404) — see NotFoundComponent.
     path: '**',
-    redirectTo: ''
+    data: { titleKey: 'not_found.title', seo: 'noindex' },
+    loadComponent: () => import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent)
   }
 ];
+
+/** Pages behind a login (or for the owner only): never indexed, links not followed. */
+const PRIVATE_PATHS = new Set([
+  'deposer-annonce', 'deposer-annonce/:id', 'auth/login', 'auth/register', 'auth/forgot-password', 'auth/reset-password',
+  'mes-annonces', 'booster-annonce/:id', 'mes-favoris', 'mes-abonnements', 'chat', 'notifications',
+  'recherches-sauvegardees', 'profil', 'admin', 'parametres', 'supprimer-compte',
+]);
+/** Public but thin or personal: kept out of the index, links followed. */
+const NOINDEX_PATHS = new Set(['recherche-image', 'vendeur/:id']);
+for (const r of localizedRoutes) {
+  if (r.path && PRIVATE_PATHS.has(r.path)) r.data = { ...r.data, seo: 'private' };
+  else if (r.path && NOINDEX_PATHS.has(r.path)) r.data = { ...r.data, seo: 'noindex' };
+}
 
 export const routes: Routes = [
   {

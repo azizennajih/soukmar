@@ -231,11 +231,13 @@ export class AnnoncesComponent implements OnInit {
       `SouqMar24 — ${heading}`,
       `${this.total} ${this.i18n.t('annonces.found')} — SouqMar24`
     );
-    const bareCanonicalPath = this.filters.categorie
-      ? `/annonces?categorie=${encodeURIComponent(this.filters.categorie)}`
-      : '/annonces';
-    this.seo.setCanonical(`${SITE_URL}/${this.i18n.lang()}${bareCanonicalPath}`);
-    this.seo.setHreflangAlternates(bareCanonicalPath);
+    // Canonical, robots and hreflang for this page come from the central rules (seo-rules.ts).
+    // A search or category without a single result is a thin page: keep it out of the index (the central rule
+    // in seo-rules.ts already handles filter variants).
+    if (this.total === 0) {
+      this.seo.setRobots('noindex, follow');
+      this.seo.removeHreflangAlternates();
+    }
   }
 
   isFav(listing: Listing): boolean {
