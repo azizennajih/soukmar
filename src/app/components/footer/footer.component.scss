@@ -5,12 +5,16 @@
 
   &__inner {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1fr;
-    gap: 2.5rem;
-    padding: 3rem 1.25rem;
+    // Brand + the four category groups side by side, so the footer stays short.
+    grid-template-columns: 1.4fr repeat(4, 1fr);
+    gap: 2rem;
+    padding: 2.5rem 1.25rem 2rem;
 
-    @media (max-width: 900px) { grid-template-columns: 1fr 1fr; }
-    @media (max-width: 500px) { grid-template-columns: 1fr; }
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr 1fr;
+      .footer__brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 400px) { gap: 1.5rem 1rem; }
   }
 
   &__brand {
@@ -44,12 +48,22 @@
 
   &__col {
     h4 { color: #fff; font-size: .9rem; font-weight: 700; margin-bottom: .9rem; }
-    ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    ul { list-style: none; display: flex; flex-direction: column; gap: .45rem; }
     a {
       font-size: .85rem; color: #64748b; text-decoration: none;
       transition: color .15s;
       &:hover { color: #e63946; }
     }
+  }
+
+  // One quiet row under the categories: company links on the left, contact on the right.
+  &__meta {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 2rem;
+    padding: 1.1rem 1.25rem;
+    border-top: 1px solid #1e293b;
+    &-links { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
+    &-links a { font-size: .85rem; color: #64748b; text-decoration: none; transition: color .15s; &:hover { color: #e63946; } }
+    .footer__contact-link { margin-bottom: 0; }
   }
 
   &__contact-link {

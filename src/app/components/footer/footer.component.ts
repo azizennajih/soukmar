@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { TranslatePipe } from '../../pipes/translate.pipe';
-import { CATEGORIES } from '../../models/listing.model';
+import { CATEGORY_GROUPS } from '../../models/listing.model';
 import { countryName, VISIBLE_COUNTRY_REGIONS } from '../../models/country.model';
 import { FlagIconComponent } from '../flag-icon/flag-icon.component';
 import { AuthService } from '../../services/auth.service';
@@ -19,7 +19,7 @@ import { CookieConsentService } from '../../services/cookie-consent.service';
 })
 export class FooterComponent {
   year = new Date().getFullYear();
-  readonly categories = CATEGORIES;
+  readonly categoryGroups = CATEGORY_GROUPS;
   countryName = countryName;
   readonly countryRegions = VISIBLE_COUNTRY_REGIONS;
 

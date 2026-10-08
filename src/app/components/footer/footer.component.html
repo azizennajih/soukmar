@@ -13,29 +13,26 @@
       </div>
     </div>
 
-    <div class="footer__col">
-      <h4>{{ 'footer.categories' | T }}</h4>
-      <ul>
-        @for (cat of categories; track cat.value) {
-          <li><a routerLink="/annonces" [queryParams]="{categorie: cat.value}">{{ ('cats.' + cat.value) | T }}</a></li>
-        }
-      </ul>
-    </div>
+    @for (group of categoryGroups; track group.key) {
+      <nav class="footer__col" [attr.aria-label]="('home.cat_group_' + group.key) | T">
+        <h4>{{ ('home.cat_group_' + group.key) | T }}</h4>
+        <ul>
+          @for (cat of group.categories; track cat) {
+            <li><a routerLink="/annonces" [queryParams]="{categorie: cat}">{{ ('cats.' + cat) | T }}</a></li>
+          }
+        </ul>
+      </nav>
+    }
+  </div>
 
-    <div class="footer__col">
-      <h4>SouqMar24</h4>
-      <ul>
-        <li><a routerLink="/a-propos">{{ 'footer.about' | T }}</a></li>
-        <li><a routerLink="/comment-ca-marche">{{ 'footer.how' | T }}</a></li>
-        <li><a routerLink="/securite">{{ 'footer.safety' | T }}</a></li>
-        <li><a routerLink="/aide">{{ 'footer.contact_us' | T }}</a></li>
-      </ul>
-    </div>
-
-    <div class="footer__col">
-      <h4>{{ 'footer.contact_title' | T }}</h4>
-      <a href="mailto:contact@souqmar24.com" class="footer__contact-link"><app-icon name="mail" [size]="14" /> contact&#64;souqmar24.com</a>
-    </div>
+  <div class="container footer__meta">
+    <nav class="footer__meta-links" aria-label="SouqMar24">
+      <a routerLink="/a-propos">{{ 'footer.about' | T }}</a>
+      <a routerLink="/comment-ca-marche">{{ 'footer.how' | T }}</a>
+      <a routerLink="/securite">{{ 'footer.safety' | T }}</a>
+      <a routerLink="/aide">{{ 'footer.contact_us' | T }}</a>
+    </nav>
+    <a href="mailto:contact@souqmar24.com" class="footer__contact-link"><app-icon name="mail" [size]="14" /> contact&#64;souqmar24.com</a>
   </div>
 
   <div class="footer__bottom">
