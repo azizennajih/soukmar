@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, Input, Output, EventEmitter, ViewC
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
+import { PlaceService } from '../../services/place.service';
 
 const DIACRITICS = /[̀-ͯ]/g;
 
@@ -33,12 +34,18 @@ export class TextAutocompleteComponent {
   /** i18n key prefix applied to each option code, e.g. 'job_professions.' */
   @Input() labelPrefix = '';
   @Input() placeholder = '';
+  /** ISO country code: when set, towns and villages of that country are suggested from the server as the user types. */
+  @Input() country = '';
   @Output() valueChange = new EventEmitter<string>();
 
   @ViewChild('fieldWrap') fieldWrap!: ElementRef<HTMLElement>;
 
   private host = inject(ElementRef<HTMLElement>);
   private i18n = inject(I18nService);
+  private places = inject(PlaceService);
+  private searchTimer?: ReturnType<typeof setTimeout>;
+  private searchSeq = 0;
+  private remote = signal<{ name: string; admin1: string | null }[]>([]);
 
   open = signal(false);
   panelStyle = signal<PanelStyle>({ top: '0px', left: '0px', width: '0px' });
@@ -48,11 +55,30 @@ export class TextAutocompleteComponent {
   // change and the list would stay frozen at whatever it first rendered.
   // Templates re-invoke this on every change-detection pass, which zoneless
   // OnPush still runs after the (input) event that updates `value`.
-  filtered(): { code: string; label: string }[] {
+  filtered(): { code: string; label: string; hint?: string }[] {
     const q = normalize(this.value);
     const labeled = this.options.map(o => ({ code: o, label: this.i18n.t(this.labelPrefix + o) }));
-    if (!q) return labeled;
-    return labeled.filter(o => normalize(o.label).includes(q));
+    const local = q ? labeled.filter(o => normalize(o.label).includes(q)) : labeled;
+    const extra = this.remote();
+    if (!extra.length) return local;
+    const known = new Set(local.map(o => normalize(o.label)));
+    return local.concat(
+      extra.filter(e => !known.has(normalize(e.name))).map(e => ({ code: e.name + '|' + (e.admin1 ?? ''), label: e.name, hint: e.admin1 ?? '' }))
+    );
+  }
+
+  /** Asks the server for matching towns/villages (debounced; stale answers are dropped). */
+  private searchRemote(q: string) {
+    clearTimeout(this.searchTimer);
+    if (!this.country || (!q.trim() && this.options.length)) { this.remote.set([]); return; }
+    const seq = ++this.searchSeq;
+    const country = this.country;
+    this.searchTimer = setTimeout(() => {
+      this.places.search(country, q.trim(), 30).subscribe({
+        next: hits => { if (seq === this.searchSeq) this.remote.set(hits.map(h => ({ name: h.name, admin1: h.admin1 }))); },
+        error: () => { if (seq === this.searchSeq) this.remote.set([]); },
+      });
+    }, q.trim() ? 200 : 0);
   }
 
   private openPanel() {
@@ -70,12 +96,14 @@ export class TextAutocompleteComponent {
   }
 
   onFocus() {
+    this.searchRemote(this.value);
     this.openPanel();
   }
 
   onInput(text: string) {
     this.value = text;
     this.valueChange.emit(text);
+    this.searchRemote(text);
     if (!this.open()) this.openPanel();
   }
 

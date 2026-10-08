@@ -345,7 +345,8 @@
     "cgu": "AGB",
     "privacy": "Datenschutz",
     "cookies": "Cookie-Einstellungen verwalten",
-    "legal_notice": "Impressum"
+    "legal_notice": "Impressum",
+    "place_data": "Ortsdaten:"
   },
   "common": {
     "mad": "MAD",

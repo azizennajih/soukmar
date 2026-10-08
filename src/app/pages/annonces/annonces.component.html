@@ -167,6 +167,7 @@
         <label class="sidebar__label">{{ 'annonces.city' | T }}</label>
         <app-city-select
           [cities]="cities"
+          [country]="filters.pays || countryService.country()"
           [value]="filters.ville"
           (valueChange)="onCityChange($event)"
           [showGps]="true"

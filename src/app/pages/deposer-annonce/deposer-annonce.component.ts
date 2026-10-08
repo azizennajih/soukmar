@@ -12,6 +12,7 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { TextAutocompleteComponent } from '../../components/text-autocomplete/text-autocomplete.component';
+import { CitySelectComponent } from '../../components/city-select/city-select.component';
 import { DateInputComponent } from '../../components/date-input/date-input.component';
 import { MultiSelectComponent } from '../../components/multi-select/multi-select.component';
 import { CATEGORIES, MOROCCO_CITIES, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES, Category, Subcategory, AttributeDefinition, Condition, ListingIntent, PriceType, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR, TRANSPORT_COUNTRY_REGIONS, TRANSPORT_CITIES_BY_COUNTRY } from '../../models/listing.model';
@@ -27,7 +28,7 @@ interface PhotoItem { url: string; file?: File; }
 
 @Component({
   selector: 'app-deposer-annonce',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CatIconComponent, TextAutocompleteComponent, DateInputComponent, MultiSelectComponent, TranslatePipe, CityLabelPipe, TurnstileComponent, PhoneInputComponent, FlagIconComponent, IconComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CatIconComponent, TextAutocompleteComponent, CitySelectComponent, DateInputComponent, MultiSelectComponent, TranslatePipe, CityLabelPipe, TurnstileComponent, PhoneInputComponent, FlagIconComponent, IconComponent],
   templateUrl: './deposer-annonce.component.html',
   styleUrl: './deposer-annonce.component.scss'
 })

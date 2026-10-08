@@ -168,3 +168,9 @@
     color: var(--text-muted);
   }
 }
+
+.city-select__hint {
+  margin-inline-start: .4rem;
+  font-size: .75rem;
+  color: var(--text-muted);
+}

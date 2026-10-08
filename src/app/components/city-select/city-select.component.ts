@@ -5,6 +5,7 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 import { GeocodeService, Coords } from '../../services/geocode.service';
 import { I18nService } from '../../services/i18n.service';
 import { cityLabel } from '../../models/listing.model';
+import { PlaceService } from '../../services/place.service';
 
 const DIACRITICS = /[̀-ͯ]/g;
 
@@ -32,6 +33,8 @@ export class CitySelectComponent {
    * not to change value on that same re-render (e.g. re-focusing an already-
    * empty field just calls query.set('') again, a no-op signal write). */
   cities = input<string[]>([]);
+  /** ISO country code: when set, towns and villages of that country are suggested from the server as the user types (on top of `cities`). */
+  country = input('');
   @Input() placeholder = '';
   @Input() value = '';
   @Input() showGps = false;
@@ -47,6 +50,11 @@ export class CitySelectComponent {
   private host = inject(ElementRef<HTMLElement>);
   private geocodeService = inject(GeocodeService);
   private i18n = inject(I18nService);
+  private places = inject(PlaceService);
+  private searchTimer?: ReturnType<typeof setTimeout>;
+  private searchSeq = 0;
+  /** Server suggestions for the current query, with their region for the sub-label. */
+  private remote = signal<{ name: string; admin1: string | null }[]>([]);
 
   open = signal(false);
   query = signal('');
@@ -66,10 +74,33 @@ export class CitySelectComponent {
     // unfiltered browse-all list broke it — the city list is alphabetical,
     // so a fixed slice only ever showed cities starting with "A".
     const cities = this.cities();
-    return q
+    const local = q
       ? cities.filter(c => normalize(c).includes(q) || normalize(cityLabel(c, lang)).includes(q))
       : cities;
+    const extra = this.remote();
+    if (!extra.length) return local;
+    const known = new Set(local.map(normalize));
+    return local.concat(extra.map(e => e.name).filter(n => !known.has(normalize(n))));
   });
+
+  /** Region of a server-suggested place (tells apart the many villages sharing one name). */
+  hint(city: string): string {
+    return this.remote().find(e => e.name === city)?.admin1 ?? '';
+  }
+
+  /** Asks the server for matching towns/villages (debounced; stale answers are dropped). */
+  private searchRemote(q: string) {
+    const country = this.country();
+    clearTimeout(this.searchTimer);
+    if (!country || (!q.trim() && this.cities().length)) { this.remote.set([]); return; }
+    const seq = ++this.searchSeq;
+    this.searchTimer = setTimeout(() => {
+      this.places.search(country, q.trim(), 30).subscribe({
+        next: hits => { if (seq === this.searchSeq) this.remote.set(hits.map(h => ({ name: h.name, admin1: h.admin1 }))); },
+        error: () => { if (seq === this.searchSeq) this.remote.set([]); },
+      });
+    }, q.trim() ? 200 : 0);
+  }
 
   /** Arabic name in Arabic UI (falls back to the stored French/Latin city as-is
    * for any value outside the dictionary), otherwise that stored value unchanged. */
@@ -109,11 +140,13 @@ export class CitySelectComponent {
     this.query.set('');
     this.activeIndex.set(-1);
     this.gpsError.set(false);
+    this.searchRemote('');
     this.openPanel();
   }
 
   onInput(v: string) {
     this.query.set(v);
+    this.searchRemote(v);
     this.activeIndex.set(-1);
     if (!this.open()) this.openPanel();
   }

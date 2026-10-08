@@ -44,7 +44,7 @@
     </div>
   }
 
-  @if (open() && cities().length) {
+  @if (open() && (cities().length || filtered().length || country())) {
     <div class="city-select__panel" [style.top]="panelStyle().top" [style.left]="panelStyle().left" [style.width]="panelStyle().width">
       @if (filtered().length) {
         @for (city of filtered(); track city; let i = $index) {
@@ -54,7 +54,7 @@
             [class.city-select__option--active]="i === activeIndex()"
             [class.city-select__option--selected]="city === value"
             (mousedown)="$event.preventDefault(); select(city)"
-          >{{ labelFor(city) }}</button>
+          >{{ labelFor(city) }}@if (hint(city)) { <span class="city-select__hint">{{ hint(city) }}</span> }</button>
         }
       } @else {
         <div class="city-select__empty">{{ 'common.no_results' | T }}</div>

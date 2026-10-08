@@ -151,16 +151,18 @@
             <div class="form-group">
               <label>{{ 'deposer.label_city' | T }}</label>
               @if (form.country === 'MA') {
-                <select [(ngModel)]="form.city">
-                  <option value="">{{ 'deposer.city_default' | T }}</option>
-                  @for (city of cities; track city) {
-                    <option [value]="city">{{ city | cityLabel }}</option>
-                  }
-                </select>
+                <app-city-select
+                  [cities]="cities"
+                  [country]="form.country"
+                  [value]="form.city"
+                  (valueChange)="form.city = $event"
+                  [placeholder]="'deposer.city_default' | T"
+                />
               } @else {
                 <app-text-autocomplete
                   [value]="form.city"
                   [options]="citiesForCountry"
+                  [country]="form.country"
                   [placeholder]="'deposer.destination_city_other_placeholder' | T"
                   (valueChange)="form.city = $event"
                 />

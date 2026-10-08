@@ -16,7 +16,7 @@
       <div class="text-autocomplete__list">
         @for (opt of filtered(); track opt.code) {
           <div class="text-autocomplete__option" (mousedown)="$event.preventDefault()" (click)="pick(opt.label)">
-            {{ opt.label }}
+            {{ opt.label }}@if (opt.hint) { <span class="text-autocomplete__hint">{{ opt.hint }}</span> }
           </div>
         }
       </div>

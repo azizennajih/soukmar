@@ -164,6 +164,7 @@
         <div class="navbar__search-field navbar__search-field--location">
           <app-city-select
             [cities]="cities"
+            [country]="countryService.country()"
             [value]="selectedCity"
             (valueChange)="onCityChange($event)"
             [showGps]="true"
