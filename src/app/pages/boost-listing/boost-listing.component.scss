@@ -186,7 +186,12 @@
     color: var(--text);
     cursor: pointer;
 
-    input { margin-top: .2rem; flex-shrink: 0; accent-color: var(--primary); }
+    // The global input style (full width, padding, border) would stretch a checkbox across the card and push the text out.
+    input[type="checkbox"] {
+      width: 1.15rem; height: 1.15rem; min-width: 1.15rem; padding: 0; margin: .1rem 0 0;
+      flex: 0 0 auto; accent-color: var(--primary); box-shadow: none;
+    }
+    span { flex: 1 1 auto; min-width: 0; }
   }
 
   &__error {
