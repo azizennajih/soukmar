@@ -5,7 +5,7 @@
   &__field {
     display: flex;
     align-items: center;
-    gap: .3rem;
+    gap: 0;
     width: 100%;
     padding: .5rem .65rem;
     border: 1.5px solid var(--border);
@@ -31,11 +31,13 @@
 
     &::placeholder { color: var(--text-muted); opacity: 1; }
 
-    &--md { width: 1.6rem; }
-    &--yr { width: 2.6rem; }
+    // Sized to their digits (ch) so the separator sits right next to the number: 05.12.2026, not 05 . 12 . 2026.
+    font-variant-numeric: tabular-nums;
+    &--md { width: 2.15ch; }
+    &--yr { width: 4.2ch; }
   }
 
-  &__sep { color: var(--text-muted); font-size: .85rem; }
+  &__sep { color: var(--text-muted); font-size: .85rem; padding: 0; }
 
   &__cal-btn {
     margin-left: auto;
