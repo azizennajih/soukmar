@@ -503,6 +503,15 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
+  /** Status picker in the listings table: any status can be set, e.g. a rejected listing put back online. */
+  async onStatusChange(listing: Listing, ev: Event) {
+    const select = ev.target as HTMLSelectElement;
+    await this.updateListingStatus(listing, select.value);
+    select.value = listing.status; // shows the real status again if the change was refused
+  }
+
+  readonly listingStatuses = ['ACTIVE', 'PENDING', 'RESERVED', 'SOLD', 'REJECTED', 'EXPIRED'];
+
   async togglePremium(listing: Listing) {
     if (this.actionLoading.has(listing.id)) return;
     this.actionLoading.add(listing.id);

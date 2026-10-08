@@ -286,6 +286,13 @@
             <!-- Statut -->
             <div class="table-cell-status">
               <span class="badge" [ngClass]="statusClass(listing.status)">{{ statusLabel(listing.status) }}</span>
+              <select class="role-select status-select" [attr.aria-label]="'admin.col_status' | T"
+                      [value]="listing.status" [disabled]="isActionLoading(listing.id)"
+                      (change)="onStatusChange(listing, $event)">
+                @for (st of listingStatuses; track st) {
+                  <option [value]="st" [selected]="st === listing.status">{{ statusLabel(st) }}</option>
+                }
+              </select>
             </div>
             <!-- Actions -->
             <div class="table-cell-actions">
@@ -297,6 +304,11 @@
                 <button class="action-btn action-btn--reject" [title]="'common.reject' | T"
                         [disabled]="isActionLoading(listing.id)"
                         (click)="updateListingStatus(listing, 'REJECTED')"><app-icon name="close" [size]="13" /></button>
+              }
+              @if (listing.status === 'REJECTED' || listing.status === 'EXPIRED') {
+                <button class="action-btn action-btn--approve" [title]="'common.approve' | T"
+                        [disabled]="isActionLoading(listing.id)"
+                        (click)="updateListingStatus(listing, 'ACTIVE')"><app-icon name="check" [size]="13" /></button>
               }
               @if (listing.status === 'ACTIVE') {
                 <button class="action-btn action-btn--reject" [title]="'common.deactivate' | T"

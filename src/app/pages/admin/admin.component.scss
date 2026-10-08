@@ -402,6 +402,9 @@
 }
 
 /* ── Table cells ─────────────────────────── */
+.table-cell-status { display: flex; flex-direction: column; align-items: flex-start; gap: .35rem; }
+.status-select { max-width: 9rem; }
+
 .table-cell-date {
   display: flex; flex-direction: column; gap: .1rem; white-space: nowrap;
   font-size: .85rem; color: var(--text); font-variant-numeric: tabular-nums;
