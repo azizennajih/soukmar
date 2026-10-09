@@ -18,7 +18,7 @@ describe('decideSeo', () => {
     expect(d.robots).not.toContain('noindex');
     expect(d.hreflang.map(h => h.lang)).toEqual([...INDEXABLE_LANGS, 'x-default']);
     expect(d.hreflang.find(h => h.lang === 'ar')!.href).toBe('https://souqmar24.com/ar/a-propos');
-    expect(d.hreflang.find(h => h.lang === 'x-default')!.href).toBe('https://souqmar24.com/fr/a-propos');
+    expect(d.hreflang.find(h => h.lang === 'x-default')!.href).toBe('https://souqmar24.com/en/a-propos');
   });
 
   it('treats the language root as the home page', () => {

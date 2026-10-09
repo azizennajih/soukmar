@@ -27,11 +27,10 @@ export function isRtlLang(lang: Lang): boolean {
   return (RTL_LANGS as string[]).includes(lang);
 }
 
-/** French is Morocco's primary language and the app's original default —
- * used as the `x-default`/fallback hreflang target and as the language a
- * bare, unprefixed URL falls back to server-side (no request-language
- * detection there; see I18nService for the browser-side detection). */
-export const DEFAULT_LANG: Lang = 'fr';
+/** English, the international default: the `x-default` hreflang target and the language a visitor gets when
+ * nothing says otherwise (no saved choice, no country-based language, no matching Accept-Language). Visitors
+ * with a saved choice, or from a country with its own language (e.g. Morocco → French), are unaffected. */
+export const DEFAULT_LANG: Lang = 'en';
 
 /** Best supported language from an HTTP Accept-Language header ("de-DE,de;q=0.9,en;q=0.8"),
  * honouring q-values; null when the header is missing or lists no supported language. The server

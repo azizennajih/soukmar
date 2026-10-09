@@ -62,7 +62,7 @@ Keine Datenbank-Migration, keine Änderung an DNS, Caddy oder anderer Produktion
 2. **Google Search Console** (nur mit deinem Google-Konto möglich): Domain-Property `souqmar24.com` anlegen und per DNS-TXT-Eintrag bei IONOS verifizieren → `https://souqmar24.com/sitemap.xml` einreichen → „URL-Prüfung“ für Startseite, eine Kategorieseite und eine Anzeige → „Indexierung beantragen“. Gleiches optional in **Bing Webmaster Tools**.
 3. Prüfen, ob eine zweite Property pro Sprache nötig ist: nein – die Domain-Property deckt alle `/xx/`-Pfade ab; in den Berichten nach URL-Präfix filtern.
 4. Muttersprachliche Prüfung der Übersetzungen (pt, tr, fa, ur, ps), danach in `INDEXABLE_LANGS` aufnehmen.
-5. Entscheidung `x-default`: aktuell Französisch (Standardsprache). Für eine international ausgerichtete Seite wäre Englisch üblich – das ist eine Produktentscheidung, kein Fehler.
+5. Standardsprache: **Englisch** (entschieden am 9. Okt. 2026) – gilt für `x-default`, für Besucher ohne erkennbare Sprache und als Rückfall für E-Mails ohne gespeicherte Sprache. Wer eine Sprache gewählt hat oder aus einem Land mit eigener Sprache kommt (z. B. Marokko → Französisch), ist nicht betroffen.
 6. Datenschutzerklärung enthält bereits den Absatz zur anonymen Besucherzählung; Search Console selbst benötigt keine Änderung.
 
 ## 6. Deployment- und Rollback-Plan
