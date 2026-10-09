@@ -22,6 +22,7 @@ import { formatDateTimeForCountry, formatDateForCountry } from '../../models/dat
 import { CountryService } from '../../services/country.service';
 import { FlagIconComponent } from '../../components/flag-icon/flag-icon.component';
 import { firstValueFrom } from 'rxjs';
+import { ImageUrlPipe } from '../../pipes/image-url.pipe';
 
 export interface AdminUser {
   id: string;
@@ -98,7 +99,7 @@ export interface SecurityEvent {
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CatIconComponent, IconComponent, TranslatePipe, CityLabelPipe, FlagIconComponent],
+  imports: [ImageUrlPipe, CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CatIconComponent, IconComponent, TranslatePipe, CityLabelPipe, FlagIconComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })

@@ -23,10 +23,11 @@ import { ListingsMapComponent } from '../../components/listings-map/listings-map
 import { IconComponent } from '../../components/icon/icon.component';
 import { FlagIconComponent } from '../../components/flag-icon/flag-icon.component';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
+import { ImageUrlPipe } from '../../pipes/image-url.pipe';
 
 @Component({
   selector: 'app-annonce-detail',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, TranslatePipe, CityLabelPipe, ReportButtonComponent, ListingCardComponent, StarRatingComponent, VerifiedBadgeComponent, ListingsMapComponent, IconComponent, FlagIconComponent, CatIconComponent],
+  imports: [ImageUrlPipe, CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, TranslatePipe, CityLabelPipe, ReportButtonComponent, ListingCardComponent, StarRatingComponent, VerifiedBadgeComponent, ListingsMapComponent, IconComponent, FlagIconComponent, CatIconComponent],
   templateUrl: './annonce-detail.component.html',
   styleUrl: './annonce-detail.component.scss'
 })

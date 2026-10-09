@@ -10,7 +10,7 @@
 
       <div class="boost-page__listing card">
         @if (listing.images?.[0]) {
-          <img [src]="listing.images[0]" [alt]="listing.title" class="boost-page__listing-img" />
+          <img [src]="listing.images[0] | imageUrl:320" [alt]="listing.title" class="boost-page__listing-img" />
         }
         <div>
           <h1 class="boost-page__listing-title">{{ listing.title }}</h1>

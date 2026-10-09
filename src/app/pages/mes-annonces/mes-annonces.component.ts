@@ -13,12 +13,13 @@ import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { IconComponent } from '../../components/icon/icon.component';
 import { CatIconComponent } from '../../components/cat-icon/cat-icon.component';
 import { Listing, CATEGORIES, formatPriceParts, timeAgo } from '../../models/listing.model';
+import { ImageUrlPipe } from '../../pipes/image-url.pipe';
 
 type SortKey = '' | 'oldest' | 'prix_asc' | 'prix_desc';
 
 @Component({
   selector: 'app-mes-annonces',
-  imports: [CommonModule, FormsModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, CityLabelPipe, IconComponent, CatIconComponent],
+  imports: [ImageUrlPipe, CommonModule, FormsModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, CityLabelPipe, IconComponent, CatIconComponent],
   templateUrl: './mes-annonces.component.html',
   styleUrl: './mes-annonces.component.scss'
 })

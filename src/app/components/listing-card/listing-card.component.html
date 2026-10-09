@@ -2,7 +2,7 @@
   <!-- Image -->
   <div class="listing-card__image">
     @if (listing.images[0]) {
-      <img [src]="listing.images[0]" [alt]="listing.title" loading="lazy" />
+      <img [src]="listing.images[0] | imageUrl:480" [alt]="listing.title" loading="lazy" decoding="async" />
     } @else {
       <div class="listing-card__placeholder">
         @if (category) {

@@ -1,4 +1,5 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, isDevMode } from '@angular/core';
+import { ApplicationConfig, provideAppInitializer, inject, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, isDevMode } from '@angular/core';
+import { I18nService } from './services/i18n.service';
 import { provideRouter, withInMemoryScrolling, TitleStrategy } from '@angular/router';
 import { LocalizedTitleStrategy } from './services/localized-title.strategy';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
@@ -11,6 +12,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
+    // The page's dictionary is loaded before the first render (the other 10 languages are not downloaded at all).
+    provideAppInitializer(() => inject(I18nService).initialLoad()),
     provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' })),
     { provide: TitleStrategy, useClass: LocalizedTitleStrategy },
     provideHttpClient(withFetch(), withInterceptors([appReadyInterceptor, langInterceptor])),

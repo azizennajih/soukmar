@@ -32,7 +32,7 @@
         <div class="detail__main-img">
           @if (listing.images[selectedImage]) {
             <button type="button" class="detail__main-img-btn" (click)="openLightbox()" [attr.aria-label]="'listing.view_fullscreen' | T">
-              <img [src]="listing.images[selectedImage]" [alt]="listing.title" />
+              <img [src]="listing.images[selectedImage] | imageUrl:1200" [alt]="listing.title" />
               <span class="detail__zoom-hint"><app-icon name="zoom-in" [size]="16" /></span>
             </button>
             @if (listing.images.length > 1) {
@@ -63,7 +63,7 @@
           <div class="detail__thumbs">
             @for (img of listing.images; track $index) {
               <div class="detail__thumb" [class.active]="selectedImage === $index" (click)="selectedImage = $index">
-                <img [src]="img" [alt]="listing.title + ' ' + $index" />
+                <img [src]="img | imageUrl:200" [alt]="listing.title + ' ' + $index" loading="lazy" decoding="async" />
               </div>
             }
           </div>

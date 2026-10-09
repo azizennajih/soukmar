@@ -241,7 +241,7 @@
             <div class="table-cell-listing">
               <div class="table-listing-thumb">
                 @if (listing.images?.[0]) {
-                  <img [src]="listing.images[0]" alt="" loading="lazy">
+                  <img [src]="listing.images[0] | imageUrl:160" alt="" loading="lazy" decoding="async">
                 } @else {
                   <app-cat-icon [category]="listing.category" [size]="20" />
                 }

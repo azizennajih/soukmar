@@ -11,10 +11,11 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 import { IconComponent } from '../../components/icon/icon.component';
 import { Listing, formatPrice } from '../../models/listing.model';
 import { BoostStatus, BoostTier, BoostTierId, BOOST_TIERS, boostCurrency, quoteBoostPrice, tierPrice } from '../../models/boost.model';
+import { ImageUrlPipe } from '../../pipes/image-url.pipe';
 
 @Component({
   selector: 'app-boost-listing',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, CountryDatePipe, IconComponent],
+  imports: [ImageUrlPipe, CommonModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, CountryDatePipe, IconComponent],
   templateUrl: './boost-listing.component.html',
   styleUrl: './boost-listing.component.scss'
 })

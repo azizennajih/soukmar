@@ -88,6 +88,7 @@ Jede Kategorie hat Unterkategorien (`Subcategory`), jede Unterkategorie hat eige
 - **Keine hardcodierten Strings** in Templates oder Components — immer `| T` oder `this.i18n.t('key')`
 - **RTL:** Bei `ar` wird `document.documentElement.dir = 'rtl'` automatisch gesetzt
 - **Reaktiv:** `this.i18n.lang()` (Signal) lesen — Angular triggert Re-Render
+- **Performance:** Die Sprachdateien werden pro Sprache **lazy** geladen (`I18nService.load()`, App-Initializer in `app.config.ts`) — nie wieder `import xx from '.../i18n/xx.json'` statisch einbinden (sonst landen alle 11 Sprachen = 1,1 MB im Start-Paket). Anzeigenfotos immer mit `| imageUrl:<Breite>` ausgeben (Cloudinary skaliert), nur das Lightbox-Bild in Originalgröße.
 - Neue Übersetzungsschlüssel **immer in alle 6 JSON-Dateien** eintragen
 - Kategorien: `('cats.' + cat.value) | T` — nie `cat.label` direkt nutzen
 - Zeit/Preis: `timeAgo(date, lang)` und `formatPrice(price, currency, lang)` aus `listing.model.ts`

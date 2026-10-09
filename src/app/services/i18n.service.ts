@@ -1,4 +1,4 @@
-import { Injectable, signal, computed, effect, inject, PLATFORM_ID, REQUEST } from '@angular/core';
+import { Injectable, signal, computed, effect, inject, untracked, PLATFORM_ID, REQUEST } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { BrowserStorageService } from './browser-storage.service';
 import { DEFAULT_LANG, isSupportedLang, isRtlLang, langFromAcceptLanguage, withLang as withLangCommands, type Lang } from './locale-routing';
@@ -46,31 +46,30 @@ function detectStoredLang(storage: BrowserStorageService, isBrowser: boolean, re
   return { lang: readCookie(request, LANG_KEY), explicit: readCookie(request, LANG_EXPLICIT_KEY) === '1' };
 }
 
-import frRaw from '../../assets/i18n/fr.json';
-import enRaw from '../../assets/i18n/en.json';
-import arRaw from '../../assets/i18n/ar.json';
-import deRaw from '../../assets/i18n/de.json';
-import esRaw from '../../assets/i18n/es.json';
-import itRaw from '../../assets/i18n/it.json';
-import ptRaw from '../../assets/i18n/pt.json';
-import trRaw from '../../assets/i18n/tr.json';
-import faRaw from '../../assets/i18n/fa.json';
-import urRaw from '../../assets/i18n/ur.json';
-import psRaw from '../../assets/i18n/ps.json';
+type Dict = Record<string, unknown>;
 
-const TRANSLATIONS: Record<Lang, Record<string, unknown>> = {
-  fr: frRaw as Record<string, unknown>,
-  en: enRaw as Record<string, unknown>,
-  ar: arRaw as Record<string, unknown>,
-  de: deRaw as Record<string, unknown>,
-  es: esRaw as Record<string, unknown>,
-  it: itRaw as Record<string, unknown>,
-  pt: ptRaw as Record<string, unknown>,
-  tr: trRaw as Record<string, unknown>,
-  fa: faRaw as Record<string, unknown>,
-  ur: urRaw as Record<string, unknown>,
-  ps: psRaw as Record<string, unknown>,
+/** The dictionaries are NOT bundled into the main download: every visitor reads one language, but the 11 files
+ * together are 1.1 MB (about 370 KB gzipped) of the start-up JavaScript. Each one is its own chunk, fetched when
+ * its language is first needed (see I18nService.load and the app initializer in app.config.ts). */
+const LOADERS: Record<Lang, () => Promise<{ default: unknown }>> = {
+  fr: () => import('../../assets/i18n/fr.json'),
+  en: () => import('../../assets/i18n/en.json'),
+  ar: () => import('../../assets/i18n/ar.json'),
+  de: () => import('../../assets/i18n/de.json'),
+  es: () => import('../../assets/i18n/es.json'),
+  it: () => import('../../assets/i18n/it.json'),
+  pt: () => import('../../assets/i18n/pt.json'),
+  tr: () => import('../../assets/i18n/tr.json'),
+  fa: () => import('../../assets/i18n/fa.json'),
+  ur: () => import('../../assets/i18n/ur.json'),
+  ps: () => import('../../assets/i18n/ps.json'),
 };
+
+/** Language segment of a URL path ("/de/annonces" -> "de"), or null. */
+export function langFromPath(path: string | null | undefined): Lang | null {
+  const first = (path ?? '').split('?')[0].split('/').filter(Boolean)[0]?.toLowerCase();
+  return first && isSupportedLang(first) ? first : null;
+}
 
 /** An explicit earlier choice (via the language switcher) always wins.
  * Otherwise, the visitor's browsing country (IP-detected client-side, or
@@ -114,19 +113,71 @@ export class I18nService {
 
   lang = signal<Lang>(detectInitialLang(this.storage, this.isBrowser, this.request));
 
-  private _dict = computed(() => TRANSLATIONS[this.lang()]);
+  /** Dictionaries loaded so far. */
+  private dicts = signal<Partial<Record<Lang, Dict>>>({});
+  /** The language whose dictionary is on screen: while a newly chosen language is still being fetched, the
+   * previous one stays visible (a few hundred ms) instead of showing raw keys. */
+  private lastReady = signal<Lang | null>(null);
+  private pending = new Map<Lang, Promise<void>>();
+
+  private _dict = computed<Dict>(() => {
+    const dicts = this.dicts();
+    return dicts[this.lang()] ?? (this.lastReady() ? dicts[this.lastReady()!] : undefined) ?? {};
+  });
+
+  /** The language the visible texts are actually in (differs from lang() only while a dictionary loads). */
+  readonly activeLang = computed<Lang>(() => (this.dicts()[this.lang()] ? this.lang() : (this.lastReady() ?? this.lang())));
 
   constructor() {
+    // What the visitor chose: remembered right away.
     effect(() => {
       const l = this.lang();
       this.storage.setItem(LANG_KEY, l);
+      if (!this.isBrowser) return;
+      this.writeCookie(LANG_KEY, l);
+    });
+    // The page's language and direction follow the texts that are really shown.
+    effect(() => {
+      const l = this.activeLang();
       this.document.documentElement.lang = l;
       this.document.documentElement.dir = isRtlLang(l) ? 'rtl' : 'ltr';
       if (!this.isBrowser) return;
-      this.writeCookie(LANG_KEY, l);
       const scrollY = window.scrollY;
       requestAnimationFrame(() => window.scrollTo(0, scrollY));
     });
+    // Whenever the language changes, make sure its dictionary is (being) loaded.
+    effect(() => {
+      const l = this.lang();
+      untracked(() => { void this.load(l); });
+    });
+  }
+
+  /** Loads (once) the dictionary of a language. Safe to call repeatedly. */
+  load(lang: Lang): Promise<void> {
+    if (this.dicts()[lang]) return Promise.resolve();
+    let p = this.pending.get(lang);
+    if (!p) {
+      p = LOADERS[lang]()
+        .then(m => {
+          this.dicts.update(d => ({ ...d, [lang]: (m.default ?? m) as Dict }));
+          this.lastReady.set(lang);
+        })
+        .catch(() => { /* offline / chunk missing: keep showing the previous language */ })
+        .finally(() => this.pending.delete(lang));
+      this.pending.set(lang, p);
+    }
+    return p;
+  }
+
+  /** App initializer: waits for the dictionary of the page's language (the URL's language segment, else the detected
+   * one) so the very first render — also on the server — already has its texts. */
+  async initialLoad(): Promise<void> {
+    const path = this.request?.url
+      ? (() => { try { return new URL(this.request!.url).pathname; } catch { return this.request!.url; } })()
+      : this.document.location?.pathname;
+    const lang = langFromPath(path) ?? this.lang();
+    await this.load(lang);
+    if (!this.dicts()[lang] && lang !== DEFAULT_LANG) await this.load(DEFAULT_LANG); // last resort: English
   }
 
   /** Mirrors a localStorage write into a cookie so SSR can read it back (see

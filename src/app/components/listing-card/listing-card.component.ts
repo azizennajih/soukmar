@@ -11,10 +11,11 @@ import { I18nService } from '../../services/i18n.service';
 import { FlagIconComponent } from '../flag-icon/flag-icon.component';
 import { IconComponent } from '../icon/icon.component';
 import { CatIconComponent } from '../cat-icon/cat-icon.component';
+import { ImageUrlPipe } from '../../pipes/image-url.pipe';
 
 @Component({
   selector: 'app-listing-card',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, CityLabelPipe, FlagIconComponent, IconComponent, CatIconComponent],
+  imports: [ImageUrlPipe, CommonModule, RouterLink, LocalizedRouterLinkDirective, TranslatePipe, CityLabelPipe, FlagIconComponent, IconComponent, CatIconComponent],
   templateUrl: './listing-card.component.html',
   styleUrl: './listing-card.component.scss'
 })
