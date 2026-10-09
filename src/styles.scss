@@ -157,7 +157,8 @@ a { color: inherit; text-decoration: none; }
 .auth-switch { text-align: center; font-size: .875rem; color: #64748b; margin-top: 1.5rem;
   a { color: #e63946; font-weight: 700; text-decoration: none; &:hover { text-decoration: underline; } } }
 .input-icon-wrap { position: relative; }
-.input-icon { position: absolute; left: .85rem; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
+/* z-index: a field that comes later in the DOM and is itself positioned (app-password-input) would otherwise paint its white background over the icon. */
+.input-icon { position: absolute; z-index: 1; left: .85rem; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
 .input-eye {
   position: absolute; right: .75rem; top: 50%; transform: translateY(-50%);
   background: none; border: none; cursor: pointer; color: #94a3b8;

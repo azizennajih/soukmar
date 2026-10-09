@@ -45,7 +45,7 @@
 
 .input-icon-wrap { position: relative; }
 .input-icon {
-  position: absolute; left: .85rem; top: 50%; transform: translateY(-50%);
+  position: absolute; z-index: 1; left: .85rem; top: 50%; transform: translateY(-50%);
   color: #94a3b8; pointer-events: none;
 }
 .input-eye {
