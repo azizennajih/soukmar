@@ -5,10 +5,12 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CookieConsentBannerComponent } from './components/cookie-consent-banner/cookie-consent-banner.component';
 import { AppReadyService } from './services/app-ready.service';
 import { VisitPingService } from './services/visit-ping.service';
+import { ToastHostComponent } from './components/toast-host/toast-host.component';
+import { DialogHostComponent } from './components/dialog-host/dialog-host.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, FooterComponent, CookieConsentBannerComponent],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent, CookieConsentBannerComponent, ToastHostComponent, DialogHostComponent],
   template: `
     <app-navbar />
     <main class="main-content">
@@ -18,6 +20,8 @@ import { VisitPingService } from './services/visit-ping.service';
       <app-footer />
     </div>
     <app-cookie-consent-banner />
+    <app-toast-host />
+    <app-dialog-host />
   `,
   styles: [`
     :host { display: flex; flex-direction: column; min-height: 100vh; }

@@ -4,6 +4,8 @@ import { RouterLink } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
+import { DialogService } from '../../services/dialog.service';
+import { ToastService } from '../../services/toast.service';
 import { ListingService } from '../../services/listing.service';
 import { AuthService } from '../../services/auth.service';
 import { I18nService } from '../../services/i18n.service';
@@ -107,6 +109,8 @@ export class AdminComponent implements OnInit, OnDestroy {
   public auth = inject(AuthService);
   public i18n = inject(I18nService);
   private cdr = inject(ChangeDetectorRef);
+  private dialog = inject(DialogService);
+  private toast = inject(ToastService);
   public countryService = inject(CountryService);
   countryName = countryName;
 
@@ -357,28 +361,38 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   async reviewBoostRequest(r: AdminBoostRequest, status: 'APPROVED' | 'REJECTED') {
     if (this.actionLoading.has(r.id)) return;
+    let note: string | undefined;
+    if (status === 'REJECTED') {
+      const answer = await this.dialog.prompt({ message: this.i18n.t('admin.boost_request_note_prompt') });
+      if (answer === null) return; // question cancelled: nothing is rejected
+      note = answer || undefined;
+    }
     this.actionLoading.add(r.id);
     try {
-      const note = status === 'REJECTED' ? (prompt(this.i18n.t('admin.boost_request_note_prompt')) ?? undefined) : undefined;
       const updated = await firstValueFrom(this.api.patch<AdminBoostRequest>(`/admin/boost-requests/${r.id}`, { status, adminNote: note }));
       r.status = updated.status;
       r.adminNote = updated.adminNote;
       r.resolvedAt = updated.resolvedAt;
-    } catch { alert(this.i18n.t('auth.generic_error')); }
+    } catch { this.toast.error(this.i18n.t('auth.generic_error')); }
     this.actionLoading.delete(r.id);
     this.cdr.markForCheck();
   }
 
   async reviewIdVerification(v: AdminIdVerification, status: 'APPROVED' | 'REJECTED') {
     if (this.actionLoading.has(v.id)) return;
+    let note: string | undefined;
+    if (status === 'REJECTED') {
+      const answer = await this.dialog.prompt({ message: this.i18n.t('admin.id_verification_note_prompt') });
+      if (answer === null) return; // question cancelled: nothing is rejected
+      note = answer || undefined;
+    }
     this.actionLoading.add(v.id);
     try {
-      const note = status === 'REJECTED' ? (prompt(this.i18n.t('admin.id_verification_note_prompt')) ?? undefined) : undefined;
       const updated = await firstValueFrom(this.api.patch<AdminIdVerification>(`/admin/id-verifications/${v.id}`, { status, adminNote: note }));
       v.status = updated.status;
       v.adminNote = updated.adminNote;
       v.reviewedAt = updated.reviewedAt;
-    } catch { alert(this.i18n.t('auth.generic_error')); }
+    } catch { this.toast.error(this.i18n.t('auth.generic_error')); }
     this.actionLoading.delete(v.id);
     this.cdr.markForCheck();
   }
@@ -403,14 +417,16 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   async resolveReport(report: Report, status: 'RESOLVED' | 'DISMISSED') {
     if (this.actionLoading.has(report.id)) return;
+    const answer = await this.dialog.prompt({ message: this.i18n.t('admin.reports_note_prompt') });
+    if (answer === null) return; // question cancelled: the report stays open
+    const note = answer || undefined;
     this.actionLoading.add(report.id);
     try {
-      const note = prompt(this.i18n.t('admin.reports_note_prompt')) ?? undefined;
       const updated = await firstValueFrom(this.reportService.adminUpdate(report.id, { status, adminNote: note }));
       report.status = updated.status;
       report.adminNote = updated.adminNote;
       report.resolvedAt = updated.resolvedAt;
-    } catch { alert(this.i18n.t('auth.generic_error')); }
+    } catch { this.toast.error(this.i18n.t('auth.generic_error')); }
     this.actionLoading.delete(report.id);
     this.cdr.markForCheck();
   }
@@ -498,7 +514,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     try {
       await firstValueFrom(this.api.put(`/listings/${listing.id}`, { status }));
       listing.status = status as any;
-    } catch { alert(this.i18n.t('admin.update_error')); }
+    } catch { this.toast.error(this.i18n.t('admin.update_error')); }
     this.actionLoading.delete(listing.id);
     this.cdr.markForCheck();
   }
@@ -518,18 +534,18 @@ export class AdminComponent implements OnInit, OnDestroy {
     try {
       await firstValueFrom(this.api.put(`/listings/${listing.id}`, { isPremium: !listing.isPremium }));
       listing.isPremium = !listing.isPremium;
-    } catch { alert(this.i18n.t('auth.generic_error')); }
+    } catch { this.toast.error(this.i18n.t('auth.generic_error')); }
     this.actionLoading.delete(listing.id);
     this.cdr.markForCheck();
   }
 
   async deleteListing(listing: Listing) {
-    if (!confirm(this.i18n.t('admin.confirm_delete_listing', { title: listing.title }))) return;
+    if (!(await this.dialog.confirm({ message: this.i18n.t('admin.confirm_delete_listing', { title: listing.title }), danger: true, confirmLabel: this.i18n.t('common.delete') }))) return;
     this.actionLoading.add(listing.id);
     try {
       await firstValueFrom(this.ls.delete(listing.id));
       this.allListings = this.allListings.filter(l => l.id !== listing.id);
-    } catch { alert(this.i18n.t('admin.delete_error')); }
+    } catch { this.toast.error(this.i18n.t('admin.delete_error')); }
     this.actionLoading.delete(listing.id);
     this.cdr.markForCheck();
   }
@@ -538,7 +554,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     try {
       await firstValueFrom(this.api.patch(`/admin/users/${user.id}`, { role }));
       user.role = role as any;
-    } catch { alert(this.i18n.t('auth.generic_error')); }
+    } catch { this.toast.error(this.i18n.t('auth.generic_error')); }
     this.cdr.markForCheck();
   }
 

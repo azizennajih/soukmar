@@ -231,7 +231,8 @@
     "call_mute": "Couper le micro",
     "call_unmute": "Réactiver le micro",
     "call_mic_denied": "Accès au micro refusé. Veuillez l'autoriser dans les paramètres du navigateur.",
-    "call_failed": "L'appel a échoué."
+    "call_failed": "L'appel a échoué.",
+    "listing_unavailable": "Cette annonce n'est plus disponible."
   },
   "notifications": {
     "title": "Notifications",
@@ -1144,7 +1145,8 @@
     "clear": "Effacer",
     "toggle_premium": "Activer/désactiver Premium",
     "show_password": "Afficher le mot de passe",
-    "hide_password": "Masquer le mot de passe"
+    "hide_password": "Masquer le mot de passe",
+    "confirm": "Confirmer"
   },
   "premium": {
     "badge": "Boostez vos annonces",

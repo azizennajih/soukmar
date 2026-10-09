@@ -111,6 +111,7 @@ Jede Kategorie hat Unterkategorien (`Subcategory`), jede Unterkategorie hat eige
 - Keine neuen Farben außer der Palette
 - `TranslatePipe` immer in `imports: []` des Components eintragen wenn `| T` genutzt wird
 - PowerShell für alle CLI-Befehle (kein Bash auf Windows)
+- **Keine nativen Browser-Fenster** (`alert()`, `confirm()`, `prompt()`): Hinweise über `ToastService` (`toast.error/success/info`), Rückfragen über `DialogService` (`await dialog.confirm({message, danger})`, `await dialog.prompt({message})` → `null` = abgebrochen). Beide Hosts hängen einmal in `app.ts`.
 - Nach jeder Änderung: commit + push zu `github.com/azizennajih/soukmar`
 
 ---

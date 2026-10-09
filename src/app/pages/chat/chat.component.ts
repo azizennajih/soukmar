@@ -1,4 +1,6 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef, ChangeDetectionStrategy, inject } from '@angular/core';
+import { DialogService } from '../../services/dialog.service';
+import { ToastService } from '../../services/toast.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
@@ -41,6 +43,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   sendingOffer = false;
   listingStatus = '';
 
+  private dialog = inject(DialogService);
+  private toast = inject(ToastService);
   private subs: Subscription[] = [];
   private typingTimer: ReturnType<typeof setTimeout> | null = null;
   private shouldScroll = false;
@@ -92,11 +96,16 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
         const conv = await this.chatService.getOrCreateConversation(listingId);
         await this.openConversation(conv);
       } catch (e: unknown) {
-        const err = e as { error?: { error?: string } };
-        if (err?.error?.error) alert(err.error.error);
+        // 404: the listing was deleted, rejected, expired or is still in moderation — an old link or notification.
+        const err = e as { status?: number; error?: { error?: string } };
+        this.toast.error(err?.status === 404 ? this.i18n.t('chat.listing_unavailable') : (err?.error?.error ?? this.i18n.t('auth.generic_error')));
       }
+      // The ?listing= parameter has done its job: drop it so a reload or the back button doesn't repeat the attempt.
+      this.router.navigate([], { relativeTo: this.route, queryParams: { listing: null }, queryParamsHandling: 'merge', replaceUrl: true });
     }
   }
+
+
 
   async loadConversations() {
     this.conversations = await this.chatService.getConversations();
@@ -123,9 +132,10 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.cdr.markForCheck();
   }
 
-  cancelReservation() {
+  async cancelReservation() {
     if (!this.activeConv) return;
-    if (!confirm(this.i18n.t('chat.confirm_cancel_reservation'))) return;
+    if (!(await this.dialog.confirm({ message: this.i18n.t('chat.confirm_cancel_reservation') }))) return;
+    if (!this.activeConv) return;
     this.chatService.cancelReservation(this.activeConv.id, this.activeConv.listingId);
     this.listingStatus = 'ACTIVE';
     this.cdr.markForCheck();
@@ -217,9 +227,10 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     return msg.type === 'OFFER' && msg.offerStatus === 'PENDING' && this.isMine(msg);
   }
 
-  cancelOffer(msg: ChatMessage) {
+  async cancelOffer(msg: ChatMessage) {
     if (!this.activeConv) return;
-    if (!confirm(this.i18n.t('chat.confirm_cancel_offer'))) return;
+    if (!(await this.dialog.confirm({ message: this.i18n.t('chat.confirm_cancel_offer'), danger: true }))) return;
+    if (!this.activeConv) return;
     this.chatService.cancelOffer(msg.id, this.activeConv.id, this.activeConv.listingId);
   }
 

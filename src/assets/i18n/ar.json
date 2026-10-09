@@ -231,7 +231,8 @@
     "call_mute": "كتم الصوت",
     "call_unmute": "إلغاء كتم الصوت",
     "call_mic_denied": "تم رفض الوصول إلى الميكروفون. يرجى السماح به في إعدادات المتصفح.",
-    "call_failed": "فشلت المكالمة."
+    "call_failed": "فشلت المكالمة.",
+    "listing_unavailable": "هذا الإعلان لم يعد متاحًا."
   },
   "notifications": {
     "title": "الإشعارات",
@@ -870,7 +871,8 @@
     "clear": "مسح",
     "toggle_premium": "تفعيل/إلغاء المميز",
     "show_password": "إظهار كلمة المرور",
-    "hide_password": "إخفاء كلمة المرور"
+    "hide_password": "إخفاء كلمة المرور",
+    "confirm": "تأكيد"
   },
   "subcats": {
     "AUTO": "سيارة",

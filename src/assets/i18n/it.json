@@ -231,7 +231,8 @@
     "call_mute": "Disattiva microfono",
     "call_unmute": "Riattiva microfono",
     "call_mic_denied": "Accesso al microfono negato. Consentilo nelle impostazioni del browser.",
-    "call_failed": "Chiamata non riuscita."
+    "call_failed": "Chiamata non riuscita.",
+    "listing_unavailable": "Questo annuncio non è più disponibile."
   },
   "notifications": {
     "title": "Notifiche",
@@ -376,7 +377,8 @@
     "clear": "Cancella",
     "toggle_premium": "Attiva/disattiva Premium",
     "show_password": "Mostra password",
-    "hide_password": "Nascondi password"
+    "hide_password": "Nascondi password",
+    "confirm": "Conferma"
   },
   "premium": {
     "badge": "Potenzia i tuoi annunci",

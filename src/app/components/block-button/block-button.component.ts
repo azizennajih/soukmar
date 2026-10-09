@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service';
 import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { IconComponent } from '../icon/icon.component';
+import { DialogService } from '../../services/dialog.service';
 
 @Component({
   selector: 'app-block-button',
@@ -20,12 +21,15 @@ export class BlockButtonComponent {
 
   private userService = inject(UserService);
   i18n = inject(I18nService);
+  private dialog = inject(DialogService);
 
   submitting = signal(false);
 
-  toggle() {
+  async toggle() {
     if (this.submitting()) return;
-    if (!this.blocked && !confirm(this.i18n.t('block.confirm'))) return;
+    if (!this.blocked && !(await this.dialog.confirm({
+      message: this.i18n.t('block.confirm'), danger: true, confirmLabel: this.i18n.t('block.block'),
+    }))) return;
 
     this.submitting.set(true);
     const req$ = this.blocked ? this.userService.unblockUser(this.userId) : this.userService.blockUser(this.userId);

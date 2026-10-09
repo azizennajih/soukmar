@@ -231,7 +231,8 @@
     "call_mute": "Stummschalten",
     "call_unmute": "Stummschaltung aufheben",
     "call_mic_denied": "Mikrofonzugriff verweigert. Bitte in den Browsereinstellungen erlauben.",
-    "call_failed": "Anruf fehlgeschlagen."
+    "call_failed": "Anruf fehlgeschlagen.",
+    "listing_unavailable": "Diese Anzeige ist nicht mehr verfügbar."
   },
   "notifications": {
     "title": "Benachrichtigungen",
@@ -376,7 +377,8 @@
     "clear": "Löschen",
     "toggle_premium": "Premium umschalten",
     "show_password": "Passwort anzeigen",
-    "hide_password": "Passwort verbergen"
+    "hide_password": "Passwort verbergen",
+    "confirm": "Bestätigen"
   },
   "premium": {
     "badge": "Anzeigen boosten",

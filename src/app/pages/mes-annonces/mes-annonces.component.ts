@@ -6,6 +6,8 @@ import { LocalizedRouterLinkDirective } from '../../directives/localized-router-
 import { AuthService } from '../../services/auth.service';
 import { ListingService } from '../../services/listing.service';
 import { I18nService } from '../../services/i18n.service';
+import { DialogService } from '../../services/dialog.service';
+import { ToastService } from '../../services/toast.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { IconComponent } from '../../components/icon/icon.component';
@@ -57,6 +59,9 @@ export class MesAnnoncesComponent implements OnInit {
     };
   }
 
+  private dialog = inject(DialogService);
+  private toast = inject(ToastService);
+
   constructor(public auth: AuthService, private ls: ListingService, private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
@@ -68,10 +73,11 @@ export class MesAnnoncesComponent implements OnInit {
     });
   }
 
-  delete(id: string) {
-    if (!confirm(this.i18n.t('mes_annonces.confirm_delete'))) return;
-    this.ls.delete(id).subscribe(() => {
-      this.listings = this.listings.filter(l => l.id !== id);
+  async delete(id: string) {
+    if (!(await this.dialog.confirm({ message: this.i18n.t('mes_annonces.confirm_delete'), danger: true, confirmLabel: this.i18n.t('common.delete') }))) return;
+    this.ls.delete(id).subscribe({
+      next: () => { this.listings = this.listings.filter(l => l.id !== id); this.cdr.markForCheck(); },
+      error: () => this.toast.error(this.i18n.t('auth.generic_error')),
     });
   }
 

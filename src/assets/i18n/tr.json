@@ -231,7 +231,8 @@
     "call_mute": "Mikrofonu kapat",
     "call_unmute": "Mikrofonu aç",
     "call_mic_denied": "Mikrofon erişimi reddedildi. Lütfen tarayıcı ayarlarından izin verin.",
-    "call_failed": "Arama başarısız oldu."
+    "call_failed": "Arama başarısız oldu.",
+    "listing_unavailable": "Bu ilan artık mevcut değil."
   },
   "notifications": {
     "title": "Bildirimler",
@@ -1144,7 +1145,8 @@
     "clear": "Temizle",
     "toggle_premium": "Premium'u aç/kapat",
     "show_password": "Şifreyi göster",
-    "hide_password": "Şifreyi gizle"
+    "hide_password": "Şifreyi gizle",
+    "confirm": "Onayla"
   },
   "premium": {
     "badge": "İlanlarınızı öne çıkarın",

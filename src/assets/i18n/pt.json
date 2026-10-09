@@ -231,7 +231,8 @@
     "call_mute": "Silenciar microfone",
     "call_unmute": "Reativar microfone",
     "call_mic_denied": "Acesso ao microfone negado. Autorize-o nas configurações do navegador.",
-    "call_failed": "A chamada falhou."
+    "call_failed": "A chamada falhou.",
+    "listing_unavailable": "Este anúncio já não está disponível."
   },
   "notifications": {
     "title": "Notificações",
@@ -1144,7 +1145,8 @@
     "clear": "Limpar",
     "toggle_premium": "Ativar/desativar Premium",
     "show_password": "Mostrar senha",
-    "hide_password": "Ocultar senha"
+    "hide_password": "Ocultar senha",
+    "confirm": "Confirmar"
   },
   "premium": {
     "badge": "Aumente seus anúncios",

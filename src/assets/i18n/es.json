@@ -231,7 +231,8 @@
     "call_mute": "Silenciar",
     "call_unmute": "Activar micrófono",
     "call_mic_denied": "Acceso al micrófono denegado. Actívalo en la configuración del navegador.",
-    "call_failed": "La llamada falló."
+    "call_failed": "La llamada falló.",
+    "listing_unavailable": "Este anuncio ya no está disponible."
   },
   "notifications": {
     "title": "Notificaciones",
@@ -376,7 +377,8 @@
     "clear": "Borrar",
     "toggle_premium": "Alternar Premium",
     "show_password": "Mostrar contraseña",
-    "hide_password": "Ocultar contraseña"
+    "hide_password": "Ocultar contraseña",
+    "confirm": "Confirmar"
   },
   "premium": {
     "badge": "Impulsa tus anuncios",

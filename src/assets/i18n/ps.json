@@ -231,7 +231,8 @@
     "call_mute": "مایکروفون بند کول",
     "call_unmute": "مایکروفون فعالول",
     "call_mic_denied": "د مایکروفون لاسرسی رد شو. مهرباني وکړئ یې د براوزر په تنظیماتو کې اجازه ورکړئ.",
-    "call_failed": "زنګ ناکام شو."
+    "call_failed": "زنګ ناکام شو.",
+    "listing_unavailable": "دا اعلان نور شتون نه لري."
   },
   "notifications": {
     "title": "خبرتیاوې",
@@ -1144,7 +1145,8 @@
     "clear": "پاکول",
     "toggle_premium": "ممتاز فعال/غیرفعالول",
     "show_password": "پټ نوم ښودل",
-    "hide_password": "پټ نوم پټول"
+    "hide_password": "پټ نوم پټول",
+    "confirm": "تایید"
   },
   "premium": {
     "badge": "خپل اعلانونه ډېر ښکاره کړئ",

@@ -231,7 +231,8 @@
     "call_mute": "Mute",
     "call_unmute": "Unmute",
     "call_mic_denied": "Microphone access denied. Please allow it in your browser settings.",
-    "call_failed": "Call failed."
+    "call_failed": "Call failed.",
+    "listing_unavailable": "This listing is no longer available."
   },
   "notifications": {
     "title": "Notifications",
@@ -870,7 +871,8 @@
     "clear": "Clear",
     "toggle_premium": "Toggle Premium",
     "show_password": "Show password",
-    "hide_password": "Hide password"
+    "hide_password": "Hide password",
+    "confirm": "Confirm"
   },
   "subcats": {
     "AUTO": "Car",
