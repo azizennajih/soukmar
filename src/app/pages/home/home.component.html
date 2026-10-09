@@ -86,6 +86,7 @@
 
       <div class="cat-groups">
         @for (group of categoryGroups; track group.key) {
+          <div class="cat-group">
           <h3 class="cat-group__title">{{ ('home.cat_group_' + group.key) | T }}</h3>
           <div class="cat-group__row">
             @for (cat of group.items; track cat.value) {
@@ -99,6 +100,7 @@
                 </div>
               </a>
             }
+          </div>
           </div>
         }
       </div>
@@ -153,6 +155,9 @@
   <!-- ===== CITIES ===== -->
   <section class="section section--gray">
     <div class="container">
+      <div class="section-header">
+        <h2 class="section-title icon-label"><app-icon name="location" [size]="20" /> {{ 'home.popular_cities' | T }}</h2>
+      </div>
       <div class="cities-grid">
         @for (city of cities; track city) {
           <button class="city-btn" (click)="goToCity(city)">

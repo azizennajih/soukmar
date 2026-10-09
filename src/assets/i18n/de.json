@@ -71,7 +71,8 @@
     "cat_group_mobility": "Unterwegs",
     "cat_group_family": "Familie und mehr",
     "category_count": "{count} Anzeigen",
-    "category_count_one": "1 Anzeige"
+    "category_count_one": "1 Anzeige",
+    "popular_cities": "Beliebte Städte"
   },
   "annonces": {
     "title": "Alle Anzeigen",

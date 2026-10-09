@@ -71,7 +71,8 @@
     "cat_group_mobility": "Déplacements",
     "cat_group_family": "Famille et plus",
     "category_count": "{count} annonces",
-    "category_count_one": "1 annonce"
+    "category_count_one": "1 annonce",
+    "popular_cities": "Villes populaires"
   },
   "annonces": {
     "title": "Toutes les annonces",

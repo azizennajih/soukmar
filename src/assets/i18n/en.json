@@ -71,7 +71,8 @@
     "cat_group_mobility": "On the move",
     "cat_group_family": "Family and more",
     "category_count": "{count} listings",
-    "category_count_one": "1 listing"
+    "category_count_one": "1 listing",
+    "popular_cities": "Popular cities"
   },
   "annonces": {
     "title": "All listings",

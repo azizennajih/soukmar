@@ -71,7 +71,8 @@
     "cat_group_mobility": "جابه‌جایی",
     "cat_group_family": "خانواده و بیشتر",
     "category_count": "{count} آگهی",
-    "category_count_one": "1 آگهی"
+    "category_count_one": "1 آگهی",
+    "popular_cities": "شهرهای محبوب"
   },
   "annonces": {
     "title": "همه آگهی‌ها",

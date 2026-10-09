@@ -71,7 +71,8 @@
     "cat_group_mobility": "In movimento",
     "cat_group_family": "Famiglia e altro",
     "category_count": "{count} annunci",
-    "category_count_one": "1 annuncio"
+    "category_count_one": "1 annuncio",
+    "popular_cities": "Città popolari"
   },
   "annonces": {
     "title": "Tutti gli annunci",

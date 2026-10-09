@@ -71,7 +71,8 @@
     "cat_group_mobility": "Yolda",
     "cat_group_family": "Aile ve daha fazlası",
     "category_count": "{count} ilan",
-    "category_count_one": "1 ilan"
+    "category_count_one": "1 ilan",
+    "popular_cities": "Popüler şehirler"
   },
   "annonces": {
     "title": "Tüm ilanlar",

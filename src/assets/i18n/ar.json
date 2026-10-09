@@ -71,7 +71,8 @@
     "cat_group_mobility": "التنقل",
     "cat_group_family": "العائلة وأكثر",
     "category_count": "{count} إعلان",
-    "category_count_one": "إعلان واحد"
+    "category_count_one": "إعلان واحد",
+    "popular_cities": "مدن شائعة"
   },
   "annonces": {
     "title": "جميع الإعلانات",

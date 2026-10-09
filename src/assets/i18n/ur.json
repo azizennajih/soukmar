@@ -71,7 +71,8 @@
     "cat_group_mobility": "سفر اور نقل و حمل",
     "cat_group_family": "خاندان اور مزید",
     "category_count": "{count} اشتہارات",
-    "category_count_one": "1 اشتہار"
+    "category_count_one": "1 اشتہار",
+    "popular_cities": "مقبول شہر"
   },
   "annonces": {
     "title": "تمام اشتہارات",

@@ -71,7 +71,8 @@
     "cat_group_mobility": "په سفر کې",
     "cat_group_family": "کورنۍ او نور",
     "category_count": "{count} اعلانونه",
-    "category_count_one": "1 اعلان"
+    "category_count_one": "1 اعلان",
+    "popular_cities": "مشهور ښارونه"
   },
   "annonces": {
     "title": "ټول اعلانونه",
