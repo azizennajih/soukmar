@@ -23,6 +23,9 @@
       border-radius: 0;
       background: transparent;
       box-shadow: none !important;
+
+      // The pill around it already shows the focus: no second ring (the global input:focus style) inside it.
+      input, input:focus { border: none; border-radius: 0; box-shadow: none; padding: 0; background: transparent; }
     }
 
     &--center {
@@ -45,6 +48,9 @@
       text-overflow: ellipsis;
 
       &::placeholder { color: var(--text-muted); }
+
+      // iOS Safari zooms the whole page when a field with text smaller than 16px gets focus.
+      @media (pointer: coarse) { font-size: 16px; }
     }
   }
 

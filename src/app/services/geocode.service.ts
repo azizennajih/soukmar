@@ -8,8 +8,9 @@ export interface Coords { lat: number; lng: number }
 export class GeocodeService {
   constructor(private api: ApiService) {}
 
-  geocode(query: string): Observable<Coords> {
-    return this.api.get<Coords>('/geocode', { q: query });
+  /** `country` (ISO code) looks the place up in that country; without it the server assumes Morocco. */
+  geocode(query: string, country?: string): Observable<Coords> {
+    return this.api.get<Coords>('/geocode', country ? { q: query, country } : { q: query });
   }
 
   /** Rejects if the browser denies permission or geolocation is unavailable. */

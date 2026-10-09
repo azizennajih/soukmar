@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, Output, EventEmitter, ViewChild, inject, signal, computed, input } from '@angular/core';
+import { Component, DestroyRef, ElementRef, HostListener, Input, Output, EventEmitter, ViewChild, inject, signal, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../pipes/translate.pipe';
@@ -17,6 +17,8 @@ interface PanelStyle {
   top: string;
   left: string;
   width: string;
+  /** Keeps the list inside the part of the screen that is not covered by the on-screen keyboard. */
+  maxHeight?: string;
 }
 
 @Component({
@@ -74,13 +76,15 @@ export class CitySelectComponent {
     // unfiltered browse-all list broke it — the city list is alphabetical,
     // so a fixed slice only ever showed cities starting with "A".
     const cities = this.cities();
-    const local = q
+    const matches = q
       ? cities.filter(c => normalize(c).includes(q) || normalize(cityLabel(c, lang)).includes(q))
       : cities;
+    // Names that START with what was typed come first ("Mü" → München, Münster before Dortmund).
+    const starts = (c: string) => normalize(cityLabel(c, lang)).startsWith(q) || normalize(c).startsWith(q);
     const extra = this.remote();
-    if (!extra.length) return local;
-    const known = new Set(local.map(normalize));
-    return local.concat(extra.map(e => e.name).filter(n => !known.has(normalize(n))));
+    const known = new Set(matches.map(normalize));
+    const all = extra.length ? matches.concat(extra.map(e => e.name).filter(n => !known.has(normalize(n)))) : matches;
+    return q ? [...all.filter(starts), ...all.filter(c => !starts(c))] : all;
   });
 
   /** Region of a server-suggested place (tells apart the many villages sharing one name). */
@@ -114,11 +118,36 @@ export class CitySelectComponent {
 
   private anchorStyle(): PanelStyle {
     const rect = this.fieldWrap.nativeElement.getBoundingClientRect();
+    const top = rect.bottom + 6;
+    // Phones: the visible area shrinks when the keyboard opens (visualViewport), so the list must too.
+    const vv = typeof window !== 'undefined' ? window.visualViewport : null;
+    const visibleBottom = vv ? vv.offsetTop + vv.height : (typeof window !== 'undefined' ? window.innerHeight : top + 256);
+    const maxHeight = Math.max(120, Math.min(256, visibleBottom - top - 12));
     return {
-      top: `${rect.bottom + 6}px`,
+      top: `${top}px`,
       left: `${rect.left}px`,
       width: `${rect.width}px`,
+      maxHeight: `${maxHeight}px`,
     };
+  }
+
+  constructor() {
+    // The on-screen keyboard of a phone fires scroll/resize events of the *visual* viewport while the user
+    // is still typing: the list must follow the field instead of closing (and committing half a word).
+    if (typeof window !== 'undefined' && window.visualViewport) {
+      const vv = window.visualViewport;
+      const follow = () => this.repositionPanel();
+      vv.addEventListener('resize', follow);
+      vv.addEventListener('scroll', follow);
+      inject(DestroyRef).onDestroy(() => {
+        vv.removeEventListener('resize', follow);
+        vv.removeEventListener('scroll', follow);
+      });
+    }
+  }
+
+  private repositionPanel() {
+    if (this.open()) this.panelStyle.set(this.anchorStyle());
   }
 
   /** Centers the (variable-width) error box under the field instead of left-aligning it to it. */
@@ -236,9 +265,12 @@ export class CitySelectComponent {
     }
   }
 
+  // Scrolling or resizing moves the field; the (fixed-position) list follows it. It used to close here, which
+  // on a phone happened the moment the keyboard opened, so the list never stayed and the typed letters were
+  // committed as the city after one or two keystrokes.
   @HostListener('window:scroll')
   @HostListener('window:resize')
   onViewportChange() {
-    if (this.open()) { this.open.set(false); this.commitTypedQuery(); }
+    this.repositionPanel();
   }
 }

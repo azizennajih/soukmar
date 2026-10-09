@@ -335,7 +335,7 @@ export class AnnoncesComponent implements OnInit {
       qp['radius'] = this.filters.radius || '10';
     } else if (this.filters.radius && this.filters.ville) {
       try {
-        const coords = await firstValueFrom(this.geocodeService.geocode(this.filters.ville));
+        const coords = await firstValueFrom(this.geocodeService.geocode(this.filters.ville, this.filters.pays || this.countryService.country()));
         qp['lat'] = String(coords.lat);
         qp['lng'] = String(coords.lng);
         qp['radius'] = this.filters.radius;

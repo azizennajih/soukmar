@@ -194,7 +194,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       params['radius'] = this.radius || '10';
     } else if (this.radius && this.selectedCity.trim()) {
       try {
-        const coords = await firstValueFrom(this.geocodeService.geocode(this.selectedCity.trim()));
+        const coords = await firstValueFrom(this.geocodeService.geocode(this.selectedCity.trim(), this.countryService.country()));
         params['lat'] = String(coords.lat);
         params['lng'] = String(coords.lng);
         params['radius'] = this.radius;

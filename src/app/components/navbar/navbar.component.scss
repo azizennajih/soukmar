@@ -94,6 +94,30 @@
       box-shadow: 0 0 0 3px rgba(230,57,70,.12);
     }
 
+    // Phones: two stacked rows instead of one squeezed row. Top: keyword and the search button (with its
+    // label). Bottom: the city at full width plus the radius ("Ganzer Ort" / +10 km …) next to it. Side by
+    // side in one row the city field had ~55px left (two letters visible) and the radius was hidden.
+    @media (max-width: 640px) {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 7.75rem;
+      grid-template-areas: "keyword button" "city radius";
+      height: auto;
+      border-radius: 1.4rem;
+
+      .navbar__search-sep { display: none; }
+      .navbar__search-field:first-child { grid-area: keyword; height: 44px; min-width: 0; }
+      .navbar__search-field--location {
+        grid-area: city; flex: none; height: 44px; min-width: 0; border-left: none; border-top: 1.5px solid #e2e8f0;
+      }
+      .navbar__search-field--radius {
+        display: flex; grid-area: radius; flex: none; height: 44px; min-width: 0;
+        border-left: 1.5px solid #e2e8f0; border-top: 1.5px solid #e2e8f0;
+        .navbar__search-radius-select { padding-left: .75rem; }
+      }
+      .navbar__search-btn { grid-area: button; height: 44px; border-radius: 0; justify-content: center; }
+      .navbar__search-btn-text { display: inline; }
+    }
+
     &-field {
       position: relative;
       display: flex;
@@ -152,6 +176,8 @@
       width: 100%;
       &:focus { border-color: transparent; box-shadow: none; }
       &--location { font-size: .85rem; }
+      // iOS Safari zooms the whole page when a field with text smaller than 16px gets focus.
+      @media (pointer: coarse) { font-size: 16px; }
     }
 
     &-radius-select {
@@ -164,6 +190,8 @@
       background-repeat: no-repeat;
       background-position: right .5rem center;
       padding-right: 1.35rem;
+      // iOS Safari zooms the page when a field with text smaller than 16px gets focus.
+      @media (pointer: coarse) { font-size: 16px; }
     }
 
     &-btn {
