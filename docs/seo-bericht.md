@@ -31,7 +31,6 @@ Alle Punkte sind im Code, durch Unit-Tests und durch einen SEO-Smoke-Test gegen 
 - **Eine zentrale Regel** (`src/app/services/seo-rules.ts`) bestimmt für jede Seite Canonical, robots-Meta und hreflang. Sie wird bei jeder Navigation angewendet (`localized-title.strategy.ts`) – auch beim Server-Rendering.
   - Query-Parameter fließen nie ins Canonical, außer `?categorie=` (eine eigene, sinnvolle Landingpage je Kategorie).
   - Filter-/Sortier-/Seiten-Varianten der Anzeigenliste: Canonical auf die Basisseite, `noindex, follow`.
-  - Leere Such-/Kategorieseiten: `noindex, follow`.
   - Private Seiten (Login, Registrierung, Konto, Chat, Admin, Boost …): `noindex, nofollow`. Seiten dünner/persönlicher Art (Verkäuferprofil, Bildersuche): `noindex, follow`.
 - **Mehrsprachigkeit ehrlich begrenzt:** `INDEXABLE_LANGS` (`locale-routing.ts`) = fr, en, ar, de, es, it. Nur diese bilden den hreflang-Cluster und die Sitemap; pt, tr, fa, ur, ps bleiben nutzbar, sind aber `noindex`, bis eine Muttersprachlerin / ein Muttersprachler die Übersetzung geprüft hat. Umschalten: Sprache in die Liste eintragen (Frontend **und** Backend `lib/sitemap.ts`).
 - **Echte 404:** neue Seite `NotFoundComponent` mit HTTP-Status 404 beim Server-Rendering; nicht ladbare Anzeigen liefern ebenfalls 404 + `noindex`.
@@ -40,6 +39,15 @@ Alle Punkte sind im Code, durch Unit-Tests und durch einen SEO-Smoke-Test gegen 
 - **Sitemap** (Backend): zusätzlich Info-Seiten und eine Landingpage je Kategorie, **nur für Kategorien mit mindestens einer aktiven Anzeige**; Kommentar zur Sprachauswahl; Tests ergänzt.
 - **Weiterleitung `/` → Sprache:** abhängig von Cookie/Browser-Sprache (nicht von der IP), temporär (302), jetzt mit `Vary: Accept-Language, Cookie`. Alle Sprachversionen bleiben direkt per URL erreichbar.
 - **Werkzeug:** `scripts/seo-smoke.mjs` prüft eine laufende Seite (lokal oder live) auf Status, Canonical, robots, hreflang und Sitemap.
+
+## 2a. Nachträgliche Korrekturen (9. Okt. 2026, nach dem ersten Live-Test in der Search Console)
+
+Die Search Console lehnte den Indexierungsantrag für `/en/annonces` mit „Indexierungsprobleme beim Live-Test“ ab. Zwei Ursachen wurden im Code gefunden und behoben:
+
+1. **Leere Seite = noindex (von mir eingeführt, jetzt entfernt).** Ob die Anzeigenliste leer ist, hängt vom Land des Besuchers ab (Anzeigen werden pro Land gezeigt). Googlebot besucht meist aus den USA, sieht dort 0 Anzeigen und hätte die Seite im gerenderten Zustand als `noindex` gesehen. Die Regel gibt es nicht mehr; nur noch Filter-Varianten sind `noindex`.
+2. **Sprache der Seite wurde nach dem Laden vom Land überschrieben.** Ein Besucher ohne gespeicherte Sprachwahl, der aus einem anderen Land kam (auch der Googlebot), sah nach dem Laden den Text einer anderen Sprache als in der URL (z. B. `/de/…` plötzlich auf Englisch). Jetzt gilt immer die Sprache aus der URL (`I18nService.setLangFromUrl`); die Länder-Schätzung ändert die Sprache nur noch, wenn eine Seite gar keine Sprache in der URL hat. Test: `i18n-url-language.spec.ts`.
+
+**Offen / Hinweis:** Die Anzeigenübersicht zeigt weiterhin nur Anzeigen des Landes des Besuchers (Produktregel). Für Besucher und Crawler aus Ländern ohne Anzeigen wirkt sie leer. Detailseiten bleiben unabhängig davon über die Sitemap erreichbar. Wer das ändern will (z. B. „keine Anzeigen im eigenen Land → alle Länder zeigen“), muss das als Produktentscheidung festlegen.
 
 ## 3. Geänderte Dateien
 

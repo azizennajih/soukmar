@@ -232,12 +232,6 @@ export class AnnoncesComponent implements OnInit {
       `${this.total} ${this.i18n.t('annonces.found')} — SouqMar24`
     );
     // Canonical, robots and hreflang for this page come from the central rules (seo-rules.ts).
-    // A search or category without a single result is a thin page: keep it out of the index (the central rule
-    // in seo-rules.ts already handles filter variants).
-    if (this.total === 0) {
-      this.seo.setRobots('noindex, follow');
-      this.seo.removeHreflangAlternates();
-    }
   }
 
   isFav(listing: Listing): boolean {

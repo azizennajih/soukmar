@@ -143,6 +143,17 @@ export class I18nService {
    * explicitly chosen; use `chooseLang`/`markLangExplicit` for that. */
   setLang(l: Lang) { this.lang.set(l); }
 
+  /** Set by LocaleShellComponent from the URL's `:lang` segment. Once a page has a language in its URL, that
+   * language is final: the later IP-based country guess (setLangFromCountry) must not swap the page's text for
+   * another language — visitors, and crawlers rendering /de/... from a US address, would otherwise see a page
+   * whose text no longer matches its URL. */
+  private urlDriven = false;
+
+  setLangFromUrl(l: Lang) {
+    this.urlDriven = true;
+    this.lang.set(l);
+  }
+
   /** Marks that the visitor picked a language by hand via the switcher —
    * from now on `detectInitialLang()` always honors the stored value over
    * any country- or browser-based guess, even across reloads and after a
@@ -164,6 +175,7 @@ export class I18nService {
    * initially rendered with DEFAULT_LANG gets corrected to English a moment
    * later. A no-op once the visitor has explicitly picked a language. */
   setLangFromCountry(countryCode: string) {
+    if (this.urlDriven) return;
     if (this.storage.getItem(LANG_EXPLICIT_KEY) === '1') return;
     const lang = defaultLangForCountry(countryCode);
     if (lang !== this.lang()) this.lang.set(lang);

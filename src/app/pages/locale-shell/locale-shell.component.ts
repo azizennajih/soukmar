@@ -30,7 +30,7 @@ export class LocaleShellComponent {
   constructor() {
     this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
       const lang = params.get('lang');
-      if (isSupportedLang(lang)) this.i18n.setLang(lang);
+      if (isSupportedLang(lang)) this.i18n.setLangFromUrl(lang);
     });
   }
 }
