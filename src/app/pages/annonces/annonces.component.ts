@@ -16,7 +16,7 @@ import { IconComponent } from '../../components/icon/icon.component';
 import { MultiSelectComponent } from '../../components/multi-select/multi-select.component';
 import { TextAutocompleteComponent } from '../../components/text-autocomplete/text-autocomplete.component';
 import { CATEGORIES, MOROCCO_CITIES, Listing, Category, AttributeDefinition, JOB_PROFESSION_CODES, JOB_PROFESSIONS_BY_SECTOR, CONDITION_CATEGORIES, NO_CONDITION_SUBCATEGORIES, SHOE_SIZES_EU } from '../../models/listing.model';
-import { CITIES_BY_COUNTRY, currencyForCountry } from '../../models/country.model';
+import { CITIES_BY_COUNTRY, currencyForCountry, countryName } from '../../models/country.model';
 import { CountryService } from '../../services/country.service';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
@@ -186,8 +186,27 @@ export class AnnoncesComponent implements OnInit {
     } catch { /* silently ignore */ }
   }
 
+  /** True while the list shows other countries' listings because the visitor's own country has none yet. */
+  showingOtherCountries = false;
+
+  /** Name of the visitor's own country, for the "no listings here yet" hint. */
+  get ownCountryName(): string {
+    return countryName(this.filters.pays || this.countryService.country(), this.i18n.lang());
+  }
+
+  /** A plain browse of the portal (optionally one category) — no search, filter, price or place narrowing. */
+  private get isPlainBrowse(): boolean {
+    const f = this.filters;
+    return !f.q && !f.souscategorie && !f.condition && !f.accountType && !f.intent && !f.ville
+      && !f.minPrix && !f.maxPrix && !f.lat && !f.radius && Object.keys(this.attrFilters).length === 0;
+  }
+
   loadListings() {
     this.loading = true;
+    this.fetchListings(this.filters.pays || undefined);
+  }
+
+  private fetchListings(country: string | undefined, isFallback = false) {
     this.listingService.getAll({
       q:             this.filters.q             || undefined,
       category:      this.filters.categorie     || undefined,
@@ -195,7 +214,7 @@ export class AnnoncesComponent implements OnInit {
       condition:     this.filters.condition     || undefined,
       accountType:   this.filters.accountType   || undefined,
       intent:        this.filters.intent        || undefined,
-      country:       this.filters.pays          || undefined,
+      country,
       city:          this.filters.ville         || undefined,
       minPrice:      this.filters.minPrix       || undefined,
       maxPrice:      this.filters.maxPrix       || undefined,
@@ -206,6 +225,13 @@ export class AnnoncesComponent implements OnInit {
       attrs:         this.attrFilters,
     }).subscribe({
       next: res => {
+        // A visitor from a country without listings (and a crawler browsing from one) would face an empty page —
+        // useless for people and a "soft 404" for search engines. Show the other countries' listings instead, with a hint.
+        if (res.total === 0 && country && this.isPlainBrowse) {
+          this.fetchListings(undefined, true);
+          return;
+        }
+        this.showingOtherCountries = isFallback && res.total > 0;
         this.listings = res.listings;
         this.total = res.total;
         this.loading = false;

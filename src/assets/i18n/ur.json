@@ -123,7 +123,8 @@
     "view_mode": "دیکھنے کا انداز",
     "view_list": "فہرست",
     "view_map": "نقشہ",
-    "map_missing_location": "{count} اشتہار بغیر مقام کے نقشے پر نہیں دکھائے جاتے۔"
+    "map_missing_location": "{count} اشتہار بغیر مقام کے نقشے پر نہیں دکھائے جاتے۔",
+    "other_countries_hint": "{country} میں ابھی کوئی اشتہار نہیں – دوسرے ممالک کے اشتہارات دکھائے جا رہے ہیں۔"
   },
   "listing": {
     "loading": "لوڈ ہو رہا ہے...",

@@ -123,7 +123,8 @@
     "view_mode": "د لیدلو حالت",
     "view_list": "لیست",
     "view_map": "نقشه",
-    "map_missing_location": "{count} اعلانونه پرته له موقعیت نه په نقشه کې نه ښکاري."
+    "map_missing_location": "{count} اعلانونه پرته له موقعیت نه په نقشه کې نه ښکاري.",
+    "other_countries_hint": "په {country} کې تر اوسه اعلان نشته – د نورو هېوادونو اعلانونه ښودل کیږي."
   },
   "listing": {
     "loading": "بارېږي...",

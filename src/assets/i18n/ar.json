@@ -123,7 +123,8 @@
     "view_mode": "وضع العرض",
     "view_list": "قائمة",
     "view_map": "خريطة",
-    "map_missing_location": "لا يتم عرض {count} إعلان (إعلانات) بدون موقع على الخريطة."
+    "map_missing_location": "لا يتم عرض {count} إعلان (إعلانات) بدون موقع على الخريطة.",
+    "other_countries_hint": "لا توجد إعلانات في {country} بعد – نعرض لك إعلانات من بلدان أخرى."
   },
   "listing": {
     "loading": "جارٍ التحميل...",

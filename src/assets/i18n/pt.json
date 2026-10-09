@@ -123,7 +123,8 @@
     "view_mode": "Modo de exibição",
     "view_list": "Lista",
     "view_map": "Mapa",
-    "map_missing_location": "{count} anúncio(s) sem localização não são exibidos no mapa."
+    "map_missing_location": "{count} anúncio(s) sem localização não são exibidos no mapa.",
+    "other_countries_hint": "Ainda não há anúncios em {country} – mostramos anúncios de outros países."
   },
   "listing": {
     "loading": "Carregando...",

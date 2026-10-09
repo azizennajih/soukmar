@@ -123,7 +123,8 @@
     "view_mode": "Ansicht",
     "view_list": "Liste",
     "view_map": "Karte",
-    "map_missing_location": "{count} Anzeige(n) ohne Standort werden auf der Karte nicht angezeigt."
+    "map_missing_location": "{count} Anzeige(n) ohne Standort werden auf der Karte nicht angezeigt.",
+    "other_countries_hint": "Noch keine Anzeigen in {country} – hier siehst du Anzeigen aus anderen Ländern."
   },
   "listing": {
     "loading": "Lädt...",

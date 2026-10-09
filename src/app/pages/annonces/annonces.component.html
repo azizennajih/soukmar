@@ -210,6 +210,9 @@
             @else { {{ 'annonces.title' | T }} }
           </h1>
           <p class="annonces__count">{{ listings.length }} {{ 'annonces.found' | T }}</p>
+          @if (showingOtherCountries) {
+            <p class="annonces__count annonces__country-note">{{ 'annonces.other_countries_hint' | T:{ country: ownCountryName } }}</p>
+          }
         </div>
         <div class="annonces__header-actions">
           <div class="annonces__view-toggle" role="group" [attr.aria-label]="'annonces.view_mode' | T">

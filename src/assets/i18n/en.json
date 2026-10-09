@@ -123,7 +123,8 @@
     "view_mode": "View mode",
     "view_list": "List",
     "view_map": "Map",
-    "map_missing_location": "{count} listing(s) without a location aren't shown on the map."
+    "map_missing_location": "{count} listing(s) without a location aren't shown on the map.",
+    "other_countries_hint": "No listings in {country} yet – showing listings from other countries."
   },
   "listing": {
     "loading": "Loading...",

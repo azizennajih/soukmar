@@ -123,7 +123,8 @@
     "view_mode": "Mode d'affichage",
     "view_list": "Liste",
     "view_map": "Carte",
-    "map_missing_location": "{count} annonce(s) sans localisation ne sont pas affichées sur la carte."
+    "map_missing_location": "{count} annonce(s) sans localisation ne sont pas affichées sur la carte.",
+    "other_countries_hint": "Pas encore d'annonces en {country} – voici des annonces d'autres pays."
   },
   "listing": {
     "loading": "Chargement...",

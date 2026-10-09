@@ -123,7 +123,8 @@
     "view_mode": "Görünüm modu",
     "view_list": "Liste",
     "view_map": "Harita",
-    "map_missing_location": "Konumu olmayan {count} ilan haritada gösterilmiyor."
+    "map_missing_location": "Konumu olmayan {count} ilan haritada gösterilmiyor.",
+    "other_countries_hint": "{country} için henüz ilan yok – diğer ülkelerin ilanlarını gösteriyoruz."
   },
   "listing": {
     "loading": "Yükleniyor...",
