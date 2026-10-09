@@ -1,3 +1,5 @@
+import { CITY_LABELS } from './city-names';
+
 export type Category =
   | 'VEHICLES' | 'REAL_ESTATE' | 'JOBS' | 'ELECTRONICS'
   | 'HOME_GARDEN' | 'FASHION' | 'SERVICES' | 'OTHER'
@@ -855,14 +857,16 @@ export const MOROCCO_CITIES_AR: Record<string, string> = {
   "Aït Benhaddou": "أيت بن حدو",
 };
 
-/** City display label: Arabic name when the app is in Arabic (falls back to the
- * original string for any value not in the dictionary — e.g. free text a user
- * typed that isn't a known city), otherwise the stored French/Latin name as-is.
+/** City display label in the app language: the Arabic name of Moroccan cities, or the
+ * localised name of a foreign city ("Munich" → "München", "Vienna" → "Wien", see
+ * city-names.ts). Falls back to the stored string for anything not in a dictionary —
+ * e.g. free text a user typed, or a town from the server's place list.
  * Cities are stored and filtered as plain free text, so this only ever affects
  * what's rendered, never what's saved or sent to the backend. */
 export function cityLabel(city: string, lang: string): string {
   if (!city) return city;
-  return lang === 'ar' ? (MOROCCO_CITIES_AR[city] ?? city) : city;
+  if (lang === 'ar') return MOROCCO_CITIES_AR[city] ?? CITY_LABELS['ar'][city] ?? city;
+  return CITY_LABELS[lang]?.[city] ?? city;
 }
 
 /** Maps an app language code to the Intl locale used for number/date formatting. */
