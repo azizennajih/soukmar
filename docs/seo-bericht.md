@@ -74,7 +74,7 @@ Keine Datenbank-Migration, keine Änderung an DNS, Caddy oder anderer Produktion
 node scripts/seo-smoke.mjs https://souqmar24.com
 ```
 Alle Zeilen müssen „ok“ sein. Zusätzlich im Browser `https://souqmar24.com/de/does-not-exist` öffnen (404-Seite) und `https://souqmar24.com/sitemap.xml`.
-**Rollback:** Frontend auf den Stand davor (`git revert` des SEO-Commits im Repo `soukmar`, bzw. `git checkout 50dd945`), Backend auf `39ceb15`, danach erneut `update.sh`. Die Änderungen sind reine Auslieferungslogik; Daten sind nicht betroffen.
+**Rollback:** Nicht per `git checkout` auf dem Server (`update.sh` holt per `git pull` immer den neuesten Stand und bricht auf einem alten Stand ab). Stattdessen werden die SEO-Änderungen im Repository mit einem Revert-Commit zurückgenommen (Frontend zurück auf den Stand `50dd945`, Backend auf `39ceb15`), gepusht und danach wie gewohnt mit `update.sh` eingespielt. Die Änderungen betreffen nur die Auslieferung; Daten sind nicht betroffen.
 
 ## 7. Empfehlungen und Maßnahmenplan
 
