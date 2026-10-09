@@ -7,7 +7,7 @@
     <div class="hero__circle hero__circle--bl"></div>
 
     <div class="container hero__content">
-      @if (heroActiveListingsCount !== null) {
+      @if (isAdmin && heroActiveListingsCount !== null) {
         <div class="hero__badge">
           <span class="hero__badge-dot"></span>
           {{ 'home.hero_badge' | T:{count: heroActiveListingsCount.toString()} }}
@@ -33,17 +33,19 @@
       </div>
     </div>
 
-    <!-- Stats bar -->
-    <div class="hero__stats">
-      <div class="container hero__stats-inner">
-        @for (stat of stats; track stat.labelKey) {
-          <div class="hero__stat">
-            <div class="hero__stat-value">{{ stat.value }}</div>
-            <div class="hero__stat-label">{{ stat.labelKey | T }}</div>
-          </div>
-        }
+    <!-- Stats bar (admins only) -->
+    @if (isAdmin) {
+      <div class="hero__stats">
+        <div class="container hero__stats-inner">
+          @for (stat of stats; track stat.labelKey) {
+            <div class="hero__stat">
+              <div class="hero__stat-value">{{ stat.value }}</div>
+              <div class="hero__stat-label">{{ stat.labelKey | T }}</div>
+            </div>
+          }
+        </div>
       </div>
-    </div>
+    }
   </section>
 
   <!-- ===== PERSONALIZED INTERESTS ===== -->

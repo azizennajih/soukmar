@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, effect } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, effect, untracked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
@@ -44,10 +44,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   favoriteIds = new Set<string>();
   interests: { category: Category; newListingsCount: number }[] = [];
 
-  // Placeholder until loadStats() resolves (see ngOnInit) — real counts from
-  // GET /api/stats/public, not hand-picked marketing numbers, so this bar
-  // stays honest as the platform actually grows instead of needing a
-  // manual edit before every "the numbers don't match reality" moment.
+  // Placeholder until loadStats() resolves — real counts from GET /api/stats/public, not hand-picked
+  // marketing numbers. Only admins see them: while the platform is young the visitor-facing numbers
+  // ("1 active listing") would work against it, so the bar and the hero badge are admin-only for now.
   stats = [
     { labelKey: 'home.stat_active_listings', value: '—' },
     { labelKey: 'home.stat_registered_users', value: '—' },
@@ -66,10 +65,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     { icon: 'trending-up' as const, titleKey: 'home.feature_boost_title', descKey: 'home.feature_boost_desc', bg: '#f3e8ff', color: '#7e22ce' },
   ];
 
+  /** The platform numbers (stats bar, hero badge) are shown to admins only. */
+  get isAdmin(): boolean {
+    return this.auth.currentUser()?.role === 'ADMIN';
+  }
+
   constructor(
     private listingService: ListingService,
     private api: ApiService,
-    private auth: AuthService,
+    protected auth: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef,
     public countryService: CountryService,
@@ -79,6 +83,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     // Re-runs whenever the navbar's country switcher changes — a visitor
     // sitting on the homepage sees it reflect the new country immediately,
     // not just on their next navigation.
+    // Fetch the numbers only for admins (also right after an admin logs in on this page).
+    effect(() => {
+      if (this.auth.currentUser()?.role === 'ADMIN') untracked(() => this.loadStats());
+    });
     effect(() => {
       const country = this.countryService.country();
       this.api.get<Record<string, number>>('/stats/categories', { country }).subscribe({
@@ -113,7 +121,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.loadFavorites();
       this.loadInterests();
     }
-    this.loadStats();
   }
 
   private async loadStats() {
