@@ -26,3 +26,8 @@ node branding/server.mjs      # startet http://localhost:4599
 ```
 
 Dann `http://localhost:4599` im Browser öffnen: die Seite zeichnet alle Bilder (`generate.html`) und der Server speichert sie in `branding/social/`. Texte, Größen und Farben stehen in `generate.html` (Liste `ASSETS`).
+
+## Reel (9:16, 15,5 s, MP4)
+
+`branding/reel/reel-de.mp4`, `reel-fr.mp4`, `reel-ar.mp4`, `reel-en.mp4` (1080×1920, ohne Ton). Ablauf: Logo, "Kaufen & verkaufen – ganz einfach in deiner Nähe", sechs Kategorien, Chat-Anfrage, Aufruf mit `souqmar24.com`. Texte stehen in `branding/reel.html` (Objekt `TEXTS`). Neu aufnehmen: `node branding/server.mjs`, dann `http://localhost:4599/reel` öffnen (nur eine Sprache: `?lang=de`; Standbild prüfen: `?lang=de&still=9.5`).
+Musik fügst du in Instagram, Facebook oder TikTok beim Hochladen hinzu (dort gibt es lizenzierte Titel).

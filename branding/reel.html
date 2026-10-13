@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>SouqMar24 Reel-Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@500;600&family=Noto+Sans+Arabic:wght@600;800&display=swap" rel="stylesheet">
+<style>body{font:14px system-ui;margin:0;padding:1rem;background:#eee}canvas{width:270px;height:480px;border-radius:12px;display:block}li{margin:.2rem 0}</style>
+</head>
+<body>
+<canvas id="cv" width="1080" height="1920"></canvas>
+<ul id="log"></ul>
+<script>
+const W = 1080, H = 1920, FPS = 30, DURATION = 15.5;
+const C = { primary: '#D93D4A', primaryDark: '#B8313C', primaryLight: '#FEF1F2', goldLight: '#FEF6E4', secondary: '#1E3A5F', text: '#111827', muted: '#6B7280', white: '#FFFFFF' };
+const S_PATH = new Path2D('M43 21.5C41.5 15.5 22 14.5 22 25.5c0 10.5 21 5.5 21 15.5 0 11-19.5 10-22 3');
+
+const TEXTS = {
+  de: { rtl: false, head: 'Kaufen & verkaufen', sub: 'ganz einfach in deiner Nähe', catsTitle: 'Für alles etwas dabei',
+        cats: [['🚗', 'Fahrzeuge'], ['🏠', 'Immobilien'], ['📱', 'Elektronik'], ['👗', 'Mode'], ['💼', 'Jobs'], ['🐾', 'Haustiere']],
+        chatTitle: 'Direkt per Chat anfragen', q: 'Ist das noch verfügbar?', a: 'Ja, gerne!', cta: 'Jetzt entdecken' },
+  fr: { rtl: false, head: 'Achetez et vendez', sub: 'facilement près de chez vous', catsTitle: 'Il y en a pour tous les goûts',
+        cats: [['🚗', 'Véhicules'], ['🏠', 'Immobilier'], ['📱', 'Électronique'], ['👗', 'Mode'], ['💼', 'Emploi'], ['🐾', 'Animaux']],
+        chatTitle: 'Posez vos questions par chat', q: 'C’est toujours disponible ?', a: 'Oui, avec plaisir !', cta: 'Découvrir maintenant' },
+  ar: { rtl: true, head: 'اشترِ وبِع', sub: 'بسهولة وبالقرب منك', catsTitle: 'شيء للجميع',
+        cats: [['🚗', 'السيارات'], ['🏠', 'العقارات'], ['📱', 'الإلكترونيات'], ['👗', 'الأزياء'], ['💼', 'الوظائف'], ['🐾', 'الحيوانات الأليفة']],
+        chatTitle: 'اسأل مباشرة عبر الدردشة', q: 'هل ما زال متوفرًا؟', a: 'نعم، بكل سرور!', cta: 'اكتشف الآن' },
+  en: { rtl: false, head: 'Buy & sell', sub: 'easily, close to you', catsTitle: 'Something for everyone',
+        cats: [['🚗', 'Vehicles'], ['🏠', 'Real estate'], ['📱', 'Electronics'], ['👗', 'Fashion'], ['💼', 'Jobs'], ['🐾', 'Pets']],
+        chatTitle: 'Ask directly via chat', q: 'Is this still available?', a: 'Yes, happily!', cta: 'Discover now' },
+};
+
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const easeOutBack = (p) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); };
+const easeOutCubic = (p) => 1 - Math.pow(1 - p, 3);
+const pop = (local, delay, dur = 0.55) => clamp((local - delay) / dur) === 0 ? 0 : easeOutBack(clamp((local - delay) / dur));
+const rise = (local, delay, dur = 0.5) => easeOutCubic(clamp((local - delay) / dur));
+
+function font(L, weight, size) { return L.rtl ? `${weight >= 800 ? 800 : 600} ${size}px "Noto Sans Arabic", sans-serif` : `${weight} ${size}px "Plus Jakarta Sans", sans-serif`; }
+function bodyFont(L, size) { return L.rtl ? `600 ${size}px "Noto Sans Arabic", sans-serif` : `600 ${size}px Inter, sans-serif`; }
+
+function tile(ctx, cx, cy, size, bg, fg) {
+  ctx.save(); ctx.translate(cx - size / 2, cy - size / 2);
+  ctx.fillStyle = bg; ctx.beginPath(); ctx.roundRect(0, 0, size, size, size * 14 / 64); ctx.fill();
+  ctx.scale(size / 64, size / 64); ctx.strokeStyle = fg; ctx.lineWidth = 8; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.stroke(S_PATH);
+  ctx.restore();
+}
+function wordmark(ctx, cx, y, size, alpha = 1) {
+  ctx.save(); ctx.globalAlpha = alpha; ctx.font = `800 ${size}px "Plus Jakarta Sans", sans-serif`; ctx.textBaseline = 'alphabetic'; ctx.direction = 'ltr'; ctx.textAlign = 'left';
+  const w1 = ctx.measureText('SouqMar').width, w2 = ctx.measureText('24').width, x = cx - (w1 + w2) / 2;
+  ctx.fillStyle = C.white; ctx.fillText('SouqMar', x, y); ctx.fillStyle = C.goldLight; ctx.fillText('24', x + w1, y);
+  ctx.restore();
+}
+function wrap(ctx, text, maxW) {
+  const words = text.split(' '), lines = []; let line = '';
+  for (const w of words) { const t = line ? line + ' ' + w : w; if (ctx.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t; }
+  if (line) lines.push(line); return lines;
+}
+function centerText(ctx, L, text, cx, y, f, color, maxW = 900, lh = 1.2, alpha = 1, dy = 0) {
+  ctx.save(); ctx.font = f; ctx.fillStyle = color; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.direction = L.rtl ? 'rtl' : 'ltr'; ctx.globalAlpha = alpha;
+  const size = parseInt(f.match(/(\d+)px/)[1]); const lines = wrap(ctx, text, maxW);
+  lines.forEach((l, i) => ctx.fillText(l, cx, y + dy + i * size * lh));
+  ctx.restore(); return lines.length;
+}
+function bg(ctx, t) {
+  ctx.fillStyle = C.primary; ctx.fillRect(0, 0, W, H);
+  ctx.save(); ctx.fillStyle = C.white; ctx.globalAlpha = 0.08;
+  const a = t * 0.35;
+  ctx.beginPath(); ctx.arc(160 + Math.cos(a) * 60, 220 + Math.sin(a) * 50, 380, 0, 7); ctx.fill();
+  ctx.beginPath(); ctx.arc(940 + Math.sin(a) * 60, 1700 + Math.cos(a) * 50, 460, 0, 7); ctx.fill();
+  ctx.restore();
+}
+function bubble(ctx, L, text, x, y, w, h, fill, color, alpha, scale) {
+  ctx.save(); ctx.globalAlpha = alpha; ctx.translate(x + w / 2, y + h / 2); ctx.scale(scale, scale); ctx.translate(-w / 2, -h / 2);
+  ctx.shadowColor = 'rgba(0,0,0,.18)'; ctx.shadowBlur = 24; ctx.shadowOffsetY = 8;
+  ctx.fillStyle = fill; ctx.beginPath(); ctx.roundRect(0, 0, w, h, 48); ctx.fill(); ctx.shadowColor = 'transparent';
+  ctx.font = bodyFont(L, 50); ctx.fillStyle = color; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.direction = L.rtl ? 'rtl' : 'ltr'; ctx.fillText(text, w / 2, h / 2 + 2);
+  ctx.restore();
+}
+
+const SCENES = [
+  { start: 0, end: 2.7, draw(ctx, L, l) {
+      tile(ctx, 540, 800, 380 * pop(l, 0.1, 0.7), C.white, C.primary);
+      wordmark(ctx, 540, 1130 + (1 - rise(l, 0.7)) * 50, 128, rise(l, 0.7)); } },
+  { start: 2.7, end: 6.0, draw(ctx, L, l) {
+      const n = centerText(ctx, L, L.head, 540, 760, font(L, 800, 120), C.white, 900, 1.15, rise(l, 0.1), (1 - rise(l, 0.1)) * 60);
+      centerText(ctx, L, L.sub, 540, 760 + n * 138 + 40, font(L, 800, 64), C.goldLight, 960, 1.25, rise(l, 0.55), (1 - rise(l, 0.55)) * 60); } },
+  { start: 6.0, end: 10.4, draw(ctx, L, l) {
+      centerText(ctx, L, L.catsTitle, 540, 440, font(L, 800, 72), C.white, 900, 1.2, rise(l, 0), (1 - rise(l, 0)) * 40);
+      L.cats.forEach(([emoji, label], i) => {
+        const col = i % 2, row = Math.floor(i / 2), x = 100 + col * 460, y = 560 + row * 340, s = pop(l, 0.25 + i * 0.18);
+        ctx.save(); ctx.translate(x + 210, y + 150); ctx.scale(s, s); ctx.translate(-210, -150);
+        ctx.shadowColor = 'rgba(0,0,0,.2)'; ctx.shadowBlur = 28; ctx.shadowOffsetY = 10;
+        ctx.fillStyle = C.white; ctx.beginPath(); ctx.roundRect(0, 0, 420, 300, 44); ctx.fill(); ctx.shadowColor = 'transparent';
+        ctx.font = '120px "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = C.text; ctx.fillText(emoji, 210, 150);
+        ctx.font = font(L, 800, 46); ctx.direction = L.rtl ? 'rtl' : 'ltr'; ctx.fillText(label, 210, 240);
+        ctx.restore();
+      }); } },
+  { start: 10.4, end: 13.0, draw(ctx, L, l) {
+      centerText(ctx, L, L.chatTitle, 540, 700, font(L, 800, 76), C.white, 900, 1.2, rise(l, 0), (1 - rise(l, 0)) * 40);
+      bubble(ctx, L, L.q, 90, 960, 640, 130, C.white, C.text, pop(l, 0.35) > 0 ? 1 : 0, pop(l, 0.35, 0.4));
+      bubble(ctx, L, L.a, 350, 1140, 640, 130, C.primaryDark, C.white, pop(l, 1.0) > 0 ? 1 : 0, pop(l, 1.0, 0.4)); } },
+  { start: 13.0, end: 15.5, draw(ctx, L, l) {
+      tile(ctx, 540, 640, 260 * pop(l, 0.05, 0.6), C.white, C.primary);
+      wordmark(ctx, 540, 930, 112, rise(l, 0.3));
+      ctx.save(); ctx.globalAlpha = rise(l, 0.6); const s = pop(l, 0.6, 0.5); ctx.translate(540, 1110); ctx.scale(s, s);
+      ctx.font = font(L, 800, 56); const w = ctx.measureText(L.cta).width + 120;
+      ctx.fillStyle = C.white; ctx.beginPath(); ctx.roundRect(-w / 2, -60, w, 120, 60); ctx.fill();
+      ctx.fillStyle = C.primary; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.direction = L.rtl ? 'rtl' : 'ltr'; ctx.fillText(L.cta, 0, 4); ctx.restore();
+      ctx.save(); ctx.globalAlpha = rise(l, 0.9); ctx.font = '600 52px Inter, sans-serif'; ctx.fillStyle = C.white; ctx.textAlign = 'center'; ctx.direction = 'ltr'; ctx.fillText('souqmar24.com', 540, 1290); ctx.restore(); } },
+];
+
+function frame(ctx, L, t) {
+  bg(ctx, t);
+  for (const s of SCENES) {
+    if (t < s.start || t >= s.end) continue;
+    const l = t - s.start, total = s.end - s.start;
+    ctx.save(); ctx.globalAlpha = Math.min(1, l / 0.3, (total - l) / 0.3 + 0.0001); s.draw(ctx, L, l); ctx.restore();
+  }
+}
+
+async function record(lang, canvas) {
+  const L = TEXTS[lang], ctx = canvas.getContext('2d');
+  const stream = canvas.captureStream(FPS);
+  const rec = new MediaRecorder(stream, { mimeType: 'video/mp4;codecs=avc1.42E01E', videoBitsPerSecond: 8000000 });
+  const chunks = []; rec.ondataavailable = (e) => e.data.size && chunks.push(e.data);
+  const done = new Promise((r) => (rec.onstop = r));
+  const t0 = performance.now(); frame(ctx, L, 0); rec.start(250);
+  await new Promise((resolve) => { const tick = () => { const t = (performance.now() - t0) / 1000; if (t >= DURATION) return resolve(); frame(ctx, L, t); requestAnimationFrame(tick); }; requestAnimationFrame(tick); });
+  rec.stop(); await done;
+  const blob = new Blob(chunks, { type: 'video/mp4' });
+  const res = await fetch('/save-video?name=' + encodeURIComponent('reel-' + lang), { method: 'POST', body: blob });
+  const li = document.createElement('li'); li.textContent = `${res.ok ? 'OK' : 'FEHLER'} reel-${lang}.mp4 (${Math.round(blob.size / 1024)} KB)`; document.getElementById('log').appendChild(li);
+}
+
+(async () => {
+  await Promise.all([document.fonts.load('800 100px "Plus Jakarta Sans"'), document.fonts.load('600 40px Inter'), document.fonts.load('800 60px "Noto Sans Arabic"'), document.fonts.load('600 60px "Noto Sans Arabic"')]);
+  const q = new URLSearchParams(location.search), only = q.get('lang');
+  if (q.has('still')) { // Standbild zum Pruefen: ?lang=de&still=8
+    const cv = document.getElementById('cv'); cv.style.cssText = 'width:540px;height:960px';
+    frame(cv.getContext('2d'), TEXTS[only || 'de'], parseFloat(q.get('still'))); document.title = 'STILL'; return;
+  }
+  for (const lang of only ? [only] : Object.keys(TEXTS)) await record(lang, document.getElementById('cv'));
+  document.title = 'FERTIG';
+})();
+</script>
+</body>
+</html>

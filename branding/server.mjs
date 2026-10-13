@@ -14,6 +14,19 @@ http
     if (req.method === "GET" && url.pathname === "/") {
       res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
       res.end(fs.readFileSync(path.join(dir, "generate.html")));
+    } else if (req.method === "GET" && url.pathname === "/reel") {
+      res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
+      res.end(fs.readFileSync(path.join(dir, "reel.html")));
+    } else if (req.method === "POST" && url.pathname === "/save-video") {
+      const name = (url.searchParams.get("name") || "").replace(/[^\w-]/g, "");
+      const chunks = [];
+      req.on("data", (c) => chunks.push(c));
+      req.on("end", () => {
+        const file = path.join(dir, "reel", `${name}.mp4`);
+        fs.mkdirSync(path.dirname(file), { recursive: true });
+        fs.writeFileSync(file, Buffer.concat(chunks));
+        res.writeHead(200).end("ok");
+      });
     } else if (req.method === "POST" && url.pathname === "/save") {
       const name = (url.searchParams.get("name") || "").replace(/[^\w/-]/g, "");
       const chunks = [];
