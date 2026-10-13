@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>SouqMar24 Branding-Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@500&display=swap" rel="stylesheet">
+<style>body{font:14px system-ui;padding:1rem}li{margin:.2rem 0}</style>
+</head>
+<body>
+<h1>SouqMar24 Branding</h1>
+<ul id="log"></ul>
+<script>
+const C = { primary: '#D93D4A', primaryLight: '#FEF1F2', gold: '#C9941A', goldLight: '#FEF6E4', secondary: '#1E3A5F', text: '#111827', bg: '#F8F7F5', white: '#FFFFFF' };
+// S aus public/favicon.svg (viewBox 64)
+const S_PATH = new Path2D('M43 21.5C41.5 15.5 22 14.5 22 25.5c0 10.5 21 5.5 21 15.5 0 11-19.5 10-22 3');
+const HEAD = '"Plus Jakarta Sans", sans-serif';
+
+function rr(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); }
+
+/** Roter Kachel-S an Position, Kantenlaenge size. radius 14/64 wie im Favicon. */
+function tile(ctx, x, y, size, { bg = C.primary, fg = C.white, round = true } = {}) {
+  ctx.save();
+  ctx.translate(x, y);
+  if (bg) { ctx.fillStyle = bg; rr(ctx, 0, 0, size, size, round ? size * 14 / 64 : 0); ctx.fill(); }
+  ctx.scale(size / 64, size / 64);
+  ctx.strokeStyle = fg; ctx.lineWidth = 8; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.stroke(S_PATH);
+  ctx.restore();
+}
+/** S ohne Kachel, um scale vergroessert und zentriert (fuer Profilbild mit Vollflaeche). */
+function bigS(ctx, cx, cy, size, fg) {
+  // Der S-Pfad liegt in den 64er Koordinaten ca. 17..47 x 12..48 (Mitte ~ 32/30)
+  ctx.save();
+  ctx.translate(cx - size / 2, cy - size / 2);
+  ctx.scale(size / 64, size / 64);
+  ctx.strokeStyle = fg; ctx.lineWidth = 8; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.stroke(S_PATH);
+  ctx.restore();
+}
+/** Wortmarke: Kachel + "SouqMar" + "24". Gibt Breite zurueck; origin links, vertikal mittig bei cy. */
+function wordmark(ctx, x, cy, fontSize, { text = C.text, accent = C.primary, tileBg = C.primary, tileFg = C.white, measureOnly = false } = {}) {
+  const t = fontSize * 1.35, gap = fontSize * 0.42;
+  ctx.font = `800 ${fontSize}px ${HEAD}`;
+  const w1 = ctx.measureText('SouqMar').width, w2 = ctx.measureText('24').width;
+  const total = t + gap + w1 + w2;
+  if (!measureOnly) {
+    tile(ctx, x, cy - t / 2, t, { bg: tileBg, fg: tileFg });
+    ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+    const base = cy + fontSize * 0.36;
+    ctx.fillStyle = text; ctx.fillText('SouqMar', x + t + gap, base);
+    ctx.fillStyle = accent; ctx.fillText('24', x + t + gap + w1, base);
+  }
+  return total;
+}
+function centeredWordmark(ctx, cx, cy, fontSize, opts) {
+  const w = wordmark(ctx, 0, cy, fontSize, { ...opts, measureOnly: true });
+  wordmark(ctx, cx - w / 2, cy, fontSize, opts);
+}
+function domain(ctx, cx, y, size, color) {
+  ctx.font = `500 ${size}px Inter, sans-serif`; ctx.fillStyle = color; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  ctx.fillText('souqmar24.com', cx, y);
+}
+function dots(ctx, w, h, color, alpha) {
+  ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = color;
+  ctx.beginPath(); ctx.arc(w * 0.06, h * 0.08, Math.min(w, h) * 0.34, 0, 7); ctx.fill();
+  ctx.beginPath(); ctx.arc(w * 0.96, h * 0.95, Math.min(w, h) * 0.42, 0, 7); ctx.fill();
+  ctx.restore();
+}
+
+const ASSETS = [
+  // Logo-Dateien (mit transparentem Hintergrund, falls nicht anders vermerkt)
+  { name: 'logo/logo-icon-1024', w: 1024, h: 1024, draw: (c) => tile(c, 0, 0, 1024) },
+  { name: 'logo/logo-icon-512', w: 512, h: 512, draw: (c) => tile(c, 0, 0, 512) },
+  { name: 'logo/logo-horizontal-transparent', w: 1800, h: 480, draw: (c) => centeredWordmark(c, 900, 240, 190) },
+  { name: 'logo/logo-horizontal-white-bg', w: 1800, h: 480, draw: (c) => { c.fillStyle = C.white; c.fillRect(0, 0, 1800, 480); centeredWordmark(c, 900, 240, 190); } },
+  { name: 'logo/logo-horizontal-fuer-dunklen-hintergrund', w: 1800, h: 480, draw: (c) => { c.fillStyle = C.secondary; c.fillRect(0, 0, 1800, 480); centeredWordmark(c, 900, 240, 190, { text: C.white }); } },
+  { name: 'logo/logo-header-600x160', w: 600, h: 160, draw: (c) => centeredWordmark(c, 300, 80, 64) },
+  // Profilbilder: Vollflaeche, die Plattformen schneiden einen Kreis aus -> S klein genug in der Mitte
+  { name: 'profilbild/profilbild-facebook-instagram-tiktok-1080', w: 1080, h: 1080, draw: (c) => { c.fillStyle = C.primary; c.fillRect(0, 0, 1080, 1080); bigS(c, 540, 540, 640, C.white); } },
+  { name: 'profilbild/profilbild-rund-vorschau-720', w: 720, h: 720, draw: (c) => { c.fillStyle = C.primary; c.beginPath(); c.arc(360, 360, 360, 0, 7); c.fill(); bigS(c, 360, 360, 430, C.white); } },
+  // Facebook
+  { name: 'facebook/facebook-titelbild-1640x624', w: 1640, h: 624, draw: (c) => {
+      const g = c.createLinearGradient(0, 0, 1640, 624); g.addColorStop(0, C.white); g.addColorStop(1, C.primaryLight);
+      c.fillStyle = g; c.fillRect(0, 0, 1640, 624); dots(c, 1640, 624, C.primary, 0.07);
+      centeredWordmark(c, 820, 290, 130); domain(c, 820, 430, 40, C.secondary); } },
+  { name: 'facebook/facebook-link-vorschau-1200x630', w: 1200, h: 630, draw: (c) => {
+      c.fillStyle = C.primary; c.fillRect(0, 0, 1200, 630); dots(c, 1200, 630, C.white, 0.08);
+      centeredWordmark(c, 600, 290, 108, { text: C.white, accent: C.goldLight, tileBg: C.white, tileFg: C.primary });
+      domain(c, 600, 420, 36, C.white); } },
+  // Instagram / Facebook Beitrag, Story
+  { name: 'instagram/beitrag-quadrat-1080x1080', w: 1080, h: 1080, draw: (c) => {
+      c.fillStyle = C.primary; c.fillRect(0, 0, 1080, 1080); dots(c, 1080, 1080, C.white, 0.08);
+      tile(c, 390, 270, 300, { bg: C.white, fg: C.primary });
+      centeredWordmark(c, 540, 680, 92, { text: C.white, accent: C.goldLight, tileBg: 'transparent', tileFg: 'transparent' });
+      domain(c, 540, 790, 38, C.white); } },
+  { name: 'instagram/story-1080x1920', w: 1080, h: 1920, draw: (c) => {
+      c.fillStyle = C.primary; c.fillRect(0, 0, 1080, 1920); dots(c, 1080, 1920, C.white, 0.08);
+      tile(c, 340, 640, 400, { bg: C.white, fg: C.primary });
+      centeredWordmark(c, 540, 1130, 108, { text: C.white, accent: C.goldLight, tileBg: 'transparent', tileFg: 'transparent' });
+      domain(c, 540, 1260, 44, C.white); } },
+  // TikTok: Videocover 9:16 (heller Hintergrund, Wortmarke)
+  { name: 'tiktok/tiktok-videocover-1080x1920', w: 1080, h: 1920, draw: (c) => {
+      const g = c.createLinearGradient(0, 0, 0, 1920); g.addColorStop(0, C.white); g.addColorStop(1, C.primaryLight);
+      c.fillStyle = g; c.fillRect(0, 0, 1080, 1920);
+      tile(c, 340, 640, 400, {});
+      centeredWordmark(c, 540, 1130, 108, { tileBg: 'transparent', tileFg: 'transparent' });
+      domain(c, 540, 1260, 44, C.secondary); } },
+];
+// Wortmarke ohne Kachel (tileBg transparent): Kachelbreite bleibt als Luft -> fuer die Beitraege die Kachel oben, Text unten: Luft links abziehen
+// (wird in wordmark() ueber tileBg 'transparent' nicht entfernt, daher Textblock separat zentrieren)
+const _wm = wordmark;
+wordmark = function (ctx, x, cy, fs, o = {}) {
+  if (o.tileBg === 'transparent') {
+    ctx.font = `800 ${fs}px ${HEAD}`;
+    const w1 = ctx.measureText('SouqMar').width, w2 = ctx.measureText('24').width;
+    if (!o.measureOnly) {
+      ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left'; const base = cy + fs * 0.36;
+      ctx.fillStyle = o.text || C.text; ctx.fillText('SouqMar', x, base);
+      ctx.fillStyle = o.accent || C.primary; ctx.fillText('24', x + w1, base);
+    }
+    return w1 + w2;
+  }
+  return _wm(ctx, x, cy, fs, o);
+};
+
+(async () => {
+  await Promise.all([document.fonts.load('800 100px "Plus Jakarta Sans"'), document.fonts.load('500 40px Inter')]);
+  const log = document.getElementById('log');
+  for (const a of ASSETS) {
+    const cv = document.createElement('canvas'); cv.width = a.w; cv.height = a.h;
+    const ctx = cv.getContext('2d'); a.draw(ctx);
+    const blob = await new Promise((r) => cv.toBlob(r, 'image/png'));
+    const res = await fetch('/save?name=' + encodeURIComponent(a.name), { method: 'POST', body: blob });
+    const li = document.createElement('li'); li.textContent = `${res.ok ? 'OK' : 'FEHLER'} ${a.name}.png ${a.w}x${a.h}`; log.appendChild(li);
+  }
+  document.title = 'FERTIG';
+})();
+</script>
+</body>
+</html>
