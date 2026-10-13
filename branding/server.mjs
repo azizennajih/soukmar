@@ -14,6 +14,9 @@ http
     if (req.method === "GET" && url.pathname === "/") {
       res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
       res.end(fs.readFileSync(path.join(dir, "generate.html")));
+    } else if (req.method === "GET" && url.pathname === "/flyer") {
+      res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
+      res.end(fs.readFileSync(path.join(dir, "flyer.html")));
     } else if (req.method === "GET" && url.pathname === "/reel") {
       res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
       res.end(fs.readFileSync(path.join(dir, "reel.html")));

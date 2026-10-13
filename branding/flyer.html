@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>SouqMar24 Flyer-Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@500;600&family=Noto+Sans+Arabic:wght@600;800&display=swap" rel="stylesheet">
+<style>body{font:14px system-ui;padding:1rem}li{margin:.2rem 0}</style>
+</head>
+<body>
+<ul id="log"></ul>
+<script>
+const W = 1080, H = 1350;
+const C = { primary: '#D93D4A', primaryDark: '#B8313C', primaryLight: '#FEF1F2', goldLight: '#FEF6E4', gold: '#C9941A', secondary: '#1E3A5F', text: '#111827', muted: '#6B7280', border: '#E5E9EE', bg: '#F8F7F5', white: '#FFFFFF' };
+const S_PATH = new Path2D('M43 21.5C41.5 15.5 22 14.5 22 25.5c0 10.5 21 5.5 21 15.5 0 11-19.5 10-22 3');
+
+const TEXTS = {
+  de: { rtl: false, tag: 'Jetzt neu: der Marktplatz für Kleinanzeigen', head: 'Kaufen & verkaufen – ganz einfach in deiner Nähe',
+        feats: [['💬', 'Per Chat anfragen und', 'deinen Preis anbieten'], ['🌍', 'Mehrsprachig nutzbar –', 'in deiner Sprache'], ['❤️', 'Favoriten speichern und', 'Verkäufern folgen']],
+        cats: [['🚗', 'Fahrzeuge'], ['🏠', 'Immobilien'], ['📱', 'Elektronik'], ['👗', 'Mode'], ['💼', 'Jobs'], ['🐾', 'Haustiere']], cta: 'Jetzt entdecken' },
+  fr: { rtl: false, tag: 'Nouveau : la place de marché des petites annonces', head: 'Achetez et vendez facilement près de chez vous',
+        feats: [['💬', 'Posez vos questions par chat', 'et proposez votre prix'], ['🌍', 'Disponible en plusieurs langues', 'dont la vôtre'], ['❤️', 'Enregistrez vos favoris et', 'suivez les vendeurs']],
+        cats: [['🚗', 'Véhicules'], ['🏠', 'Immobilier'], ['📱', 'Électronique'], ['👗', 'Mode'], ['💼', 'Emploi'], ['🐾', 'Animaux']], cta: 'Découvrir maintenant' },
+  ar: { rtl: true, tag: 'جديد: سوق الإعلانات المبوّبة', head: 'اشترِ وبِع بسهولة وبالقرب منك',
+        feats: [['💬', 'اسأل عبر الدردشة', 'واقترح سعرك'], ['🌍', 'متوفر بعدة لغات', 'ومنها لغتك'], ['❤️', 'احفظ المفضلة', 'وتابع البائعين']],
+        cats: [['🚗', 'السيارات'], ['🏠', 'العقارات'], ['📱', 'الإلكترونيات'], ['👗', 'الأزياء'], ['💼', 'الوظائف'], ['🐾', 'الحيوانات']], cta: 'اكتشف الآن' },
+};
+
+const EMOJI = '"Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif';
+const hf = (L, size) => L.rtl ? `800 ${size}px "Noto Sans Arabic", sans-serif` : `800 ${size}px "Plus Jakarta Sans", sans-serif`;
+const bf = (L, size) => L.rtl ? `600 ${size}px "Noto Sans Arabic", sans-serif` : `600 ${size}px Inter, sans-serif`;
+
+function tile(c, x, y, size, bg, fg) {
+  c.save(); c.translate(x, y); c.fillStyle = bg; c.beginPath(); c.roundRect(0, 0, size, size, size * 14 / 64); c.fill();
+  c.scale(size / 64, size / 64); c.strokeStyle = fg; c.lineWidth = 8; c.lineCap = 'round'; c.lineJoin = 'round'; c.stroke(S_PATH); c.restore();
+}
+function wrap(c, text, maxW) {
+  const words = text.split(' '), lines = []; let line = '';
+  for (const w of words) { const t = line ? line + ' ' + w : w; if (c.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t; }
+  if (line) lines.push(line); return lines;
+}
+function text(c, L, str, x, y, font, color, align = 'center') {
+  c.save(); c.font = font; c.fillStyle = color; c.textAlign = align; c.textBaseline = 'alphabetic'; c.direction = L.rtl ? 'rtl' : 'ltr'; c.fillText(str, x, y); c.restore();
+}
+function shadowRect(c, x, y, w, h, r, fill) {
+  c.save(); c.shadowColor = 'rgba(17,24,39,.12)'; c.shadowBlur = 28; c.shadowOffsetY = 10; c.fillStyle = fill; c.beginPath(); c.roundRect(x, y, w, h, r); c.fill(); c.restore();
+}
+
+function draw(c, L) {
+  // Hintergrund
+  c.fillStyle = C.bg; c.fillRect(0, 0, W, H);
+  // roter Kopf mit abgerundeter Unterkante
+  c.fillStyle = C.primary; c.beginPath(); c.roundRect(0, -60, W, 700, [0, 0, 70, 70]); c.fill();
+  c.save(); c.fillStyle = C.white; c.globalAlpha = 0.08;
+  c.beginPath(); c.arc(70, 90, 260, 0, 7); c.fill(); c.beginPath(); c.arc(1000, 600, 300, 0, 7); c.fill(); c.restore();
+  // Logo
+  const ts = 120; c.font = '800 84px "Plus Jakarta Sans", sans-serif'; const w1 = c.measureText('SouqMar').width, w2 = c.measureText('24').width;
+  const total = ts + 28 + w1 + w2, x0 = (W - total) / 2;
+  tile(c, x0, 70, ts, C.white, C.primary);
+  c.save(); c.font = '800 84px "Plus Jakarta Sans", sans-serif'; c.textAlign = 'left'; c.direction = 'ltr'; c.fillStyle = C.white; c.fillText('SouqMar', x0 + ts + 28, 70 + ts / 2 + 30); c.fillStyle = C.goldLight; c.fillText('24', x0 + ts + 28 + w1, 70 + ts / 2 + 30); c.restore();
+  // Hinweis-Pille
+  c.font = bf(L, 32); const tw = c.measureText(L.tag).width + 80;
+  c.fillStyle = C.goldLight; c.beginPath(); c.roundRect((W - tw) / 2, 236, tw, 70, 35); c.fill();
+  text(c, L, L.tag, W / 2, 236 + 47, bf(L, 32), C.primaryDark);
+  // Ueberschrift
+  let hs = 96, lines; for (; hs >= 60; hs -= 2) { c.font = hf(L, hs); lines = wrap(c, L.head, 940); if (lines.length <= 2) break; }
+  lines.forEach((l, i) => text(c, L, l, W / 2, 400 + hs + i * hs * 1.18 - 20, hf(L, hs), C.white));
+  // Vorteile
+  const y0 = 672;
+  L.feats.forEach(([emoji, l1, l2], i) => {
+    const y = y0 + i * 128; shadowRect(c, 70, y, 940, 108, 34, C.white);
+    const ix = L.rtl ? 70 + 940 - 26 - 76 : 70 + 26; // Symbolkreis
+    c.fillStyle = C.primaryLight; c.beginPath(); c.arc(ix + 38, y + 54, 38, 0, 7); c.fill();
+    c.font = `46px ${EMOJI}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillStyle = C.text; c.fillText(emoji, ix + 38, y + 58);
+    const tx = L.rtl ? ix - 24 : ix + 76 + 24, al = L.rtl ? 'right' : 'left';
+    text(c, L, l1, tx, y + 46, bf(L, 34), C.text, al); text(c, L, l2, tx, y + 88, hf(L, 34), C.primary, al);
+  });
+  // Kategorien
+  const cy = y0 + 3 * 128 + 14;
+  L.cats.forEach(([emoji], i) => { const cx = 70 + 940 / 12 + (L.rtl ? 5 - i : i) * (940 / 6); c.font = `54px ${EMOJI}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillStyle = C.text; c.fillText(emoji, cx, cy + 30); });
+  const catLine = L.cats.map((k) => k[1]).join(L.rtl ? ' · ' : ' · ');
+  c.font = bf(L, 28); const cl = wrap(c, catLine, 940); cl.forEach((l, i) => text(c, L, l, W / 2, cy + 88 + i * 36, bf(L, 28), C.muted));
+  // Aufruf
+  const label = `${L.cta}  ·  souqmar24.com`; c.font = hf(L, 40); const pw = c.measureText(label).width + 100;
+  c.save(); c.shadowColor = 'rgba(217,61,74,.35)'; c.shadowBlur = 24; c.shadowOffsetY = 8; c.fillStyle = C.primary; c.beginPath(); c.roundRect((W - pw) / 2, 1232, pw, 92, 46); c.fill(); c.restore();
+  c.save(); c.font = hf(L, 40); c.fillStyle = C.white; c.textAlign = 'center'; c.textBaseline = 'middle'; c.direction = 'ltr'; c.fillText(L.rtl ? `souqmar24.com  ·  ${L.cta}` : label, W / 2, 1280); c.restore();
+}
+
+(async () => {
+  await Promise.all([document.fonts.load('800 100px "Plus Jakarta Sans"'), document.fonts.load('600 40px Inter'), document.fonts.load('800 60px "Noto Sans Arabic"'), document.fonts.load('600 60px "Noto Sans Arabic"')]);
+  const only = new URLSearchParams(location.search).get('lang');
+  for (const lang of only ? [only] : Object.keys(TEXTS)) {
+    const cv = document.createElement('canvas'); cv.width = W; cv.height = H; document.body.appendChild(cv); cv.style.cssText = 'width:' + (only ? 540 : 270) + 'px;height:auto;margin:6px;border-radius:8px';
+    draw(cv.getContext('2d'), TEXTS[lang]);
+    if (only) continue;
+    const blob = await new Promise((r) => cv.toBlob(r, 'image/png'));
+    const res = await fetch('/save?name=' + encodeURIComponent('flyer/flyer-facebook-' + lang + '-1080x1350'), { method: 'POST', body: blob });
+    const li = document.createElement('li'); li.textContent = `${res.ok ? 'OK' : 'FEHLER'} flyer-facebook-${lang}-1080x1350.png`; document.getElementById('log').appendChild(li);
+  }
+  document.title = 'FERTIG';
+})();
+</script>
+</body>
+</html>
