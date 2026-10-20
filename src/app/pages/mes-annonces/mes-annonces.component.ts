@@ -57,7 +57,30 @@ export class MesAnnoncesComponent implements OnInit {
       PENDING:  { label: t('annonces.pending') || 'En attente',  cls: 'badge-pending'  },
       REJECTED: { label: t('annonces.rejected') || 'Rejetée',    cls: 'badge-rejected' },
       EXPIRED:  { label: t('annonces.expired') || 'Expirée',     cls: 'badge-rejected' },
+      CHANGES_REQUESTED: { label: t('annonces.changes_requested'), cls: 'badge-pending' },
+      SUSPENDED: { label: t('annonces.suspended'), cls: 'badge-rejected' },
     };
+  }
+
+  /** Explanation under a listing that is not public (waiting for review, needs changes, rejected, suspended). */
+  reviewHint(l: Listing): string | null {
+    switch (l.status) {
+      case 'PENDING': return 'mes_annonces.review_pending';
+      case 'CHANGES_REQUESTED': return 'mes_annonces.review_changes';
+      case 'REJECTED': return l.resubmitAllowed ? 'mes_annonces.review_rejected_resubmit' : 'mes_annonces.review_rejected_final';
+      case 'SUSPENDED': return 'mes_annonces.review_suspended';
+      default: return null;
+    }
+  }
+
+  /** A final rejection cannot be edited any more (the server refuses it too). */
+  canEdit(l: Listing): boolean {
+    return !(l.status === 'REJECTED' && !l.resubmitAllowed);
+  }
+
+  /** Editing sends it back to the review: say so on the button. */
+  editTitleKey(l: Listing): string {
+    return l.status === 'CHANGES_REQUESTED' || l.status === 'REJECTED' ? 'mes_annonces.edit_resubmit' : 'common.edit';
   }
 
   private dialog = inject(DialogService);
@@ -94,7 +117,7 @@ export class MesAnnoncesComponent implements OnInit {
 
   getCategory(val: string) { return CATEGORIES.find(c => c.value === val); }
   priceParts(l: Listing) { return l.price != null ? formatPriceParts(l.price, l.currency) : null; }
-  time(l: Listing)  { return timeAgo(l.createdAt); }
+  time(l: Listing)  { return timeAgo(l.createdAt, this.i18n.lang()); }
 
   daysUntilExpiry(l: Listing): number | null {
     if (!l.expiresAt) return null;

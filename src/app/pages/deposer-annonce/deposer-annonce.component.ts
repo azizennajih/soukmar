@@ -52,6 +52,8 @@ export class DeposerAnnonceComponent {
   loadingSubcats = false;
   loadingAttrs = false;
   success = false;
+  /** The saved listing now waits for the team's review (new listing, resubmission or a re-check after an edit). */
+  inReview = false;
   error = '';
   captchaToken = '';
 
@@ -544,8 +546,11 @@ export class DeposerAnnonceComponent {
         next: listing => {
           this.loading = false;
           this.success = true;
+          this.inReview = listing.status === 'PENDING';
           this.cdr.markForCheck();
-          setTimeout(() => this.router.navigate(this.i18n.withLang(['/annonces', listing.id])), 2000);
+          // A listing in review is not public yet: send the owner to the own list, where its status is explained.
+          const target = this.inReview ? ['/mes-annonces'] : ['/annonces', listing.id];
+          setTimeout(() => this.router.navigate(this.i18n.withLang(target)), this.inReview ? 3500 : 2000);
         },
         error: () => {
           this.loading = false;

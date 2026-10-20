@@ -1,0 +1,445 @@
+<section class="mod">
+
+  <!-- Summary counters -->
+  @if (summary(); as s) {
+    <div class="mod__summary">
+      <button type="button" class="mod-kpi mod-kpi--warn" (click)="filterStatus = 'PENDING'; onStatusFilter(); setView('queue')">
+        <span class="mod-kpi__value">{{ s.pending }}</span>
+        <span class="mod-kpi__label">{{ 'moderation.sum_pending' | T }}</span>
+        @if (s.oldestPendingSince) {
+          <span class="mod-kpi__sub">{{ 'moderation.sum_oldest' | T:{ time: ago(s.oldestPendingSince) } }}</span>
+        }
+      </button>
+      <div class="mod-kpi" [class.mod-kpi--danger]="s.highRiskPending > 0">
+        <span class="mod-kpi__value">{{ s.highRiskPending }}</span>
+        <span class="mod-kpi__label">{{ 'moderation.sum_high' | T }}</span>
+      </div>
+      <button type="button" class="mod-kpi" (click)="filterStatus = 'CHANGES_REQUESTED'; onStatusFilter(); setView('queue')">
+        <span class="mod-kpi__value">{{ s.changesRequested }}</span>
+        <span class="mod-kpi__label">{{ 'moderation.sum_changes' | T }}</span>
+      </button>
+      <button type="button" class="mod-kpi" (click)="filterStatus = 'SUSPENDED'; onStatusFilter(); setView('queue')">
+        <span class="mod-kpi__value">{{ s.suspended }}</span>
+        <span class="mod-kpi__label">{{ 'moderation.sum_suspended' | T }}</span>
+      </button>
+      <div class="mod-kpi">
+        <span class="mod-kpi__value">{{ s.decidedToday }}</span>
+        <span class="mod-kpi__label">{{ 'moderation.sum_today' | T }}</span>
+      </div>
+    </div>
+  }
+
+  @if (detailLoading() && !detail()) {
+    <div class="mod__loading">{{ 'admin.loading' | T }}</div>
+  }
+
+  <!-- ══════════════ DETAIL ══════════════ -->
+  @if (detail(); as d) {
+    <div class="mod-detail">
+      <div class="mod-detail__bar">
+        <button type="button" class="btn-outline mod-btn" (click)="back()">
+          <app-icon name="chevron-left" [size]="14" /> {{ 'moderation.back' | T }}
+        </button>
+        <span class="badge" [ngClass]="statusClass(d.listing.status)">{{ statusLabel(d.listing.status) }}</span>
+        <span class="mod-detail__id" dir="ltr">ID {{ d.listing.id }}</span>
+      </div>
+
+      <div class="mod-detail__grid">
+
+        <!-- Left: what the buyer will see -->
+        <div class="mod-detail__main">
+          <div class="card mod-card">
+            @if (d.listing.images.length) {
+              <div class="mod-gallery">
+                <div class="mod-gallery__main">
+                  <img [src]="d.listing.images[selectedImage()] | imageUrl:900" [alt]="d.listing.title" decoding="async">
+                </div>
+                @if (d.listing.images.length > 1) {
+                  <div class="mod-gallery__thumbs">
+                    @for (img of d.listing.images; track $index) {
+                      <button type="button" class="mod-gallery__thumb" [class.mod-gallery__thumb--active]="$index === selectedImage()"
+                              (click)="selectedImage.set($index)" [attr.aria-label]="'moderation.d_image' | T:{ n: ($index + 1).toString() }">
+                        <img [src]="img | imageUrl:160" alt="" loading="lazy" decoding="async">
+                      </button>
+                    }
+                  </div>
+                }
+              </div>
+            } @else {
+              <div class="mod-gallery__none"><app-icon name="image" [size]="28" /> {{ 'moderation.d_no_images' | T }}</div>
+            }
+
+            <h2 class="mod-detail__title">{{ d.listing.title }}</h2>
+            <div class="mod-detail__price">{{ d.listing.priceType === 'FREE' ? ('listing.free_badge' | T) : money(d.listing.price, d.listing.currency) }}</div>
+            <div class="mod-detail__facts">
+              @if (category(d.listing.category); as cat) {
+                <span class="badge" [ngClass]="cat.color"><app-cat-icon [category]="cat.value" [size]="13" /> {{ ('cats.' + cat.value) | T }}</span>
+              }
+              @if (d.listing.subcategory) {
+                <span class="mod-chip">{{ ('subcats.' + d.listing.subcategory.code) | T }}</span>
+              }
+              <span class="mod-chip"><app-flag-icon [iso]="d.listing.country || 'MA'" [size]="13" /> {{ d.listing.city | cityLabel }}, {{ countryLabel(d.listing.country || 'MA') }}</span>
+            </div>
+
+            <h3 class="mod-h3">{{ 'listing.description' | T }}</h3>
+            <p class="mod-detail__desc">{{ d.listing.description }}</p>
+
+            @if (specAttrs().length) {
+              <h3 class="mod-h3">{{ 'listing.specs_title' | T }}</h3>
+              <dl class="mod-dl">
+                @for (av of specAttrs(); track av.attributeDefinitionId) {
+                  <div class="mod-dl__row">
+                    <dt>{{ ('attrs.' + av.attributeDefinition!.code) | T:(av.attributeDefinition!.code === 'SALARY' ? { currency: d.listing.currency || 'MAD' } : undefined) }}</dt>
+                    <dd>{{ formatAttrValue(av) }}</dd>
+                  </div>
+                }
+              </dl>
+            }
+
+            @if (d.listing.phone || d.listing.whatsapp) {
+              <h3 class="mod-h3">{{ 'moderation.d_contact' | T }}</h3>
+              <dl class="mod-dl">
+                @if (d.listing.phone) { <div class="mod-dl__row"><dt>{{ 'moderation.s_phone' | T }}</dt><dd dir="ltr">{{ d.listing.phone }}</dd></div> }
+                @if (d.listing.whatsapp) { <div class="mod-dl__row"><dt>WhatsApp</dt><dd dir="ltr">{{ d.listing.whatsapp }}</dd></div> }
+              </dl>
+            }
+
+            <div class="mod-detail__links">
+              <button type="button" class="btn-outline mod-btn" (click)="showPreview.set(!showPreview())">
+                <app-icon name="eye" [size]="14" /> {{ (showPreview() ? 'moderation.d_preview_hide' : 'moderation.d_preview') | T }}
+              </button>
+              <a class="btn-outline mod-btn" [routerLink]="['/annonces', d.listing.id]" target="_blank" rel="noopener">
+                <app-icon name="link" [size]="14" /> {{ 'moderation.d_open_page' | T }}
+              </a>
+            </div>
+            @if (showPreview()) {
+              <div class="mod-preview">
+                <p class="mod-preview__note">{{ 'moderation.d_preview_note' | T }}</p>
+                <div class="mod-preview__card"><app-listing-card [listing]="d.listing" /></div>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Right: warnings, seller, decision, history -->
+        <aside class="mod-detail__side">
+
+          <!-- Decision -->
+          <div class="card mod-card mod-decision">
+            <h3 class="mod-h3 mod-h3--first">{{ 'moderation.act_title' | T }}</h3>
+            @if (d.allowedActions.length === 0) {
+              <p class="mod-muted">{{ 'moderation.act_none' | T }}</p>
+            }
+
+            @if (d.listing.moderationReason && d.listing.status !== 'ACTIVE') {
+              <p class="mod-reason-box"><strong>{{ 'moderation.last_reason' | T }}</strong> {{ d.listing.moderationReason }}</p>
+            }
+
+            @if (!reasonAction()) {
+              <div class="mod-decision__buttons">
+                @if (isAllowed('approve')) {
+                  <button type="button" class="btn-primary mod-btn" [disabled]="busy()" (click)="approve()">
+                    <app-icon name="check" [size]="15" /> {{ 'moderation.act_approve' | T }}
+                  </button>
+                }
+                @if (isAllowed('request_changes')) {
+                  <button type="button" class="btn-outline mod-btn" [disabled]="busy()" (click)="startReason('request-changes')">
+                    <app-icon name="edit" [size]="15" /> {{ 'moderation.act_request' | T }}
+                  </button>
+                }
+                @if (isAllowed('reject')) {
+                  <button type="button" class="btn-outline mod-btn mod-btn--danger" [disabled]="busy()" (click)="startReason('reject')">
+                    <app-icon name="close" [size]="15" /> {{ 'moderation.act_reject' | T }}
+                  </button>
+                }
+                @if (isAllowed('suspend')) {
+                  <button type="button" class="btn-outline mod-btn mod-btn--danger" [disabled]="busy()" (click)="startReason('suspend')">
+                    <app-icon name="pause" [size]="15" /> {{ 'moderation.act_suspend' | T }}
+                  </button>
+                }
+                @if (isAllowed('requeue')) {
+                  <button type="button" class="btn-ghost mod-btn" [disabled]="busy()" (click)="requeue()">
+                    <app-icon name="clock" [size]="15" /> {{ 'moderation.act_requeue' | T }}
+                  </button>
+                }
+              </div>
+            } @else {
+              <form class="mod-reason" (ngSubmit)="submitReason()">
+                <label for="mod-reason-input" class="mod-reason__label">
+                  {{ (reasonAction() === 'reject' ? 'moderation.act_reject' : reasonAction() === 'suspend' ? 'moderation.act_suspend' : 'moderation.act_request') | T }}
+                  — {{ 'moderation.reason_label' | T }}
+                </label>
+                <textarea id="mod-reason-input" name="reason" rows="4" [maxLength]="reasonMax" [(ngModel)]="reason" (ngModelChange)="onReasonInput()"
+                          [placeholder]="'moderation.reason_ph' | T" required></textarea>
+                <div class="mod-reason__hint" [class.mod-reason__hint--bad]="reason.length > 0 && !reasonValid()">
+                  {{ reason.trim().length }}/{{ reasonMax }} · {{ 'moderation.reason_min' | T:{ n: reasonMin.toString() } }}
+                </div>
+                @if (reasonAction() === 'reject') {
+                  <label class="mod-check">
+                    <input type="checkbox" name="allowResubmit" [(ngModel)]="allowResubmit">
+                    <span>{{ 'moderation.allow_resubmit' | T }}</span>
+                  </label>
+                }
+                <div class="mod-reason__actions">
+                  <button type="submit" class="btn-primary mod-btn" [disabled]="!reasonValid() || busy()">{{ 'moderation.send_decision' | T }}</button>
+                  <button type="button" class="btn-ghost mod-btn" [disabled]="busy()" (click)="cancelReason()">{{ 'common.cancel' | T }}</button>
+                </div>
+              </form>
+            }
+          </div>
+
+          <!-- Automatic warnings -->
+          <div class="card mod-card">
+            <h3 class="mod-h3 mod-h3--first">{{ 'moderation.sig_title' | T }}</h3>
+            @if (d.listing.moderationSignals.length) {
+              <ul class="mod-signals">
+                @for (sig of d.listing.moderationSignals; track $index) {
+                  <li class="mod-signal" [ngClass]="'mod-signal--' + sig.severity">
+                    <span class="mod-signal__sev">{{ ('moderation.sev_' + sig.severity) | T }}</span>
+                    <span>{{ signalText(sig) }}@if (signalDetail(sig); as extra) { <small class="mod-signal__extra"> — {{ extra }}</small> }</span>
+                  </li>
+                }
+              </ul>
+            } @else {
+              <p class="mod-muted">{{ 'moderation.sig_none' | T }}</p>
+            }
+            <p class="mod-note">{{ 'moderation.sig_disclaimer' | T }}</p>
+
+            @if (d.duplicates.length) {
+              <h3 class="mod-h3">{{ 'moderation.dup_title' | T }}</h3>
+              <ul class="mod-signals">
+                @for (dup of d.duplicates; track $index) {
+                  <li class="mod-signal" [ngClass]="'mod-signal--' + dup.severity">
+                    <span class="mod-signal__sev">{{ ('moderation.sev_' + dup.severity) | T }}</span>
+                    <span>
+                      {{ signalText(dup) }}
+                      @if (dup.listing; as other) {
+                        <button type="button" class="mod-link" (click)="open(other.id)">{{ other.title }}</button>
+                        <small class="mod-signal__extra">({{ statusLabel(other.status) }})</small>
+                      }
+                    </span>
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+
+          <!-- Seller -->
+          <div class="card mod-card">
+            <h3 class="mod-h3 mod-h3--first">{{ 'moderation.s_title' | T }}</h3>
+            <dl class="mod-dl">
+              <div class="mod-dl__row"><dt>{{ 'moderation.s_name' | T }}</dt><dd>{{ d.seller.name }}</dd></div>
+              <div class="mod-dl__row"><dt>{{ 'moderation.s_email' | T }}</dt><dd dir="ltr">{{ d.seller.email }}</dd></div>
+              @if (d.seller.phone) { <div class="mod-dl__row"><dt>{{ 'moderation.s_phone' | T }}</dt><dd dir="ltr">{{ d.seller.phone }}</dd></div> }
+              <div class="mod-dl__row"><dt>{{ 'moderation.s_since' | T }}</dt><dd>{{ dateTime(d.seller.createdAt) }}</dd></div>
+              <div class="mod-dl__row"><dt>{{ 'moderation.s_email_ok' | T }}</dt><dd>{{ (d.seller.emailVerified ? 'common.yes' : 'common.no') | T }}</dd></div>
+              <div class="mod-dl__row"><dt>{{ 'moderation.s_phone_ok' | T }}</dt><dd>{{ (d.seller.phoneVerified ? 'common.yes' : 'common.no') | T }}</dd></div>
+              <div class="mod-dl__row"><dt>{{ 'moderation.s_id_ok' | T }}</dt><dd>{{ (d.seller.idVerified ? 'common.yes' : 'common.no') | T }}</dd></div>
+              <div class="mod-dl__row"><dt>{{ 'moderation.s_total' | T }}</dt><dd>{{ d.seller.listingsTotal }}</dd></div>
+              <div class="mod-dl__row"><dt>{{ 'moderation.s_public' | T }}</dt><dd>{{ d.seller.listingsPublic }}</dd></div>
+              <div class="mod-dl__row" [class.mod-dl__row--warn]="d.seller.listingsRejected > 0"><dt>{{ 'moderation.s_rejected' | T }}</dt><dd>{{ d.seller.listingsRejected }}</dd></div>
+              <div class="mod-dl__row" [class.mod-dl__row--warn]="d.seller.reportsAgainst > 0"><dt>{{ 'moderation.s_reports' | T }}</dt><dd>{{ d.seller.reportsAgainst }}</dd></div>
+            </dl>
+          </div>
+
+          <!-- History -->
+          <div class="card mod-card">
+            <h3 class="mod-h3 mod-h3--first">{{ 'moderation.hist_title' | T }}</h3>
+            @if (d.events.length === 0) {
+              <p class="mod-muted">{{ 'moderation.hist_empty' | T }}</p>
+            } @else {
+              <ol class="mod-timeline">
+                @for (ev of d.events; track ev.id) {
+                  <li class="mod-timeline__item">
+                    <div class="mod-timeline__head">
+                      <strong>{{ eventTitle(ev) }}</strong>
+                      <span class="mod-timeline__time">{{ dateTime(ev.createdAt) }}</span>
+                    </div>
+                    <div class="mod-timeline__who">{{ actorLabel(ev) }}</div>
+                    @if (ev.reason) { <div class="mod-timeline__reason">{{ ev.reason }}</div> }
+                    @if (ev.emailKind) {
+                      <div class="mod-timeline__mail" [ngClass]="'mod-timeline__mail--' + (ev.emailStatus || 'PENDING').toLowerCase()">
+                        <app-icon name="mail" [size]="12" />
+                        {{ ('moderation.mail_' + (ev.emailStatus || 'PENDING')) | T }}
+                        @if (ev.emailSentAt) { · {{ dateTime(ev.emailSentAt) }} }
+                        @if (ev.emailStatus === 'FAILED' || ev.emailStatus === 'PENDING') {
+                          <button type="button" class="mod-link" [disabled]="resendingEvent() === ev.id" (click)="resendMail(ev)">{{ 'moderation.mail_resend' | T }}</button>
+                        }
+                      </div>
+                      @if (ev.emailError) { <div class="mod-timeline__err" dir="ltr">{{ ev.emailError }}</div> }
+                    }
+                  </li>
+                }
+              </ol>
+            }
+          </div>
+        </aside>
+      </div>
+    </div>
+  } @else if (!detailLoading()) {
+
+    <!-- ══════════════ LIST ══════════════ -->
+    <div class="mod__views" role="tablist">
+      <button type="button" role="tab" class="mod__view" [class.mod__view--active]="view() === 'queue'" [attr.aria-selected]="view() === 'queue'" (click)="setView('queue')">
+        {{ 'moderation.view_queue' | T }}
+      </button>
+      <button type="button" role="tab" class="mod__view" [class.mod__view--active]="view() === 'history'" [attr.aria-selected]="view() === 'history'" (click)="setView('history')">
+        {{ 'moderation.view_history' | T }}
+      </button>
+    </div>
+
+    @if (view() === 'queue') {
+      <form class="card mod-filters" (ngSubmit)="applyFilters()">
+        <div class="mod-filters__field">
+          <label for="mf-status">{{ 'moderation.f_status' | T }}</label>
+          <select id="mf-status" name="status" [(ngModel)]="filterStatus" (ngModelChange)="onStatusFilter()">
+            <option value="ALL">{{ 'moderation.f_all_status' | T }}</option>
+            @for (st of statuses; track st) { <option [value]="st">{{ statusLabel(st) }}</option> }
+          </select>
+        </div>
+        <div class="mod-filters__field">
+          <label for="mf-country">{{ 'moderation.f_country' | T }}</label>
+          <select id="mf-country" name="country" [(ngModel)]="filterCountry" (ngModelChange)="applyFilters()">
+            <option value="">{{ 'moderation.f_all_countries' | T }}</option>
+            @for (c of countryList; track c.code) { <option [value]="c.code">{{ countryLabel(c.code) }}</option> }
+          </select>
+        </div>
+        <div class="mod-filters__field">
+          <label for="mf-cat">{{ 'moderation.f_category' | T }}</label>
+          <select id="mf-cat" name="category" [(ngModel)]="filterCategory" (ngModelChange)="applyFilters()">
+            <option value="">{{ 'moderation.f_all_categories' | T }}</option>
+            @for (c of categories; track c.value) { <option [value]="c.value">{{ ('cats.' + c.value) | T }}</option> }
+          </select>
+        </div>
+        <div class="mod-filters__field">
+          <label for="mf-from">{{ 'moderation.f_from' | T }}</label>
+          <input id="mf-from" name="from" type="date" [(ngModel)]="filterFrom" (ngModelChange)="applyFilters()">
+        </div>
+        <div class="mod-filters__field">
+          <label for="mf-to">{{ 'moderation.f_to' | T }}</label>
+          <input id="mf-to" name="to" type="date" [(ngModel)]="filterTo" (ngModelChange)="applyFilters()">
+        </div>
+        <div class="mod-filters__field">
+          <label for="mf-sort">{{ 'moderation.f_sort' | T }}</label>
+          <select id="mf-sort" name="sort" [(ngModel)]="sort" (ngModelChange)="applyFilters()">
+            <option value="oldest">{{ 'moderation.sort_oldest' | T }}</option>
+            <option value="risk">{{ 'moderation.sort_risk' | T }}</option>
+            <option value="newest">{{ 'moderation.sort_newest' | T }}</option>
+          </select>
+        </div>
+        <div class="mod-filters__field mod-filters__field--search">
+          <label for="mf-q">{{ 'moderation.f_search' | T }}</label>
+          <div class="mod-filters__search">
+            <input id="mf-q" name="q" type="search" [(ngModel)]="filterSearch" [placeholder]="'moderation.f_search_ph' | T" autocomplete="off">
+            <button type="submit" class="btn-primary mod-btn">{{ 'common.search' | T }}</button>
+            <button type="button" class="btn-ghost mod-btn" (click)="resetFilters()">{{ 'moderation.f_reset' | T }}</button>
+          </div>
+        </div>
+      </form>
+
+      @if (queueLoading() && !queue()) {
+        <div class="mod__loading">{{ 'admin.loading' | T }}</div>
+      } @else if (queueError()) {
+        <div class="empty-state"><app-icon name="alert-triangle" [size]="32" /><p>{{ 'auth.generic_error' | T }}</p></div>
+      } @else if (queue(); as q) {
+        <div class="mod__count">{{ 'moderation.count' | T:{ n: q.total.toString() } }}</div>
+        @if (q.listings.length === 0) {
+          <div class="empty-state"><app-icon name="check-circle" [size]="32" /><p>{{ 'moderation.empty' | T }}</p></div>
+        } @else {
+          <ul class="mod-list" [class.mod-list--busy]="queueLoading()">
+            @for (l of q.listings; track l.id) {
+              <li>
+                <button type="button" class="card mod-row" (click)="open(l.id)">
+                  <span class="mod-row__thumb">
+                    @if (l.images[0]) { <img [src]="l.images[0] | imageUrl:160" alt="" loading="lazy" decoding="async"> }
+                    @else { <app-cat-icon [category]="l.category" [size]="22" /> }
+                  </span>
+                  <span class="mod-row__body">
+                    <span class="mod-row__title">{{ l.title }}</span>
+                    <span class="mod-row__meta">
+                      <span class="mod-chip"><app-flag-icon [iso]="l.country" [size]="12" /> {{ l.city | cityLabel }}</span>
+                      <span class="mod-chip">{{ ('cats.' + l.category) | T }}</span>
+                      <span class="mod-chip">{{ l.priceType === 'FREE' ? ('listing.free_badge' | T) : money(l.price, l.currency) }}</span>
+                      <span class="mod-chip"><app-icon name="image" [size]="12" /> {{ l.imageCount }}</span>
+                    </span>
+                    <span class="mod-row__meta mod-row__meta--muted">
+                      {{ l.user.name }} · {{ 'moderation.submitted' | T:{ time: ago(l.submittedAt || l.createdAt) } }}
+                    </span>
+                    @if (l.moderationReason && l.status !== 'PENDING') {
+                      <span class="mod-row__reason">{{ l.moderationReason }}</span>
+                    }
+                  </span>
+                  <span class="mod-row__side">
+                    <span class="badge" [ngClass]="statusClass(l.status)">{{ statusLabel(l.status) }}</span>
+                    @if (highestSeverity(l.moderationSignals); as sev) {
+                      <span class="mod-risk" [ngClass]="'mod-risk--' + sev">
+                        <app-icon name="alert-triangle" [size]="12" /> {{ 'moderation.warnings' | T:{ n: l.moderationSignals.length.toString() } }}
+                      </span>
+                    } @else {
+                      <span class="mod-risk mod-risk--none">{{ 'moderation.no_warnings' | T }}</span>
+                    }
+                  </span>
+                </button>
+              </li>
+            }
+          </ul>
+          @if (q.pages > 1) {
+            <div class="mod-pager">
+              <button type="button" class="btn-outline mod-btn" [disabled]="q.page <= 1 || queueLoading()" (click)="goToPage(q.page - 1)">‹ {{ 'moderation.prev' | T }}</button>
+              <span>{{ 'moderation.page_of' | T:{ p: q.page.toString(), n: q.pages.toString() } }}</span>
+              <button type="button" class="btn-outline mod-btn" [disabled]="q.page >= q.pages || queueLoading()" (click)="goToPage(q.page + 1)">{{ 'moderation.next' | T }} ›</button>
+            </div>
+          }
+        }
+      }
+    }
+
+    @if (view() === 'history') {
+      <div class="card mod-filters mod-filters--history">
+        <div class="mod-filters__field">
+          <label for="mh-status">{{ 'moderation.f_result' | T }}</label>
+          <select id="mh-status" [(ngModel)]="historyStatus" (ngModelChange)="applyHistoryFilter()">
+            <option value="">{{ 'moderation.f_all_status' | T }}</option>
+            @for (st of ['ACTIVE', 'REJECTED', 'CHANGES_REQUESTED', 'SUSPENDED', 'PENDING']; track st) { <option [value]="st">{{ statusLabel(st) }}</option> }
+          </select>
+        </div>
+      </div>
+      @if (historyLoading() && !history()) {
+        <div class="mod__loading">{{ 'admin.loading' | T }}</div>
+      } @else if (history(); as h) {
+        @if (h.events.length === 0) {
+          <div class="empty-state"><app-icon name="clipboard" [size]="32" /><p>{{ 'moderation.hist_empty' | T }}</p></div>
+        } @else {
+          <ul class="mod-list" [class.mod-list--busy]="historyLoading()">
+            @for (ev of h.events; track ev.id) {
+              <li>
+                <button type="button" class="card mod-row mod-row--history" (click)="open(ev.listingId)">
+                  <span class="mod-row__body">
+                    <span class="mod-row__title">{{ ev.listing.title }}</span>
+                    <span class="mod-row__meta mod-row__meta--muted">
+                      {{ eventTitle(ev) }} · {{ actorLabel(ev) }} · {{ dateTime(ev.createdAt) }}
+                    </span>
+                    @if (ev.reason) { <span class="mod-row__reason">{{ ev.reason }}</span> }
+                  </span>
+                  <span class="mod-row__side">
+                    <span class="badge" [ngClass]="statusClass(ev.toStatus)">{{ statusLabel(ev.toStatus) }}</span>
+                    @if (ev.emailStatus) {
+                      <span class="mod-timeline__mail" [ngClass]="'mod-timeline__mail--' + ev.emailStatus.toLowerCase()"><app-icon name="mail" [size]="12" /> {{ ('moderation.mail_' + ev.emailStatus) | T }}</span>
+                    }
+                  </span>
+                </button>
+              </li>
+            }
+          </ul>
+          @if (h.pages > 1) {
+            <div class="mod-pager">
+              <button type="button" class="btn-outline mod-btn" [disabled]="h.page <= 1 || historyLoading()" (click)="goToHistoryPage(h.page - 1)">‹ {{ 'moderation.prev' | T }}</button>
+              <span>{{ 'moderation.page_of' | T:{ p: h.page.toString(), n: h.pages.toString() } }}</span>
+              <button type="button" class="btn-outline mod-btn" [disabled]="h.page >= h.pages || historyLoading()" (click)="goToHistoryPage(h.page + 1)">{{ 'moderation.next' | T }} ›</button>
+            </div>
+          }
+        }
+      }
+    }
+  }
+</section>

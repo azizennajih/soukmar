@@ -401,3 +401,16 @@
     font-size: .8rem; font-weight: 600;
   }
 }
+
+.detail__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: .6rem;
+  margin-bottom: 1rem;
+  padding: .75rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--gold);
+  background: var(--gold-light);
+  color: var(--text);
+  font-size: .9rem;
+}

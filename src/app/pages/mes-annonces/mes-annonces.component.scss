@@ -142,3 +142,21 @@
 
   &__count { flex: 0 0 28px; text-align: right; font-size: .78rem; font-weight: 700; color: var(--text); }
 }
+
+.listing-row__review {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  margin-top: .6rem;
+  padding: .55rem .75rem;
+  border-radius: .5rem;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  font-size: .8rem;
+  color: var(--text);
+
+  &--pending, &--changes_requested { background: var(--gold-light); border-color: var(--gold); }
+  &--rejected, &--suspended { background: var(--primary-light); border-color: var(--primary); }
+
+  &-reason { overflow-wrap: anywhere; white-space: pre-wrap; }
+}

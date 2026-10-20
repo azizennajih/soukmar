@@ -28,11 +28,14 @@
     <button class="admin-tab icon-label" [class.active]="tab() === 'overview'" (click)="setTab('overview')">
       <app-icon name="bar-chart" [size]="14" /> {{ 'admin.tab_overview' | T }}
     </button>
+    <button class="admin-tab icon-label" [class.active]="tab() === 'moderation'" (click)="openModeration()">
+      <app-icon name="clipboard" [size]="14" /> {{ 'moderation.title' | T }}
+      @if (moderationPending() > 0) {
+        <span class="tab-badge">{{ moderationPending() }}</span>
+      }
+    </button>
     <button class="admin-tab icon-label" [class.active]="tab() === 'listings'" (click)="setTab('listings')">
       <app-icon name="list" [size]="14" /> {{ 'admin.tab_listings' | T }}
-      @if (stats.pending > 0) {
-        <span class="tab-badge">{{ stats.pending }}</span>
-      }
     </button>
     <button class="admin-tab icon-label" [class.active]="tab() === 'users'" (click)="setTab('users')">
       <app-icon name="users" [size]="14" /> {{ 'admin.tab_users' | T }}
@@ -181,22 +184,26 @@
                   }
                 </div>
                 <div class="pending-row__actions">
-                  <button class="action-btn action-btn--approve"
-                          [disabled]="isActionLoading(listing.id)"
-                          (click)="updateListingStatus(listing, 'ACTIVE')">{{ 'admin.approve' | T }}</button>
-                  <button class="action-btn action-btn--reject"
-                          [disabled]="isActionLoading(listing.id)"
-                          (click)="updateListingStatus(listing, 'REJECTED')">{{ 'admin.reject' | T }}</button>
+                  <button class="action-btn action-btn--approve" (click)="openModeration(listing.id)">{{ 'moderation.review' | T }}</button>
                 </div>
               </div>
             }
           }
-          <button class="btn-outline pending-card__more" (click)="setTab('listings'); setListingFilter('PENDING')">
+          <button class="btn-outline pending-card__more" (click)="openModeration()">
             {{ 'admin.see_pending' | T }}
           </button>
         </div>
       }
     }
+  }
+
+  <!-- ══════════════ MODERATION ══════════════ -->
+  @if (tab() === 'moderation') {
+    <div class="section-header">
+      <h2 class="section-title">{{ 'moderation.title' | T }}</h2>
+    </div>
+    <p class="admin-header__sub moderation-intro">{{ 'moderation.subtitle' | T }}</p>
+    <app-moderation [openId]="moderationOpenId()" (decided)="onModerationDecided()" />
   }
 
   <!-- ══════════════ LISTINGS ══════════════ -->
@@ -286,34 +293,25 @@
             <!-- Statut -->
             <div class="table-cell-status">
               <span class="badge" [ngClass]="statusClass(listing.status)">{{ statusLabel(listing.status) }}</span>
-              <select class="role-select status-select" [attr.aria-label]="'admin.col_status' | T"
-                      [value]="listing.status" [disabled]="isActionLoading(listing.id)"
-                      (change)="onStatusChange(listing, $event)">
-                @for (st of listingStatuses; track st) {
-                  <option [value]="st" [selected]="st === listing.status">{{ statusLabel(st) }}</option>
-                }
-              </select>
+              @if (!isReviewStatus(listing.status)) {
+                <select class="role-select status-select" [attr.aria-label]="'admin.col_status' | T"
+                        [value]="listing.status" [disabled]="isActionLoading(listing.id)"
+                        (change)="onStatusChange(listing, $event)">
+                  @for (st of listingStatuses; track st) {
+                    <option [value]="st" [selected]="st === listing.status">{{ statusLabel(st) }}</option>
+                  }
+                </select>
+              }
             </div>
             <!-- Actions -->
             <div class="table-cell-actions">
               <a [routerLink]="['/annonces', listing.id]" class="action-btn action-btn--view" [title]="'common.view' | T"><app-icon name="eye" [size]="13" /></a>
-              @if (listing.status === 'PENDING') {
+              <button class="action-btn action-btn--approve" [title]="'moderation.review' | T"
+                      (click)="openModeration(listing.id)"><app-icon name="shield" [size]="13" /></button>
+              @if (listing.status === 'EXPIRED') {
                 <button class="action-btn action-btn--approve" [title]="'common.approve' | T"
                         [disabled]="isActionLoading(listing.id)"
                         (click)="updateListingStatus(listing, 'ACTIVE')"><app-icon name="check" [size]="13" /></button>
-                <button class="action-btn action-btn--reject" [title]="'common.reject' | T"
-                        [disabled]="isActionLoading(listing.id)"
-                        (click)="updateListingStatus(listing, 'REJECTED')"><app-icon name="close" [size]="13" /></button>
-              }
-              @if (listing.status === 'REJECTED' || listing.status === 'EXPIRED') {
-                <button class="action-btn action-btn--approve" [title]="'common.approve' | T"
-                        [disabled]="isActionLoading(listing.id)"
-                        (click)="updateListingStatus(listing, 'ACTIVE')"><app-icon name="check" [size]="13" /></button>
-              }
-              @if (listing.status === 'ACTIVE') {
-                <button class="action-btn action-btn--reject" [title]="'common.deactivate' | T"
-                        [disabled]="isActionLoading(listing.id)"
-                        (click)="updateListingStatus(listing, 'REJECTED')"><app-icon name="pause" [size]="13" /></button>
               }
               <button class="action-btn" [class.action-btn--gold]="listing.isPremium"
                       [title]="'common.toggle_premium' | T" [disabled]="isActionLoading(listing.id)"

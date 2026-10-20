@@ -10,8 +10,8 @@
   } @else if (success) {
     <div class="deposer__success card">
       <div class="deposer__success-icon"><app-icon name="check-circle" [size]="40" /></div>
-      <h2>{{ (isEdit ? 'deposer.success_title_edit' : 'deposer.success_title') | T }}</h2>
-      <p>{{ (isEdit ? 'deposer.success_sub_edit' : 'deposer.success_sub') | T }}</p>
+      <h2>{{ (inReview ? (isEdit ? 'deposer.success_title_resubmit' : 'deposer.success_title_review') : (isEdit ? 'deposer.success_title_edit' : 'deposer.success_title')) | T }}</h2>
+      <p>{{ (inReview ? (isEdit ? 'deposer.success_sub_resubmit' : 'deposer.success_sub_review') : (isEdit ? 'deposer.success_sub_edit' : 'deposer.success_sub')) | T }}</p>
     </div>
   } @else if (initLoading) {
     <div class="deposer__loading"><span class="deposer__loading-spinner"></span></div>

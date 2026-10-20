@@ -146,7 +146,15 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
   private countryService = inject(CountryService);
   private responseInit = inject(RESPONSE_INIT, { optional: true });
 
+  /** The owner and staff can open a listing that is not public (review, rejected, suspended); everybody else gets a 404. */
+  get isNotPublic(): boolean {
+    const s = this.listing?.status;
+    return s === 'PENDING' || s === 'CHANGES_REQUESTED' || s === 'REJECTED' || s === 'SUSPENDED';
+  }
+
   private updateMetaTags(listing: Listing) {
+    // Never let a search engine index a page that is not public.
+    if (listing.status === 'PENDING' || listing.status === 'CHANGES_REQUESTED' || listing.status === 'REJECTED' || listing.status === 'SUSPENDED') this.seo.setRobots('noindex, nofollow');
     const title = `SouqMar24 — ${listing.title}`;
     const description = (listing.description || '').replace(/\s+/g, ' ').trim().slice(0, 160) || `${listing.title} — ${listing.city}`;
     const image = listing.images?.[0] || '';

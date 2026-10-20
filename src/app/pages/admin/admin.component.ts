@@ -23,6 +23,8 @@ import { CountryService } from '../../services/country.service';
 import { FlagIconComponent } from '../../components/flag-icon/flag-icon.component';
 import { firstValueFrom } from 'rxjs';
 import { ImageUrlPipe } from '../../pipes/image-url.pipe';
+import { ModerationComponent } from './moderation/moderation.component';
+import type { ModerationSummary } from '../../models/moderation.model';
 
 export interface AdminUser {
   id: string;
@@ -37,7 +39,7 @@ export interface AdminUser {
   banned?: boolean;
 }
 
-type Tab = 'overview' | 'listings' | 'users' | 'revenue' | 'visitors' | 'reports' | 'security' | 'id-verifications' | 'boost-requests';
+type Tab = 'overview' | 'moderation' | 'listings' | 'users' | 'revenue' | 'visitors' | 'reports' | 'security' | 'id-verifications' | 'boost-requests';
 
 export interface AdminActivity {
   type: 'USER' | 'LISTING' | 'BOOST_REQUEST' | 'REVENUE' | 'REPORT' | 'ID_VERIFICATION';
@@ -84,7 +86,10 @@ export interface AdminBoostRequest {
   user: { id: string; name: string; email: string };
   listing: { id: string; title: string; images: string[]; status: string };
 }
-type ListingFilter = 'ALL' | 'ACTIVE' | 'PENDING' | 'REJECTED' | 'SOLD' | 'RESERVED';
+type ListingFilter = 'ALL' | 'ACTIVE' | 'PENDING' | 'CHANGES_REQUESTED' | 'REJECTED' | 'SUSPENDED' | 'SOLD' | 'RESERVED';
+
+/** Statuses that belong to the review workflow: they are changed only in the moderation area, never by the plain status picker. */
+const REVIEW_STATUSES = ['PENDING', 'CHANGES_REQUESTED', 'REJECTED', 'SUSPENDED'];
 
 export interface SecurityEvent {
   id: string;
@@ -99,7 +104,7 @@ export interface SecurityEvent {
 
 @Component({
   selector: 'app-admin',
-  imports: [ImageUrlPipe, CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CatIconComponent, IconComponent, TranslatePipe, CityLabelPipe, FlagIconComponent],
+  imports: [ModerationComponent, ImageUrlPipe, CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CatIconComponent, IconComponent, TranslatePipe, CityLabelPipe, FlagIconComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })
@@ -230,7 +235,11 @@ export class AdminComponent implements OnInit, OnDestroy {
   actionLoading = new Set<string>();
 
   readonly CATEGORIES = CATEGORIES;
-  readonly filterOptions: ListingFilter[] = ['ALL','ACTIVE','PENDING','REJECTED','SOLD','RESERVED'];
+  readonly filterOptions: ListingFilter[] = ['ALL','ACTIVE','PENDING','CHANGES_REQUESTED','REJECTED','SUSPENDED','SOLD','RESERVED'];
+
+  /** Listings waiting for review (badge on the moderation tab) and the listing the moderation tab should open. */
+  moderationPending = signal(0);
+  moderationOpenId = signal<string | null>(null);
 
   get monthLabels(): string[] {
     const lang = this.i18n.lang();
@@ -336,11 +345,31 @@ export class AdminComponent implements OnInit, OnDestroy {
   timeAgo = (d: Date) => timeAgo(d, this.i18n.lang());
 
   ngOnInit() {
+    this.loadModerationPending();
     this.loadReports();
     this.loadSecurityEvents();
     this.loadIdVerifications();
     this.loadBoostRequests();
   }
+
+  async loadModerationPending() {
+    try {
+      this.moderationPending.set((await firstValueFrom(this.api.get<ModerationSummary>('/admin/moderation/summary'))).pending);
+    } catch { /* the badge simply stays as it was */ }
+  }
+
+  /** Opens the moderation tab, on the given listing or on the queue. */
+  openModeration(listingId?: string) {
+    this.moderationOpenId.set(listingId ?? null);
+    this.setTab('moderation');
+  }
+
+  onModerationDecided() {
+    this.loadModerationPending();
+    this.loadListings();
+  }
+
+  isReviewStatus(status: string): boolean { return REVIEW_STATUSES.includes(status); }
 
   private async loadIdVerifications() {
     this.idVerificationsLoading.set(true);
@@ -527,7 +556,8 @@ export class AdminComponent implements OnInit, OnDestroy {
     select.value = listing.status; // shows the real status again if the change was refused
   }
 
-  readonly listingStatuses = ['ACTIVE', 'PENDING', 'RESERVED', 'SOLD', 'REJECTED', 'EXPIRED'];
+  /** The plain status picker only offers these; review statuses are decided in the moderation area. */
+  readonly listingStatuses = ['ACTIVE', 'RESERVED', 'SOLD', 'EXPIRED'];
 
   async togglePremium(listing: Listing) {
     if (this.actionLoading.has(listing.id)) return;
@@ -564,7 +594,8 @@ export class AdminComponent implements OnInit, OnDestroy {
   statusLabel(s: string) {
     const map: Record<string, string> = {
       ACTIVE: 'annonces.active', PENDING: 'annonces.pending', REJECTED: 'annonces.rejected',
-      SOLD: 'annonces.sold', RESERVED: 'annonces.reserved', EXPIRED: 'annonces.expired'
+      SOLD: 'annonces.sold', RESERVED: 'annonces.reserved', EXPIRED: 'annonces.expired',
+      CHANGES_REQUESTED: 'annonces.changes_requested', SUSPENDED: 'annonces.suspended'
     };
     const key = map[s];
     return key ? this.i18n.t(key) : s;
@@ -573,7 +604,8 @@ export class AdminComponent implements OnInit, OnDestroy {
     const map: Record<string, string> = {
       ACTIVE: 'badge-active', PENDING: 'badge-pending',
       REJECTED: 'badge-rejected', SOLD: 'badge-sold',
-      RESERVED: 'badge-reserved', EXPIRED: 'badge-rejected'
+      RESERVED: 'badge-reserved', EXPIRED: 'badge-rejected',
+      CHANGES_REQUESTED: 'badge-pending', SUSPENDED: 'badge-rejected'
     };
     return map[s] ?? '';
   }

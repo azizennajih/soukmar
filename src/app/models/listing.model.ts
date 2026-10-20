@@ -6,7 +6,8 @@ export type Category =
   | 'BABY_KIDS' | 'PETS' | 'SPORTS_LEISURE' | 'LESSONS_COURSES' | 'CARPOOLING' | 'TRANSPORT' | 'RENTAL'
   | 'TICKETS' | 'GIVEAWAY_SWAP' | 'MOVING';
 
-export type ListingStatus = 'ACTIVE' | 'RESERVED' | 'SOLD' | 'PENDING' | 'REJECTED' | 'EXPIRED'; // updated
+/** PENDING = waiting for review, CHANGES_REQUESTED / REJECTED / SUSPENDED = decided by staff; none of these four is public. */
+export type ListingStatus = 'ACTIVE' | 'RESERVED' | 'SOLD' | 'PENDING' | 'REJECTED' | 'EXPIRED' | 'CHANGES_REQUESTED' | 'SUSPENDED';
 
 export type AttributeType = 'TEXT' | 'NUMBER' | 'SELECT' | 'MULTI_SELECT' | 'BOOLEAN' | 'DATE';
 export type Condition = 'NEW' | 'USED';
@@ -82,6 +83,10 @@ export interface Listing {
    * creation, routing it to PENDING instead of ACTIVE — shown to admins in
    * the Pending queue so they know why it was held. */
   moderationNote?: string | null;
+  /** Reason of the last staff decision (rejection, change request, suspension) — visible to the owner only. */
+  moderationReason?: string | null;
+  /** After a rejection: may the owner edit and resubmit the listing? */
+  resubmitAllowed?: boolean;
   isPremium: boolean;
   isFeatured: boolean;
   views: number;

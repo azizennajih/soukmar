@@ -77,6 +77,9 @@ Marokkanisches Kleinanzeigen-Portal (wie Avito/Leboncoin).
 ### Dynamisches Attribut-System (EAV)
 Jede Kategorie hat Unterkategorien (`Subcategory`), jede Unterkategorie hat eigene `AttributeDefinition`-Felder (Text/Zahl/Auswahl/Ja-Nein, Pflicht-/Filter-Flag). Werte pro Anzeige liegen in `ListingAttributeValue` (typisierte Spalten `valueText`/`valueNumber`/`valueBoolean`). Labels kommen **nie aus der DB** — immer über i18n: `subcats.<code>`, `attrs.<code>`, `attrs.opts.<optionCode>`. Backend-Katalog-Endpunkte unter `/api/catalog/*`, Frontend-Zugriff über `CatalogService`. Suchfilter nutzen das Query-Schema `attr_<CODE>` (Auswahl/Bool) bzw. `attr_<CODE>_min`/`_max` (Zahl-Bereich).
 
+### Anzeigenmoderation (Freigabe vor Veröffentlichung)
+Neue Anzeigen sind `PENDING` und erst nach Freigabe durch Admin/Moderator öffentlich (`ACTIVE`). Weitere Status: `CHANGES_REQUESTED`, `SUSPENDED`, `REJECTED`. Status werden **nur** über `/api/admin/moderation/*` geändert (Backend: `src/lib/listingModeration.ts`), nie über das normale Bearbeiten. Admin-UI: `src/app/pages/admin/moderation/`. Öffentliche Abfragen müssen nicht freigegebene Anzeigen ausschließen. Details, Env-Variablen und Tests: `docs/anzeigenmoderation.md`.
+
 ---
 
 ## i18n — IMMER berücksichtigen
