@@ -119,11 +119,6 @@
           <div class="chat__typing">{{ 'chat.typing' | T }}</div>
         }
         <div class="chat__header-report">
-          @if (!messagingBlocked && callState === 'idle') {
-            <button type="button" class="chat__call-btn" (click)="startCall()" [title]="'chat.call_start' | T">
-              <app-icon name="phone-call" [size]="16" />
-            </button>
-          }
           <app-block-button [userId]="getPartnerId()" [blocked]="partnerBlockedByMe" (blockedChange)="onBlockToggled($event)" [compact]="true" />
           <app-report-button [reportedId]="getPartnerId()" [listingId]="activeConv.listingId" />
         </div>

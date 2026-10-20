@@ -234,11 +234,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.chatService.cancelOffer(msg.id, this.activeConv.id, this.activeConv.listingId);
   }
 
-  startCall() {
-    if (!this.activeConv) return;
-    this.chatService.startCall(this.activeConv.id);
-  }
-
   acceptCall() { this.chatService.acceptCall(); }
   rejectCall() { this.chatService.rejectCall(); }
   endCall() { this.chatService.endCall(); }
