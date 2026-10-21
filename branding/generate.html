@@ -125,6 +125,9 @@ ASSETS.push(
   // Android und iOS nutzen dasselbe enge Bild (Android: 224 dp breit im Compose-Startbild, iOS: 240 pt im Launch-Screen)
   splashIos(1), splashIos(2), splashIos(3),
 );
+// App-Symbol (iOS AppIcon 1024): Vollflaeche Marken-Rot, weisses S, keine Rundung und keine Transparenz (iOS rundet selbst).
+// Der S-Pfad liegt in den 64er Koordinaten mit Mitte bei ca. (32, 30.5): um 1.5 Einheiten nach unten gerueckt, damit er optisch mittig sitzt.
+ASSETS.push({ name: 'appicon/appicon-ios-1024', w: 1024, h: 1024, draw: (c) => { c.fillStyle = C.primary; c.fillRect(0, 0, 1024, 1024); bigS(c, 512, 512 + 1.5 * 1100 / 64, 1100, C.white); } });
 // Wortmarke ohne Kachel (tileBg transparent): Kachelbreite bleibt als Luft -> fuer die Beitraege die Kachel oben, Text unten: Luft links abziehen
 // (wird in wordmark() ueber tileBg 'transparent' nicht entfernt, daher Textblock separat zentrieren)
 const _wm = wordmark;
