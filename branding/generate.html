@@ -107,6 +107,24 @@ const ASSETS = [
       centeredWordmark(c, 540, 1130, 108, { tileBg: 'transparent', tileFg: 'transparent' });
       domain(c, 540, 1260, 44, C.secondary); } },
 ];
+// Startbild der Apps (Android + iOS): weisse Wortmarke auf dem Marken-Rot, das Rot setzen die Apps selbst als Hintergrund.
+// fitWordmark: Wortmarke so skalieren, dass sie targetW breit ist; Kachel weiss mit rotem S, "24" in goldLight wie in den Social-Bildern.
+const SPLASH = { text: C.white, accent: C.goldLight, tileBg: C.white, tileFg: C.primary };
+function fitWordmark(ctx, cx, cy, targetW) {
+  const probe = wordmark(ctx, 0, 0, 100, { ...SPLASH, measureOnly: true });
+  const fs = 100 * targetW / probe;
+  centeredWordmark(ctx, cx, cy, fs, SPLASH);
+  return fs;
+}
+// Enges Bild fuer Android (3x-Datei) und iOS (1x/2x/3x): 240 pt breit.
+const splashIos = (scale) => {
+  const w = 240 * scale, h = Math.ceil(240 * scale * 0.5);
+  return { name: 'splash/splash-ios-' + scale + 'x', w, h, draw: (c) => fitWordmark(c, w / 2, h / 2, w - 4) };
+};
+ASSETS.push(
+  // Android und iOS nutzen dasselbe enge Bild (Android: 224 dp breit im Compose-Startbild, iOS: 240 pt im Launch-Screen)
+  splashIos(1), splashIos(2), splashIos(3),
+);
 // Wortmarke ohne Kachel (tileBg transparent): Kachelbreite bleibt als Luft -> fuer die Beitraege die Kachel oben, Text unten: Luft links abziehen
 // (wird in wordmark() ueber tileBg 'transparent' nicht entfernt, daher Textblock separat zentrieren)
 const _wm = wordmark;
@@ -127,7 +145,8 @@ wordmark = function (ctx, x, cy, fs, o = {}) {
 (async () => {
   await Promise.all([document.fonts.load('800 100px "Plus Jakarta Sans"'), document.fonts.load('500 40px Inter')]);
   const log = document.getElementById('log');
-  for (const a of ASSETS) {
+  const only = new URLSearchParams(location.search).get('only'); // z. B. ?only=splash erzeugt nur diese Dateien
+  for (const a of ASSETS.filter((x) => !only || x.name.startsWith(only))) {
     const cv = document.createElement('canvas'); cv.width = a.w; cv.height = a.h;
     const ctx = cv.getContext('2d'); a.draw(ctx);
     const blob = await new Promise((r) => cv.toBlob(r, 'image/png'));
