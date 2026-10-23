@@ -120,6 +120,12 @@ Neue Anzeigen sind `PENDING` und erst nach Freigabe durch Admin/Moderator öffen
 
 ---
 
+## Arbeitsweise (Tokens sparen)
+- Große Dateien **nie komplett lesen**: die i18n-JSON-Dateien (je >1500 Zeilen), `package-lock.json`, `docs/phasen-verlauf.md`, Build-Logs. Stattdessen Grep nach dem Schlüssel/Stichwort oder `Read` mit `offset`/`limit`.
+- Erst gezielt suchen (Grep/Glob), dann nur die betroffene Stelle lesen; nicht ganze Ordner durchlesen.
+- Lange Befehlsausgaben filtern (`Select-String`, `| Select-Object -Last 20`), besonders bei Gradle, npm und Tests.
+- Pro Aufgabe eine **neue Sitzung** (`/clear`): ein langer Verlauf wird bei jeder Nachricht mitgetragen. Dauerhaftes Wissen gehört in diese Datei oder ins Memory, nicht in den Chatverlauf.
+
 ## Wichtige Dateipfade
 
 | Was | Pfad |
