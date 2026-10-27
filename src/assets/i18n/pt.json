@@ -259,6 +259,8 @@
   },
   "auth": {
     "login_title": "Bem-vindo de volta!",
+    "session_expired": "Para sua segurança, sua sessão foi encerrada por inatividade. Entre novamente.",
+    "session_expiring": "Sua sessão será encerrada em breve por inatividade. Mova o mouse ou digite para continuar conectado.",
     "login_sub": "Entre na sua conta",
     "register_title": "Criar uma conta",
     "register_sub": "Junte-se a milhares de compradores e vendedores",

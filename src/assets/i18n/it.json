@@ -259,6 +259,8 @@
   },
   "auth": {
     "login_title": "Bentornato!",
+    "session_expired": "Per la tua sicurezza sei stato disconnesso per inattività. Accedi di nuovo.",
+    "session_expiring": "Verrai disconnesso a breve per inattività. Muovi il mouse o digita per restare connesso.",
     "login_sub": "Accedi al tuo account",
     "register_title": "Crea un account",
     "register_sub": "Unisciti a migliaia di acquirenti e venditori",

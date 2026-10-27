@@ -259,6 +259,8 @@
   },
   "auth": {
     "login_title": "Tekrar hoş geldiniz!",
+    "session_expired": "Güvenliğiniz için hareketsizlik nedeniyle oturumunuz kapatıldı. Lütfen tekrar giriş yapın.",
+    "session_expiring": "Hareketsizlik nedeniyle oturumunuz yakında kapatılacak. Oturumda kalmak için fareyi hareket ettirin veya bir şey yazın.",
     "login_sub": "Hesabınıza giriş yapın",
     "register_title": "Hesap oluştur",
     "register_sub": "Binlerce alıcı ve satıcıya katılın",

@@ -5,6 +5,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CookieConsentBannerComponent } from './components/cookie-consent-banner/cookie-consent-banner.component';
 import { AppReadyService } from './services/app-ready.service';
 import { VisitPingService } from './services/visit-ping.service';
+import { SessionTimeoutService } from './services/session-timeout.service';
 import { ToastHostComponent } from './components/toast-host/toast-host.component';
 import { DialogHostComponent } from './components/dialog-host/dialog-host.component';
 
@@ -35,5 +36,6 @@ export class App {
 
   constructor() {
     inject(VisitPingService).start();
+    inject(SessionTimeoutService).start();
   }
 }

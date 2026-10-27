@@ -259,6 +259,8 @@
   },
   "auth": {
     "login_title": "Willkommen zurück!",
+    "session_expired": "Aus Sicherheitsgründen wurdest du wegen Inaktivität abgemeldet. Bitte melde dich erneut an.",
+    "session_expiring": "Du wirst in Kürze wegen Inaktivität abgemeldet. Bewege die Maus oder tippe etwas, um angemeldet zu bleiben.",
     "login_sub": "In Ihr Konto einloggen",
     "register_title": "Konto erstellen",
     "register_sub": "Treten Sie Tausenden von Käufern und Verkäufern bei",

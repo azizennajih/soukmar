@@ -259,6 +259,8 @@
   },
   "auth": {
     "login_title": "Welcome back!",
+    "session_expired": "For your security you were signed out due to inactivity. Please sign in again.",
+    "session_expiring": "You will be signed out soon due to inactivity. Move the mouse or type to stay signed in.",
     "login_sub": "Sign in to your account",
     "register_title": "Create an account",
     "register_sub": "Join thousands of buyers and sellers",

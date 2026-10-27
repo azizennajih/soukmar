@@ -90,7 +90,7 @@ export class AuthService {
   }
 
   login(email: string, password: string): Promise<{ ok: boolean; unverified?: boolean; error?: string }> {
-    return this.postJson<{ user: AuthUser; token: string }>('/auth/login', { email, password, lang: this.i18n.lang() })
+    return this.postJson<{ user: AuthUser; token: string }>('/auth/login', { email, password, client: 'web', lang: this.i18n.lang() })
       .then(res => { this.setSession(res.user, res.token); return { ok: true }; })
       .catch(e => {
         const err = e as Record<string, unknown>;

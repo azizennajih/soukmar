@@ -259,6 +259,8 @@
   },
   "auth": {
     "login_title": "Bon retour !",
+    "session_expired": "Pour votre sécurité, vous avez été déconnecté pour cause d'inactivité. Veuillez vous reconnecter.",
+    "session_expiring": "Vous allez bientôt être déconnecté pour cause d'inactivité. Bougez la souris ou tapez pour rester connecté.",
     "login_sub": "Connectez-vous à votre compte",
     "register_title": "Créer un compte",
     "register_sub": "Rejoignez des milliers d'acheteurs et vendeurs",

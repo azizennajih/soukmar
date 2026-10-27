@@ -259,6 +259,8 @@
   },
   "auth": {
     "login_title": "¡Bienvenido de vuelta!",
+    "session_expired": "Por tu seguridad, se cerró tu sesión por inactividad. Inicia sesión de nuevo.",
+    "session_expiring": "Tu sesión se cerrará pronto por inactividad. Mueve el ratón o escribe para seguir conectado.",
     "login_sub": "Inicia sesión en tu cuenta",
     "register_title": "Crear una cuenta",
     "register_sub": "Únete a miles de compradores y vendedores",
