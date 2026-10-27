@@ -6,9 +6,9 @@ import { I18nService } from './i18n.service';
 import { ToastService } from './toast.service';
 import { apiBase } from '../config/api.config';
 
-/** Signed out after this long without any input. The server enforces the same limit by letting
+/** Signed out after this long (3 hours) without any input. The server enforces the same limit by letting
  * the login token expire (WEB_IDLE_SECONDS in the backend) — this timer is only the friendly part. */
-const IDLE_MS = 30 * 60_000;
+const IDLE_MS = 3 * 60 * 60_000;
 const WARN_MS = 2 * 60_000;
 const REFRESH_EVERY_MS = 5 * 60_000;
 const TICK_MS = 15_000;
