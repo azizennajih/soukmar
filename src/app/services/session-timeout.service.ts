@@ -1,4 +1,4 @@
-import { Injectable, PLATFORM_ID, effect, inject } from '@angular/core';
+import { Injectable, Injector, PLATFORM_ID, effect, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from './auth.service';
 import { BrowserStorageService } from './browser-storage.service';
@@ -23,6 +23,7 @@ export class SessionTimeoutService {
   private i18n = inject(I18nService);
   private toast = inject(ToastService);
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private injector = inject(Injector);
 
   private lastWrite = 0;
   private lastRefresh = Date.now();
@@ -36,7 +37,7 @@ export class SessionTimeoutService {
     document.addEventListener('visibilitychange', () => { if (!document.hidden) this.check(); });
     effect(() => {
       if (this.auth.currentUser()) this.arm(); else this.disarm();
-    });
+    }, { injector: this.injector });
   }
 
   private arm(): void {
