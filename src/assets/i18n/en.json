@@ -515,7 +515,11 @@
     "activity_REPORT": "Report",
     "activity_ID_VERIFICATION": "ID check",
     "created_at": "Created",
-    "registered_at": "Registered"
+    "registered_at": "Registered",
+    "group_overview": "Overview",
+    "group_review": "To review",
+    "group_manage": "Manage",
+    "group_system": "System"
   },
   "deposer": {
     "gate_title": "Login required",

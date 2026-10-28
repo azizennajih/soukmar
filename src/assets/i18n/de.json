@@ -544,7 +544,11 @@
     "activity_REPORT": "Meldung",
     "activity_ID_VERIFICATION": "ID-Prüfung",
     "created_at": "Erstellt",
-    "registered_at": "Registriert"
+    "registered_at": "Registriert",
+    "group_overview": "Überblick",
+    "group_review": "Zu prüfen",
+    "group_manage": "Verwalten",
+    "group_system": "System"
   },
   "mes_annonces": {
     "title": "Meine Anzeigen",

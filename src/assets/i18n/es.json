@@ -544,7 +544,11 @@
     "activity_REPORT": "Denuncia",
     "activity_ID_VERIFICATION": "Verificación de identidad",
     "created_at": "Creado",
-    "registered_at": "Registrado"
+    "registered_at": "Registrado",
+    "group_overview": "Resumen",
+    "group_review": "Por revisar",
+    "group_manage": "Gestionar",
+    "group_system": "Sistema"
   },
   "mes_annonces": {
     "title": "Mis anuncios",

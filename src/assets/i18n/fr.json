@@ -1312,7 +1312,11 @@
     "activity_REPORT": "Signalement",
     "activity_ID_VERIFICATION": "Vérification d'identité",
     "created_at": "Créé le",
-    "registered_at": "Inscrit le"
+    "registered_at": "Inscrit le",
+    "group_overview": "Aperçu",
+    "group_review": "À examiner",
+    "group_manage": "Gérer",
+    "group_system": "Système"
   },
   "deposer": {
     "gate_title": "Connexion requise",

@@ -1312,7 +1312,11 @@
     "activity_REPORT": "گزارش",
     "activity_ID_VERIFICATION": "تأیید هویت",
     "created_at": "ایجاد",
-    "registered_at": "ثبت‌نام"
+    "registered_at": "ثبت‌نام",
+    "group_overview": "نمای کلی",
+    "group_review": "در انتظار بررسی",
+    "group_manage": "مدیریت",
+    "group_system": "سیستم"
   },
   "deposer": {
     "gate_title": "ورود موردنیاز است",

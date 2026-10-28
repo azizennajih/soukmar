@@ -544,7 +544,11 @@
     "activity_REPORT": "Segnalazione",
     "activity_ID_VERIFICATION": "Verifica dell'identità",
     "created_at": "Creato",
-    "registered_at": "Registrato"
+    "registered_at": "Registrato",
+    "group_overview": "Panoramica",
+    "group_review": "Da verificare",
+    "group_manage": "Gestione",
+    "group_system": "Sistema"
   },
   "mes_annonces": {
     "title": "I miei annunci",

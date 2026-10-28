@@ -1312,7 +1312,11 @@
     "activity_REPORT": "Denúncia",
     "activity_ID_VERIFICATION": "Verificação de identidade",
     "created_at": "Criado",
-    "registered_at": "Registado"
+    "registered_at": "Registado",
+    "group_overview": "Visão geral",
+    "group_review": "Por rever",
+    "group_manage": "Gerir",
+    "group_system": "Sistema"
   },
   "deposer": {
     "gate_title": "Login necessário",

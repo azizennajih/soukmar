@@ -1312,7 +1312,11 @@
     "activity_REPORT": "رپورٹ",
     "activity_ID_VERIFICATION": "شناخت کی تصدیق",
     "created_at": "بنایا گیا",
-    "registered_at": "رجسٹر ہوا"
+    "registered_at": "رجسٹر ہوا",
+    "group_overview": "جائزہ",
+    "group_review": "جائزے کے منتظر",
+    "group_manage": "انتظام",
+    "group_system": "سسٹم"
   },
   "deposer": {
     "gate_title": "لاگ ان ضروری ہے",

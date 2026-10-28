@@ -515,7 +515,11 @@
     "activity_REPORT": "بلاغ",
     "activity_ID_VERIFICATION": "التحقق من الهوية",
     "created_at": "تاريخ الإنشاء",
-    "registered_at": "تاريخ التسجيل"
+    "registered_at": "تاريخ التسجيل",
+    "group_overview": "نظرة عامة",
+    "group_review": "قيد المراجعة",
+    "group_manage": "الإدارة",
+    "group_system": "النظام"
   },
   "deposer": {
     "gate_title": "يجب تسجيل الدخول",

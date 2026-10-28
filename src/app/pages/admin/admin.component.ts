@@ -502,6 +502,10 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   setTab(t: Tab) {
     this.tab.set(t);
+    // On narrow screens the navigation is a swipeable row: bring the open section into view.
+    if (typeof document !== 'undefined') {
+      setTimeout(() => document.querySelector('.admin-nav .admin-tab.active')?.scrollIntoView?.({ inline: 'center', block: 'nearest' }), 0);
+    }
     // The visitors tab refreshes by itself while it is open ("active now" changes by the minute).
     clearInterval(this.analyticsTimer);
     if (t === 'visitors') {

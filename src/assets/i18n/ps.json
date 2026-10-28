@@ -1312,7 +1312,11 @@
     "activity_REPORT": "راپور",
     "activity_ID_VERIFICATION": "د هویت تایید",
     "created_at": "جوړ شو",
-    "registered_at": "ثبت شو"
+    "registered_at": "ثبت شو",
+    "group_overview": "عمومي کتنه",
+    "group_review": "د کتنې لپاره",
+    "group_manage": "مدیریت",
+    "group_system": "سیستم"
   },
   "deposer": {
     "gate_title": "ننوتل اړین دی",

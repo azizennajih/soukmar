@@ -1312,7 +1312,11 @@
     "activity_REPORT": "Şikâyet",
     "activity_ID_VERIFICATION": "Kimlik doğrulama",
     "created_at": "Oluşturuldu",
-    "registered_at": "Kayıt tarihi"
+    "registered_at": "Kayıt tarihi",
+    "group_overview": "Genel bakış",
+    "group_review": "İncelenecekler",
+    "group_manage": "Yönet",
+    "group_system": "Sistem"
   },
   "deposer": {
     "gate_title": "Giriş gerekli",

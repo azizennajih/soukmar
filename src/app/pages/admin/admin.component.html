@@ -23,58 +23,73 @@
     </div>
   </div>
 
-  <!-- Tabs -->
-  <nav class="admin-tabs">
-    <button class="admin-tab icon-label" [class.active]="tab() === 'overview'" (click)="setTab('overview')">
-      <app-icon name="bar-chart" [size]="14" /> {{ 'admin.tab_overview' | T }}
-    </button>
-    <button class="admin-tab icon-label" [class.active]="tab() === 'moderation'" (click)="openModeration()">
-      <app-icon name="clipboard" [size]="14" /> {{ 'moderation.title' | T }}
-      @if (moderationPending() > 0) {
-        <span class="tab-badge">{{ moderationPending() }}</span>
-      }
-    </button>
-    <button class="admin-tab icon-label" [class.active]="tab() === 'listings'" (click)="setTab('listings')">
-      <app-icon name="list" [size]="14" /> {{ 'admin.tab_listings' | T }}
-    </button>
-    <button class="admin-tab icon-label" [class.active]="tab() === 'users'" (click)="setTab('users')">
-      <app-icon name="users" [size]="14" /> {{ 'admin.tab_users' | T }}
-    </button>
-    <button class="admin-tab icon-label" [class.active]="tab() === 'visitors'" (click)="setTab('visitors')">
-      <app-icon name="globe" [size]="14" /> {{ 'admin.tab_visitors' | T }}
-    </button>
-    <button class="admin-tab icon-label" [class.active]="tab() === 'revenue'" (click)="setTab('revenue')">
-      <app-icon name="offer" [size]="14" /> {{ 'admin.tab_revenue' | T }}
-    </button>
-    <button class="admin-tab icon-label" [class.active]="tab() === 'reports'" (click)="setTab('reports')">
-      <app-icon name="report" [size]="14" /> {{ 'admin.tab_reports' | T }}
-      @if (pendingReportsCount > 0) {
-        <span class="tab-badge">{{ pendingReportsCount }}</span>
-      }
-    </button>
-    <button class="admin-tab icon-label" [class.active]="tab() === 'id-verifications'" (click)="setTab('id-verifications')">
-      <app-icon name="id-card" [size]="14" /> {{ 'admin.tab_id_verifications' | T }}
-      @if (pendingIdVerificationsCount > 0) {
-        <span class="tab-badge">{{ pendingIdVerificationsCount }}</span>
-      }
-    </button>
-    <button class="admin-tab icon-label" [class.active]="tab() === 'boost-requests'" (click)="setTab('boost-requests')">
-      <app-icon name="rocket" [size]="14" /> {{ 'admin.tab_boost_requests' | T }}
-      @if (pendingBoostRequestsCount > 0) {
-        <span class="tab-badge">{{ pendingBoostRequestsCount }}</span>
-      }
-    </button>
-    @if (auth.currentUser()?.role === 'ADMIN') {
-      <button class="admin-tab icon-label" [class.active]="tab() === 'campaigns'" (click)="setTab('campaigns')">
-        <app-icon name="mail" [size]="14" /> {{ 'campaigns.tab' | T }}
+  <!-- Navigation: grouped sidebar on wide screens, swipeable row on narrow ones -->
+  <nav class="admin-nav" [attr.aria-label]="'admin.title' | T">
+    <div class="admin-nav__group">
+      <span class="admin-nav__label">{{ 'admin.group_overview' | T }}</span>
+      <button class="admin-tab icon-label" [class.active]="tab() === 'overview'" (click)="setTab('overview')">
+        <app-icon name="bar-chart" [size]="16" /> {{ 'admin.tab_overview' | T }}
       </button>
-    }
-    <button class="admin-tab icon-label" [class.active]="tab() === 'security'" (click)="setTab('security')">
-      <app-icon name="shield" [size]="14" /> {{ 'admin.tab_security' | T }}
-      @if (highSeverityEventCount > 0) {
-        <span class="tab-badge">{{ highSeverityEventCount }}</span>
+      <button class="admin-tab icon-label" [class.active]="tab() === 'visitors'" (click)="setTab('visitors')">
+        <app-icon name="globe" [size]="16" /> {{ 'admin.tab_visitors' | T }}
+      </button>
+      <button class="admin-tab icon-label" [class.active]="tab() === 'revenue'" (click)="setTab('revenue')">
+        <app-icon name="offer" [size]="16" /> {{ 'admin.tab_revenue' | T }}
+      </button>
+    </div>
+
+    <div class="admin-nav__group">
+      <span class="admin-nav__label">{{ 'admin.group_review' | T }}</span>
+      <button class="admin-tab icon-label" [class.active]="tab() === 'moderation'" (click)="openModeration()">
+        <app-icon name="clipboard" [size]="16" /> {{ 'moderation.title' | T }}
+        @if (moderationPending() > 0) {
+          <span class="tab-badge">{{ moderationPending() }}</span>
+        }
+      </button>
+      <button class="admin-tab icon-label" [class.active]="tab() === 'reports'" (click)="setTab('reports')">
+        <app-icon name="report" [size]="16" /> {{ 'admin.tab_reports' | T }}
+        @if (pendingReportsCount > 0) {
+          <span class="tab-badge">{{ pendingReportsCount }}</span>
+        }
+      </button>
+      <button class="admin-tab icon-label" [class.active]="tab() === 'id-verifications'" (click)="setTab('id-verifications')">
+        <app-icon name="id-card" [size]="16" /> {{ 'admin.tab_id_verifications' | T }}
+        @if (pendingIdVerificationsCount > 0) {
+          <span class="tab-badge">{{ pendingIdVerificationsCount }}</span>
+        }
+      </button>
+      <button class="admin-tab icon-label" [class.active]="tab() === 'boost-requests'" (click)="setTab('boost-requests')">
+        <app-icon name="rocket" [size]="16" /> {{ 'admin.tab_boost_requests' | T }}
+        @if (pendingBoostRequestsCount > 0) {
+          <span class="tab-badge">{{ pendingBoostRequestsCount }}</span>
+        }
+      </button>
+    </div>
+
+    <div class="admin-nav__group">
+      <span class="admin-nav__label">{{ 'admin.group_manage' | T }}</span>
+      <button class="admin-tab icon-label" [class.active]="tab() === 'listings'" (click)="setTab('listings')">
+        <app-icon name="list" [size]="16" /> {{ 'admin.tab_listings' | T }}
+      </button>
+      <button class="admin-tab icon-label" [class.active]="tab() === 'users'" (click)="setTab('users')">
+        <app-icon name="users" [size]="16" /> {{ 'admin.tab_users' | T }}
+      </button>
+      @if (auth.currentUser()?.role === 'ADMIN') {
+        <button class="admin-tab icon-label" [class.active]="tab() === 'campaigns'" (click)="setTab('campaigns')">
+          <app-icon name="mail" [size]="16" /> {{ 'campaigns.tab' | T }}
+        </button>
       }
-    </button>
+    </div>
+
+    <div class="admin-nav__group">
+      <span class="admin-nav__label">{{ 'admin.group_system' | T }}</span>
+      <button class="admin-tab icon-label" [class.active]="tab() === 'security'" (click)="setTab('security')">
+        <app-icon name="shield" [size]="16" /> {{ 'admin.tab_security' | T }}
+        @if (highSeverityEventCount > 0) {
+          <span class="tab-badge">{{ highSeverityEventCount }}</span>
+        }
+      </button>
+    </div>
   </nav>
 
   <!-- ══════════════ OVERVIEW ══════════════ -->
