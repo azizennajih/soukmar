@@ -1,6 +1,7 @@
 import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { apiBase } from '../config/api.config';
+import { CookieConsentService } from './cookie-consent.service';
 
 /** Tells the backend that this tab is open, once a minute while it is visible — the numbers behind the
  * admin dashboard's "active now" and visitors-per-country charts. Nothing is stored on the visitor's
@@ -8,6 +9,7 @@ import { apiBase } from '../config/api.config';
 @Injectable({ providedIn: 'root' })
 export class VisitPingService {
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private consent = inject(CookieConsentService);
   private started = false;
   private lastPing = 0;
 
@@ -21,6 +23,8 @@ export class VisitPingService {
 
   private ping() {
     if (document.visibilityState !== 'visible') return;
+    // Counted only for visitors who allowed the reach measurement in the cookie settings.
+    if (!this.consent.analyticsAllowed) return;
     // However often the browser reports a tab switch, one heartbeat per half minute is enough.
     if (Date.now() - this.lastPing < 30_000) return;
     this.lastPing = Date.now();

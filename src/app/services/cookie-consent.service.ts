@@ -7,13 +7,10 @@ const CONSENT_COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
 export type CookieConsentChoice = 'all' | 'essential';
 
-/** GDPR-style cookie/localStorage consent — a single global choice (no
- * per-category toggles) since the site currently only uses essential
- * storage (auth session, language/country preference) and no third-party
- * trackers to actually categorize; "essential" vs "all" leaves room to
- * gate a future analytics/marketing script behind consent() === 'all'
- * without redesigning this service. `null` means no choice made yet —
- * the banner (app-cookie-consent-banner) shows until one is picked. */
+/** GDPR-style cookie/localStorage consent. Stored as one value: 'essential' (only what the site needs to
+ * run: login, language, country) or 'all' (plus the anonymous reach measurement). The settings dialog
+ * (app-cookie-consent-banner) offers that as a per-category choice, like Booking's "manage settings".
+ * `null` means no choice made yet — the banner shows until one is picked. */
 @Injectable({ providedIn: 'root' })
 export class CookieConsentService {
   private storage = inject(BrowserStorageService);
@@ -32,18 +29,20 @@ export class CookieConsentService {
     if (this.isBrowser && current) this.writeCookie(current);
   }
 
+  /** Whether the settings dialog is open (opened from the banner or the footer link). */
+  settingsOpen = signal(false);
+
+  /** True when the visitor allowed the reach measurement. */
+  get analyticsAllowed(): boolean { return this.consent() === 'all'; }
+
+  openSettings() { this.settingsOpen.set(true); }
+  closeSettings() { this.settingsOpen.set(false); }
+
   choose(choice: CookieConsentChoice) {
+    this.settingsOpen.set(false);
     this.consent.set(choice);
     this.storage.setItem(CONSENT_KEY, choice);
     this.writeCookie(choice);
-  }
-
-  /** Re-opens the banner so a visitor can change an earlier choice (footer
-   * "Manage cookie settings" link) — mirrors the withdraw-as-easy-as-give rule. */
-  reopen() {
-    this.consent.set(null);
-    this.storage.removeItem(CONSENT_KEY);
-    this.writeCookie(null);
   }
 
   private readInitialConsent(): CookieConsentChoice | null {

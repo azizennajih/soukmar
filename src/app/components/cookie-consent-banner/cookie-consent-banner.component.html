@@ -6,9 +6,44 @@
         <a routerLink="/politique-confidentialite">{{ 'cookie_consent.learn_more' | T }}</a>
       </p>
       <div class="cookie-banner__actions">
+        <button type="button" class="btn-outline" (click)="openSettings()">{{ 'cookie_consent.manage' | T }}</button>
         <button type="button" class="btn-primary" (click)="choose('essential')">{{ 'cookie_consent.decline' | T }}</button>
         <button type="button" class="btn-primary" (click)="choose('all')">{{ 'cookie_consent.accept' | T }}</button>
       </div>
+    </div>
+  </div>
+}
+
+@if (cookieConsent.settingsOpen()) {
+  <div class="cookie-modal" (click)="cookieConsent.closeSettings()">
+    <div class="cookie-modal__box" role="dialog" aria-modal="true" aria-labelledby="cookie-modal-title" (click)="$event.stopPropagation()">
+      <h2 id="cookie-modal-title" class="cookie-modal__title">{{ 'cookie_consent.settings_title' | T }}</h2>
+      <p class="cookie-modal__intro">{{ 'cookie_consent.settings_intro' | T }}</p>
+
+      <div class="cookie-modal__item">
+        <div class="cookie-modal__item-head">
+          <h3>{{ 'cookie_consent.necessary_title' | T }}</h3>
+          <span class="cookie-modal__always">{{ 'cookie_consent.always_active' | T }}</span>
+        </div>
+        <p>{{ 'cookie_consent.necessary_desc' | T }}</p>
+      </div>
+
+      <div class="cookie-modal__item">
+        <div class="cookie-modal__item-head">
+          <h3 id="cookie-analytics-label">{{ 'cookie_consent.analytics_title' | T }}</h3>
+          <button type="button" class="cookie-switch" role="switch" aria-labelledby="cookie-analytics-label"
+                  [class.cookie-switch--on]="analytics()" [attr.aria-checked]="analytics()"
+                  (click)="analytics.set(!analytics())"><span class="cookie-switch__knob"></span></button>
+        </div>
+        <p>{{ 'cookie_consent.analytics_desc' | T }}</p>
+      </div>
+
+      <div class="cookie-modal__actions">
+        <button type="button" class="btn-primary" (click)="saveSettings()">{{ 'cookie_consent.save' | T }}</button>
+        <button type="button" class="btn-outline" (click)="choose('all')">{{ 'cookie_consent.accept_all' | T }}</button>
+        <button type="button" class="btn-outline" (click)="choose('essential')">{{ 'cookie_consent.only_necessary' | T }}</button>
+      </div>
+      <a class="cookie-modal__more" routerLink="/politique-confidentialite" (click)="cookieConsent.closeSettings()">{{ 'cookie_consent.learn_more' | T }}</a>
     </div>
   </div>
 }

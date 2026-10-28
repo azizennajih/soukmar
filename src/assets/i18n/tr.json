@@ -1735,6 +1735,17 @@
     "browse_btn": "İlanlara göz at"
   },
   "cookie_consent": {
+    "manage": "Ayarları yönet",
+    "settings_title": "Çerez ayarları",
+    "settings_intro": "Hangi çerezleri kullanabileceğimizi seçin. Seçiminizi istediğiniz zaman alt bilgideki “Çerez ayarlarını yönet” bağlantısından değiştirebilirsiniz.",
+    "necessary_title": "Gerekli",
+    "necessary_desc": "Sitenin çalışması için gereklidir: oturum açma, dil ve ülke. Bu çerezler kapatılamaz.",
+    "always_active": "Her zaman etkin",
+    "analytics_title": "Erişim ölçümü",
+    "analytics_desc": "Siteyi kaç ziyaretçinin kullandığını anlamamıza ve siteyi iyileştirmemize yardımcı olur. Sayım anonimdir, IP adresi saklanmaz.",
+    "save": "Seçimi kaydet",
+    "accept_all": "Tümünü kabul et",
+    "only_necessary": "Yalnızca gerekli olanlar",
     "message": "Sitenin çalışması için gerekli çerezleri (oturum açma, dil, ülke) kullanıyoruz. “Kabul et” seçeneğini seçerseniz siteyi geliştirmek için ayrıca kitle ölçüm çerezlerini de kullanırız. “Reddet” seçeneğini seçerseniz yalnızca gerekli çerezler kullanılır. Seçiminizi istediğiniz zaman alt bilgideki “Çerez ayarlarını yönet” bölümünden değiştirebilirsiniz.",
     "learn_more": "Daha fazla bilgi",
     "decline": "Reddet",

@@ -1735,6 +1735,17 @@
     "browse_btn": "Ver anúncios"
   },
   "cookie_consent": {
+    "manage": "Gerir definições",
+    "settings_title": "Definições de cookies",
+    "settings_intro": "Escolha que cookies podemos usar. Pode alterar a sua escolha a qualquer momento em «Gerir definições de cookies» no rodapé.",
+    "necessary_title": "Necessários",
+    "necessary_desc": "Indispensáveis ao funcionamento do site: início de sessão, idioma e país. Estes cookies não podem ser desativados.",
+    "always_active": "Sempre ativos",
+    "analytics_title": "Medição de audiência",
+    "analytics_desc": "Ajuda-nos a perceber quantos visitantes usam o site para o podermos melhorar. A contagem é anónima; nenhum endereço IP é guardado.",
+    "save": "Guardar escolha",
+    "accept_all": "Aceitar todos",
+    "only_necessary": "Apenas necessários",
     "message": "Utilizamos cookies essenciais para o funcionamento do site (início de sessão, idioma, país). Se escolher «Aceitar», utilizamos também cookies de medição de audiência para melhorar o site. Se escolher «Recusar», apenas são utilizados os cookies essenciais. Pode alterar a sua escolha a qualquer momento em «Gerir definições de cookies» no rodapé.",
     "learn_more": "Saiba mais",
     "decline": "Recusar",

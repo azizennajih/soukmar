@@ -1735,6 +1735,17 @@
     "browse_btn": "Anzeigen durchsuchen"
   },
   "cookie_consent": {
+    "manage": "Einstellungen verwalten",
+    "settings_title": "Cookie-Einstellungen",
+    "settings_intro": "Wählen Sie, welche Cookies wir verwenden dürfen. Ihre Wahl können Sie jederzeit über „Cookie-Einstellungen verwalten“ in der Fußzeile ändern.",
+    "necessary_title": "Erforderlich",
+    "necessary_desc": "Für den Betrieb der Website nötig: Anmeldung, Sprache und Land. Diese Cookies können nicht abgeschaltet werden.",
+    "always_active": "Immer aktiv",
+    "analytics_title": "Reichweitenmessung",
+    "analytics_desc": "Hilft uns zu verstehen, wie viele Besucher die Website nutzen, damit wir sie verbessern können. Die Zählung ist anonym, es wird keine IP-Adresse gespeichert.",
+    "save": "Auswahl speichern",
+    "accept_all": "Alle akzeptieren",
+    "only_necessary": "Nur erforderliche",
     "message": "Wir verwenden Cookies, die für den Betrieb der Website erforderlich sind (Anmeldung, Sprache, Land). Wenn Sie „Akzeptieren“ wählen, setzen wir zusätzlich Cookies zur Reichweitenmessung ein, um die Website zu verbessern. Wenn Sie „Ablehnen“ wählen, werden nur die erforderlichen Cookies verwendet. Sie können Ihre Wahl jederzeit über „Cookie-Einstellungen verwalten“ in der Fußzeile ändern.",
     "learn_more": "Mehr erfahren",
     "decline": "Ablehnen",

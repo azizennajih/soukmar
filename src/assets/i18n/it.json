@@ -1735,6 +1735,17 @@
     "browse_btn": "Sfoglia gli annunci"
   },
   "cookie_consent": {
+    "manage": "Gestisci le impostazioni",
+    "settings_title": "Impostazioni dei cookie",
+    "settings_intro": "Scegli quali cookie possiamo usare. Puoi modificare la scelta in qualsiasi momento da «Gestisci le impostazioni dei cookie» nel piè di pagina.",
+    "necessary_title": "Necessari",
+    "necessary_desc": "Indispensabili al funzionamento del sito: accesso, lingua e paese. Questi cookie non possono essere disattivati.",
+    "always_active": "Sempre attivi",
+    "analytics_title": "Misurazione del pubblico",
+    "analytics_desc": "Ci aiuta a capire quanti visitatori usano il sito per poterlo migliorare. Il conteggio è anonimo, nessun indirizzo IP viene salvato.",
+    "save": "Salva la scelta",
+    "accept_all": "Accetta tutti",
+    "only_necessary": "Solo necessari",
     "message": "Utilizziamo cookie essenziali per il funzionamento del sito (accesso, lingua, paese). Se scegli «Accetta», utilizzeremo anche cookie di misurazione del pubblico per migliorare il sito. Se scegli «Rifiuta», vengono usati solo i cookie essenziali. Puoi modificare la tua scelta in qualsiasi momento da «Gestisci impostazioni cookie» nel piè di pagina.",
     "learn_more": "Scopri di più",
     "decline": "Rifiuta",

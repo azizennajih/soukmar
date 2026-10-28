@@ -1735,6 +1735,17 @@
     "browse_btn": "Browse listings"
   },
   "cookie_consent": {
+    "manage": "Manage settings",
+    "settings_title": "Cookie settings",
+    "settings_intro": "Choose which cookies we may use. You can change your choice at any time via “Manage cookie settings” in the footer.",
+    "necessary_title": "Necessary",
+    "necessary_desc": "Required for the site to work: sign-in, language and country. These cookies cannot be switched off.",
+    "always_active": "Always active",
+    "analytics_title": "Reach measurement",
+    "analytics_desc": "Helps us understand how many visitors use the site so we can improve it. Counting is anonymous; no IP address is stored.",
+    "save": "Save choices",
+    "accept_all": "Accept all",
+    "only_necessary": "Necessary only",
     "message": "We use cookies that are essential to the operation of the site (login, language, country). If you select “Accept”, we also use audience measurement cookies to improve the site. If you select “Decline”, only essential cookies are used. You can change your choice at any time via “Manage cookie settings” in the footer.",
     "learn_more": "Learn more",
     "decline": "Decline",
