@@ -128,6 +128,10 @@ const localizedRoutes: Routes = [
     loadComponent: () => import('./pages/mes-donnees/mes-donnees.component').then(m => m.MesDonneesComponent)
   },
   {
+    path: 'newsletter-abmelden',
+    loadComponent: () => import('./pages/newsletter-abmelden/newsletter-abmelden.component').then(m => m.NewsletterAbmeldenComponent)
+  },
+  {
     path: 'supprimer-compte',
     loadComponent: () => import('./pages/supprimer-compte/supprimer-compte.component').then(m => m.SupprimerCompteComponent)
   },

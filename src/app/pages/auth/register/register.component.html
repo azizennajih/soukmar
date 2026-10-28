@@ -83,6 +83,11 @@
           <app-password-input [value]="form.confirm" (valueChange)="form.confirm = $event" name="confirm" placeholder="••••••••" autocomplete="new-password" />
         </div>
 
+        <label class="auth-consent">
+          <input type="checkbox" name="marketing" [(ngModel)]="form.marketing" />
+          <span>{{ 'auth.marketing_consent' | T }}</span>
+        </label>
+
         <app-turnstile (verified)="captchaToken = $event" />
 
         <button type="submit" class="btn-primary auth-submit" [disabled]="loading">

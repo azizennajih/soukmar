@@ -102,8 +102,8 @@ export class AuthService {
       });
   }
 
-  register(name: string, email: string, password: string, phone?: string, city?: string, captchaToken?: string, accountType?: 'PRIVATE' | 'BUSINESS', country?: string): Promise<{ ok: boolean; emailSent?: boolean; error?: string }> {
-    return this.postJson<{ message: string; emailSent: boolean }>('/auth/register', { name, email, password, phone, city, captchaToken, accountType, country, lang: this.i18n.lang() })
+  register(name: string, email: string, password: string, phone?: string, city?: string, captchaToken?: string, accountType?: 'PRIVATE' | 'BUSINESS', country?: string, marketingConsent = false): Promise<{ ok: boolean; emailSent?: boolean; error?: string }> {
+    return this.postJson<{ message: string; emailSent: boolean }>('/auth/register', { name, email, password, phone, city, captchaToken, accountType, country, marketingConsent, lang: this.i18n.lang() })
       .then(res => ({ ok: true, emailSent: res.emailSent }))
       .catch(e => {
         const err = e as Record<string, unknown>;

@@ -64,6 +64,11 @@
         <span class="tab-badge">{{ pendingBoostRequestsCount }}</span>
       }
     </button>
+    @if (auth.currentUser()?.role === 'ADMIN') {
+      <button class="admin-tab icon-label" [class.active]="tab() === 'campaigns'" (click)="setTab('campaigns')">
+        <app-icon name="mail" [size]="14" /> {{ 'campaigns.tab' | T }}
+      </button>
+    }
     <button class="admin-tab icon-label" [class.active]="tab() === 'security'" (click)="setTab('security')">
       <app-icon name="shield" [size]="14" /> {{ 'admin.tab_security' | T }}
       @if (highSeverityEventCount > 0) {
@@ -195,6 +200,11 @@
         </div>
       }
     }
+  }
+
+  <!-- ══════════════ CAMPAIGNS (advertising e-mail) ══════════════ -->
+  @if (tab() === 'campaigns' && auth.currentUser()?.role === 'ADMIN') {
+    <app-admin-campaigns />
   }
 
   <!-- ══════════════ MODERATION ══════════════ -->

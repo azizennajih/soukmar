@@ -15,6 +15,13 @@
         </div>
       }
       <p class="donnees__note">{{ 'mes_donnees.email_always' | T }}</p>
+      <div class="donnees__row donnees__row--marketing">
+        <span [id]="'pref-' + marketingRow.key" class="donnees__row-label">{{ marketingRow.label | T }}</span>
+        <button type="button" class="donnees-switch" role="switch" [attr.aria-labelledby]="'pref-' + marketingRow.key"
+                [class.donnees-switch--on]="p[marketingRow.key]" [attr.aria-checked]="p[marketingRow.key]"
+                (click)="toggle(marketingRow.key)"><span class="donnees-switch__knob"></span></button>
+      </div>
+      <p class="donnees__note">{{ 'mes_donnees.marketing_hint' | T }}</p>
     }
   </section>
 

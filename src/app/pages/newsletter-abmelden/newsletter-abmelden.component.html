@@ -1,0 +1,21 @@
+<div class="unsub container fade-in">
+  <div class="card unsub__card">
+    @switch (state()) {
+      @case ('done') {
+        <h1 class="unsub__title">{{ 'newsletter_unsub.done_title' | T }}</h1>
+        <p class="unsub__text">{{ 'newsletter_unsub.done_text' | T }}</p>
+        <a routerLink="/" class="btn-primary unsub__btn">{{ 'newsletter_unsub.home' | T }}</a>
+      }
+      @case ('error') {
+        <h1 class="unsub__title">{{ 'newsletter_unsub.title' | T }}</h1>
+        <p class="unsub__text">{{ 'newsletter_unsub.error' | T }}</p>
+        <a routerLink="/" class="btn-outline unsub__btn">{{ 'newsletter_unsub.home' | T }}</a>
+      }
+      @default {
+        <h1 class="unsub__title">{{ 'newsletter_unsub.title' | T }}</h1>
+        <p class="unsub__text">{{ 'newsletter_unsub.intro' | T }}</p>
+        <button type="button" class="btn-primary unsub__btn" [disabled]="state() === 'working'" (click)="confirm()">{{ 'newsletter_unsub.confirm_btn' | T }}</button>
+      }
+    }
+  </div>
+</div>

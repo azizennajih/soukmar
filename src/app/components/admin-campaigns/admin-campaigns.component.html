@@ -1,0 +1,101 @@
+@if (editing(); as e) {
+  <div class="campaigns">
+    <button type="button" class="btn-ghost campaigns__back" (click)="back()">← {{ 'campaigns.back' | T }}</button>
+
+    <div class="card campaigns__card">
+      <div class="campaigns__status">
+        <span class="campaigns__badge campaigns__badge--{{ e.status | lowercase }}">{{ statusLabel(e.status) }}</span>
+        @if (e.status !== 'DRAFT') { <span class="campaigns__counts">{{ countsLabel(e) }}</span> }
+        @if (e.status === 'SENDING') {
+          <button type="button" class="btn-outline campaigns__btn" (click)="cancelSend()">{{ 'campaigns.cancel_send' | T }}</button>
+        }
+      </div>
+
+      <label class="form-label">{{ 'campaigns.name' | T }}</label>
+      <input type="text" class="form-input" [(ngModel)]="e.name" name="cname" maxlength="120" [disabled]="!isDraft" />
+
+      <h3 class="campaigns__heading">{{ 'campaigns.texts' | T }}</h3>
+      <div class="campaigns__langs">
+        @for (l of langs; track l) {
+          <button type="button" class="campaigns__lang" [class.active]="activeLang() === l" [class.filled]="hasContent(l)" (click)="activeLang.set(l)">{{ l | uppercase }}</button>
+        }
+      </div>
+
+      @for (l of langs; track l) {
+        @if (activeLang() === l) {
+          <div class="campaigns__text" [attr.dir]="l === 'ar' || l === 'fa' || l === 'ur' || l === 'ps' ? 'rtl' : 'ltr'">
+            <label class="form-label">{{ 'campaigns.subject' | T }}</label>
+            <input type="text" class="form-input" [(ngModel)]="e.contents[l].subject" [name]="'subject-' + l" maxlength="150" [disabled]="!isDraft" />
+            <label class="form-label">{{ 'campaigns.body' | T }}</label>
+            <textarea class="form-input campaigns__body" rows="9" [(ngModel)]="e.contents[l].body" [name]="'body-' + l" maxlength="5000" [disabled]="!isDraft"></textarea>
+            <div class="campaigns__cta">
+              <div>
+                <label class="form-label">{{ 'campaigns.cta_label' | T }}</label>
+                <input type="text" class="form-input" [(ngModel)]="e.contents[l].ctaLabel" [name]="'cta-label-' + l" maxlength="40" [disabled]="!isDraft" />
+              </div>
+              <div>
+                <label class="form-label">{{ 'campaigns.cta_url' | T }}</label>
+                <input type="url" class="form-input" [(ngModel)]="e.contents[l].ctaUrl" [name]="'cta-url-' + l" placeholder="https://" [disabled]="!isDraft" />
+              </div>
+            </div>
+          </div>
+        }
+      }
+      <p class="campaigns__hint">{{ 'campaigns.body_hint' | T }}</p>
+
+      <h3 class="campaigns__heading">{{ 'campaigns.audience' | T }}</h3>
+      <p class="campaigns__hint">{{ 'campaigns.intro' | T }}</p>
+      <label class="form-label">{{ 'campaigns.countries' | T }}</label>
+      <input type="text" class="form-input" [(ngModel)]="e.countries" name="countries" placeholder="MA, DE, FR" (ngModelChange)="scheduleCount()" [disabled]="!isDraft" />
+      <label class="form-label">{{ 'campaigns.langs' | T }}</label>
+      <div class="campaigns__langs">
+        @for (l of langs; track l) {
+          <button type="button" class="campaigns__lang" [class.active]="e.langs.includes(l)" [disabled]="!isDraft" (click)="toggleLang(l)">{{ l | uppercase }}</button>
+        }
+      </div>
+      <label class="form-label">{{ 'campaigns.account_type' | T }}</label>
+      <select class="form-input" [(ngModel)]="e.accountType" name="accountType" (ngModelChange)="scheduleCount()" [disabled]="!isDraft">
+        <option value="">{{ 'campaigns.account_all' | T }}</option>
+        <option value="PRIVATE">{{ 'campaigns.private' | T }}</option>
+        <option value="BUSINESS">{{ 'campaigns.business' | T }}</option>
+      </select>
+      @if (audienceCount() !== null && isDraft) {
+        <p class="campaigns__count">{{ 'campaigns.recipients' | T:{ count: '' + audienceCount() } }}</p>
+      }
+
+      @if (errorText()) { <p class="campaigns__error">{{ errorText() }}</p> }
+
+      @if (isDraft) {
+        <div class="campaigns__actions">
+          <button type="button" class="btn-outline campaigns__btn" [disabled]="busy()" (click)="save()">{{ 'campaigns.save' | T }}</button>
+          <button type="button" class="btn-outline campaigns__btn" [disabled]="busy()" (click)="sendTest()">{{ 'campaigns.test_send' | T }} ({{ userEmail }})</button>
+          <button type="button" class="btn-primary campaigns__btn" [disabled]="busy() || !audienceCount()" (click)="send()">{{ 'campaigns.send' | T }}</button>
+          <button type="button" class="btn-ghost campaigns__btn campaigns__btn--danger" [disabled]="busy()" (click)="remove()">{{ 'campaigns.delete' | T }}</button>
+        </div>
+      }
+    </div>
+  </div>
+} @else {
+  <div class="campaigns">
+    <div class="campaigns__head">
+      <div>
+        <h2 class="section-title">{{ 'campaigns.title' | T }}</h2>
+        <p class="campaigns__hint">{{ 'campaigns.intro' | T }}</p>
+      </div>
+      <button type="button" class="btn-primary campaigns__btn" (click)="newCampaign()">{{ 'campaigns.new' | T }}</button>
+    </div>
+
+    @if (campaigns(); as list) {
+      @if (list.length === 0) {
+        <p class="campaigns__empty">{{ 'campaigns.empty' | T }}</p>
+      }
+      @for (c of list; track c.id) {
+        <button type="button" class="card campaigns__row" (click)="open(c.id)">
+          <span class="campaigns__row-name">{{ c.name }}</span>
+          <span class="campaigns__badge campaigns__badge--{{ c.status | lowercase }}">{{ statusLabel(c.status) }}</span>
+          <span class="campaigns__counts">{{ countsLabel(c) }}</span>
+        </button>
+      }
+    }
+  </div>
+}

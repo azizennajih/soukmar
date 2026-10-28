@@ -39,7 +39,7 @@ export class RegisterComponent {
     // <option>, which would otherwise render as blank/unselected.
     country: isVisibleCountry(this.countryService.country()) ? this.countryService.country() : 'MA',
     phone: '',
-    city: '', password: '', confirm: '', accountType: '' as '' | 'PRIVATE' | 'BUSINESS'
+    city: '', password: '', confirm: '', accountType: '' as '' | 'PRIVATE' | 'BUSINESS', marketing: false
   };
 
   regionLabelKey(region: string): string {
@@ -90,7 +90,7 @@ export class RegisterComponent {
       const result = await this.auth.register(
         this.form.name, this.form.email, this.form.password,
         this.form.phone, this.form.city, this.captchaToken, this.form.accountType || undefined,
-        this.form.country
+        this.form.country, this.form.marketing
       );
       if (result.ok) {
         this.registeredEmail = this.form.email;

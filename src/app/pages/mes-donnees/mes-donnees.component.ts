@@ -11,7 +11,7 @@ import { ToastService } from '../../services/toast.service';
 import { UserService } from '../../services/user.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 
-type EmailPrefKey = 'emailMessages' | 'emailSavedSearches' | 'emailListingReminders';
+type EmailPrefKey = 'emailMessages' | 'emailSavedSearches' | 'emailListingReminders' | 'emailMarketing';
 type EmailPrefs = Record<EmailPrefKey, boolean>;
 
 interface BlockedUser { id: string; name: string; image: string | null; blockedAt: string }
@@ -39,6 +39,8 @@ export class MesDonneesComponent implements OnInit {
     { key: 'emailSavedSearches', label: 'mes_donnees.email_saved_searches' },
     { key: 'emailListingReminders', label: 'mes_donnees.email_listing_reminders' },
   ];
+  /** Advertising is separate from the service mails: opt-in, and it has its own explanation. */
+  readonly marketingRow = { key: 'emailMarketing' as EmailPrefKey, label: 'mes_donnees.email_marketing' };
 
   prefs = signal<EmailPrefs | null>(null);
   blocked = signal<BlockedUser[] | null>(null);
