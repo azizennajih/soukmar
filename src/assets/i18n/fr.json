@@ -1537,7 +1537,28 @@
     "id_verification_approved": "Identité vérifiée",
     "id_verification_rejected": "Demande refusée. Vous pouvez soumettre une nouvelle demande."
   },
+  "mes_donnees": {
+    "title": "Mes données et confidentialité",
+    "email_title": "Notifications par e-mail",
+    "email_intro": "Choisissez les e-mails que vous souhaitez recevoir. Les notifications dans l’application ne sont pas concernées.",
+    "email_messages": "Premier message à propos de l’une de mes annonces",
+    "email_saved_searches": "Nouvelle annonce correspondant à une recherche enregistrée",
+    "email_listing_reminders": "Mon annonce expire bientôt ou a expiré",
+    "email_always": "Vous recevez toujours les e-mails importants sur votre compte (confirmation, mot de passe) et sur la vérification de vos annonces.",
+    "blocked_title": "Utilisateurs bloqués",
+    "blocked_empty": "Vous n’avez bloqué personne.",
+    "unblock": "Débloquer",
+    "export_title": "Télécharger mes données",
+    "export_intro": "Téléchargez une copie de toutes les données que nous conservons sur votre compte (profil, annonces, messages, favoris, etc.) au format JSON.",
+    "export_btn": "Télécharger les données",
+    "export_error": "Le téléchargement a échoué. Veuillez réessayer.",
+    "cookies_title": "Cookies",
+    "cookies_btn": "Ouvrir les paramètres des cookies",
+    "saved": "Enregistré"
+  },
   "parametres": {
+    "privacy_data": "Mes données et confidentialité",
+    "privacy_data_sub": "Notifications par e-mail, utilisateurs bloqués, export des données, cookies",
     "title": "Paramètres",
     "profile_account": "Profil & Compte",
     "profile_account_sub": "Nom, téléphone, ville, photo de profil, mot de passe",

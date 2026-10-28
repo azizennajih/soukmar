@@ -641,7 +641,28 @@
     "id_verification_approved": "Identidad verificada",
     "id_verification_rejected": "Solicitud rechazada. Puedes enviar una nueva."
   },
+  "mes_donnees": {
+    "title": "Mis datos y privacidad",
+    "email_title": "Notificaciones por correo",
+    "email_intro": "Elige qué correos quieres recibir. Las notificaciones dentro de la app no se ven afectadas.",
+    "email_messages": "Primer mensaje sobre uno de mis anuncios",
+    "email_saved_searches": "Nuevo anuncio que coincide con una búsqueda guardada",
+    "email_listing_reminders": "Mi anuncio caduca pronto o ha caducado",
+    "email_always": "Siempre recibirás los correos importantes de la cuenta (confirmación, contraseña) y sobre la revisión de tus anuncios.",
+    "blocked_title": "Usuarios bloqueados",
+    "blocked_empty": "No has bloqueado a nadie.",
+    "unblock": "Desbloquear",
+    "export_title": "Descargar mis datos",
+    "export_intro": "Descarga una copia de todos los datos que guardamos de tu cuenta (perfil, anuncios, mensajes, favoritos y más) en un archivo JSON.",
+    "export_btn": "Descargar datos",
+    "export_error": "La descarga ha fallado. Inténtalo de nuevo.",
+    "cookies_title": "Cookies",
+    "cookies_btn": "Abrir ajustes de cookies",
+    "saved": "Guardado"
+  },
   "parametres": {
+    "privacy_data": "Mis datos y privacidad",
+    "privacy_data_sub": "Notificaciones por correo, usuarios bloqueados, exportar datos, cookies",
     "title": "Ajustes",
     "profile_account": "Perfil y cuenta",
     "profile_account_sub": "Nombre, teléfono, ciudad, foto de perfil, contraseña",

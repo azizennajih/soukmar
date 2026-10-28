@@ -124,6 +124,10 @@ const localizedRoutes: Routes = [
     loadComponent: () => import('./pages/aide/aide.component').then(m => m.AideComponent)
   },
   {
+    path: 'mes-donnees',
+    loadComponent: () => import('./pages/mes-donnees/mes-donnees.component').then(m => m.MesDonneesComponent)
+  },
+  {
     path: 'supprimer-compte',
     loadComponent: () => import('./pages/supprimer-compte/supprimer-compte.component').then(m => m.SupprimerCompteComponent)
   },

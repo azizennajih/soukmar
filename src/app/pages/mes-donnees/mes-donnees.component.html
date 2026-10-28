@@ -1,0 +1,48 @@
+<div class="donnees container fade-in">
+  <a routerLink="/parametres" class="donnees__back">← {{ 'parametres.title' | T }}</a>
+  <h1 class="donnees__title">{{ 'mes_donnees.title' | T }}</h1>
+
+  <section class="card donnees__card">
+    <h2 class="donnees__heading">{{ 'mes_donnees.email_title' | T }}</h2>
+    <p class="donnees__intro">{{ 'mes_donnees.email_intro' | T }}</p>
+    @if (prefs(); as p) {
+      @for (row of emailRows; track row.key) {
+        <div class="donnees__row">
+          <span [id]="'pref-' + row.key" class="donnees__row-label">{{ row.label | T }}</span>
+          <button type="button" class="donnees-switch" role="switch" [attr.aria-labelledby]="'pref-' + row.key"
+                  [class.donnees-switch--on]="p[row.key]" [attr.aria-checked]="p[row.key]"
+                  (click)="toggle(row.key)"><span class="donnees-switch__knob"></span></button>
+        </div>
+      }
+      <p class="donnees__note">{{ 'mes_donnees.email_always' | T }}</p>
+    }
+  </section>
+
+  <section class="card donnees__card">
+    <h2 class="donnees__heading">{{ 'mes_donnees.blocked_title' | T }}</h2>
+    @if (blocked(); as list) {
+      @if (list.length === 0) {
+        <p class="donnees__intro">{{ 'mes_donnees.blocked_empty' | T }}</p>
+      }
+      @for (u of list; track u.id) {
+        <div class="donnees__row">
+          <span class="donnees__avatar">{{ u.name[0]?.toUpperCase() }}</span>
+          <span class="donnees__row-label">{{ u.name }}</span>
+          <button type="button" class="btn-outline donnees__btn" (click)="unblock(u)">{{ 'mes_donnees.unblock' | T }}</button>
+        </div>
+      }
+    }
+  </section>
+
+  <section class="card donnees__card">
+    <h2 class="donnees__heading">{{ 'mes_donnees.export_title' | T }}</h2>
+    <p class="donnees__intro">{{ 'mes_donnees.export_intro' | T }}</p>
+    <button type="button" class="btn-primary donnees__btn" [disabled]="exporting()" (click)="download()">{{ 'mes_donnees.export_btn' | T }}</button>
+  </section>
+
+  <section class="card donnees__card">
+    <h2 class="donnees__heading">{{ 'mes_donnees.cookies_title' | T }}</h2>
+    <p class="donnees__intro">{{ 'cookie_consent.settings_intro' | T }}</p>
+    <button type="button" class="btn-outline donnees__btn" (click)="cookieConsent.openSettings()">{{ 'mes_donnees.cookies_btn' | T }}</button>
+  </section>
+</div>

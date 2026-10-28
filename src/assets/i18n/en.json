@@ -740,7 +740,28 @@
     "id_verification_approved": "Identity verified",
     "id_verification_rejected": "Request declined. You can submit a new one."
   },
+  "mes_donnees": {
+    "title": "My data & privacy",
+    "email_title": "E-mail notifications",
+    "email_intro": "Choose which e-mails you want to receive from us. In-app notifications are not affected.",
+    "email_messages": "First message about one of my listings",
+    "email_saved_searches": "New listing matching a saved search",
+    "email_listing_reminders": "My listing is about to expire or has expired",
+    "email_always": "You always receive important account e-mails (confirmation, password) and e-mails about the review of your listings.",
+    "blocked_title": "Blocked users",
+    "blocked_empty": "You have not blocked anyone.",
+    "unblock": "Unblock",
+    "export_title": "Download my data",
+    "export_intro": "Download a copy of all the data we hold about your account (profile, listings, messages, favourites and more) as a JSON file.",
+    "export_btn": "Download data",
+    "export_error": "The download failed. Please try again.",
+    "cookies_title": "Cookies",
+    "cookies_btn": "Open cookie settings",
+    "saved": "Saved"
+  },
   "parametres": {
+    "privacy_data": "My data & privacy",
+    "privacy_data_sub": "E-mail notifications, blocked users, data export, cookies",
     "title": "Settings",
     "profile_account": "Profile & Account",
     "profile_account_sub": "Name, phone number, city, profile picture, password",

@@ -1537,7 +1537,28 @@
     "id_verification_approved": "Kimlik doğrulandı",
     "id_verification_rejected": "Talep reddedildi. Yeni bir talep gönderebilirsiniz."
   },
+  "mes_donnees": {
+    "title": "Verilerim ve gizlilik",
+    "email_title": "E-posta bildirimleri",
+    "email_intro": "Hangi e-postaları almak istediğinizi seçin. Uygulama içi bildirimler etkilenmez.",
+    "email_messages": "İlanlarımdan biri hakkındaki ilk mesaj",
+    "email_saved_searches": "Kayıtlı bir aramayla eşleşen yeni ilan",
+    "email_listing_reminders": "İlanımın süresi dolmak üzere veya doldu",
+    "email_always": "Hesapla ilgili önemli e-postaları (doğrulama, şifre) ve ilanlarınızın incelenmesine dair e-postaları her zaman alırsınız.",
+    "blocked_title": "Engellenen kullanıcılar",
+    "blocked_empty": "Kimseyi engellemediniz.",
+    "unblock": "Engeli kaldır",
+    "export_title": "Verilerimi indir",
+    "export_intro": "Hesabınızla ilgili sakladığımız tüm verilerin (profil, ilanlar, mesajlar, favoriler vb.) bir kopyasını JSON dosyası olarak indirin.",
+    "export_btn": "Verileri indir",
+    "export_error": "İndirme başarısız oldu. Lütfen tekrar deneyin.",
+    "cookies_title": "Çerezler",
+    "cookies_btn": "Çerez ayarlarını aç",
+    "saved": "Kaydedildi"
+  },
   "parametres": {
+    "privacy_data": "Verilerim ve gizlilik",
+    "privacy_data_sub": "E-posta bildirimleri, engellenen kullanıcılar, veri dışa aktarma, çerezler",
     "title": "Ayarlar",
     "profile_account": "Profil & Hesap",
     "profile_account_sub": "Ad, telefon, şehir, profil fotoğrafı, şifre",

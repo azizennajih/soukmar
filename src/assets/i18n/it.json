@@ -641,7 +641,28 @@
     "id_verification_approved": "Identità verificata",
     "id_verification_rejected": "Richiesta rifiutata. Puoi inviarne una nuova."
   },
+  "mes_donnees": {
+    "title": "I miei dati e la privacy",
+    "email_title": "Notifiche via e-mail",
+    "email_intro": "Scegli quali e-mail vuoi ricevere. Le notifiche nell’app non vengono modificate.",
+    "email_messages": "Primo messaggio su uno dei miei annunci",
+    "email_saved_searches": "Nuovo annuncio corrispondente a una ricerca salvata",
+    "email_listing_reminders": "Il mio annuncio sta per scadere o è scaduto",
+    "email_always": "Ricevi sempre le e-mail importanti sull’account (conferma, password) e sulla verifica dei tuoi annunci.",
+    "blocked_title": "Utenti bloccati",
+    "blocked_empty": "Non hai bloccato nessuno.",
+    "unblock": "Sblocca",
+    "export_title": "Scarica i miei dati",
+    "export_intro": "Scarica una copia di tutti i dati che conserviamo sul tuo account (profilo, annunci, messaggi, preferiti e altro) in un file JSON.",
+    "export_btn": "Scarica i dati",
+    "export_error": "Il download non è riuscito. Riprova.",
+    "cookies_title": "Cookie",
+    "cookies_btn": "Apri le impostazioni dei cookie",
+    "saved": "Salvato"
+  },
   "parametres": {
+    "privacy_data": "I miei dati e la privacy",
+    "privacy_data_sub": "Notifiche e-mail, utenti bloccati, esportazione dati, cookie",
     "title": "Impostazioni",
     "profile_account": "Profilo e account",
     "profile_account_sub": "Nome, telefono, città, foto profilo, password",

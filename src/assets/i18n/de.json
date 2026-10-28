@@ -641,7 +641,28 @@
     "id_verification_approved": "Identität verifiziert",
     "id_verification_rejected": "Anfrage abgelehnt. Sie können eine neue Anfrage stellen."
   },
+  "mes_donnees": {
+    "title": "Meine Daten & Datenschutz",
+    "email_title": "E-Mail-Benachrichtigungen",
+    "email_intro": "Wählen Sie, welche E-Mails Sie von uns erhalten möchten. Benachrichtigungen in der App bleiben davon unberührt.",
+    "email_messages": "Erste Nachricht zu einer meiner Anzeigen",
+    "email_saved_searches": "Neue Anzeige zu einer gespeicherten Suche",
+    "email_listing_reminders": "Meine Anzeige läuft bald ab oder ist abgelaufen",
+    "email_always": "Wichtige Mails zum Konto (Bestätigung, Passwort) und zur Prüfung Ihrer Anzeigen erhalten Sie immer.",
+    "blocked_title": "Blockierte Nutzer",
+    "blocked_empty": "Sie haben niemanden blockiert.",
+    "unblock": "Entblocken",
+    "export_title": "Meine Daten herunterladen",
+    "export_intro": "Laden Sie eine Kopie aller Daten herunter, die wir zu Ihrem Konto gespeichert haben (Profil, Anzeigen, Nachrichten, Favoriten u. a.), als JSON-Datei.",
+    "export_btn": "Daten herunterladen",
+    "export_error": "Der Download ist fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "cookies_title": "Cookies",
+    "cookies_btn": "Cookie-Einstellungen öffnen",
+    "saved": "Gespeichert"
+  },
   "parametres": {
+    "privacy_data": "Meine Daten & Datenschutz",
+    "privacy_data_sub": "E-Mail-Benachrichtigungen, blockierte Nutzer, Datenexport, Cookies",
     "title": "Einstellungen",
     "profile_account": "Profil & Konto",
     "profile_account_sub": "Name, Telefonnummer, Stadt, Profilbild, Passwort",

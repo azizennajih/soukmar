@@ -1,0 +1,48 @@
+.donnees {
+  padding: 2.5rem 1.25rem;
+  max-width: 720px;
+
+  &__back { display: inline-block; font-size: .85rem; color: var(--text-muted); text-decoration: none; margin-bottom: 1rem; }
+  &__back:hover { color: var(--primary); }
+
+  &__title { font-size: 1.6rem; font-weight: 800; color: var(--text); margin-bottom: 1.5rem; letter-spacing: -.02em; }
+
+  &__card { padding: 1.5rem; margin-bottom: 1rem; }
+
+  &__heading { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 0 0 .4rem; }
+  &__intro { font-size: .85rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 1rem; }
+  &__note { font-size: .78rem; color: var(--text-muted); line-height: 1.5; margin: .9rem 0 0; }
+
+  &__row {
+    display: flex; align-items: center; gap: .8rem;
+    padding: .7rem 0; border-top: 1px solid var(--border);
+  }
+  &__row:first-of-type { border-top: none; }
+  &__row-label { flex: 1; min-width: 0; font-size: .9rem; color: var(--text); }
+
+  &__avatar {
+    flex-shrink: 0; width: 2rem; height: 2rem; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--primary-light); color: var(--primary); font-weight: 700; font-size: .85rem;
+  }
+
+  &__btn { padding: .55rem 1.1rem; font-size: .85rem; white-space: nowrap; }
+}
+
+.donnees-switch {
+  position: relative; flex-shrink: 0; width: 2.6rem; height: 1.5rem; padding: 0;
+  border: none; border-radius: 999px; background: var(--border); cursor: pointer; transition: background .15s;
+
+  &--on { background: var(--primary); }
+
+  &__knob {
+    position: absolute; top: .2rem; left: .2rem; width: 1.1rem; height: 1.1rem;
+    border-radius: 50%; background: var(--white); box-shadow: var(--shadow); transition: transform .15s;
+  }
+  &--on &__knob { transform: translateX(1.1rem); }
+
+  &:focus-visible { outline: 2px solid var(--secondary); outline-offset: 2px; }
+}
+
+:host-context([dir='rtl']) .donnees-switch__knob { left: auto; right: .2rem; }
+:host-context([dir='rtl']) .donnees-switch--on .donnees-switch__knob { transform: translateX(-1.1rem); }
