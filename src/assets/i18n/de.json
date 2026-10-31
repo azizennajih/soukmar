@@ -550,7 +550,11 @@
     "group_manage": "Verwalten",
     "group_system": "System"
   },
-  "mes_annonces": {
+  "mes_annonces": {
+
+    "search_placeholder": "Meine Anzeigen durchsuchen…",
+
+    "search_no_match": "Keine Anzeige gefunden.",
     "title": "Meine Anzeigen",
     "new": "Neue Anzeige",
     "empty": "Noch keine Anzeigen",

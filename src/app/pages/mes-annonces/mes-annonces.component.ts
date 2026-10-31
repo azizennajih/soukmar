@@ -33,9 +33,18 @@ export class MesAnnoncesComponent implements OnInit {
   statsData: Record<string, { date: string; count: number }[]> = {};
   funnelData: Record<string, { views: number; favorites: number; contacts: number; offers: number; offersAccepted: number }> = {};
   sortBy: SortKey = '';
+  searchTerm = '';
+
+  /** Case-insensitive match on title, description, city and category label. */
+  private matchesSearch(l: Listing): boolean {
+    const q = this.searchTerm.trim().toLowerCase();
+    if (!q) return true;
+    const cat = this.i18n.t('cats.' + l.category).toLowerCase();
+    return [l.title, l.description, l.city, cat].some(v => (v ?? '').toLowerCase().includes(q));
+  }
 
   get sortedListings(): Listing[] {
-    const sorted = [...this.listings];
+    const sorted = this.listings.filter(l => this.matchesSearch(l));
     switch (this.sortBy) {
       case 'oldest':
         return sorted.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());

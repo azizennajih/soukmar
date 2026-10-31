@@ -3,10 +3,15 @@
   <div class="mes-annonces__header">
     <div>
       <h1>{{ 'mes_annonces.title' | T }}</h1>
-      <p>{{ listings.length }}</p>
+      <p>@if (searchTerm.trim()) { {{ sortedListings.length }} / }{{ listings.length }}</p>
     </div>
     <div class="mes-annonces__header-actions">
       @if (listings.length > 0) {
+        <div class="mes-annonces__search">
+          <app-icon name="search" [size]="16" />
+          <input type="search" name="search" [(ngModel)]="searchTerm" [placeholder]="'mes_annonces.search_placeholder' | T"
+                 [attr.aria-label]="'mes_annonces.search_placeholder' | T" autocomplete="off" />
+        </div>
         <div class="mes-annonces__sort">
           <label for="mes-annonces-sort">{{ 'annonces.sort' | T }}</label>
           <select id="mes-annonces-sort" [(ngModel)]="sortBy">
@@ -33,6 +38,9 @@
     </div>
   } @else {
     <div class="mes-annonces__list">
+      @if (sortedListings.length === 0) {
+        <div class="mes-annonces__no-match">{{ 'mes_annonces.search_no_match' | T }}</div>
+      }
       @for (listing of sortedListings; track listing.id) {
         <div class="listing-row card">
           <!-- Thumb -->

@@ -160,3 +160,12 @@
 
   &-reason { overflow-wrap: anywhere; white-space: pre-wrap; }
 }
+
+.mes-annonces__search {
+  display: flex; align-items: center; gap: .5rem; padding: 0 .75rem;
+  background: var(--white); border: 1px solid var(--border); border-radius: .75rem; color: var(--text-muted);
+  &:focus-within { border-color: var(--primary); }
+  input { border: 0; outline: 0; background: transparent; padding: .6rem 0; min-width: 12rem; font: inherit; color: var(--text); }
+  @media (max-width: 640px) { flex: 1 1 100%; input { flex: 1; min-width: 0; } }
+}
+.mes-annonces__no-match { padding: 2rem 1rem; text-align: center; color: var(--text-muted); }

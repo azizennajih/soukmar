@@ -1446,7 +1446,11 @@
     "success_title_resubmit": "Modifications soumises !",
     "success_sub_resubmit": "Votre annonce va être vérifiée à nouveau et sera de nouveau en ligne dès sa validation. Nous vous préviendrons par e-mail."
   },
-  "mes_annonces": {
+  "mes_annonces": {
+
+    "search_placeholder": "Rechercher dans mes annonces…",
+
+    "search_no_match": "Aucune annonce trouvée.",
     "title": "Mes annonces",
     "new": "Nouvelle annonce",
     "empty": "Aucune annonce pour le moment",

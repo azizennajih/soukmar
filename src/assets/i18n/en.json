@@ -649,7 +649,11 @@
     "success_title_resubmit": "Changes submitted!",
     "success_sub_resubmit": "Your listing will be reviewed again and goes back online once it is approved. We will let you know by e-mail."
   },
-  "mes_annonces": {
+  "mes_annonces": {
+
+    "search_placeholder": "Search my listings…",
+
+    "search_no_match": "No listing found.",
     "title": "My listings",
     "new": "New listing",
     "empty": "No listings yet",

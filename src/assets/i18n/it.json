@@ -550,7 +550,11 @@
     "group_manage": "Gestione",
     "group_system": "Sistema"
   },
-  "mes_annonces": {
+  "mes_annonces": {
+
+    "search_placeholder": "Cerca nei miei annunci…",
+
+    "search_no_match": "Nessun annuncio trovato.",
     "title": "I miei annunci",
     "new": "Nuovo annuncio",
     "empty": "Ancora nessun annuncio",

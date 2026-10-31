@@ -1446,7 +1446,11 @@
     "success_title_resubmit": "Değişiklikler gönderildi!",
     "success_sub_resubmit": "İlanınız yeniden incelenecek ve onaylandıktan sonra tekrar yayına girecek. Size e-posta ile haber vereceğiz."
   },
-  "mes_annonces": {
+  "mes_annonces": {
+
+    "search_placeholder": "İlanlarımda ara…",
+
+    "search_no_match": "İlan bulunamadı.",
     "title": "İlanlarım",
     "new": "Yeni ilan",
     "empty": "Şu anda ilan yok",

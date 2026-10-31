@@ -1446,7 +1446,11 @@
     "success_title_resubmit": "Alterações enviadas!",
     "success_sub_resubmit": "O seu anúncio será analisado novamente e voltará a ficar online após a aprovação. Avisamos por e-mail."
   },
-  "mes_annonces": {
+  "mes_annonces": {
+
+    "search_placeholder": "Pesquisar nos meus anúncios…",
+
+    "search_no_match": "Nenhum anúncio encontrado.",
     "title": "Meus anúncios",
     "new": "Novo anúncio",
     "empty": "Nenhum anúncio no momento",
