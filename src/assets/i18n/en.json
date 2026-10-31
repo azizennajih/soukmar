@@ -1884,6 +1884,12 @@
     "allow_resubmit": "The user may edit the listing and submit it again",
     "send_decision": "Send decision",
     "confirm_approve": "Approve the listing “{title}” now? It becomes publicly visible immediately and the user gets an e-mail.",
+
+    "bulk_approve": "Approve all",
+
+    "confirm_bulk_approve": "Approve all waiting listings ({count}) now? They become publicly visible immediately. High-risk listings stay in the queue. No e-mails are sent.",
+
+    "done_bulk_approve": "{approved} listings approved, {skipped} high-risk skipped.",
     "confirm_requeue": "Put the listing back in the queue? It will no longer be public.",
     "done_approve": "Listing approved.",
     "done_reject": "Listing rejected.",

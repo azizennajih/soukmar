@@ -1884,6 +1884,12 @@
     "allow_resubmit": "Der Nutzer darf die Anzeige bearbeiten und erneut einreichen",
     "send_decision": "Entscheidung senden",
     "confirm_approve": "Anzeige „{title}“ jetzt freigeben? Sie wird sofort öffentlich sichtbar und der Nutzer erhält eine E-Mail.",
+
+    "bulk_approve": "Alle freigeben",
+
+    "confirm_bulk_approve": "Alle wartenden Anzeigen ({count}) jetzt freigeben? Sie werden sofort öffentlich sichtbar. Anzeigen mit hohem Risiko bleiben in der Warteschlange. Es werden keine E-Mails gesendet.",
+
+    "done_bulk_approve": "{approved} Anzeigen freigegeben, {skipped} mit hohem Risiko übersprungen.",
     "confirm_requeue": "Anzeige zurück in die Warteschlange stellen? Sie ist danach nicht mehr öffentlich.",
     "done_approve": "Anzeige freigegeben.",
     "done_reject": "Anzeige abgelehnt.",

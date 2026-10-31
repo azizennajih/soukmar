@@ -318,6 +318,25 @@ export class ModerationComponent implements OnInit, OnChanges {
     await this.decide(action, this.reason.trim(), action === 'reject' ? this.allowResubmit : undefined);
   }
 
+  /** Admin only: approves every waiting listing at once (the server skips high-risk ones and sends no e-mails). */
+  async approveAll() {
+    const count = this.summary()?.pending ?? 0;
+    if (!count) return;
+    const ok = await this.dialog.confirm({ message: this.i18n.t('moderation.confirm_bulk_approve', { count: String(count) }), confirmLabel: this.i18n.t('moderation.bulk_approve') });
+    if (!ok) return;
+    this.busy.set(true);
+    try {
+      const res = await firstValueFrom(this.api.post<{ approved: number; skippedHighRisk: number }>('/admin/moderation/approve-all', {}));
+      this.toast.success(this.i18n.t('moderation.done_bulk_approve', { approved: String(res.approved), skipped: String(res.skippedHighRisk) }));
+      this.decided.emit();
+      this.loadSummary();
+      this.loadQueue();
+    } catch {
+      this.toast.error(this.i18n.t('auth.generic_error'));
+    }
+    this.busy.set(false);
+  }
+
   /** Sends a decision. `expectedStatus` makes the server refuse it when another reviewer decided in the meantime. */
   private async decide(action: ModerationAction, reason?: string, allowResubmit?: boolean) {
     const d = this.detail();

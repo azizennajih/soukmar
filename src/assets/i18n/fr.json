@@ -1884,6 +1884,12 @@
     "allow_resubmit": "L'utilisateur peut modifier l'annonce et la soumettre à nouveau",
     "send_decision": "Envoyer la décision",
     "confirm_approve": "Valider l'annonce « {title} » maintenant ? Elle sera immédiatement visible publiquement et l'utilisateur recevra un e-mail.",
+
+    "bulk_approve": "Tout approuver",
+
+    "confirm_bulk_approve": "Approuver maintenant toutes les annonces en attente ({count}) ? Elles deviennent immédiatement publiques. Les annonces à risque élevé restent dans la file. Aucun e-mail n'est envoyé.",
+
+    "done_bulk_approve": "{approved} annonces approuvées, {skipped} à risque élevé ignorées.",
     "confirm_requeue": "Remettre l'annonce dans la file d'attente ? Elle ne sera plus publique.",
     "done_approve": "Annonce validée.",
     "done_reject": "Annonce refusée.",

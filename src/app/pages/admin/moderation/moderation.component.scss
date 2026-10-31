@@ -438,3 +438,5 @@ button.mod-kpi { cursor: pointer; &:hover { box-shadow: var(--shadow-md); } }
     &__title { white-space: normal; }
   }
 }
+
+.mod__bulk { display: flex; justify-content: flex-end; margin-bottom: .75rem; }

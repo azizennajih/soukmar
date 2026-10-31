@@ -1884,6 +1884,12 @@
     "allow_resubmit": "Kullanıcı ilanı düzenleyip yeniden gönderebilir",
     "send_decision": "Kararı gönder",
     "confirm_approve": "“{title}” ilanı şimdi onaylansın mı? Hemen herkese açık olur ve kullanıcıya e-posta gider.",
+
+    "bulk_approve": "Tümünü onayla",
+
+    "confirm_bulk_approve": "Bekleyen tüm ilanlar ({count}) şimdi onaylansın mı? Hemen herkese görünür olur. Yüksek riskli ilanlar kuyrukta kalır. E-posta gönderilmez.",
+
+    "done_bulk_approve": "{approved} ilan onaylandı, {skipped} yüksek riskli atlandı.",
     "confirm_requeue": "İlan kuyruğa geri alınsın mı? Artık herkese açık olmayacak.",
     "done_approve": "İlan onaylandı.",
     "done_reject": "İlan reddedildi.",

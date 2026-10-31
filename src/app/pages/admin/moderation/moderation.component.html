@@ -289,6 +289,13 @@
     </div>
 
     @if (view() === 'queue') {
+      @if (filterStatus === 'PENDING' && (summary()?.pending ?? 0) > 0) {
+        <div class="mod__bulk">
+          <button type="button" class="btn-primary mod-btn" [disabled]="busy()" (click)="approveAll()">
+            <app-icon name="check" [size]="15" /> {{ 'moderation.bulk_approve' | T }} ({{ summary()?.pending }})
+          </button>
+        </div>
+      }
       <form class="card mod-filters" (ngSubmit)="applyFilters()">
         <div class="mod-filters__field">
           <label for="mf-status">{{ 'moderation.f_status' | T }}</label>

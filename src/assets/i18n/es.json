@@ -1884,6 +1884,12 @@
     "allow_resubmit": "El usuario puede editar el anuncio y volver a enviarlo",
     "send_decision": "Enviar decisión",
     "confirm_approve": "¿Aprobar ahora el anuncio «{title}»? Será visible públicamente de inmediato y el usuario recibirá un correo.",
+
+    "bulk_approve": "Aprobar todo",
+
+    "confirm_bulk_approve": "¿Aprobar ahora todos los anuncios en espera ({count})? Serán visibles públicamente de inmediato. Los anuncios de alto riesgo permanecen en la cola. No se envían correos.",
+
+    "done_bulk_approve": "{approved} anuncios aprobados, {skipped} de alto riesgo omitidos.",
     "confirm_requeue": "¿Devolver el anuncio a la cola? Dejará de ser público.",
     "done_approve": "Anuncio aprobado.",
     "done_reject": "Anuncio rechazado.",

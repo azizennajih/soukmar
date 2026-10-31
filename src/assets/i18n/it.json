@@ -1884,6 +1884,12 @@
     "allow_resubmit": "L'utente può modificare l'annuncio e inviarlo di nuovo",
     "send_decision": "Invia decisione",
     "confirm_approve": "Approvare ora l'annuncio «{title}»? Sarà subito visibile pubblicamente e l'utente riceverà un'e-mail.",
+
+    "bulk_approve": "Approva tutti",
+
+    "confirm_bulk_approve": "Approvare ora tutti gli annunci in attesa ({count})? Diventano subito pubblici. Gli annunci ad alto rischio restano in coda. Non vengono inviate e-mail.",
+
+    "done_bulk_approve": "{approved} annunci approvati, {skipped} ad alto rischio saltati.",
     "confirm_requeue": "Rimettere l'annuncio in coda? Non sarà più pubblico.",
     "done_approve": "Annuncio approvato.",
     "done_reject": "Annuncio rifiutato.",
