@@ -1,0 +1,40 @@
+.social {
+  &__sep {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin: 1.25rem 0 1rem;
+    color: var(--text-muted);
+    font-size: .85rem;
+
+    &::before, &::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .6rem;
+  }
+
+  &__google { min-height: 40px; }
+
+  &__fb {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    width: 100%;
+    max-width: 320px;
+    padding: .6rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: .75rem;
+    background: var(--white);
+    color: var(--text);
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover { background: var(--bg); }
+    &:disabled { opacity: .6; cursor: default; }
+  }
+}

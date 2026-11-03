@@ -9,10 +9,11 @@ import { I18nService } from '../../../services/i18n.service';
 import { TranslatePipe } from '../../../pipes/translate.pipe';
 import { PasswordInputComponent } from '../../../components/password-input/password-input.component';
 import { IconComponent } from '../../../components/icon/icon.component';
+import { SocialLoginComponent } from '../../../components/social-login/social-login.component';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, TranslatePipe, PasswordInputComponent, IconComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, TranslatePipe, PasswordInputComponent, IconComponent, SocialLoginComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -48,6 +49,16 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /** Back to the page the visitor wanted (e.g. the listing wizard) instead of always the home page. */
+  goBack() {
+    this.storage.removeItem(SIGNUP_EMAIL_KEY);
+    const saved = this.cameFromConfirmation ? this.storage.getItem(RETURN_URL_KEY) : null;
+    const back = this.auth.takeReturnUrl() ?? saved;
+    this.storage.removeItem(RETURN_URL_KEY);
+    if (back) this.router.navigateByUrl(back);
+    else this.router.navigate(this.i18n.withLang(['/']));
+  }
+
   async submit() {
     if (!this.email || !this.password) { this.error = this.i18n.t('auth.fill_all_fields'); return; }
     this.loading = true;
@@ -56,13 +67,7 @@ export class LoginComponent implements OnInit {
     try {
       const result = await this.auth.login(this.email, this.password);
       if (result.ok) {
-        this.storage.removeItem(SIGNUP_EMAIL_KEY);
-        // Back to the page the visitor wanted (e.g. the listing wizard) instead of always the home page.
-        const saved = this.cameFromConfirmation ? this.storage.getItem(RETURN_URL_KEY) : null;
-        const back = this.auth.takeReturnUrl() ?? saved;
-        this.storage.removeItem(RETURN_URL_KEY);
-        if (back) this.router.navigateByUrl(back);
-        else this.router.navigate(this.i18n.withLang(['/']));
+        this.goBack();
       } else if (result.unverified) {
         this.unverifiedEmail = this.email;
         this.error = result.error || this.i18n.t('auth.unverified_error');

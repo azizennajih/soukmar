@@ -141,6 +141,17 @@ export class AuthService {
       });
   }
 
+  /** Which social-login providers the server has configured (provider → public client/app id). */
+  socialProviders(): Promise<{ google?: string; facebook?: string }> {
+    return fetch(`${BASE}/auth/social/providers`).then(r => (r.ok ? r.json() : {})).catch(() => ({}));
+  }
+
+  loginSocial(provider: 'google' | 'facebook', token: string): Promise<{ ok: boolean; error?: string }> {
+    return this.postJson<{ user: AuthUser; token: string }>('/auth/social', { provider, token, client: 'web', lang: this.i18n.lang() })
+      .then(res => { this.setSession(res.user, res.token); return { ok: true }; })
+      .catch(e => ({ ok: false, error: typeof (e as Record<string, unknown>)['error'] === 'string' ? (e as { error: string }).error : this.i18n.t('auth.social_error') }));
+  }
+
   private postJson<T>(path: string, body: unknown): Promise<T> {
     return fetch(`${BASE}${path}`, {
       method: 'POST',

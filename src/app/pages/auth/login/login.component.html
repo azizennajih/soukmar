@@ -60,6 +60,8 @@
       </button>
     </form>
 
+    <app-social-login (signedIn)="goBack()" />
+
     <p class="auth-switch">
       {{ 'auth.no_account' | T }}
       <a routerLink="/auth/register">{{ 'auth.register_link' | T }}</a>

@@ -1,152 +1,40 @@
-# SoukMar — Claude Working Guide
+# SoukMar (Web) — Claude Working Guide
 
-## Project
-Marokkanisches Kleinanzeigen-Portal (wie Avito/Leboncoin).  
-**Stack:** Angular 22 (zoneless, OnPush) · Node/Express · PostgreSQL · Prisma · Cloudinary  
-**Pfad:** `C:\AIProjekte\soukmar`  
-**GitHub:** github.com/azizennajih/soukmar  
-**Dev-Server:** `npm start` im Projektverzeichnis (Port 4200)
+Marokkanisches Kleinanzeigen-Portal. **Stack:** Angular 22 (zoneless, OnPush, standalone) · Node/Express (`../soukmar-backend`) · PostgreSQL · Prisma · Cloudinary
+**Pfad:** `C:\AIProjekte\soukmar` · **GitHub:** github.com/azizennajih/soukmar · **Dev:** `npm start` (Port 4200) · Build: `npx ng build`
+Backend, Android und iOS haben eigene `CLAUDE.md` (Backend: Tests, Moderation, API-Meldungen, Deployment).
 
----
+## Design — immer einhalten
+- Farben, Radius, Schatten stehen als CSS-Variablen in `src/styles.scss` (`--primary` #D93D4A, `--secondary`, `--gold`, `--text`, `--text-muted`, `--border`, `--bg`, `--white`, `--radius`). **Nur diese nutzen, keine neuen oder hardcodierten Farben.**
+- Preise nie rot/fett-900: `color: var(--text)`, `font-weight: 700`.
+- Fonts: Inter (Body), Plus Jakarta Sans (h1–h5). Abstände in `rem` (px nur für 1px-Borders). Inputs/Buttons `.75rem` Radius, Pills `999px`. Container `.container` (max 1280px).
+- Globale Klassen (nicht neu schreiben): `.btn-primary .btn-outline .btn-ghost .card .badge-* .container .section .grid-2/3/4 .form-group .input-icon-wrap .empty-state .fade-in .auth-page .auth-card .auth-form`; Kategorie-Badges `.cat-<farbe>` (siehe `styles.scss`).
+- Breakpoints: 480 / 640 / 768 / 1024 px (max-width).
+- SCSS in BEM (`.navbar__logo`). Keine inline-Styles im Template.
 
-## Design System — IMMER einhalten
+## i18n
+- **11 Sprachen:** ar, de, en, es, fa, fr, it, ps, pt, tr, ur — `src/assets/i18n/<lang>.json`, **lazy** geladen (`I18nService.load()`); nie statisch importieren.
+- Texte: `| T` (TranslatePipe in `imports` eintragen) oder `this.i18n.t('key')`. Keine hardcodierten Strings. Neue Schlüssel in **alle 11** Dateien.
+- RTL (`ar`, `fa`, `ur`, `ps`) setzt `I18nService` automatisch.
+- Kategorien: `('cats.' + cat.value) | T`. Unterkategorien/Attribute: `subcats.<code>`, `attrs.<code>`, `attrs.opts.<option>` (Labels nie aus der DB).
+- Zeit/Preis: `timeAgo()`, `formatPrice()` aus `listing.model.ts`. Anzeigenfotos immer `| imageUrl:<Breite>`.
 
-### Farben (CSS-Variablen aus `src/styles.scss`)
-| Variable          | Wert        | Verwendung                                |
-|-------------------|-------------|-------------------------------------------|
-| `--primary`       | `#D93D4A`   | Buttons, CTAs, Logo, Hover — sparsam      |
-| `--primary-dark`  | `#B8313C`   | Hover-Zustand für Primary                 |
-| `--primary-light` | `#FEF1F2`   | Hintergrund für Primär-Highlights         |
-| `--gold`          | `#C9941A`   | Premium-Badges, Featured-Akzent           |
-| `--gold-light`    | `#FEF6E4`   | Hintergrund für Gold-Highlights           |
-| `--secondary`     | `#1E3A5F`   | Navbar-Topbar, sekundäre Elemente         |
-| `--text`          | `#111827`   | Haupttext                                 |
-| `--text-muted`    | `#6B7280`   | Sekundärtext, Placeholder                 |
-| `--border`        | `#E5E9EE`   | Rahmen, Trennlinien                       |
-| `--bg`            | `#F8F7F5`   | Seitenhintergrund (leicht warm)           |
-| `--white`         | `#FFFFFF`   | Karten, Overlays                          |
-| `--radius`        | `.875rem`   | Standard-Borderradius                     |
+## Angular
+`OnPush` + `cdr.markForCheck()` nach async Daten · Signals/`computed` bevorzugen · Standalone, kein NgModule, kein zone.js.
+Keine `alert()/confirm()/prompt()`: `ToastService` (`toast.error/success/info`) und `DialogService` (`await dialog.confirm({message, danger})`).
 
-**WICHTIG:** Preise NIEMALS rot oder fett-900 — immer `color: var(--text)`, `font-weight: 700`.  
-**Hardcoded Farben vermeiden** — immer CSS-Variablen nutzen.  
-**Niemals neue Farben erfinden** — nur die obige Palette verwenden.
+## Fachliches
+- **Attribut-System (EAV):** Kategorie → `Subcategory` → `AttributeDefinition`; Werte in `ListingAttributeValue`. Katalog über `/api/catalog/*` und `CatalogService`; Suchfilter `attr_<CODE>`, `attr_<CODE>_min/_max`.
+- **Moderation:** Neue Anzeigen sind `PENDING`, öffentlich erst nach Freigabe. Status nur über `/api/admin/moderation/*` ändern. Admin-UI `src/app/pages/admin/moderation/`, Doku `docs/anzeigenmoderation.md`.
+- **Login:** E-Mail/Passwort + optional Google/Facebook (`components/social-login`, Backend `POST /api/auth/social`). Buttons erscheinen nur, wenn `GOOGLE_CLIENT_ID` bzw. `FACEBOOK_APP_ID`+`FACEBOOK_APP_SECRET` im Backend-`.env` gesetzt sind. Instagram: kein eigener Login mehr (läuft über Facebook); TikTok liefert keine E-Mail. Neue externe Skripte/Frames brauchen einen Eintrag in der CSP in `src/server.ts`.
 
-### Typografie
-- **Body-Font:** Inter (400–700)
-- **Heading-Font:** Plus Jakarta Sans (600–900) — für h1–h5
-- Preise: `font-weight: 700`, `color: var(--text)` — nicht rot, nicht fett-900
-
-<!-- Typografie ist im obigen Block enthalten -->
-
-### Abstände & Größen
-- Spacing-Einheit: `rem` (kein px außer für 1px-Borders)
-- Border-Radius: `--radius` (1rem) Standard · `.75rem` für Inputs/Buttons · `.5rem` für kleine Elemente · `999px` für Pills
-- Standard-Padding Buttons: `.7rem 1.5rem`
-- Container: `max-width: 1280px`, `.container`-Klasse verwenden
-
-### Schatten
-```css
---shadow:    0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);   /* Karten */
---shadow-md: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -1px rgba(0,0,0,.06);
---shadow-lg: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
-```
-
-### Globale Utility-Klassen (aus `styles.scss` — nicht neu schreiben)
-```
-.btn-primary    .btn-outline    .btn-ghost
-.card           .badge          .badge-premium .badge-active .badge-pending .badge-sold .badge-rejected
-.container      .section
-.grid-2         .grid-3         .grid-4
-.form-group     .input-icon-wrap
-.empty-state
-.fade-in
-.auth-page      .auth-card      .auth-logo      .auth-form  (für Auth-Seiten)
-```
-
-### Kategorie-Badge-Farben
-```
-.cat-blue    → Elektronik     .cat-green   → Immobilien
-.cat-purple  → Jobs           .cat-yellow  → Premium/Sonstiges
-.cat-emerald → Dienstleistungen .cat-pink  → Mode
-.cat-orange  → Fahrzeuge      .cat-gray    → Andere
-.cat-teal    → Baby & Kind    .cat-brown   → Haustiere
-.cat-indigo  → Sport & Freizeit
-.cat-cyan    → Unterricht & Kurse
-```
-
-### Dynamisches Attribut-System (EAV)
-Jede Kategorie hat Unterkategorien (`Subcategory`), jede Unterkategorie hat eigene `AttributeDefinition`-Felder (Text/Zahl/Auswahl/Ja-Nein, Pflicht-/Filter-Flag). Werte pro Anzeige liegen in `ListingAttributeValue` (typisierte Spalten `valueText`/`valueNumber`/`valueBoolean`). Labels kommen **nie aus der DB** — immer über i18n: `subcats.<code>`, `attrs.<code>`, `attrs.opts.<optionCode>`. Backend-Katalog-Endpunkte unter `/api/catalog/*`, Frontend-Zugriff über `CatalogService`. Suchfilter nutzen das Query-Schema `attr_<CODE>` (Auswahl/Bool) bzw. `attr_<CODE>_min`/`_max` (Zahl-Bereich).
-
-### Anzeigenmoderation (Freigabe vor Veröffentlichung)
-Neue Anzeigen sind `PENDING` und erst nach Freigabe durch Admin/Moderator öffentlich (`ACTIVE`). Weitere Status: `CHANGES_REQUESTED`, `SUSPENDED`, `REJECTED`. Status werden **nur** über `/api/admin/moderation/*` geändert (Backend: `src/lib/listingModeration.ts`), nie über das normale Bearbeiten. Admin-UI: `src/app/pages/admin/moderation/`. Öffentliche Abfragen müssen nicht freigegebene Anzeigen ausschließen. Details, Env-Variablen und Tests: `docs/anzeigenmoderation.md`.
-
----
-
-## i18n — IMMER berücksichtigen
-
-- **6 Sprachen:** Arabisch (`ar`), Deutsch (`de`), Englisch (`en`), Spanisch (`es`), Französisch (`fr`), Italienisch (`it`)
-- **Service:** `I18nService` (Signal-basiert) — injizieren mit `inject(I18nService)`
-- **Pipe:** `| T` (TranslatePipe, `pure: false`) — für alle UI-Texte im Template
-- **Übersetzungsdateien:** `src/assets/i18n/{ar,de,en,es,fr,it}.json`
-- **Keine hardcodierten Strings** in Templates oder Components — immer `| T` oder `this.i18n.t('key')`
-- **RTL:** Bei `ar` wird `document.documentElement.dir = 'rtl'` automatisch gesetzt
-- **Reaktiv:** `this.i18n.lang()` (Signal) lesen — Angular triggert Re-Render
-- **Performance:** Die Sprachdateien werden pro Sprache **lazy** geladen (`I18nService.load()`, App-Initializer in `app.config.ts`) — nie wieder `import xx from '.../i18n/xx.json'` statisch einbinden (sonst landen alle 11 Sprachen = 1,1 MB im Start-Paket). Anzeigenfotos immer mit `| imageUrl:<Breite>` ausgeben (Cloudinary skaliert), nur das Lightbox-Bild in Originalgröße.
-- Neue Übersetzungsschlüssel **immer in alle 6 JSON-Dateien** eintragen
-- Kategorien: `('cats.' + cat.value) | T` — nie `cat.label` direkt nutzen
-- Zeit/Preis: `timeAgo(date, lang)` und `formatPrice(price, currency, lang)` aus `listing.model.ts`
-
----
-
-## Angular-Konventionen
-
-- **ChangeDetection:** `OnPush` — immer `cdr.markForCheck()` nach async Daten
-- **Signals:** `signal()`, `computed()`, `effect()` bevorzugen
-- **Standalone Components** — kein NgModule
-- **Imports im Component** deklarieren (nicht in app.module)
-- Kein `zone.js` — das Projekt läuft zoneless
-
----
-
-## Code-Konventionen
-
-- SCSS: BEM-Naming (`.navbar__logo`, `.navbar__logo-icon`)
-- Keine inline-Styles im Template
-- Keine neuen Farben außer der Palette
-- `TranslatePipe` immer in `imports: []` des Components eintragen wenn `| T` genutzt wird
-- PowerShell für alle CLI-Befehle (kein Bash auf Windows)
-- **Keine nativen Browser-Fenster** (`alert()`, `confirm()`, `prompt()`): Hinweise über `ToastService` (`toast.error/success/info`), Rückfragen über `DialogService` (`await dialog.confirm({message, danger})`, `await dialog.prompt({message})` → `null` = abgebrochen). Beide Hosts hängen einmal in `app.ts`.
-- Nach jeder Änderung: commit + push zu `github.com/azizennajih/soukmar`
-
----
+## Wichtige Pfade
+`src/styles.scss` · `src/app/services/{i18n,auth}.service.ts` · `src/app/models/listing.model.ts` · `src/app/app.routes.ts` · `src/app/components/{navbar,listing-card,social-login}/` · Katalog-Seed `../soukmar-backend/prisma/catalog-data.ts`
 
 ## Arbeitsweise (Tokens sparen)
-- Große Dateien **nie komplett lesen**: die i18n-JSON-Dateien (je >1500 Zeilen), `package-lock.json`, `docs/phasen-verlauf.md`, Build-Logs. Stattdessen Grep nach dem Schlüssel/Stichwort oder `Read` mit `offset`/`limit`.
-- Erst gezielt suchen (Grep/Glob), dann nur die betroffene Stelle lesen; nicht ganze Ordner durchlesen.
-- Lange Befehlsausgaben filtern (`Select-String`, `| Select-Object -Last 20`), besonders bei Gradle, npm und Tests.
-- Pro Aufgabe eine **neue Sitzung** (`/clear`): ein langer Verlauf wird bei jeder Nachricht mitgetragen. Dauerhaftes Wissen gehört in diese Datei oder ins Memory, nicht in den Chatverlauf.
-
-## Wichtige Dateipfade
-
-| Was | Pfad |
-|-----|------|
-| Global Styles | `src/styles.scss` |
-| i18n (6 Sprachen) | `src/assets/i18n/{ar,de,en,es,fr,it}.json` |
-| Katalog-Daten (Seed) | `soukmar-backend/prisma/catalog-data.ts` |
-| i18n Service | `src/app/services/i18n.service.ts` |
-| TranslatePipe | `src/app/pipes/translate.pipe.ts` |
-| Listing Model | `src/app/models/listing.model.ts` |
-| Navbar | `src/app/components/navbar/` |
-| Listing Card | `src/app/components/listing-card/` |
-| Routes | `src/app/app.routes.ts` |
-
----
-
-## Breakpoints
-
-```
-max-width: 480px   → Mobile klein
-max-width: 640px   → Mobile
-max-width: 768px   → Tablet
-max-width: 1024px  → Desktop klein
-```
+- Große Dateien nie komplett lesen (i18n-JSON >1500 Zeilen, `package-lock.json`, `docs/phasen-verlauf.md`, Build-Logs): Grep oder `Read` mit `offset`/`limit`.
+- Erst gezielt suchen (Grep/Glob), dann nur die betroffene Stelle lesen. Lange Ausgaben filtern (`| tail`, `Select-Object -Last 20`).
+- Pro Aufgabe eine neue Sitzung (`/clear`); dauerhaftes Wissen gehört hierher oder ins Memory.
+- Skripte mit Regex/Backslashes als Datei anlegen statt per `node -e`/Heredoc.
+- Nutzer-Kommunikation Deutsch und kurz; ehrlich berichten, was getestet wurde.
+- Nach jeder Änderung: commit + push zu `github.com/azizennajih/soukmar`. Server-Update macht der Nutzer (`deploy/update.sh`), nie selbst.

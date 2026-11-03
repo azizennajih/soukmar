@@ -29,12 +29,12 @@ app.disable('x-powered-by');
 // emits inline hydration and style blocks.
 const CSP = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
+  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://connect.facebook.net",
   "style-src 'self' 'unsafe-inline'",
   "font-src 'self' data:",
   "img-src 'self' data: blob: https://res.cloudinary.com https://*.tile.openstreetmap.org",
-  "connect-src 'self' https://challenges.cloudflare.com",
-  "frame-src https://challenges.cloudflare.com",
+  "connect-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://*.facebook.com",
+  "frame-src https://challenges.cloudflare.com https://accounts.google.com https://*.facebook.com",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
   "media-src 'self' blob:",
