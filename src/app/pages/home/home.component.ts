@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, effect, untracked } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, effect, untracked, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
@@ -18,14 +18,20 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 import { CityLabelPipe } from '../../pipes/city-label.pipe';
 import { SeoService, SITE_URL } from '../../services/seo.service';
 
+import { SponsorService } from '../../services/sponsor.service';
+import { SponsorBannerComponent } from '../../components/sponsor-banner/sponsor-banner.component';
+import { SponsorRailsComponent } from '../../components/sponsor-rails/sponsor-rails.component';
+
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, ListingCardComponent, CatIconComponent, TranslatePipe, CityLabelPipe, IconComponent],
+  imports: [SponsorBannerComponent, SponsorRailsComponent, CommonModule, RouterLink, LocalizedRouterLinkDirective, ListingCardComponent, CatIconComponent, TranslatePipe, CityLabelPipe, IconComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  /** Advertising banner shown under the latest listings. */
+  inlineBanners = inject(SponsorService).banners('INLINE');
   categories = CATEGORIES;
   private baseGroups = CATEGORY_GROUPS.map(g => ({
     key: g.key,

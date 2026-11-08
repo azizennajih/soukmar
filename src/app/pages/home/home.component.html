@@ -1,4 +1,5 @@
 <div class="fade-in">
+  <app-sponsor-rails />
 
   <!-- ===== HERO ===== -->
   <section class="hero">
@@ -146,6 +147,12 @@
       }
     </div>
   </section>
+
+  @if (inlineBanners()[0]; as banner) {
+    <section class="section">
+      <div class="container"><app-sponsor-banner [banner]="banner" /></div>
+    </section>
+  }
 
   <!-- ===== CITIES ===== -->
   <section class="section section--gray">

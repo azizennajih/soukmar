@@ -78,6 +78,9 @@
         <button class="admin-tab icon-label" [class.active]="tab() === 'campaigns'" (click)="setTab('campaigns')">
           <app-icon name="mail" [size]="16" /> {{ 'campaigns.tab' | T }}
         </button>
+        <button class="admin-tab icon-label" [class.active]="tab() === 'banners'" (click)="setTab('banners')">
+          <app-icon name="star" [size]="16" /> {{ 'admin_banners.tab' | T }}
+        </button>
       }
     </div>
 
@@ -220,6 +223,11 @@
   <!-- ══════════════ CAMPAIGNS (advertising e-mail) ══════════════ -->
   @if (tab() === 'campaigns' && auth.currentUser()?.role === 'ADMIN') {
     <app-admin-campaigns />
+  }
+
+  <!-- ══════════════ BANNERS (advertising / affiliate) ══════════════ -->
+  @if (tab() === 'banners' && auth.currentUser()?.role === 'ADMIN') {
+    <app-admin-banners />
   }
 
   <!-- ══════════════ MODERATION ══════════════ -->

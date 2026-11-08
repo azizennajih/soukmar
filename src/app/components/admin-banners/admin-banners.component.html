@@ -1,0 +1,86 @@
+<div class="banners">
+  <div class="banners__head">
+    <div>
+      <h2>{{ 'admin_banners.title' | T }}</h2>
+      <p class="banners__hint">{{ 'admin_banners.intro' | T }}</p>
+    </div>
+    @if (!form) { <button type="button" class="btn-primary" (click)="newBanner()">{{ 'admin_banners.new' | T }}</button> }
+  </div>
+
+  @if (form; as f) {
+    <form class="card banners__form" (ngSubmit)="save()">
+      <div class="form-group">
+        <label for="bn-name">{{ 'admin_banners.name' | T }}</label>
+        <input id="bn-name" name="name" [(ngModel)]="f.name" required maxlength="100" />
+      </div>
+      <div class="form-group">
+        <label for="bn-placement">{{ 'admin_banners.placement' | T }}</label>
+        <select id="bn-placement" name="placement" [(ngModel)]="f.placement">
+          <option value="INLINE">{{ 'admin_banners.placement_inline' | T }}</option>
+          <option value="SIDE">{{ 'admin_banners.placement_side' | T }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="bn-image">{{ 'admin_banners.image' | T }}</label>
+        <input id="bn-image" type="file" accept="image/*" (change)="onImage($event)" [disabled]="uploading" />
+        @if (f.imageUrl) { <img class="banners__preview" [src]="f.imageUrl | imageUrl:480" alt="" /> }
+      </div>
+      <div class="form-group">
+        <label for="bn-link">{{ 'admin_banners.link' | T }}</label>
+        <input id="bn-link" name="linkUrl" type="url" [(ngModel)]="f.linkUrl" required placeholder="https://" />
+      </div>
+      <div class="form-group">
+        <label for="bn-alt">{{ 'admin_banners.alt' | T }}</label>
+        <input id="bn-alt" name="altText" [(ngModel)]="f.altText" maxlength="150" />
+      </div>
+      <div class="form-group">
+        <label for="bn-countries">{{ 'admin_banners.countries' | T }}</label>
+        <input id="bn-countries" name="countries" [(ngModel)]="f.countries" placeholder="MA, DE, FR" />
+        <small>{{ 'admin_banners.countries_hint' | T }}</small>
+      </div>
+      <div class="banners__row">
+        <div class="form-group">
+          <label for="bn-start">{{ 'admin_banners.starts' | T }}</label>
+          <input id="bn-start" name="startsAt" type="date" [(ngModel)]="f.startsAt" />
+        </div>
+        <div class="form-group">
+          <label for="bn-end">{{ 'admin_banners.ends' | T }}</label>
+          <input id="bn-end" name="endsAt" type="date" [(ngModel)]="f.endsAt" />
+        </div>
+        <div class="form-group">
+          <label for="bn-sort">{{ 'admin_banners.sort' | T }}</label>
+          <input id="bn-sort" name="sortOrder" type="number" [(ngModel)]="f.sortOrder" />
+        </div>
+      </div>
+      <label class="banners__check"><input type="checkbox" name="active" [(ngModel)]="f.active" /> {{ 'admin_banners.active' | T }}</label>
+      <div class="banners__actions">
+        <button type="submit" class="btn-primary" [disabled]="saving || uploading || !f.imageUrl || !f.name || !f.linkUrl">{{ 'admin_banners.save' | T }}</button>
+        <button type="button" class="btn-outline" (click)="cancel()">{{ 'admin_banners.cancel' | T }}</button>
+      </div>
+    </form>
+  }
+
+  @if (!loading && banners.length === 0 && !form) {
+    <p class="banners__hint">{{ 'admin_banners.empty' | T }}</p>
+  }
+
+  <div class="banners__list">
+    @for (b of banners; track b.id) {
+      <div class="card banners__item">
+        <img class="banners__thumb" [src]="b.imageUrl | imageUrl:240" [alt]="b.altText" />
+        <div class="banners__info">
+          <strong>{{ b.name }}</strong>
+          <span>{{ (b.placement === 'SIDE' ? 'admin_banners.placement_side' : 'admin_banners.placement_inline') | T }}
+            · {{ b.countries.length ? b.countries.join(', ') : ('admin_banners.all_countries' | T) }}</span>
+          <span>{{ 'admin_banners.clicks' | T }}: {{ b.clicks }}</span>
+          <span class="banners__status" [class.banners__status--on]="b.active">{{ (b.active ? 'admin_banners.status_active' : 'admin_banners.status_off') | T }}</span>
+        </div>
+        <div class="banners__buttons">
+          <button type="button" class="btn-outline" (click)="toggle(b)">{{ (b.active ? 'admin_banners.turn_off' : 'admin_banners.turn_on') | T }}</button>
+          <button type="button" class="btn-outline" (click)="edit(b)">{{ 'admin_banners.edit' | T }}</button>
+          <button type="button" class="btn-outline banners__danger" (click)="remove(b)">{{ 'admin_banners.delete' | T }}</button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -32,6 +32,7 @@ Keine `alert()/confirm()/prompt()`: `ToastService` (`toast.error/success/info`) 
 - **Neue Seite:** Route in `app.routes.ts` (+ `PRIVATE_PATHS`, falls Login-Seite) **und** in `app.routes.server.ts` (`CLIENT_ONLY_PATHS` bei privaten Seiten) eintragen und im Backend `src/lib/sitemap.ts` (`DISALLOWED_PATHS`). Der Dev-Server liest `app.routes.server.ts` nur beim Start: sonst 404 → `ng serve` neu starten.
 - **i18n-JSON** haben CRLF und mehr als 4000 Zeilen: nie mit `JSON.stringify` neu schreiben (riesiger Diff), neue Blöcke per Skript vor der letzten `}` anhängen und mit `JSON.parse` prüfen.
 - **Dateiauswahl testen:** im Browser-Test `.import input[type=file]` o. Ä. gezielt wählen; das erste `input[type=file]` der Seite ist die Foto-Suche der Navbar.
+- **Werbe-/Affiliate-Banner:** im Admin-Tab "Banner" (`components/admin-banners`) verwaltet; angezeigt über `SponsorService` (`banners(placement)` je Land), `app-sponsor-rails` (links/rechts, nur ab 1700 px) und `app-sponsor-banner` (INLINE nach jeder 8. Anzeige und auf der Startseite). Immer mit Label `sponsor.label` und `rel="sponsored"`; nur Cloudinary-Bilder (CSP). Backend siehe `soukmar-backend/CLAUDE.md`.
 - **Händler-Import:** Seite `pages/import-annonces/` (CSV-Parser `csv.ts`), Backend siehe `soukmar-backend/CLAUDE.md`.
 
 ## Wichtige Pfade

@@ -1,4 +1,5 @@
 <div class="annonces container fade-in">
+  <app-sponsor-rails />
 
   <!-- Mobile filter toggle -->
   <button class="mobile-filter-toggle" (click)="filterOpen = !filterOpen">
@@ -269,8 +270,11 @@
           <app-listings-map [listings]="listings" />
         } @else {
           <div class="grid-3">
-            @for (listing of listings; track listing.id) {
+            @for (listing of listings; track listing.id; let i = $index) {
               <app-listing-card [listing]="listing" [initialFav]="isFav(listing)" />
+              @if ((i + 1) % adsEvery === 0 && i < listings.length - 1 && inlineBanners().length > 0) {
+                <app-sponsor-banner class="grid-3__wide" [banner]="inlineBanners()[((i + 1) / adsEvery - 1) % inlineBanners().length]" />
+              }
             }
           </div>
         }

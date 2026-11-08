@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, effect } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
@@ -26,9 +26,13 @@ import { I18nService } from '../../services/i18n.service';
 
 interface SubcategoryOption { id: string; code: string; }
 
+import { SponsorService } from '../../services/sponsor.service';
+import { SponsorBannerComponent } from '../../components/sponsor-banner/sponsor-banner.component';
+import { SponsorRailsComponent } from '../../components/sponsor-rails/sponsor-rails.component';
+
 @Component({
   selector: 'app-annonces',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, ListingCardComponent, ListingsMapComponent, CitySelectComponent, CatIconComponent, MultiSelectComponent, TextAutocompleteComponent, TranslatePipe, IconComponent],
+  imports: [SponsorBannerComponent, SponsorRailsComponent, CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, ListingCardComponent, ListingsMapComponent, CitySelectComponent, CatIconComponent, MultiSelectComponent, TextAutocompleteComponent, TranslatePipe, IconComponent],
   templateUrl: './annonces.component.html',
   styleUrl: './annonces.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -78,6 +82,11 @@ export class AnnoncesComponent implements OnInit {
     const sub = this.subcategoryOptions.find(s => s.id === this.filters.souscategorie);
     return !sub || !NO_CONDITION_SUBCATEGORIES.includes(sub.code);
   }
+
+  /** Advertising banners shown between the results (after every ADS_EVERY-th listing). */
+  private sponsors = inject(SponsorService);
+  inlineBanners = this.sponsors.banners('INLINE');
+  readonly adsEvery = 8;
 
   filters = { q: '', categorie: '', souscategorie: '', ville: '', minPrix: '', maxPrix: '', condition: '', tri: '', radius: '', lat: '', lng: '', accountType: '', intent: '', pays: '' };
 

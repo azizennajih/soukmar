@@ -1,0 +1,19 @@
+:host { display: block; }
+
+.sponsor {
+  position: relative;
+  display: block;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--white);
+
+  &__label {
+    position: absolute; top: .4rem; inset-inline-start: .4rem;
+    padding: .1rem .5rem; border-radius: 999px;
+    background: rgba(0,0,0,.55); color: #fff;
+    font-size: .65rem; font-weight: 600; letter-spacing: .02em;
+  }
+
+  &__img { display: block; width: 100%; height: auto; }
+}

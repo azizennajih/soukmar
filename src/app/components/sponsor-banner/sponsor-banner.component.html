@@ -1,0 +1,4 @@
+<a class="sponsor" [href]="banner().linkUrl" target="_blank" rel="sponsored noopener noreferrer" (click)="onClick()">
+  <span class="sponsor__label">{{ 'sponsor.label' | T }}</span>
+  <img class="sponsor__img" [src]="banner().imageUrl | imageUrl:width()" [alt]="banner().altText" loading="lazy" />
+</a>

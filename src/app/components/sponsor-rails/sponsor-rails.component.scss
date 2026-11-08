@@ -1,0 +1,16 @@
+// The page content is at most 1280px wide and centred; each rail (160px) sits in the free space beside it, so there
+// has to be 2 × (160 + 40) px on top of that: below that width the rails are hidden.
+.rail {
+  display: none;
+
+  @media (min-width: 1700px) {
+    display: block;
+    position: fixed;
+    top: 9rem;
+    width: 160px;
+    z-index: 5;
+
+    &--left { left: calc(50% - 640px - 160px - 1.5rem); }
+    &--right { left: calc(50% + 640px + 1.5rem); }
+  }
+}

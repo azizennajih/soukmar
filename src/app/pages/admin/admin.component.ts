@@ -24,6 +24,7 @@ import { FlagIconComponent } from '../../components/flag-icon/flag-icon.componen
 import { firstValueFrom } from 'rxjs';
 import { ImageUrlPipe } from '../../pipes/image-url.pipe';
 import { ModerationComponent } from './moderation/moderation.component';
+import { AdminBannersComponent } from '../../components/admin-banners/admin-banners.component';
 import { AdminCampaignsComponent } from '../../components/admin-campaigns/admin-campaigns.component';
 import type { ModerationSummary } from '../../models/moderation.model';
 
@@ -40,7 +41,7 @@ export interface AdminUser {
   banned?: boolean;
 }
 
-type Tab = 'overview' | 'moderation' | 'listings' | 'users' | 'revenue' | 'visitors' | 'reports' | 'security' | 'id-verifications' | 'boost-requests' | 'campaigns';
+type Tab = 'overview' | 'moderation' | 'listings' | 'users' | 'revenue' | 'visitors' | 'reports' | 'security' | 'id-verifications' | 'boost-requests' | 'campaigns' | 'banners';
 
 export interface AdminActivity {
   type: 'USER' | 'LISTING' | 'BOOST_REQUEST' | 'REVENUE' | 'REPORT' | 'ID_VERIFICATION';
@@ -105,7 +106,7 @@ export interface SecurityEvent {
 
 @Component({
   selector: 'app-admin',
-  imports: [AdminCampaignsComponent, ModerationComponent, ImageUrlPipe, CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CatIconComponent, IconComponent, TranslatePipe, CityLabelPipe, FlagIconComponent],
+  imports: [AdminBannersComponent, AdminCampaignsComponent, ModerationComponent, ImageUrlPipe, CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CatIconComponent, IconComponent, TranslatePipe, CityLabelPipe, FlagIconComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })

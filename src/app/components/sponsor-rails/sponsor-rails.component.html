@@ -1,0 +1,6 @@
+@if (left(); as banner) {
+  <aside class="rail rail--left" [attr.aria-label]="'sponsor.label' | T"><app-sponsor-banner [banner]="banner" [width]="320" /></aside>
+}
+@if (right(); as banner) {
+  <aside class="rail rail--right" [attr.aria-label]="'sponsor.label' | T"><app-sponsor-banner [banner]="banner" [width]="320" /></aside>
+}
