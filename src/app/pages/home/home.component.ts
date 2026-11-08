@@ -27,13 +27,21 @@ import { SeoService, SITE_URL } from '../../services/seo.service';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   categories = CATEGORIES;
-  /** The 18 categories grouped by theme — easier to scan than one long grid. */
-  categoryGroups = CATEGORY_GROUPS.map(g => ({
+  private baseGroups = CATEGORY_GROUPS.map(g => ({
     key: g.key,
     items: g.categories.map(value => CATEGORIES.find(c => c.value === value)!),
   }));
   /** Live listing count per category in the current country (empty until loaded). */
   categoryCounts: Record<string, number> = {};
+  /** The 18 categories grouped by theme — easier to scan than one long grid.
+   * Within a group, categories with listings come first (stable sort keeps the
+   * original order for ties), so a young platform leads with what it has. */
+  get categoryGroups() {
+    return this.baseGroups.map(g => ({
+      key: g.key,
+      items: [...g.items].sort((a, b) => (this.categoryCounts[b.value] ?? 0) - (this.categoryCounts[a.value] ?? 0)),
+    }));
+  }
   get cities(): string[] {
     const c = this.countryService.country();
     const all = c === 'MA' ? MOROCCO_CITIES : (CITIES_BY_COUNTRY[c] ?? []);
