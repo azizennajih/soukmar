@@ -46,7 +46,7 @@
     <section class="seller-profile__section">
       <h2>{{ 'seller.listings_title' | T }} ({{ profile.activeListingsCount }})</h2>
       @if (listings.length) {
-        <div class="grid-4">
+        <div class="grid-4 grid-4--cards">
           @for (l of listings; track l.id) {
             <app-listing-card [listing]="l" />
           }

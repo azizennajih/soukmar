@@ -117,7 +117,7 @@
           </div>
           <a routerLink="/annonces" class="section-link">{{ 'home.see_all' | T }} →</a>
         </div>
-        <div class="grid-4">
+        <div class="grid-4 grid-4--cards">
           @for (listing of featured; track listing.id) {
             <app-listing-card [listing]="listing" [featured]="true" [initialFav]="isFav(listing)" />
           }
@@ -137,7 +137,7 @@
       </div>
 
       @if (latest.length > 0) {
-        <div class="grid-4">
+        <div class="grid-4 grid-4--cards">
           @for (listing of latest; track listing.id) {
             <app-listing-card [listing]="listing" [initialFav]="isFav(listing)" />
           }

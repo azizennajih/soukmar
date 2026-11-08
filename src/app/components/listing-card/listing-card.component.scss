@@ -185,4 +185,25 @@
   }
 
   &__time { flex-shrink: 0; }
+
+  // Handy: 2 Karten pro Zeile -> kompaktere Darstellung
+  @media (max-width: 480px) {
+    border-radius: .75rem;
+
+    &__image { aspect-ratio: 1 / 1; }
+    &__badges { top: .4rem; left: .4rem; gap: .25rem; flex-wrap: wrap; max-width: calc(100% - 2.6rem); }
+    &__badge { padding: .12rem .4rem; font-size: .62rem; }
+    &__fav { top: .4rem; right: .4rem; width: 1.75rem; height: 1.75rem; }
+
+    &__content { padding: .6rem .65rem .55rem; }
+    &__title { font-size: .8rem; line-height: 1.3; margin-bottom: .3rem; }
+    &__price { font-size: .9rem; margin-bottom: .3rem; }
+    &__meta { margin-bottom: .3rem; }
+    &__cat { padding: .15rem .45rem; font-size: .65rem; max-width: 100%; }
+    &__attr { display: none; }
+
+    &__footer { font-size: .68rem; gap: .35rem; margin-top: .3rem; padding-top: .35rem; }
+    &__city { min-width: 0; }
+    &__city-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  }
 }
