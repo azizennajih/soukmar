@@ -2019,5 +2019,32 @@
     "audience_changed": "The number of recipients has changed ({count}). Please check and send again.",
     "private": "Private",
     "business": "Business"
+  },
+  "bulk_import": {
+    "link": "د CSV واردول",
+    "title": "د CSV فایل څخه اعلانونه واردول",
+    "intro": "ډیر اعلانونه په یو وار پورته کړئ – د سوداګرو لپاره ښه. هر اعلان د خپرېدو دمخه، لکه ځکه چې تل، کتل کیږي.",
+    "business_only": "واردول د سوداګرۍ حسابونو لپاره شته. د حساب ډول تاسو په خپل پروفایل کې بدلولی شئ.",
+    "step_template": "1. کينډۍ ښکته کړئ",
+    "template_btn": "د CSV کينډۍ ښکته کړئ",
+    "template_hint": "اړین ستونونه: title، category، city، images. څو انځور لینکونه (https) په | سره جلا کړئ، تر 8 پورې. condition: NEW یا USED. کټګورۍ: {categories}",
+    "step_file": "2. فایل غوره کړئ",
+    "choose_file": "د CSV فایل غوره کړئ",
+    "rows_found": "{count} کربېړه وموندل شوه",
+    "too_many": "په هر فایل کې تر {max} کربېړو پورې.",
+    "read_error": "فایل ونه لوستل شو.",
+    "start": "واردول پيل کړئ",
+    "progress": "واردېږي … {done} / {total}",
+    "summary": "{created} وارد شول، {skipped} پرېښودل شول، {failed} ناکام",
+    "col_row": "کربېړه",
+    "col_title": "سرلیک",
+    "col_status": "حالت",
+    "col_reason": "یادښت",
+    "status_created": "وارد شو",
+    "status_skipped": "پرېښودل شو",
+    "status_failed": "ناکام",
+    "duplicate": "دمخه شته (ورته سرلیک او ښار)",
+    "review_note": "وارد شوي اعلانونه د کتنې وروسته په «زما اعلانونه» کې ښکاري.",
+    "error": "واردول ناکام شو. مهرباني وکړئ وروسته بیا هڅه وکړئ."
   }
 }

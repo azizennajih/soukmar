@@ -2019,5 +2019,32 @@
     "audience_changed": "Alıcı sayısı değişti ({count}). Lütfen kontrol edip yeniden gönderin.",
     "private": "Bireysel",
     "business": "Ticari"
+  },
+  "bulk_import": {
+    "link": "CSV içe aktar",
+    "title": "İlanları CSV dosyasından içe aktar",
+    "intro": "Birçok ilanı tek seferde yükleyin – işletmeler için ideal. Her ilan, her zamanki gibi yayınlanmadan önce incelenir.",
+    "business_only": "İçe aktarma işletme hesapları için kullanılabilir. Hesap türünü profilinizden değiştirebilirsiniz.",
+    "step_template": "1. Şablonu indir",
+    "template_btn": "CSV şablonunu indir",
+    "template_hint": "Zorunlu sütunlar: title, category, city, images. Birden fazla fotoğraf bağlantısını (https) | ile ayırın, en fazla 8. condition: NEW veya USED. Kategoriler: {categories}",
+    "step_file": "2. Dosyayı seç",
+    "choose_file": "CSV dosyası seç",
+    "rows_found": "{count} satır bulundu",
+    "too_many": "Dosya başına en fazla {max} satır.",
+    "read_error": "Dosya okunamadı.",
+    "start": "İçe aktarmayı başlat",
+    "progress": "İçe aktarılıyor … {done} / {total}",
+    "summary": "{created} aktarıldı, {skipped} atlandı, {failed} başarısız",
+    "col_row": "Satır",
+    "col_title": "Başlık",
+    "col_status": "Durum",
+    "col_reason": "Not",
+    "status_created": "Aktarıldı",
+    "status_skipped": "Atlandı",
+    "status_failed": "Başarısız",
+    "duplicate": "Zaten var (aynı başlık ve şehir)",
+    "review_note": "İçe aktarılan ilanlar, incelendikten sonra “İlanlarım” bölümünde görünür.",
+    "error": "İçe aktarma başarısız oldu. Lütfen daha sonra tekrar deneyin."
   }
 }

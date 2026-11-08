@@ -2019,5 +2019,32 @@
     "audience_changed": "The number of recipients has changed ({count}). Please check and send again.",
     "private": "Private",
     "business": "Business"
+  },
+  "bulk_import": {
+    "link": "CSV امپورٹ",
+    "title": "CSV فائل سے اشتہارات امپورٹ کریں",
+    "intro": "بہت سے اشتہارات ایک ساتھ اپ لوڈ کریں – تاجروں کے لیے بہترین۔ ہر اشتہار معمول کے مطابق شائع ہونے سے پہلے جانچا جاتا ہے۔",
+    "business_only": "امپورٹ بزنس اکاؤنٹس کے لیے دستیاب ہے۔ آپ اپنی پروفائل میں اکاؤنٹ کی قسم تبدیل کر سکتے ہیں۔",
+    "step_template": "1. ٹیمپلیٹ ڈاؤن لوڈ کریں",
+    "template_btn": "CSV ٹیمپلیٹ ڈاؤن لوڈ کریں",
+    "template_hint": "لازمی کالم: title، category، city، images۔ ایک سے زیادہ تصویری لنک (https) کو | سے الگ کریں، زیادہ سے زیادہ 8۔ condition: NEW یا USED۔ زمرے: {categories}",
+    "step_file": "2. فائل منتخب کریں",
+    "choose_file": "CSV فائل منتخب کریں",
+    "rows_found": "{count} قطاریں ملیں",
+    "too_many": "ہر فائل میں زیادہ سے زیادہ {max} قطاریں۔",
+    "read_error": "فائل پڑھی نہیں جا سکی۔",
+    "start": "امپورٹ شروع کریں",
+    "progress": "امپورٹ ہو رہا ہے … {done} / {total}",
+    "summary": "{created} امپورٹ ہوئے، {skipped} چھوڑے گئے، {failed} ناکام",
+    "col_row": "قطار",
+    "col_title": "عنوان",
+    "col_status": "حالت",
+    "col_reason": "نوٹ",
+    "status_created": "امپورٹ ہو گیا",
+    "status_skipped": "چھوڑ دیا گیا",
+    "status_failed": "ناکام",
+    "duplicate": "پہلے سے موجود ہے (وہی عنوان اور شہر)",
+    "review_note": "امپورٹ شدہ اشتہارات جانچ کے بعد «میرے اشتہارات» میں نظر آتے ہیں۔",
+    "error": "امپورٹ ناکام ہو گیا۔ براہِ کرم بعد میں دوبارہ کوشش کریں۔"
   }
 }

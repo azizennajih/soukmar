@@ -2019,5 +2019,32 @@
     "audience_changed": "The number of recipients has changed ({count}). Please check and send again.",
     "private": "Private",
     "business": "Business"
+  },
+  "bulk_import": {
+    "link": "درون‌ریزی CSV",
+    "title": "درون‌ریزی آگهی‌ها از فایل CSV",
+    "intro": "چندین آگهی را یکجا بارگذاری کنید – مناسب فروشندگان حرفه‌ای. هر آگهی مثل همیشه پیش از انتشار بررسی می‌شود.",
+    "business_only": "درون‌ریزی برای حساب‌های تجاری در دسترس است. نوع حساب را می‌توانید در پروفایل خود تغییر دهید.",
+    "step_template": "۱. دانلود الگو",
+    "template_btn": "دانلود الگوی CSV",
+    "template_hint": "ستون‌های الزامی: title، category، city، images. چند پیوند عکس (https) را با | جدا کنید، حداکثر ۸. condition: NEW یا USED. دسته‌بندی‌ها: {categories}",
+    "step_file": "۲. انتخاب فایل",
+    "choose_file": "انتخاب فایل CSV",
+    "rows_found": "{count} ردیف پیدا شد",
+    "too_many": "حداکثر {max} ردیف در هر فایل.",
+    "read_error": "خواندن فایل ممکن نبود.",
+    "start": "شروع درون‌ریزی",
+    "progress": "در حال درون‌ریزی … {done} / {total}",
+    "summary": "{created} درون‌ریزی شد، {skipped} رد شد، {failed} ناموفق",
+    "col_row": "ردیف",
+    "col_title": "عنوان",
+    "col_status": "وضعیت",
+    "col_reason": "توضیح",
+    "status_created": "درون‌ریزی شد",
+    "status_skipped": "رد شد",
+    "status_failed": "ناموفق",
+    "duplicate": "از قبل وجود دارد (عنوان و شهر یکسان)",
+    "review_note": "آگهی‌های درون‌ریزی‌شده پس از بررسی در «آگهی‌های من» نمایش داده می‌شوند.",
+    "error": "درون‌ریزی ناموفق بود. لطفاً بعداً دوباره تلاش کنید."
   }
 }

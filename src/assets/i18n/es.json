@@ -2019,5 +2019,32 @@
     "audience_changed": "El número de destinatarios ha cambiado ({count}). Revísalo y vuelve a enviar.",
     "private": "Particular",
     "business": "Empresa"
+  },
+  "bulk_import": {
+    "link": "Importar CSV",
+    "title": "Importar anuncios desde un archivo CSV",
+    "intro": "Sube muchos anuncios a la vez: ideal para profesionales. Cada anuncio se revisa antes de publicarse, como siempre.",
+    "business_only": "La importación está disponible para cuentas de empresa. Puedes cambiar el tipo de cuenta en tu perfil.",
+    "step_template": "1. Descargar la plantilla",
+    "template_btn": "Descargar plantilla CSV",
+    "template_hint": "Columnas obligatorias: title, category, city, images. Separa varios enlaces de fotos (https) con |, máximo 8. condition: NEW o USED. Categorías: {categories}",
+    "step_file": "2. Elegir el archivo",
+    "choose_file": "Elegir archivo CSV",
+    "rows_found": "{count} filas encontradas",
+    "too_many": "Máximo {max} filas por archivo.",
+    "read_error": "No se pudo leer el archivo.",
+    "start": "Iniciar importación",
+    "progress": "Importando … {done} / {total}",
+    "summary": "{created} importados, {skipped} omitidos, {failed} con error",
+    "col_row": "Fila",
+    "col_title": "Título",
+    "col_status": "Estado",
+    "col_reason": "Nota",
+    "status_created": "Importado",
+    "status_skipped": "Omitido",
+    "status_failed": "Error",
+    "duplicate": "Ya existe (mismo título y ciudad)",
+    "review_note": "Los anuncios importados aparecen en «Mis anuncios» tras la revisión.",
+    "error": "La importación ha fallado. Inténtalo de nuevo más tarde."
   }
 }

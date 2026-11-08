@@ -2019,5 +2019,32 @@
     "audience_changed": "The number of recipients has changed ({count}). Please check and send again.",
     "private": "Private",
     "business": "Business"
+  },
+  "bulk_import": {
+    "link": "CSV import",
+    "title": "Import listings from a CSV file",
+    "intro": "Upload many listings at once – ideal for dealers. Every listing is reviewed before it is published, as usual.",
+    "business_only": "Import is available for business accounts. You can change your account type in your profile.",
+    "step_template": "1. Download the template",
+    "template_btn": "Download CSV template",
+    "template_hint": "Required columns: title, category, city, images. Separate several photo links (https) with |, up to 8. condition: NEW or USED. Categories: {categories}",
+    "step_file": "2. Choose your file",
+    "choose_file": "Choose CSV file",
+    "rows_found": "{count} rows found",
+    "too_many": "At most {max} rows per file.",
+    "read_error": "The file could not be read.",
+    "start": "Start import",
+    "progress": "Importing … {done} / {total}",
+    "summary": "{created} imported, {skipped} skipped, {failed} failed",
+    "col_row": "Row",
+    "col_title": "Title",
+    "col_status": "Status",
+    "col_reason": "Note",
+    "status_created": "Imported",
+    "status_skipped": "Skipped",
+    "status_failed": "Failed",
+    "duplicate": "Already exists (same title and city)",
+    "review_note": "Imported listings appear under “My listings” once they have been reviewed.",
+    "error": "The import failed. Please try again later."
   }
 }

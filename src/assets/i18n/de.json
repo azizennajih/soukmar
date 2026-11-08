@@ -2019,5 +2019,32 @@
     "audience_changed": "Die Empfängerzahl hat sich geändert ({count}). Bitte prüfen und erneut senden.",
     "private": "Privat",
     "business": "Gewerblich"
+  },
+  "bulk_import": {
+    "link": "CSV-Import",
+    "title": "Anzeigen per CSV importieren",
+    "intro": "Laden Sie viele Anzeigen auf einmal hoch – ideal für Händler. Jede Anzeige wird wie gewohnt vor der Veröffentlichung geprüft.",
+    "business_only": "Der Import ist für Business-Konten verfügbar. Den Kontotyp können Sie in Ihrem Profil ändern.",
+    "step_template": "1. Vorlage herunterladen",
+    "template_btn": "CSV-Vorlage herunterladen",
+    "template_hint": "Pflichtfelder: title, category, city, images. Mehrere Foto-Links (https) mit | trennen, maximal 8. condition: NEW oder USED. Kategorien: {categories}",
+    "step_file": "2. Datei auswählen",
+    "choose_file": "CSV-Datei wählen",
+    "rows_found": "{count} Zeilen gefunden",
+    "too_many": "Maximal {max} Zeilen pro Datei.",
+    "read_error": "Die Datei konnte nicht gelesen werden.",
+    "start": "Import starten",
+    "progress": "Importiere … {done} / {total}",
+    "summary": "{created} importiert, {skipped} übersprungen, {failed} fehlgeschlagen",
+    "col_row": "Zeile",
+    "col_title": "Titel",
+    "col_status": "Status",
+    "col_reason": "Hinweis",
+    "status_created": "Importiert",
+    "status_skipped": "Übersprungen",
+    "status_failed": "Fehlgeschlagen",
+    "duplicate": "Bereits vorhanden (gleicher Titel und Ort)",
+    "review_note": "Importierte Anzeigen erscheinen nach der Prüfung unter „Meine Anzeigen“.",
+    "error": "Der Import ist fehlgeschlagen. Bitte versuchen Sie es später erneut."
   }
 }

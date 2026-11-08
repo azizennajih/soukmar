@@ -1,0 +1,68 @@
+<div class="import container fade-in">
+  <h1>{{ 'bulk_import.title' | T }}</h1>
+  <p class="import__intro">{{ 'bulk_import.intro' | T }}</p>
+
+  @if (!isBusiness) {
+    <div class="card import__notice">
+      <p>{{ 'bulk_import.business_only' | T }}</p>
+      <a routerLink="/profil" class="btn-primary">{{ 'nav.profile' | T }}</a>
+    </div>
+  } @else {
+    <section class="card import__step">
+      <h2>{{ 'bulk_import.step_template' | T }}</h2>
+      <p class="import__hint">{{ 'bulk_import.template_hint' | T:{categories: categoryCodes} }}</p>
+      <button type="button" class="btn-outline icon-label" (click)="downloadTemplate()">
+        <app-icon name="clipboard" [size]="16" /> {{ 'bulk_import.template_btn' | T }}
+      </button>
+    </section>
+
+    <section class="card import__step">
+      <h2>{{ 'bulk_import.step_file' | T }}</h2>
+      <label class="btn-outline import__file">
+        <input type="file" accept=".csv,text/csv" (change)="onFile($event)" [disabled]="importing" />
+        {{ 'bulk_import.choose_file' | T }}
+      </label>
+      @if (fileName) { <span class="import__file-name">{{ fileName }}</span> }
+      @if (rows.length > 0) {
+        <p class="import__hint">{{ 'bulk_import.rows_found' | T:{count: rows.length.toString()} }}</p>
+        <button type="button" class="btn-primary" (click)="start()" [disabled]="importing">{{ 'bulk_import.start' | T }}</button>
+      }
+      @if (importing) {
+        <p class="import__hint" role="status">{{ 'bulk_import.progress' | T:{done: done.toString(), total: rows.length.toString()} }}</p>
+        <progress [value]="done" [max]="rows.length"></progress>
+      }
+    </section>
+
+    @if (results.length > 0) {
+      <section class="card import__step">
+        <h2>{{ 'bulk_import.summary' | T:{created: count('created').toString(), skipped: count('skipped').toString(), failed: count('failed').toString()} }}</h2>
+        @if (finished && count('created') > 0) {
+          <p class="import__hint">{{ 'bulk_import.review_note' | T }}</p>
+          <a routerLink="/mes-annonces" class="btn-primary">{{ 'nav.my_listings' | T }}</a>
+        }
+        <div class="import__table-wrap">
+          <table class="import__table">
+            <thead>
+              <tr>
+                <th>{{ 'bulk_import.col_row' | T }}</th>
+                <th>{{ 'bulk_import.col_title' | T }}</th>
+                <th>{{ 'bulk_import.col_status' | T }}</th>
+                <th>{{ 'bulk_import.col_reason' | T }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (r of results; track r.row) {
+                <tr>
+                  <td>{{ r.row }}</td>
+                  <td>{{ r.title }}</td>
+                  <td><span class="import__status" [class]="'import__status import__status--' + r.status">{{ ('bulk_import.status_' + r.status) | T }}</span></td>
+                  <td>{{ reasonText(r) }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+    }
+  }
+</div>

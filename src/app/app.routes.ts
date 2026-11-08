@@ -67,6 +67,11 @@ const localizedRoutes: Routes = [
     loadComponent: () => import('./pages/mes-annonces/mes-annonces.component').then(m => m.MesAnnoncesComponent)
   },
   {
+    path: 'import-annonces',
+    data: { titleKey: 'bulk_import.title' },
+    loadComponent: () => import('./pages/import-annonces/import-annonces.component').then(m => m.ImportAnnoncesComponent)
+  },
+  {
     path: 'booster-annonce/:id',
     loadComponent: () => import('./pages/boost-listing/boost-listing.component').then(m => m.BoostListingComponent)
   },
@@ -182,7 +187,7 @@ const localizedRoutes: Routes = [
 /** Pages behind a login (or for the owner only): never indexed, links not followed. */
 const PRIVATE_PATHS = new Set([
   'deposer-annonce', 'deposer-annonce/:id', 'auth/login', 'auth/register', 'auth/forgot-password', 'auth/reset-password',
-  'mes-annonces', 'booster-annonce/:id', 'mes-favoris', 'mes-abonnements', 'chat', 'notifications',
+  'mes-annonces', 'import-annonces', 'booster-annonce/:id', 'mes-favoris', 'mes-abonnements', 'chat', 'notifications',
   'recherches-sauvegardees', 'profil', 'admin', 'parametres', 'supprimer-compte',
 ]);
 /** Public but thin or personal: kept out of the index, links followed. */

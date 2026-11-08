@@ -2019,5 +2019,32 @@
     "audience_changed": "Il numero di destinatari è cambiato ({count}). Controlla e invia di nuovo.",
     "private": "Privato",
     "business": "Azienda"
+  },
+  "bulk_import": {
+    "link": "Importa CSV",
+    "title": "Importa annunci da un file CSV",
+    "intro": "Carica molti annunci in una volta – ideale per i professionisti. Ogni annuncio viene controllato prima della pubblicazione, come sempre.",
+    "business_only": "L’importazione è disponibile per gli account aziendali. Puoi cambiare il tipo di account nel tuo profilo.",
+    "step_template": "1. Scarica il modello",
+    "template_btn": "Scarica il modello CSV",
+    "template_hint": "Colonne obbligatorie: title, category, city, images. Separa più link di foto (https) con |, massimo 8. condition: NEW o USED. Categorie: {categories}",
+    "step_file": "2. Scegli il file",
+    "choose_file": "Scegli il file CSV",
+    "rows_found": "{count} righe trovate",
+    "too_many": "Massimo {max} righe per file.",
+    "read_error": "Impossibile leggere il file.",
+    "start": "Avvia importazione",
+    "progress": "Importazione … {done} / {total}",
+    "summary": "{created} importati, {skipped} saltati, {failed} falliti",
+    "col_row": "Riga",
+    "col_title": "Titolo",
+    "col_status": "Stato",
+    "col_reason": "Nota",
+    "status_created": "Importato",
+    "status_skipped": "Saltato",
+    "status_failed": "Fallito",
+    "duplicate": "Già presente (stesso titolo e stessa città)",
+    "review_note": "Gli annunci importati compaiono in «I miei annunci» dopo il controllo.",
+    "error": "Importazione non riuscita. Riprova più tardi."
   }
 }

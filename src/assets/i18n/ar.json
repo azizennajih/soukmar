@@ -2014,5 +2014,32 @@
     "audience_changed": "تغيّر عدد المستلمين ({count}). يرجى التحقق ثم الإرسال مجددًا.",
     "private": "خاص",
     "business": "تجاري"
+  },
+  "bulk_import": {
+    "link": "استيراد CSV",
+    "title": "استيراد الإعلانات من ملف CSV",
+    "intro": "ارفع عددًا كبيرًا من الإعلانات دفعة واحدة – مثالي للتجّار. تتم مراجعة كل إعلان قبل نشره كالمعتاد.",
+    "business_only": "الاستيراد متاح لحسابات الأعمال. يمكنك تغيير نوع الحساب من ملفك الشخصي.",
+    "step_template": "١. تنزيل القالب",
+    "template_btn": "تنزيل قالب CSV",
+    "template_hint": "الأعمدة المطلوبة: title وcategory وcity وimages. افصل بين روابط الصور (https) بالرمز | بحد أقصى 8. condition: NEW أو USED. الفئات: {categories}",
+    "step_file": "٢. اختيار الملف",
+    "choose_file": "اختيار ملف CSV",
+    "rows_found": "تم العثور على {count} صف",
+    "too_many": "الحد الأقصى {max} صف لكل ملف.",
+    "read_error": "تعذّرت قراءة الملف.",
+    "start": "بدء الاستيراد",
+    "progress": "جارٍ الاستيراد … {done} / {total}",
+    "summary": "تم استيراد {created}، وتخطّي {skipped}، وفشل {failed}",
+    "col_row": "الصف",
+    "col_title": "العنوان",
+    "col_status": "الحالة",
+    "col_reason": "ملاحظة",
+    "status_created": "تم الاستيراد",
+    "status_skipped": "تم التخطي",
+    "status_failed": "فشل",
+    "duplicate": "موجود مسبقًا (العنوان والمدينة نفسهما)",
+    "review_note": "تظهر الإعلانات المستوردة ضمن «إعلاناتي» بعد مراجعتها.",
+    "error": "فشل الاستيراد. يرجى المحاولة لاحقًا."
   }
 }

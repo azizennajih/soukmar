@@ -2019,5 +2019,32 @@
     "audience_changed": "Le nombre de destinataires a changé ({count}). Vérifiez puis renvoyez.",
     "private": "Particulier",
     "business": "Professionnel"
+  },
+  "bulk_import": {
+    "link": "Import CSV",
+    "title": "Importer des annonces depuis un fichier CSV",
+    "intro": "Publiez de nombreuses annonces d’un coup – idéal pour les professionnels. Chaque annonce est vérifiée avant sa publication, comme d’habitude.",
+    "business_only": "L’import est réservé aux comptes professionnels. Vous pouvez changer le type de compte dans votre profil.",
+    "step_template": "1. Télécharger le modèle",
+    "template_btn": "Télécharger le modèle CSV",
+    "template_hint": "Colonnes obligatoires : title, category, city, images. Séparez plusieurs liens de photos (https) par |, 8 au maximum. condition : NEW ou USED. Catégories : {categories}",
+    "step_file": "2. Choisir le fichier",
+    "choose_file": "Choisir un fichier CSV",
+    "rows_found": "{count} lignes trouvées",
+    "too_many": "{max} lignes maximum par fichier.",
+    "read_error": "Le fichier n’a pas pu être lu.",
+    "start": "Lancer l’import",
+    "progress": "Import en cours … {done} / {total}",
+    "summary": "{created} importées, {skipped} ignorées, {failed} en échec",
+    "col_row": "Ligne",
+    "col_title": "Titre",
+    "col_status": "Statut",
+    "col_reason": "Remarque",
+    "status_created": "Importée",
+    "status_skipped": "Ignorée",
+    "status_failed": "Échec",
+    "duplicate": "Existe déjà (même titre et même ville)",
+    "review_note": "Les annonces importées apparaissent dans « Mes annonces » après vérification.",
+    "error": "L’import a échoué. Veuillez réessayer plus tard."
   }
 }
