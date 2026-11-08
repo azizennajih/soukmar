@@ -695,6 +695,15 @@
   "legal": {
     "privacy_title": "Informativa sulla privacy",
     "terms_title": "Termini di utilizzo",
+    "deletion_title": "Eliminazione dei dati utente",
+    "deletion": {
+      "s1_title": "Quali dati conserviamo",
+      "s1_body": "Se accedi con Google o Facebook, riceviamo dal fornitore solo il tuo nome e il tuo indirizzo e-mail e li salviamo nel tuo account SouqMar24. Non leggiamo post, amici o altri dati.",
+      "s2_title": "Come eliminare account e dati",
+      "s2_body": "Accedi a SouqMar24 e apri Impostazioni → «Elimina account». Profilo, annunci, messaggi e preferiti vengono eliminati o anonimizzati, salvo obblighi legali di conservazione. Anche il collegamento con Google o Facebook termina.",
+      "s3_title": "Senza accesso",
+      "s3_body": "Scrivici a {op_email} dall’indirizzo e-mail del tuo account con oggetto «Eliminazione dei dati». Elaboriamo la richiesta entro un mese."
+    },
     "withdrawal_title": "Diritto di recesso",
     "notice_title": "Note legali",
     "last_updated": "Ultimo aggiornamento: 8 ottobre 2026",

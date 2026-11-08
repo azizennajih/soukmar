@@ -695,6 +695,15 @@
   "legal": {
     "privacy_title": "Datenschutzerklärung",
     "terms_title": "Nutzungsbedingungen",
+    "deletion_title": "Löschung von Nutzerdaten",
+    "deletion": {
+      "s1_title": "Welche Daten wir speichern",
+      "s1_body": "Wenn du dich mit Google oder Facebook anmeldest, erhalten wir vom Anbieter nur deinen Namen und deine E-Mail-Adresse und speichern sie in deinem SouqMar24-Konto. Beiträge, Freunde oder weitere Daten lesen wir nicht aus.",
+      "s2_title": "So löschst du dein Konto und deine Daten",
+      "s2_body": "Melde dich bei SouqMar24 an und öffne Einstellungen → „Nutzerkonto löschen“. Danach werden dein Profil, deine Anzeigen, Nachrichten und Favoriten gelöscht oder anonymisiert, soweit keine gesetzlichen Aufbewahrungspflichten bestehen. Die Verknüpfung mit Google oder Facebook endet damit ebenfalls.",
+      "s3_title": "Ohne Anmeldung",
+      "s3_body": "Schreibe uns von der E-Mail-Adresse deines Kontos an {op_email} mit dem Betreff „Datenlöschung“. Wir bearbeiten die Anfrage innerhalb eines Monats."
+    },
     "withdrawal_title": "Widerrufsrecht",
     "notice_title": "Impressum",
     "last_updated": "Stand: 8. Oktober 2026",

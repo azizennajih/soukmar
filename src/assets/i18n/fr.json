@@ -1591,6 +1591,15 @@
   "legal": {
     "privacy_title": "Politique de confidentialité",
     "terms_title": "Conditions d'utilisation",
+    "deletion_title": "Suppression des données utilisateur",
+    "deletion": {
+      "s1_title": "Données que nous conservons",
+      "s1_body": "Si vous vous connectez avec Google ou Facebook, nous recevons du fournisseur uniquement votre nom et votre adresse e-mail et les enregistrons dans votre compte SouqMar24. Nous ne lisons ni publications, ni amis, ni autres données.",
+      "s2_title": "Comment supprimer votre compte et vos données",
+      "s2_body": "Connectez-vous à SouqMar24 et ouvrez Paramètres → « Supprimer le compte ». Votre profil, vos annonces, messages et favoris sont alors supprimés ou anonymisés, sauf obligation légale de conservation. Le lien avec Google ou Facebook prend fin également.",
+      "s3_title": "Sans connexion",
+      "s3_body": "Écrivez-nous à {op_email} depuis l’adresse e-mail de votre compte avec l’objet « Suppression des données ». Nous traitons la demande dans un délai d’un mois."
+    },
     "withdrawal_title": "Droit de rétractation",
     "notice_title": "Mentions légales",
     "last_updated": "Dernière mise à jour : 8 octobre 2026",

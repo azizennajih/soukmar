@@ -1591,6 +1591,15 @@
   "legal": {
     "privacy_title": "Gizlilik Politikası",
     "terms_title": "Kullanım Koşulları",
+    "deletion_title": "Kullanıcı verilerinin silinmesi",
+    "deletion": {
+      "s1_title": "Hangi verileri saklıyoruz",
+      "s1_body": "Google veya Facebook ile giriş yaparsanız sağlayıcıdan yalnızca adınızı ve e-posta adresinizi alır ve SouqMar24 hesabınızda saklarız. Paylaşımlarınızı, arkadaşlarınızı veya başka verileri okumayız.",
+      "s2_title": "Hesabınızı ve verilerinizi nasıl silersiniz",
+      "s2_body": "SouqMar24’e giriş yapın ve Ayarlar → «Hesabı sil» bölümünü açın. Profiliniz, ilanlarınız, mesajlarınız ve favorileriniz, yasal saklama yükümlülükleri yoksa silinir veya anonimleştirilir. Google veya Facebook bağlantısı da sona erer.",
+      "s3_title": "Giriş yapmadan",
+      "s3_body": "Hesabınızın e-posta adresinden {op_email} adresine «Veri silme» konusuyla yazın. Talebi bir ay içinde işleme alırız."
+    },
     "withdrawal_title": "Cayma Hakkı",
     "notice_title": "Yasal Bildirim",
     "last_updated": "Son güncelleme: 8 Ekim 2026",

@@ -161,6 +161,11 @@ const localizedRoutes: Routes = [
     loadComponent: () => import('./pages/legal-page/legal-page.component').then(m => m.LegalPageComponent)
   },
   {
+    path: 'suppression-donnees',
+    data: { titleKey: 'legal.deletion_title', namespace: 'legal.deletion', sectionCount: 3 },
+    loadComponent: () => import('./pages/legal-page/legal-page.component').then(m => m.LegalPageComponent)
+  },
+  {
     path: 'droit-retractation',
     data: { titleKey: 'legal.withdrawal_title', namespace: 'legal.withdrawal', sectionCount: 6 },
     loadComponent: () => import('./pages/legal-page/legal-page.component').then(m => m.LegalPageComponent)

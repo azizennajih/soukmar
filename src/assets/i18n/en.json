@@ -794,6 +794,15 @@
   "legal": {
     "privacy_title": "Privacy Policy",
     "terms_title": "Terms of Use",
+    "deletion_title": "Deletion of user data",
+    "deletion": {
+      "s1_title": "What data we store",
+      "s1_body": "If you sign in with Google or Facebook, we only receive your name and e-mail address from the provider and store them in your SouqMar24 account. We do not read posts, friends or any other data.",
+      "s2_title": "How to delete your account and data",
+      "s2_body": "Sign in to SouqMar24 and open Settings → “Delete account”. Your profile, listings, messages and favourites are then deleted or anonymised, unless legal retention duties apply. The link to Google or Facebook ends as well.",
+      "s3_title": "Without signing in",
+      "s3_body": "Write to {op_email} from the e-mail address of your account with the subject “Data deletion”. We process the request within one month."
+    },
     "withdrawal_title": "Right of Withdrawal",
     "notice_title": "Legal Notice",
     "last_updated": "Last updated: October 8, 2026",

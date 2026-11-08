@@ -1591,6 +1591,15 @@
   "legal": {
     "privacy_title": "Política de privacidade",
     "terms_title": "Termos de uso",
+    "deletion_title": "Eliminação de dados do utilizador",
+    "deletion": {
+      "s1_title": "Que dados guardamos",
+      "s1_body": "Se iniciares sessão com Google ou Facebook, recebemos do fornecedor apenas o teu nome e o teu e-mail e guardamo-los na tua conta SouqMar24. Não lemos publicações, amigos nem outros dados.",
+      "s2_title": "Como eliminar a tua conta e os teus dados",
+      "s2_body": "Inicia sessão no SouqMar24 e abre Definições → «Eliminar conta». O teu perfil, anúncios, mensagens e favoritos são eliminados ou anonimizados, salvo obrigações legais de conservação. A ligação ao Google ou Facebook também termina.",
+      "s3_title": "Sem iniciar sessão",
+      "s3_body": "Escreve para {op_email} a partir do e-mail da tua conta com o assunto «Eliminação de dados». Tratamos o pedido no prazo de um mês."
+    },
     "withdrawal_title": "Direito de arrependimento",
     "notice_title": "Aviso legal",
     "last_updated": "Última atualização: 8 de outubro de 2026",
