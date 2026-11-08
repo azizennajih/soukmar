@@ -17,6 +17,11 @@ Fertige Bilder liegen in `branding/social/`. Gestaltung: Logo-S aus `public/favi
 | `logo/logo-horizontal-fuer-dunklen-hintergrund.png` | 1800×480 | Logo mit Titel (weiße Schrift) auf Dunkelblau |
 | `logo/logo-header-600x160.png` | 600×160 | Kopfzeile, Signatur, Banner |
 
+| `werbung/*-160x600.png` | 320×1200 (2x) | Werbe-Banner links/rechts (Admin-Tab "Banner", Platzierung "Links und rechts") |
+| `werbung/*-1200x250.png` | 2400×500 (2x) | Werbe-Banner zwischen den Anzeigen (Platzierung "Zwischen den Anzeigen") |
+
+Die Werbe-Banner (Expedia Hotels DE/FR, Check24 Reisen DE, Trip.com DE/FR) haben absichtlich keine Partner-Logos; Texte und Farben stehen in `BANNER_SPECS` in `generate.html` (neu erzeugen mit `http://localhost:4599/?only=werbung`). Als Ziel-Link im Admin-Tab die eigenen Partner-Links verwenden.
+
 Hinweis TikTok: Es gibt kein Titelbild, nur das Profilbild (mind. 200×200) und Videocover.
 
 ## Neu erzeugen

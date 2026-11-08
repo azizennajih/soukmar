@@ -145,6 +145,89 @@ wordmark = function (ctx, x, cy, fs, o = {}) {
   return _wm(ctx, x, cy, fs, o);
 };
 
+// ---- Werbe-/Affiliate-Banner (Admin-Tab "Banner"): 160x600 (links/rechts) und 1200x250 (zwischen den Anzeigen), je mit
+// doppelter Aufloesung gezeichnet. Bewusst ohne Partner-Logos (Nutzungsbedingungen der Programme pruefen); das Wort
+// "Werbung" setzt die Website selbst darueber.
+const BANNER_SPECS = [
+  { key: 'expedia-hotels-de', title: 'Hotels in Marokko', sub: 'Jetzt vergleichen und buchen', cta: 'Hotels ansehen', bg: [C.secondary, '#2B4F7E'], fg: C.white, accent: C.goldLight, ctaBg: C.white, ctaFg: C.secondary },
+  { key: 'expedia-hotels-fr', title: 'Hôtels au Maroc', sub: 'Comparez et réservez', cta: 'Voir les hôtels', bg: [C.secondary, '#2B4F7E'], fg: C.white, accent: C.goldLight, ctaBg: C.white, ctaFg: C.secondary },
+  { key: 'check24-reisen-de', title: 'Mietwagen & Pauschalreisen', sub: 'Preise vergleichen', cta: 'Angebote ansehen', bg: [C.goldLight, '#FBE9C4'], fg: C.text, accent: C.primary, ctaBg: C.primary, ctaFg: C.white },
+  { key: 'trip-reisen-de', title: 'Flüge & Hotels weltweit', sub: 'Bei Trip.com vergleichen', cta: 'Zum Angebot', bg: [C.primary, '#B9303C'], fg: C.white, accent: C.goldLight, ctaBg: C.white, ctaFg: C.primary },
+  { key: 'trip-reisen-fr', title: 'Vols & hôtels', sub: 'Comparez sur Trip.com', cta: 'Voir l’offre', bg: [C.primary, '#B9303C'], fg: C.white, accent: C.goldLight, ctaBg: C.white, ctaFg: C.primary },
+];
+
+/** Zeilenumbruch; verkleinert die Schrift, bis das laengste Wort in maxW passt. Gibt { lines, size } zurueck. */
+function fitText(ctx, text, maxW, size, weight, family) {
+  for (let s = size; s >= 8; s -= 1) {
+    ctx.font = `${weight} ${s}px ${family}`;
+    const words = text.split(' ');
+    if (words.some((w) => ctx.measureText(w).width > maxW)) continue;
+    const lines = []; let line = '';
+    for (const w of words) {
+      const t = line ? line + ' ' + w : w;
+      if (ctx.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t;
+    }
+    lines.push(line);
+    return { lines, size: s };
+  }
+  return { lines: [text], size: 8 };
+}
+/** Sonne und zwei Duenen als schlichtes Marokko-Motiv, unten in der Box (x, y, w, h). */
+function scenery(ctx, x, y, w, h, color, sun) {
+  ctx.save(); ctx.beginPath(); ctx.rect(x, y - 200, w, h + 200); ctx.clip();
+  ctx.globalAlpha = 0.22; ctx.fillStyle = color;
+  const s0 = sun || { cx: x + w * 0.7, cy: y + h * 0.38, r: Math.min(w, h) * 0.26 };
+  ctx.beginPath(); ctx.arc(s0.cx, s0.cy, s0.r, 0, 7); ctx.fill();
+  ctx.globalAlpha = 0.3;
+  ctx.beginPath(); ctx.moveTo(x, y + h * 0.78);
+  ctx.bezierCurveTo(x + w * 0.3, y + h * 0.5, x + w * 0.6, y + h * 0.95, x + w, y + h * 0.65); ctx.lineTo(x + w, y + h); ctx.lineTo(x, y + h); ctx.fill();
+  ctx.globalAlpha = 0.2;
+  ctx.beginPath(); ctx.moveTo(x, y + h * 0.9);
+  ctx.bezierCurveTo(x + w * 0.4, y + h * 0.7, x + w * 0.7, y + h * 1.05, x + w, y + h * 0.85); ctx.lineTo(x + w, y + h); ctx.lineTo(x, y + h); ctx.fill();
+  ctx.restore();
+}
+function button(ctx, x, y, w, h, label, spec, size) {
+  ctx.fillStyle = spec.ctaBg; rr(ctx, x, y, w, h, h / 2); ctx.fill();
+  ctx.font = `800 ${size}px ${HEAD}`; ctx.fillStyle = spec.ctaFg; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(label, x + w / 2, y + h / 2 + 1);
+}
+function drawBanner(ctx, spec, kind) {
+  const [w, h] = kind === 'side' ? [160, 600] : [1200, 250];
+  ctx.save(); ctx.scale(2, 2);
+  const g = ctx.createLinearGradient(0, 0, w, h); g.addColorStop(0, spec.bg[0]); g.addColorStop(1, spec.bg[1]);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+  ctx.textBaseline = 'alphabetic';
+  const sc = spec.fg === C.text ? spec.accent : spec.fg;
+  if (kind === 'side') {
+    scenery(ctx, 0, 380, w, 220, sc);
+    const pad = 14, maxW = w - pad * 2;
+    const t = fitText(ctx, spec.title, maxW, 30, 800, HEAD);
+    ctx.font = `800 ${t.size}px ${HEAD}`; ctx.fillStyle = spec.fg; ctx.textAlign = 'left';
+    let y = 110; for (const l of t.lines) { ctx.fillText(l, pad, y); y += t.size * 1.2; }
+    const s = fitText(ctx, spec.sub, maxW, 15, 500, 'Inter, sans-serif');
+    ctx.font = `500 ${s.size}px Inter, sans-serif`; ctx.fillStyle = spec.accent; y += 6;
+    for (const l of s.lines) { ctx.fillText(l, pad, y); y += s.size * 1.35; }
+    let bsSize = 15; for (; bsSize > 8; bsSize--) { ctx.font = `800 ${bsSize}px ${HEAD}`; if (ctx.measureText(spec.cta).width <= maxW - 28) break; }
+    const bs = { size: bsSize };
+    button(ctx, pad, y + 22, maxW, 44, spec.cta, spec, bs.size);
+  } else {
+    scenery(ctx, 0, 176, 1200, 74, sc, { cx: 770, cy: 120, r: 34 });
+    const pad = 56, maxW = 640;
+    const t = fitText(ctx, spec.title, maxW, 56, 800, HEAD);
+    ctx.font = `800 ${t.size}px ${HEAD}`; ctx.fillStyle = spec.fg; ctx.textAlign = 'left';
+    const lineH = t.size * 1.15, total = t.lines.length * lineH + 8 + 26;
+    let y = (h - 12 - total) / 2 + t.size * 0.85;
+    for (const l of t.lines) { ctx.fillText(l, pad, y); y += lineH; }
+    ctx.font = `500 26px Inter, sans-serif`; ctx.fillStyle = spec.accent; ctx.fillText(spec.sub, pad, y - lineH + 38);
+    button(ctx, w - pad - 300, (h - 76) / 2, 300, 76, spec.cta, spec, 28);
+  }
+  ctx.restore();
+}
+for (const spec of BANNER_SPECS) {
+  ASSETS.push({ name: `werbung/${spec.key}-160x600`, w: 320, h: 1200, draw: (c) => drawBanner(c, spec, 'side') });
+  ASSETS.push({ name: `werbung/${spec.key}-1200x250`, w: 2400, h: 500, draw: (c) => drawBanner(c, spec, 'inline') });
+}
+
 (async () => {
   await Promise.all([document.fonts.load('800 100px "Plus Jakarta Sans"'), document.fonts.load('500 40px Inter')]);
   const log = document.getElementById('log');
