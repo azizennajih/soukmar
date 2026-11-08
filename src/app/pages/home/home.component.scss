@@ -48,18 +48,6 @@
     margin-bottom: 2rem; max-width: 520px;
   }
 
-  &__tags {
-    display: flex; flex-wrap: wrap; gap: .5rem;
-  }
-
-  &__tag {
-    padding: .35rem .9rem; background: rgba(255,255,255,.15);
-    backdrop-filter: blur(4px); border-radius: 999px;
-    font-size: .8rem; font-weight: 500; color: #fff;
-    text-decoration: none; transition: background .15s;
-    &:hover { background: rgba(255,255,255,.28); }
-  }
-
   &__stats {
     position: relative;
     border-top: 1px solid rgba(255,255,255,.18);
