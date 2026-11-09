@@ -242,7 +242,7 @@ export class ProfilComponent implements OnInit {
   async changePassword() {
     this.pwSuccessMsg = '';
     this.pwErrorMsg = '';
-    if (this.pwForm.newPassword.length < 6) { this.pwErrorMsg = this.i18n.t('profil.password_too_short'); return; }
+    if (this.pwForm.newPassword.length < 8) { this.pwErrorMsg = this.i18n.t('profil.password_too_short'); return; }
     if (this.pwForm.newPassword !== this.pwForm.confirmPassword) { this.pwErrorMsg = this.i18n.t('profil.password_mismatch'); return; }
 
     this.pwSaving.set(true);

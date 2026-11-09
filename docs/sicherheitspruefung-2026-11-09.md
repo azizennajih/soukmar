@@ -23,7 +23,7 @@ Geschützte Endpunkte ohne Anmeldung: 401. CORS gibt nur die eigene Herkunft fre
 |---|---|---|---|
 | 1 | niedrig | Unbekannte API-Adressen zeigten die Express-Standardseite ("Cannot GET /api/…") und verrieten das Framework | behoben (JSON-404), wirkt nach Server-Update |
 | 2 | mittel | `script-src` der Seite erlaubt `'unsafe-inline'` (Angular-SSR). Abschwächung des XSS-Schutzes; derzeit kein `innerHTML` mit Nutzerdaten im Web | offen, Empfehlung: Nonces einführen |
-| 3 | mittel | Mindestlänge Passwort 6 Zeichen (Liste häufiger Passwörter ist aktiv) | offen, Empfehlung: 8 (betrifft auch Apps) |
+| 3 | mittel | Mindestlänge Passwort war 6 Zeichen (Liste häufiger Passwörter ist aktiv) | behoben: jetzt 8 in Backend und Web (Registrierung, Zurücksetzen, Ändern). Bestehende Passwörter bleiben gültig. Android/iOS: Hinweistexte und Eingabeprüfung beim nächsten Sync auf 8 anheben |
 | 4 | mittel | Kein Zwei-Faktor-Login für Admin-Konten. Ein übernommenes Admin-Konto könnte Banner setzen und Werbe-Mails versenden | offen, Empfehlung: 2FA oder sehr starkes Passwort |
 | 5 | niedrig | Login-Token liegt im `localStorage` (bei XSS auslesbar). Gemildert durch 3 h Leerlauf-Ablauf, Widerruf bei Passwortänderung und fehlendes `innerHTML` | akzeptiertes Risiko |
 | 6 | niedrig | HSTS ohne `includeSubDomains`/`preload` | offen, Empfehlung nur nach Prüfung aller Subdomains |

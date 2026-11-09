@@ -36,7 +36,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   async submit() {
-    if (this.password.length < 6) { this.error = this.i18n.t('auth.reset_too_short'); return; }
+    if (this.password.length < 8) { this.error = this.i18n.t('auth.reset_too_short'); return; }
     if (this.password !== this.confirmPassword) { this.error = this.i18n.t('auth.reset_mismatch'); return; }
     this.loading = true;
     this.error = '';

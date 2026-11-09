@@ -71,7 +71,7 @@ export class RegisterComponent {
     if (this.form.password !== this.form.confirm) {
       this.error = this.i18n.t('auth.reset_mismatch'); return;
     }
-    if (this.form.password.length < 6) {
+    if (this.form.password.length < 8) {
       this.error = this.i18n.t('auth.reset_too_short'); return;
     }
     if (!this.captchaToken) {
