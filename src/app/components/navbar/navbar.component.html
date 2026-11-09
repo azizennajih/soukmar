@@ -5,8 +5,8 @@
       <span>{{ 'nav.topbar_tagline' | T }}</span>
       <div class="navbar__topbar-links">
         @if (!auth.isLoggedIn) {
-          <a routerLink="/auth/login">{{ 'nav.login' | T }}</a>
-          <a routerLink="/auth/register">{{ 'nav.register' | T }}</a>
+          <a routerLink="/auth/login"><app-icon name="user" [size]="14" /> {{ 'nav.login' | T }}</a>
+          <a routerLink="/auth/register"><app-icon name="user-plus" [size]="14" /> {{ 'nav.register' | T }}</a>
         }
       </div>
     </div>
