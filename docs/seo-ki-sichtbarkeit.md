@@ -17,7 +17,7 @@
 ## Was nur du tun kannst (Reihenfolge nach Wirkung)
 1. **Google Search Console** einrichten: Property `souqmar24.com` per DNS-TXT-Eintrag bestätigen (beim DNS-Anbieter der Domain), dann `https://souqmar24.com/sitemap.xml` einreichen. Danach unter "Seiten" prüfen, welche URLs indexiert sind.
 2. **Bing Webmaster Tools**: Property aus der Search Console importieren (ein Klick), Sitemap einreichen. Wichtig: ChatGPT-Suche, Copilot und viele andere Assistenten stützen sich auf den Bing-Index.
-3. **IndexNow** (optional, Bing/Yandex): Schlüsseldatei anlegen und neue Anzeigen sofort melden. Kann ich bei Bedarf bauen.
+3. **IndexNow** (Bing, Yandex, Seznam, Naver): ist eingebaut. Sobald eine Anzeige öffentlich wird (Freigabe, direkte Veröffentlichung, Händler-Import), meldet das Backend alle Sprachversionen gesammelt alle 30 Sekunden. Nur in Produktion mit https-Adresse, nie lokal. Der (öffentliche) Schlüssel steht in `lib/indexNow.ts` und als Datei `public/<Schlüssel>.txt`; mit der Umgebungsvariable `INDEXNOW_KEY` änderbar (dann Dateiname anpassen). Nach dem Update prüfen, ob `https://souqmar24.com/fa9c0da8f30eef0a4eb2fcd6908e61ce.txt` den Schlüssel anzeigt.
 4. **Profile verlinken**: Facebook, Instagram, TikTok und ähnliche Profile mit `https://souqmar24.com` verknüpfen. Nenn mir die Profil-Adressen, dann trage ich sie als `sameAs` in die Strukturdaten ein.
 5. **Erwähnungen und Links von außen**: Marokko-Foren, Verzeichnisse, Blogs, Partnerseiten (z. B. moroccancities.com mit einem Link auf SouqMar24). KI-Assistenten und Suchmaschinen vertrauen Seiten, über die andere schreiben.
 6. **Inhalte**: Je mehr echte Anzeigen und je mehr eigener Text (Ratgeber, Städte-/Kategorieseiten), desto mehr gibt es zu finden.
