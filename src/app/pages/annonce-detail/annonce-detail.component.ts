@@ -155,7 +155,9 @@ export class AnnonceDetailComponent implements OnInit, OnDestroy {
   private updateMetaTags(listing: Listing) {
     // Never let a search engine index a page that is not public.
     if (listing.status === 'PENDING' || listing.status === 'CHANGES_REQUESTED' || listing.status === 'REJECTED' || listing.status === 'SUSPENDED') this.seo.setRobots('noindex, nofollow');
-    const title = `SouqMar24 — ${listing.title}`;
+    // Listing first, then place and brand — what a searcher types — and clipped so search results do not cut the brand off.
+    const shortTitle = listing.title.length > 55 ? `${listing.title.slice(0, 54).trimEnd()}…` : listing.title;
+    const title = this.i18n.t('seo.listing_title', { title: shortTitle, city: listing.city });
     const description = (listing.description || '').replace(/\s+/g, ' ').trim().slice(0, 160) || `${listing.title} — ${listing.city}`;
     const image = listing.images?.[0] || '';
     // Built explicitly (not this.seo.canonicalUrl) so a stray query param

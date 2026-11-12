@@ -1833,8 +1833,11 @@
     }
   },
   "seo": {
-    "default_title": "SouqMar24 — Achetez et vendez facilement",
-    "default_description": "SouqMar24, la marketplace de petites annonces : véhicules, immobilier, électronique, mode et plus encore près de chez vous."
+    "default_title": "SouqMar24 – Petites annonces au Maroc : acheter et vendre",
+    "default_description": "Petites annonces gratuites pour le Maroc : voitures, immobilier, électronique, mode, emploi et plus. Discutez directement, négociez et trouvez des offres près de chez vous.",
+    "category_title": "{category} – petites annonces, acheter et vendre | SouqMar24",
+    "category_description": "Dernières annonces dans « {category} » : comparez, discutez directement avec les vendeurs et publiez gratuitement votre annonce sur SouqMar24.",
+    "listing_title": "{title} – {city} | SouqMar24"
   },
   "not_found": {
     "title": "Page introuvable",

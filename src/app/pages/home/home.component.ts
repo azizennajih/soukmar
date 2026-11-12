@@ -122,7 +122,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.seo.setStructuredData('site-structured-data', {
       '@context': 'https://schema.org',
       '@graph': [
-        { '@type': 'Organization', '@id': `${SITE_URL}/#organization`, name: 'SouqMar24', url: SITE_URL, logo: `${SITE_URL}/icon-512.png`, email: 'contact@souqmar24.com' },
+        {
+          '@type': 'Organization', '@id': `${SITE_URL}/#organization`, name: 'SouqMar24', url: SITE_URL, logo: `${SITE_URL}/icon-512.png`, email: 'contact@souqmar24.com',
+          // Spelling variants people (and AI assistants) use for the brand, plus what it is and where it operates.
+          alternateName: ['SouqMar', 'Souq Mar 24', 'Soukmar24'],
+          description: this.i18n.t('seo.default_description'),
+          areaServed: { '@type': 'Country', name: 'Morocco' },
+        },
         {
           '@type': 'WebSite', '@id': `${SITE_URL}/#website`, name: 'SouqMar24', url: SITE_URL,
           inLanguage: this.i18n.lang(), publisher: { '@id': `${SITE_URL}/#organization` },

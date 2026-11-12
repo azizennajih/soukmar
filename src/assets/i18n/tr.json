@@ -1833,8 +1833,11 @@
     }
   },
   "seo": {
-    "default_title": "SouqMar24 — Kolayca al ve sat",
-    "default_description": "SouqMar24, ilan pazar yeri: araçlar, emlak, elektronik, moda ve çok daha fazlası yakınınızda."
+    "default_title": "SouqMar24 – Fas ilanları: al ve sat",
+    "default_description": "Fas için ücretsiz ilanlar: araçlar, emlak, elektronik, moda, iş ve daha fazlası. Doğrudan sohbet edin, fiyatı pazarlık edin ve yakınınızdaki fırsatları bulun.",
+    "category_title": "{category} – ilanlar, al ve sat | SouqMar24",
+    "category_description": "“{category}” kategorisindeki son ilanlar: karşılaştırın, satıcılarla doğrudan sohbet edin ve SouqMar24’te ücretsiz ilan verin.",
+    "listing_title": "{title} – {city} | SouqMar24"
   },
   "not_found": {
     "title": "Sayfa bulunamadı",

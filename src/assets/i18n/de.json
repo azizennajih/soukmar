@@ -1833,8 +1833,11 @@
     }
   },
   "seo": {
-    "default_title": "SouqMar24 — Kaufen und verkaufen, ganz einfach",
-    "default_description": "SouqMar24 — der Marktplatz für Kleinanzeigen: Fahrzeuge, Immobilien, Elektronik, Mode und vieles mehr in deiner Nähe."
+    "default_title": "SouqMar24 – Kleinanzeigen in Marokko: kaufen & verkaufen",
+    "default_description": "Kostenlose Kleinanzeigen für Marokko: Fahrzeuge, Immobilien, Elektronik, Mode, Jobs und mehr. Direkt chatten, Preis verhandeln und Angebote in deiner Nähe finden.",
+    "category_title": "{category} – Kleinanzeigen kaufen & verkaufen | SouqMar24",
+    "category_description": "Aktuelle Anzeigen in „{category}“: vergleichen, direkt mit Verkäufern chatten und kostenlos selbst inserieren auf SouqMar24.",
+    "listing_title": "{title} – {city} | SouqMar24"
   },
   "not_found": {
     "title": "Seite nicht gefunden",

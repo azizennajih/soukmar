@@ -1833,8 +1833,11 @@
     }
   },
   "seo": {
-    "default_title": "SouqMar24 — Compra e vendi facilmente",
-    "default_description": "SouqMar24, il marketplace di annunci: veicoli, immobili, elettronica, moda e molto altro vicino a te."
+    "default_title": "SouqMar24 – Annunci in Marocco: compra e vendi",
+    "default_description": "Annunci gratuiti per il Marocco: auto, immobili, elettronica, moda, lavoro e altro. Chatta direttamente, tratta il prezzo e trova offerte vicino a te.",
+    "category_title": "{category} – annunci, compra e vendi | SouqMar24",
+    "category_description": "Ultimi annunci in «{category}»: confronta, chatta direttamente con i venditori e pubblica gratis il tuo annuncio su SouqMar24.",
+    "listing_title": "{title} – {city} | SouqMar24"
   },
   "not_found": {
     "title": "Pagina non trovata",

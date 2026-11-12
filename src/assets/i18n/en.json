@@ -1833,8 +1833,11 @@
     }
   },
   "seo": {
-    "default_title": "SouqMar24 — Buy and sell with ease",
-    "default_description": "SouqMar24 — the classifieds marketplace: vehicles, real estate, electronics, fashion and much more near you."
+    "default_title": "SouqMar24 – Classified ads in Morocco: buy & sell",
+    "default_description": "Free classified ads for Morocco: cars, real estate, electronics, fashion, jobs and more. Chat directly, negotiate prices and find deals near you.",
+    "category_title": "{category} – classified ads, buy & sell | SouqMar24",
+    "category_description": "Latest listings in “{category}”: compare, chat directly with sellers and post your own ad for free on SouqMar24.",
+    "listing_title": "{title} – {city} | SouqMar24"
   },
   "not_found": {
     "title": "Page not found",

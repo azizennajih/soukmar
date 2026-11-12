@@ -262,9 +262,10 @@ export class AnnoncesComponent implements OnInit {
   private updateSeo() {
     this.seoApplied = true;
     const heading = this.filters.categorie ? this.i18n.t('cats.' + this.filters.categorie) : this.i18n.t('annonces.title');
+    // Keyword-bearing title and a description that states what the page offers (not only a count, which is 0 on empty pages).
     this.seo.setTitleAndDescription(
-      `SouqMar24 — ${heading}`,
-      `${this.total} ${this.i18n.t('annonces.found')} — SouqMar24`
+      this.i18n.t('seo.category_title', { category: heading }),
+      this.i18n.t('seo.category_description', { category: heading })
     );
     // Canonical, robots and hreflang for this page come from the central rules (seo-rules.ts).
   }

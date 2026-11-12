@@ -1833,8 +1833,11 @@
     }
   },
   "seo": {
-    "default_title": "SouqMar24 — Compre e venda facilmente",
-    "default_description": "SouqMar24, o marketplace de classificados: veículos, imóveis, eletrónica, moda e muito mais perto de si."
+    "default_title": "SouqMar24 – Classificados em Marrocos: comprar e vender",
+    "default_description": "Classificados gratuitos para Marrocos: carros, imóveis, eletrónica, moda, emprego e mais. Converse diretamente, negoceie o preço e encontre ofertas perto de si.",
+    "category_title": "{category} – classificados, comprar e vender | SouqMar24",
+    "category_description": "Últimos anúncios em «{category}»: compare, converse diretamente com os vendedores e publique o seu anúncio gratuitamente no SouqMar24.",
+    "listing_title": "{title} – {city} | SouqMar24"
   },
   "not_found": {
     "title": "Página não encontrada",
