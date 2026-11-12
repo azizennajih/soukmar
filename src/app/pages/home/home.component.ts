@@ -128,6 +128,12 @@ export class HomeComponent implements OnInit, OnDestroy {
           alternateName: ['SouqMar', 'Souq Mar 24', 'Soukmar24'],
           description: this.i18n.t('seo.default_description'),
           areaServed: { '@type': 'Country', name: 'Morocco' },
+          // Official profiles: lets search engines and AI assistants connect them to this brand.
+          sameAs: [
+            'https://www.tiktok.com/@souqmar24',
+            'https://www.facebook.com/profile.php?id=61595343548554',
+            'https://www.instagram.com/souqmar24/',
+          ],
         },
         {
           '@type': 'WebSite', '@id': `${SITE_URL}/#website`, name: 'SouqMar24', url: SITE_URL,
