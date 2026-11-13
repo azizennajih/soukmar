@@ -23,17 +23,23 @@ import { compressListingPhoto } from '../../utils/image-compression';
 import { TurnstileComponent } from '../../components/turnstile/turnstile.component';
 import { PhoneInputComponent } from '../../components/phone-input/phone-input.component';
 import { IconComponent } from '../../components/icon/icon.component';
+import { AiListingAssistantComponent, AiApplyPayload } from '../../components/ai-listing-assistant/ai-listing-assistant.component';
+import { ToastService } from '../../services/toast.service';
+import { DialogService } from '../../services/dialog.service';
+import { firstValueFrom } from 'rxjs';
 
 interface PhotoItem { url: string; file?: File; }
 
 @Component({
   selector: 'app-deposer-annonce',
-  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CatIconComponent, TextAutocompleteComponent, CitySelectComponent, DateInputComponent, MultiSelectComponent, TranslatePipe, CityLabelPipe, TurnstileComponent, PhoneInputComponent, FlagIconComponent, IconComponent],
+  imports: [CommonModule, RouterLink, LocalizedRouterLinkDirective, FormsModule, CatIconComponent, TextAutocompleteComponent, CitySelectComponent, DateInputComponent, MultiSelectComponent, TranslatePipe, CityLabelPipe, TurnstileComponent, PhoneInputComponent, FlagIconComponent, IconComponent, AiListingAssistantComponent],
   templateUrl: './deposer-annonce.component.html',
   styleUrl: './deposer-annonce.component.scss'
 })
 export class DeposerAnnonceComponent {
   i18n = inject(I18nService);
+  private toast = inject(ToastService);
+  private dialog = inject(DialogService);
   categories = CATEGORIES;
   cities = MOROCCO_CITIES;
   countryName = countryName;
@@ -441,7 +447,7 @@ export class DeposerAnnonceComponent {
       // FileReader's onload is a raw browser callback, invisible to zoneless
       // change detection — without markForCheck the preview never renders.
       reader.onload = e => {
-        this.photos.push({ url: e.target?.result as string, file });
+        this.photos = [...this.photos, { url: e.target?.result as string, file }];
         this.cdr.markForCheck();
       };
       reader.readAsDataURL(file);
@@ -449,7 +455,7 @@ export class DeposerAnnonceComponent {
   }
 
   removePhoto(index: number) {
-    this.photos.splice(index, 1);
+    this.photos = this.photos.filter((_, i) => i !== index);
   }
 
   // Pointer Events instead of the native HTML5 Drag & Drop API: draggable/
@@ -490,12 +496,66 @@ export class DeposerAnnonceComponent {
 
   onPointerUp() {
     if (this.dragging && this.dragIndex !== null && this.hoverIndex !== null && this.hoverIndex !== this.dragIndex) {
-      const [moved] = this.photos.splice(this.dragIndex, 1);
-      this.photos.splice(this.hoverIndex, 0, moved);
+      const next = [...this.photos];
+      const [moved] = next.splice(this.dragIndex, 1);
+      next.splice(this.hoverIndex, 0, moved);
+      this.photos = next;
     }
     this.dragIndex = null;
     this.hoverIndex = null;
     this.dragging = false;
+    this.cdr.markForCheck();
+  }
+
+  /** Title/description as last written by the AI assistant — lets us tell "still the AI text" from "typed by the user". */
+  private aiAppliedTitle = '';
+  private aiAppliedDescription = '';
+
+  /** "Apply suggestion" of the AI assistant: fills the regular form fields. Texts the user wrote are only
+   * replaced after a confirmation; category and attributes always follow the suggestion the user picked. */
+  async applyAiDraft(p: AiApplyPayload) {
+    const titleIsMine = !!this.form.title.trim() && this.form.title !== this.aiAppliedTitle && this.form.title !== p.title;
+    const descIsMine = !!this.form.description.trim() && this.form.description !== this.aiAppliedDescription && this.form.description !== p.description;
+    let replaceTexts = true;
+    if (titleIsMine || descIsMine) {
+      replaceTexts = await this.dialog.confirm({
+        message: this.i18n.t('ai.confirm_overwrite_form'),
+        confirmLabel: this.i18n.t('ai.replace'),
+        cancelLabel: this.i18n.t('ai.keep_mine'),
+      });
+    }
+    if (replaceTexts || !titleIsMine) { this.form.title = p.title; this.aiAppliedTitle = p.title; }
+    if (replaceTexts || !descIsMine) { this.form.description = p.description; this.aiAppliedDescription = p.description; }
+
+    if (!this.form.intent) this.form.intent = 'OFFER';
+    const category = p.category as Category;
+    const sameSub = this.form.category === category && this.form.subcategoryId === (p.subcategoryId ?? '');
+    if (!sameSub) {
+      this.form.category = category;
+      this.form.subcategoryId = '';
+      this.form.attributes = {};
+      this.attributeDefs = [];
+      if (category === 'CARPOOLING') this.form.showPhone = true;
+      this.subcategories = await firstValueFrom(this.catalog.getSubcategories(category)).catch(() => []);
+      const sub = this.subcategories.find(s => s.id === p.subcategoryId);
+      if (sub) {
+        this.form.subcategoryId = sub.id;
+        this.attributeDefs = await firstValueFrom(this.catalog.getAttributes(sub.id)).catch(() => []);
+      }
+      if (!this.showCondition) this.form.condition = '';
+    }
+    // Only attributes this subcategory really has, and never over a value the user already entered.
+    const attrs = { ...this.form.attributes };
+    for (const def of this.attributeDefs) {
+      const v = p.attributes[def.code];
+      const current = attrs[def.code];
+      if (v !== undefined && (current === undefined || current === '')) attrs[def.code] = v;
+    }
+    this.form.attributes = attrs;
+
+    // Subcategory still open (the AI only knew the category): let the user choose it, otherwise go to the details.
+    this.step = this.subcategories.length && !this.form.subcategoryId ? 2 : 3;
+    this.toast.success(this.i18n.t(replaceTexts ? 'ai.applied' : 'ai.applied_kept_texts'));
     this.cdr.markForCheck();
   }
 

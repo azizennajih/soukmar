@@ -1,0 +1,169 @@
+<section class="ai" [class.ai--open]="open">
+  <button type="button" class="ai__cta" (click)="toggle()" [attr.aria-expanded]="open">
+    <span class="ai__cta-text">
+      <strong>{{ 'ai.cta' | T }}</strong>
+      <small>{{ (draft && !open ? 'ai.has_result' : 'ai.cta_sub') | T }}</small>
+    </span>
+    @if (loading) { <span class="ai__spinner"></span> }
+    <svg class="ai__chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+
+  @if (open) {
+    <div class="ai__body">
+
+      @if (available === false) {
+        <div class="ai__notice ai__notice--warn">
+          <app-icon name="alert-triangle" [size]="15" />
+          <span>{{ 'ai.unavailable' | T }}</span>
+          <button type="button" class="btn-ghost ai__notice-btn" (click)="checkStatus()">{{ 'ai.retry_status' | T }}</button>
+        </div>
+      }
+
+      <p class="ai__hint">{{ 'ai.photos_hint' | T }}</p>
+
+      @if (photos().length) {
+        <div class="ai__photos">
+          @for (photo of photos(); track $index; let i = $index) {
+            <div class="ai__photo">
+              <img [src]="photo.url" alt="" />
+              <button type="button" class="ai__photo-remove" (click)="removePhoto.emit(i)" [attr.aria-label]="'ai.photo_remove' | T" [disabled]="loading">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+          }
+        </div>
+      }
+
+      <div class="ai__upload-row">
+        @if (photos().length < maxPhotos()) {
+          <label class="btn-outline ai__upload">
+            <app-icon name="camera" [size]="16" />
+            {{ (photos().length ? 'ai.add_more' : 'ai.add_photos') | T }}
+            <input class="ai__file" type="file" multiple accept="image/*" (change)="filesSelected.emit($event)" [disabled]="loading" />
+          </label>
+        }
+        @if (!draft) {
+          <button type="button" class="btn-primary" [disabled]="!files.length || loading || available === false" (click)="analyse()">
+            {{ 'ai.analyse' | T }}
+          </button>
+        }
+      </div>
+      @if (tooManyPhotos) {
+        <p class="ai__small">{{ 'ai.max_note' | T:{ n: '' + maxImages } }}</p>
+      }
+
+      @if (loading) {
+        <div class="ai__loading" role="status">
+          <span class="ai__spinner"></span>
+          <div>
+            <strong>{{ 'ai.analysing' | T }} ({{ elapsed }} s)</strong>
+            <p>{{ 'ai.analysing_hint' | T }}</p>
+          </div>
+        </div>
+      }
+
+      @if (error) {
+        <div class="ai__notice ai__notice--error" role="alert">
+          <app-icon name="alert-triangle" [size]="15" />
+          <span>{{ error }}</span>
+        </div>
+      }
+
+      @if (draft; as d) {
+        <div class="ai__result">
+          <div class="ai__result-head">
+            <h3>{{ 'ai.result_title' | T }}</h3>
+            <span class="badge" [class.badge-active]="d.confidence >= 0.75" [class.badge-pending]="d.confidence < 0.75 && d.confidence >= 0.5" [class.badge-rejected]="d.confidence < 0.5">
+              {{ 'ai.confidence' | T }}: {{ confidenceKey | T }}
+            </span>
+          </div>
+          <p class="ai__small">{{ 'ai.result_note' | T }}</p>
+
+          @if (uncertain) {
+            <div class="ai__notice ai__notice--warn"><app-icon name="alert-triangle" [size]="15" /><span>{{ 'ai.uncertain' | T }}</span></div>
+          }
+          @if (photosChanged) {
+            <div class="ai__notice ai__notice--warn"><app-icon name="alert-triangle" [size]="15" /><span>{{ 'ai.photos_changed' | T }}</span></div>
+          }
+          @if (d.cached) {
+            <p class="ai__small">{{ 'ai.cached' | T }}</p>
+          }
+
+          <dl class="ai__facts">
+            <dt>{{ 'ai.product' | T }}</dt>
+            <dd>{{ d.product_name }}</dd>
+          </dl>
+
+          <div class="form-group">
+            <label for="aiTitle">{{ 'deposer.label_title' | T }}</label>
+            <input id="aiTitle" type="text" [(ngModel)]="editTitle" maxlength="100" dir="auto" />
+            <small>{{ editTitle.length }}/100 {{ 'deposer.chars' | T }}</small>
+          </div>
+          <div class="form-group">
+            <label for="aiDesc">{{ 'deposer.label_desc' | T }}</label>
+            <textarea id="aiDesc" [(ngModel)]="editDescription" rows="6" dir="auto"></textarea>
+          </div>
+
+          <div class="ai__block">
+            <div class="ai__label">{{ (categoryChoices.length > 1 ? 'ai.category_choose' : 'ai.category') | T }}</div>
+            <div class="ai__cats">
+              @for (c of categoryChoices; track $index; let i = $index) {
+                <button type="button" class="ai__cat" [class.selected]="selectedCategory === i" (click)="selectedCategory = i" [attr.aria-pressed]="selectedCategory === i">
+                  <app-cat-icon [category]="asCategory(c.category)" [size]="16" />
+                  <span>{{ ('cats.' + c.category) | T }}@if (c.subcategory_code) { › {{ ('subcats.' + c.subcategory_code) | T }} }</span>
+                </button>
+              }
+            </div>
+          </div>
+
+          <div class="ai__block">
+            <div class="ai__label">{{ 'ai.attributes' | T }}</div>
+            @if (attributeEntries.length) {
+              <dl class="ai__facts">
+                @for (a of attributeEntries; track a.code) {
+                  <dt>{{ ('attrs.' + a.code) | T }}</dt>
+                  <dd dir="auto">{{ a.value }}</dd>
+                }
+              </dl>
+            } @else {
+              <p class="ai__small">{{ 'ai.no_attributes' | T }}</p>
+            }
+          </div>
+
+          <div class="ai__block">
+            <div class="ai__label">{{ 'ai.missing' | T }}</div>
+            <ul class="ai__list">
+              <li>{{ 'ai.missing_default' | T }}</li>
+              @if (!d.brand) { <li>{{ 'ai.missing_brand' | T }}</li> }
+              @for (code of missingAttributes; track code) {
+                <li>{{ ('attrs.' + code) | T:{ currency: '' } }}</li>
+              }
+              @for (m of d.missing_information; track $index) {
+                <li dir="auto">{{ m }}</li>
+              }
+            </ul>
+          </div>
+
+          @if (d.keywords.length) {
+            <div class="ai__block">
+              <div class="ai__label">{{ 'ai.keywords' | T }}</div>
+              <div class="ai__tags">
+                @for (k of d.keywords; track $index) { <span class="ai__tag" dir="auto">{{ k }}</span> }
+              </div>
+            </div>
+          }
+
+          <div class="ai__actions">
+            <button type="button" class="btn-primary" [disabled]="loading || !editTitle.trim() || !editDescription.trim()" (click)="applyDraft()">{{ 'ai.apply' | T }}</button>
+            @if (photosChanged) {
+              <button type="button" class="btn-outline" [disabled]="loading || !files.length" (click)="analyse()">{{ 'ai.reanalyse' | T }}</button>
+            }
+            <button type="button" class="btn-outline" [disabled]="loading || !files.length" (click)="analyse(true)">{{ 'ai.regenerate' | T }}</button>
+          </div>
+        </div>
+      }
+
+      <button type="button" class="btn-ghost ai__close" (click)="open = false">{{ 'ai.close' | T }}</button>
+    </div>
+  }
+</section>

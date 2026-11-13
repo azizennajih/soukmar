@@ -25,6 +25,17 @@
       <p>{{ 'deposer.header_sub' | T }}</p>
     </div>
 
+    <!-- AI assistant: above the steps, so it stays visible and keeps its state on every step -->
+    @if (!isEdit) {
+      <app-ai-listing-assistant
+        [photos]="photos"
+        [maxPhotos]="maxPhotos"
+        (filesSelected)="onFilesSelected($event)"
+        (removePhoto)="removePhoto($event)"
+        (apply)="applyAiDraft($event)"
+      />
+    }
+
     <!-- Stepper -->
     <div class="stepper">
       @for (s of steps; track $index) {

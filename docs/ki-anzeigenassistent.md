@@ -1,6 +1,6 @@
-# KI-Anzeigenassistent: Analyse und Entscheidungsvorlage
+# KI-Anzeigenassistent
 
-Stand: 2026-11-13. Status: **Entscheidung des Betreibers offen, noch nichts entwickelt.**
+Stand: 2026-11-13. Status: **Weg 1 umgesetzt** (Entscheidung des Betreibers vom 2026-11-13). Auf dem Live-Server ist die KI aus, bis `OLLAMA_URL` gesetzt ist.
 
 Ziel: Anzeige in wenigen Schritten aus Produktfotos erstellen, zu 100 % ohne zusätzliche Kosten.
 
@@ -54,3 +54,43 @@ Geschwindigkeit (Schätzung, nicht gemessen): ohne GPU auf 4 modernen Kernen etw
 3. **Größerer Server.** Wäre technisch der einfachste Weg, verursacht aber monatliche Kosten und widerspricht damit der Vorgabe.
 
 Ein kostenpflichtiger Dienst springt in keinem Fall automatisch ein.
+
+## Umsetzung (Weg 1)
+
+### Ablauf
+
+1. Der Assistent („✨ Anzeige mit KI erstellen“, `components/ai-listing-assistant`) steht in `/deposer-annonce` über den Formularschritten und bleibt auf jedem Schritt sichtbar. Er nutzt dieselbe Fotoliste wie der Foto-Schritt.
+2. „Fotos analysieren“ schickt bis zu 6 Fotos an `POST /api/ai/listing-draft` (angemeldet). Das Backend prüft Format und Größe, entfernt doppelte Bilder, verkleinert Kopien für das Modell und fragt Ollama: erst alle Bilder gemeinsam (Artikel, Texte, Kategorie), dann ohne Bilder die Auswahlfelder der gewählten Unterkategorie.
+3. Die Antwort wird serverseitig geprüft (`lib/aiListing.ts`): nur vorhandene Kategorien und Unterkategorien, Auswahlwerte nur aus den Optionen, Marke nur wenn auf einem Foto lesbar, nie „Sonstige“ geraten.
+4. Die Vorschau zeigt Artikel, Titel, Beschreibung, Kategorie (mit Alternativen), erkannte Eigenschaften und was fehlt. Titel und Beschreibung sind dort bearbeitbar.
+5. Erst „Vorschlag übernehmen“ schreibt ins Formular. Selbst geschriebene Texte werden nur nach Rückfrage ersetzt. Die Anzeige entsteht wie bisher über `POST /api/listings` und geht in die Moderation.
+
+### Antwort von `POST /api/ai/listing-draft`
+
+`product_name`, `suggested_title`, `suggested_description`, `suggested_category` (`category`, `subcategory_code`, `subcategory_id`), `alternative_categories`, `attributes`, `missing_attributes`, `confidence` (0–1), `missing_information`, `keywords`, `brand`, `model`, `color`, `material`, `features`, `cached`, `images_analysed`.
+
+Fehler: 503 `AI_UNAVAILABLE` (nicht eingerichtet oder nicht erreichbar), 503 `AI_BUSY` (Warteschlange voll), 502 `AI_FAILED` (Antwort unbrauchbar), 429 (mehr als 20 Analysen je Stunde und Konto). In allen Fällen bleibt die manuelle Erstellung nutzbar.
+
+### Schutz und Sparsamkeit
+
+- Kein Zugang im Browser: Der Browser spricht nur mit der eigenen API, die Adresse des KI-Rechners steht nur in der Server-`.env`.
+- Dateien: JPEG, PNG, WebP, GIF, je höchstens 10 MB, Prüfung der Magic Bytes.
+- Gleiche Fotos (auch in anderer Reihenfolge) in derselben Sprache liefern 24 Stunden lang das gespeicherte Ergebnis; „Neu generieren“ umgeht das bewusst. Doppelte Fotos in einer Anfrage werden nur einmal analysiert.
+- Es läuft immer nur eine Analyse gleichzeitig, höchstens drei warten.
+
+### Einschalten (Betreiber)
+
+Auf einem eigenen Rechner mit mindestens 8 GB RAM, **nicht** auf dem Produktivserver:
+
+1. Ollama installieren (ollama.com) und `ollama pull qwen3-vl:4b` ausführen.
+2. Den Port 11434 nur für den Server erreichbar machen, zum Beispiel über einen WireGuard- oder SSH-Tunnel. Ollama hat keine eigene Anmeldung, der Port darf nie offen im Internet stehen.
+3. In der Backend-`.env` auf dem Server eintragen und die API neu starten:
+
+```
+OLLAMA_URL=http://<Adresse des KI-Rechners im Tunnel>:11434
+OLLAMA_MODEL=qwen3-vl:4b
+```
+
+Weitere Schalter: `OLLAMA_TIMEOUT_MS` (Standard 240000), `AI_IMAGE_MAX_PX` (Standard 768, kleiner ist schneller), `AI_ATTRIBUTE_PASS=off` (zweiten Durchlauf abschalten).
+
+Ohne `OLLAMA_URL` zeigt der Assistent „gerade nicht verfügbar“; es springt kein anderer Dienst ein.

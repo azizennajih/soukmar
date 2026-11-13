@@ -28,6 +28,8 @@ Keine `alert()/confirm()/prompt()`: `ToastService` (`toast.error/success/info`) 
 - **Moderation:** Neue Anzeigen sind `PENDING`, öffentlich erst nach Freigabe. Status nur über `/api/admin/moderation/*` ändern. Admin-UI `src/app/pages/admin/moderation/`, Doku `docs/anzeigenmoderation.md`.
 - **Login:** E-Mail/Passwort + optional Google/Facebook (`components/social-login`, Backend `POST /api/auth/social`). Buttons erscheinen nur, wenn `GOOGLE_CLIENT_ID` bzw. `FACEBOOK_APP_ID`+`FACEBOOK_APP_SECRET` im Backend-`.env` gesetzt sind. Instagram: kein eigener Login mehr (läuft über Facebook); TikTok liefert keine E-Mail. Neue externe Skripte/Frames brauchen einen Eintrag in der CSP in `src/server.ts`.
 
+- **KI-Anzeigenassistent:** `components/ai-listing-assistant` steht in `/deposer-annonce` über den Schritten (nur neue Anzeigen), nutzt dieselbe Fotoliste wie der Foto-Schritt und schreibt erst nach „Vorschlag übernehmen“ ins Formular (`applyAiDraft`; selbst geschriebene Texte nur nach Rückfrage ersetzen). Backend `/api/ai/*` mit selbst betriebenem Ollama, kein kostenpflichtiger Dienst; i18n-Block `ai.*`. Doku `docs/ki-anzeigenassistent.md`.
+
 ## Stolperfallen
 - **Neue Seite:** Route in `app.routes.ts` (+ `PRIVATE_PATHS`, falls Login-Seite) **und** in `app.routes.server.ts` (`CLIENT_ONLY_PATHS` bei privaten Seiten) eintragen und im Backend `src/lib/sitemap.ts` (`DISALLOWED_PATHS`). Der Dev-Server liest `app.routes.server.ts` nur beim Start: sonst 404 → `ng serve` neu starten.
 - **i18n-JSON** haben CRLF und mehr als 4000 Zeilen: nie mit `JSON.stringify` neu schreiben (riesiger Diff), neue Blöcke per Skript vor der letzten `}` anhängen und mit `JSON.parse` prüfen.
