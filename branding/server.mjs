@@ -20,12 +20,21 @@ http
     } else if (req.method === "GET" && url.pathname === "/reel") {
       res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
       res.end(fs.readFileSync(path.join(dir, "reel.html")));
+    } else if (req.method === "GET" && url.pathname === "/video") {
+      res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
+      res.end(fs.readFileSync(path.join(dir, "video.html")));
+    } else if (req.method === "GET" && /^\/(vendor|video\/shots)\/[\w.-]+\.(js|jpg)$/.test(url.pathname)) {
+      // Muxer-Bibliothek und Screenshots fuer video.html
+      const file = path.join(dir, url.pathname);
+      if (!fs.existsSync(file)) return res.writeHead(404).end();
+      res.writeHead(200, { "content-type": file.endsWith(".js") ? "text/javascript" : "image/jpeg" });
+      res.end(fs.readFileSync(file));
     } else if (req.method === "POST" && url.pathname === "/save-video") {
       const name = (url.searchParams.get("name") || "").replace(/[^\w-]/g, "");
       const chunks = [];
       req.on("data", (c) => chunks.push(c));
       req.on("end", () => {
-        const file = path.join(dir, "reel", `${name}.mp4`);
+        const file = path.join(dir, url.searchParams.get("dir") === "video" ? "video" : "reel", `${name}.mp4`);
         fs.mkdirSync(path.dirname(file), { recursive: true });
         fs.writeFileSync(file, Buffer.concat(chunks));
         res.writeHead(200).end("ok");

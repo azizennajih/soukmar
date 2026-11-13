@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>SouqMar24 Werbevideo-Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@500;600&family=Noto+Sans+Arabic:wght@600;800&display=swap" rel="stylesheet">
+<style>body{font:14px system-ui;margin:0;padding:1rem;background:#ddd}canvas{max-width:640px;max-height:640px;border-radius:12px;display:block}li{margin:.2rem 0}</style>
+<script src="/vendor/mp4-muxer.js"></script>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<ul id="log"></ul>
+<script>
+// Werbevideo (16:9) und Reel (9:16) mit echten Screenshots von souqmar24.com.
+// Jedes Bild wird einzeln gezeichnet und per WebCodecs kodiert: exakt 30 fps, unabhaengig von der Rechnergeschwindigkeit.
+//   /video                      -> alle Formate und Sprachen
+//   /video?format=reel&lang=de  -> nur eines
+//   /video?format=wide&lang=de&still=8  -> Standbild bei Sekunde 8
+const FPS = 30;
+const FORMATS = { reel: { W: 1080, H: 1920, file: 'reel-9x16', wide: false }, wide: { W: 1920, H: 1080, file: 'video-16x9', wide: true } };
+const C = { primary: '#D93D4A', primaryDark: '#B8313C', primaryLight: '#FEF1F2', goldLight: '#FEF6E4', accent: '#FFD95A', secondary: '#1E3A5F', navy: '#0F1F35', text: '#111827', muted: '#6B7280', white: '#FFFFFF' };
+const S_PATH = new Path2D('M43 21.5C41.5 15.5 22 14.5 22 25.5c0 10.5 21 5.5 21 15.5 0 11-19.5 10-22 3');
+// Symbole (24er-Raster, Linien)
+const ICONS = {
+  zap: ['M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z'],
+  shield: ['M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z', 'M9 12l2 2 4-4'],
+  chat: ['M7.9 20A9 9 0 1 0 4 16.1L2 22Z'],
+  globe: ['M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0z', 'M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20', 'M2 12h20'],
+};
+const ICON_ORDER = ['zap', 'shield', 'chat', 'globe'];
+
+// Aussagen entsprechen der Website (Anzeige in unter 2 Minuten, Pruefung durch das Team, Chat, 11 Sprachen).
+// scroll: wie weit der Screenshot scrollt (Quell-Pixel); bei fr/ar nur bis zu den Kategorien.
+const TEXTS = {
+  de: { rtl: false, hook: ['Etwas zu', 'verkaufen?'], hook2: 'Oder auf der Suche?', tagline: 'Dein Marktplatz in deiner Nähe',
+        showTitle: 'Alles an einem Ort', showSub: 'Von Fahrzeugen bis Immobilien',
+        benTitle: 'Darum SouqMar24', ben: ['Anzeige in 2 Minuten online', 'Jede Anzeige wird geprüft', 'Direkt per Chat schreiben', 'In 11 Sprachen'],
+        ctaTop: 'Kaufen & verkaufen – ganz einfach', cta: 'Jetzt entdecken', scrollM: 6100, scrollD: 1400 },
+  fr: { rtl: false, hook: ['Quelque chose', 'à vendre ?'], hook2: 'Ou envie d’acheter ?', tagline: 'Votre marché, près de chez vous',
+        showTitle: 'Tout au même endroit', showSub: 'Des véhicules à l’immobilier',
+        benTitle: 'Pourquoi SouqMar24', ben: ['Annonce en ligne en 2 minutes', 'Chaque annonce est vérifiée', 'Discutez directement par chat', 'Disponible en 11 langues'],
+        ctaTop: 'Achetez et vendez en toute simplicité', cta: 'Découvrir maintenant', scrollM: 2700, scrollD: 260 },
+  ar: { rtl: true, hook: ['عندك شيء', 'للبيع؟'], hook2: 'أو تبحث عن شيء؟', tagline: 'سوقك المحلي بالقرب منك',
+        showTitle: 'كل شيء في مكان واحد', showSub: 'من السيارات إلى العقارات',
+        benTitle: 'لماذا SouqMar24', ben: ['إعلانك على الإنترنت في دقيقتين', 'كل إعلان تتم مراجعته', 'تواصل مباشرة عبر الدردشة', 'متوفر بـ 11 لغة'],
+        ctaTop: 'اشترِ وبِع بكل سهولة', cta: 'اكتشف الآن', scrollM: 2700, scrollD: 260 },
+  en: { rtl: false, hook: ['Something', 'to sell?'], hook2: 'Or looking to buy?', tagline: 'Your marketplace, close to you',
+        showTitle: 'Everything in one place', showSub: 'From vehicles to real estate',
+        benTitle: 'Why SouqMar24', ben: ['Your ad online in 2 minutes', 'Every ad is reviewed', 'Chat directly with sellers', 'Available in 11 languages'],
+        ctaTop: 'Buy & sell – the easy way', cta: 'Discover now', scrollM: 6100, scrollD: 1400 },
+};
+
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const eOut = (p) => 1 - Math.pow(1 - p, 3);
+const eInOut = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+const eBack = (p) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); };
+const rise = (l, d, dur = 0.55) => eOut(clamp((l - d) / dur));
+const pop = (l, d, dur = 0.55) => { const p = clamp((l - d) / dur); return p === 0 ? 0 : eBack(p); };
+
+const font = (L, size, weight = 800) => (L.rtl ? `${weight >= 800 ? 800 : 600} ${size}px "Noto Sans Arabic", sans-serif` : `${weight} ${size}px "Plus Jakarta Sans", sans-serif`);
+const bodyFont = (L, size) => (L.rtl ? `600 ${size}px "Noto Sans Arabic", sans-serif` : `600 ${size}px Inter, sans-serif`);
+function fit(ctx, L, str, size, maxW, body = false) {
+  for (let s = size; s > 20; s -= 2) { ctx.font = body ? bodyFont(L, s) : font(L, s); if (ctx.measureText(str).width <= maxW) return s; }
+  return 20;
+}
+function wrap(ctx, str, maxW) {
+  const lines = []; let line = '';
+  for (const w of str.split(' ')) { const t = line ? line + ' ' + w : w; if (ctx.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t; }
+  if (line) lines.push(line); return lines;
+}
+// Text mit Einblendung (a = 0..1): steigt leicht auf. Gibt die Zeilenzahl zurueck.
+function text(ctx, L, str, x, y, o) {
+  const { size, color = C.white, align = 'center', maxW = 900, a = 1, body = false, lh = 1.18, baseline = 'alphabetic' } = o;
+  if (a <= 0) return 0;
+  ctx.save(); ctx.font = body ? bodyFont(L, size) : font(L, size); ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = baseline;
+  ctx.direction = L.rtl ? 'rtl' : 'ltr'; ctx.globalAlpha *= clamp(a);
+  const lines = wrap(ctx, str, maxW); lines.forEach((ln, i) => ctx.fillText(ln, x, y + (1 - a) * size * 0.5 + i * size * lh));
+  ctx.restore(); return lines.length;
+}
+function tile(ctx, cx, cy, size, bg, fg) {
+  if (size <= 0) return;
+  ctx.save(); ctx.translate(cx - size / 2, cy - size / 2);
+  ctx.shadowColor = 'rgba(0,0,0,.22)'; ctx.shadowBlur = size * 0.16; ctx.shadowOffsetY = size * 0.05;
+  ctx.fillStyle = bg; ctx.beginPath(); ctx.roundRect(0, 0, size, size, size * 14 / 64); ctx.fill(); ctx.shadowColor = 'transparent';
+  ctx.scale(size / 64, size / 64); ctx.strokeStyle = fg; ctx.lineWidth = 8; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.stroke(S_PATH);
+  ctx.restore();
+}
+function wordmark(ctx, cx, y, size, a, c1 = C.white, c2 = C.goldLight) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha *= clamp(a); ctx.font = `800 ${size}px "Plus Jakarta Sans", sans-serif`; ctx.textBaseline = 'alphabetic'; ctx.direction = 'ltr'; ctx.textAlign = 'left';
+  const w1 = ctx.measureText('SouqMar').width, w2 = ctx.measureText('24').width, x = cx - (w1 + w2) / 2, yy = y + (1 - a) * size * 0.4;
+  ctx.fillStyle = c1; ctx.fillText('SouqMar', x, yy); ctx.fillStyle = c2; ctx.fillText('24', x + w1, yy);
+  ctx.restore();
+}
+// Hintergruende: Verlauf mit zwei langsam wandernden Kreisen
+function backdrop(ctx, F, t, from, to, blob, blobAlpha) {
+  const g = ctx.createLinearGradient(0, 0, F.W, F.H); g.addColorStop(0, from); g.addColorStop(1, to);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, F.W, F.H);
+  ctx.save(); ctx.fillStyle = blob; ctx.globalAlpha = blobAlpha; const a = t * 0.3, r = Math.max(F.W, F.H) * 0.24;
+  ctx.beginPath(); ctx.arc(F.W * 0.12 + Math.cos(a) * 60, F.H * 0.12 + Math.sin(a) * 50, r, 0, 7); ctx.fill();
+  ctx.beginPath(); ctx.arc(F.W * 0.9 + Math.sin(a) * 60, F.H * 0.9 + Math.cos(a) * 50, r * 1.2, 0, 7); ctx.fill();
+  ctx.restore();
+}
+const bgRed = (ctx, F, t) => backdrop(ctx, F, t, '#E4485A', C.primaryDark, C.white, 0.08);
+const bgDark = (ctx, F, t) => backdrop(ctx, F, t, C.secondary, C.navy, C.white, 0.05);
+const bgCream = (ctx, F, t) => backdrop(ctx, F, t, '#FFFBF2', C.goldLight, C.primary, 0.07);
+
+function phone(ctx, img, x, y, w, h, scroll) {
+  const r = w * 0.15, b = w * 0.03, sx = x + b, sy = y + b, sw = w - 2 * b, sh = h - 2 * b, status = w * 0.115;
+  ctx.save(); ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = w * 0.14; ctx.shadowOffsetY = w * 0.05;
+  ctx.fillStyle = '#0B1220'; ctx.beginPath(); ctx.roundRect(x, y, w, h, r); ctx.fill(); ctx.restore();
+  ctx.save(); ctx.strokeStyle = 'rgba(255,255,255,.22)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.roundRect(x + 1, y + 1, w - 2, h - 2, r); ctx.stroke(); ctx.restore();
+  ctx.save(); ctx.beginPath(); ctx.roundRect(sx, sy, sw, sh, r - b); ctx.clip();
+  ctx.fillStyle = C.secondary; ctx.fillRect(sx, sy, sw, status); // Statusleiste in der Farbe der Kopfzeile
+  const srcH = (sh - status) / sw * img.width, s = Math.min(scroll, img.height - srcH);
+  ctx.imageSmoothingQuality = 'high'; ctx.drawImage(img, 0, s, img.width, srcH, sx, sy + status, sw, sh - status);
+  ctx.restore();
+  ctx.fillStyle = '#0B1220'; ctx.beginPath(); ctx.roundRect(x + w / 2 - w * 0.14, sy + w * 0.028, w * 0.28, w * 0.062, w * 0.031); ctx.fill();
+}
+function browser(ctx, img, x, y, w, h, scroll) {
+  const bar = 56;
+  ctx.save(); ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 70; ctx.shadowOffsetY = 26;
+  ctx.fillStyle = '#E9EDF2'; ctx.beginPath(); ctx.roundRect(x, y, w, h, 22); ctx.fill(); ctx.restore();
+  ctx.save(); ctx.beginPath(); ctx.roundRect(x, y, w, h, 22); ctx.clip();
+  ['#F87171', '#FBBF24', '#34D399'].forEach((c, i) => { ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x + 30 + i * 26, y + bar / 2, 8, 0, 7); ctx.fill(); });
+  ctx.fillStyle = C.white; ctx.beginPath(); ctx.roundRect(x + 120, y + 11, w - 240, bar - 22, 17); ctx.fill();
+  ctx.font = '600 20px Inter, sans-serif'; ctx.fillStyle = C.muted; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.direction = 'ltr'; ctx.fillText('souqmar24.com', x + w / 2, y + bar / 2 + 1);
+  const srcH = (h - bar) / w * img.width, s = Math.min(scroll, img.height - srcH);
+  ctx.imageSmoothingQuality = 'high'; ctx.drawImage(img, 0, s, img.width, srcH, x, y + bar, w, h - bar);
+  ctx.restore();
+}
+function card(ctx, L, x, y, w, h, icon, label, p, all) {
+  if (p <= 0) return;
+  const pad = h * 0.21, is = h * 0.58, ix = L.rtl ? w - pad - is : pad, iy = (h - is) / 2, gap = h * 0.2;
+  ctx.save(); ctx.globalAlpha *= clamp(p * 1.6); ctx.translate(x + w / 2, y + h / 2); ctx.scale(0.8 + 0.2 * p, 0.8 + 0.2 * p); ctx.translate(-w / 2, -h / 2);
+  ctx.shadowColor = 'rgba(17,24,39,.14)'; ctx.shadowBlur = 40; ctx.shadowOffsetY = 14;
+  ctx.fillStyle = C.white; ctx.beginPath(); ctx.roundRect(0, 0, w, h, h * 0.22); ctx.fill(); ctx.shadowColor = 'transparent';
+  ctx.fillStyle = C.primaryLight; ctx.beginPath(); ctx.roundRect(ix, iy, is, is, is * 0.28); ctx.fill();
+  ctx.save(); ctx.translate(ix + is * 0.24, iy + is * 0.24); ctx.scale(is * 0.52 / 24, is * 0.52 / 24);
+  ctx.strokeStyle = C.primary; ctx.lineWidth = 2.2; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ICONS[icon].forEach((d) => ctx.stroke(new Path2D(d))); ctx.restore();
+  const maxW = w - is - pad * 2 - gap, size = Math.min(...all.map((b) => fit(ctx, L, b, h * 0.27, maxW)));
+  text(ctx, L, label, L.rtl ? ix - gap : ix + is + gap, h / 2 + 2, { size, color: C.text, align: L.rtl ? 'right' : 'left', maxW: maxW + 10, baseline: 'middle' });
+  ctx.restore();
+}
+
+const SCENES = [
+  // 1) Aufhaenger
+  { dur: 3.0, draw(ctx, L, F, l, t) {
+      bgRed(ctx, F, t);
+      const cx = F.W / 2, maxW = F.W - (F.wide ? 400 : 140), base = F.wide ? 170 : 150, y0 = F.H / 2 - (F.wide ? 70 : 190);
+      const s = Math.min(fit(ctx, L, L.hook[0], base, maxW), fit(ctx, L, L.hook[1], base, maxW));
+      text(ctx, L, L.hook[0], cx, y0, { size: s, a: rise(l, 0.1), maxW: 9999 });
+      text(ctx, L, L.hook[1], cx, y0 + s * 1.16, { size: s, color: C.accent, a: rise(l, 0.45), maxW: 9999 });
+      ctx.font = font(L, s); const w = ctx.measureText(L.hook[1]).width * eOut(clamp((l - 0.8) / 0.5));
+      ctx.fillStyle = C.white; ctx.globalAlpha = 0.9; ctx.beginPath(); ctx.roundRect(cx - w / 2, y0 + s * 1.16 + s * (L.rtl ? 0.36 : 0.24), w, s * 0.07, s * 0.035); ctx.fill(); ctx.globalAlpha = 1;
+      text(ctx, L, L.hook2, cx, y0 + s * 1.16 + s * 0.95, { size: Math.round(s * 0.46), a: rise(l, 1.35), maxW: F.W - 160 });
+  } },
+  // 2) Logo
+  { dur: 2.6, draw(ctx, L, F, l, t) {
+      bgRed(ctx, F, t);
+      const cx = F.W / 2, cy = F.H / 2 - (F.wide ? 130 : 200), ts = F.wide ? 250 : 320;
+      for (let i = 0; i < 2; i++) { const p = clamp((l - 0.3 - i * 0.35) / 1.6); if (p > 0 && p < 1) { ctx.save(); ctx.globalAlpha = (1 - p) * 0.35; ctx.strokeStyle = C.white; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(cx, cy, ts * (0.6 + p * 1.1), 0, 7); ctx.stroke(); ctx.restore(); } }
+      tile(ctx, cx, cy, ts * pop(l, 0.1, 0.7), C.white, C.primary);
+      wordmark(ctx, cx, cy + ts / 2 + (F.wide ? 140 : 170), F.wide ? 120 : 128, rise(l, 0.6));
+      text(ctx, L, L.tagline, cx, cy + ts / 2 + (F.wide ? 235 : 280), { size: F.wide ? 54 : 58, color: C.goldLight, a: rise(l, 1.0), maxW: F.W - 160 });
+  } },
+  // 3) Die Seite im Geraet
+  { dur: 6.0, draw(ctx, L, F, l, t, A) {
+      bgDark(ctx, F, t);
+      const sp = eInOut(clamp((l - 1.3) / 3.8)), enter = 1 - eOut(clamp((l - 0.15) / 0.9)), float = Math.sin(t * 1.3) * 8;
+      if (!F.wide) {
+        const n = text(ctx, L, L.showTitle, 540, 330, { size: fit(ctx, L, L.showTitle, 88, 940), a: rise(l, 0.1), maxW: 960 });
+        text(ctx, L, L.showSub, 540, 330 + n * 86, { size: 46, color: '#CBD5E1', a: rise(l, 0.4), maxW: 940, body: true });
+        phone(ctx, A.m, 245, 500 + enter * 1500 + float, 590, 1200, sp * L.scrollM);
+      } else {
+        const tw = 640, tx = L.rtl ? F.W - 120 : 120, al = L.rtl ? 'right' : 'left';
+        ctx.font = font(L, 96); const lines = wrap(ctx, L.showTitle, tw).length, ty = 450 - (lines - 1) * 55;
+        text(ctx, L, L.showTitle, tx, ty, { size: 96, align: al, a: rise(l, 0.1), maxW: tw });
+        text(ctx, L, L.showSub, tx, ty + lines * 112 + 10, { size: 44, color: '#CBD5E1', align: al, a: rise(l, 0.4), maxW: tw, body: true });
+        const pa = rise(l, 0.8); // Adresse als Pille
+        if (pa > 0) { ctx.save(); ctx.globalAlpha = pa; ctx.font = '600 36px Inter, sans-serif'; const w = ctx.measureText('souqmar24.com').width + 72, px = L.rtl ? tx - w : tx, py = ty + lines * 112 + 80;
+          ctx.fillStyle = C.primary; ctx.beginPath(); ctx.roundRect(px, py, w, 76, 38); ctx.fill(); ctx.fillStyle = C.white; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.direction = 'ltr'; ctx.fillText('souqmar24.com', px + w / 2, py + 40); ctx.restore(); }
+        const bw = 900, bx = L.rtl ? 110 : F.W - 110 - bw, ph = L.rtl ? bx + bw - 190 : bx - 100;
+        browser(ctx, A.d, bx, 150 + enter * 1100, bw, 760, sp * L.scrollD);
+        phone(ctx, A.m, ph, 420 + (1 - eOut(clamp((l - 0.45) / 0.9))) * 900 + float, 290, 590, sp * L.scrollM);
+      }
+  } },
+  // 4) Vorteile
+  { dur: 5.2, draw(ctx, L, F, l, t) {
+      bgCream(ctx, F, t);
+      const cx = F.W / 2;
+      if (!F.wide) {
+        text(ctx, L, L.benTitle, cx, 430, { size: fit(ctx, L, L.benTitle, 88, 900), color: C.text, a: rise(l, 0.1), maxW: 9999 });
+        L.ben.forEach((b, i) => card(ctx, L, 80, 540 + i * 224, 920, 190, ICON_ORDER[i], b, pop(l, 0.5 + i * 0.5), L.ben));
+      } else {
+        text(ctx, L, L.benTitle, cx, 235, { size: 92, color: C.text, a: rise(l, 0.1), maxW: 9999 });
+        L.ben.forEach((b, i) => { const col = (i % 2) ^ (L.rtl ? 1 : 0), row = i >> 1; card(ctx, L, 130 + col * 850, 350 + row * 270, 810, 210, ICON_ORDER[i], b, pop(l, 0.5 + i * 0.5), L.ben); });
+      }
+      const ua = rise(l, 2.8); // Adresse unten
+      text(ctx, L, 'souqmar24.com', cx, F.wide ? 980 : 1540, { size: F.wide ? 44 : 52, color: C.primary, a: ua, maxW: 9999, body: true });
+  } },
+  // 5) Aufruf
+  { dur: 3.7, draw(ctx, L, F, l, t) {
+      bgRed(ctx, F, t);
+      const cx = F.W / 2, y = F.wide ? 250 : 600, ts = F.wide ? 190 : 250;
+      tile(ctx, cx, y, ts * pop(l, 0.1, 0.6), C.white, C.primary);
+      wordmark(ctx, cx, y + ts / 2 + (F.wide ? 125 : 160), F.wide ? 110 : 120, rise(l, 0.35));
+      text(ctx, L, L.ctaTop, cx, y + ts / 2 + (F.wide ? 210 : 270), { size: fit(ctx, L, L.ctaTop, F.wide ? 52 : 56, F.W - 140), color: C.goldLight, a: rise(l, 0.6), maxW: 9999 });
+      const s = pop(l, 0.9, 0.5) * (1 + 0.035 * Math.sin(Math.max(0, l - 1.4) * 5));
+      if (s > 0) { ctx.save(); ctx.translate(cx, y + ts / 2 + (F.wide ? 345 : 450)); ctx.scale(s, s); ctx.font = font(L, F.wide ? 56 : 62); const w = ctx.measureText(L.cta).width + 140, h = F.wide ? 124 : 136;
+        ctx.shadowColor = 'rgba(0,0,0,.25)'; ctx.shadowBlur = 40; ctx.shadowOffsetY = 14; ctx.fillStyle = C.white; ctx.beginPath(); ctx.roundRect(-w / 2, -h / 2, w, h, h / 2); ctx.fill(); ctx.shadowColor = 'transparent';
+        ctx.fillStyle = C.primary; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.direction = L.rtl ? 'rtl' : 'ltr'; ctx.fillText(L.cta, 0, 4); ctx.restore(); }
+      text(ctx, { rtl: false }, 'souqmar24.com', cx, y + ts / 2 + (F.wide ? 500 : 640), { size: F.wide ? 56 : 64, a: rise(l, 1.3), maxW: 9999, body: true });
+  } },
+];
+let acc = 0; for (const s of SCENES) { s.start = acc; acc += s.dur; }
+const DURATION = acc, WIPE = 0.55;
+
+function frame(ctx, L, F, A, t) {
+  let i = SCENES.findIndex((s) => t < s.start + s.dur); if (i < 0) i = SCENES.length - 1;
+  const s = SCENES[i], l = t - s.start;
+  ctx.globalAlpha = 1;
+  if (i > 0 && l < WIPE) { // Kreisblende: neue Szene waechst aus der Mitte ueber die alte
+    const prev = SCENES[i - 1]; ctx.save(); prev.draw(ctx, L, F, prev.dur, t, A); ctx.restore();
+    ctx.save(); ctx.beginPath(); ctx.arc(F.W / 2, F.H / 2, eInOut(l / WIPE) * Math.hypot(F.W, F.H) / 2, 0, 7); ctx.clip(); s.draw(ctx, L, F, l, t, A); ctx.restore();
+  } else { ctx.save(); s.draw(ctx, L, F, l, t, A); ctx.restore(); }
+}
+
+const loadImg = (src) => new Promise((ok, err) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => err(new Error('Bild fehlt: ' + src)); i.src = src; });
+const log = (m) => { const li = document.createElement('li'); li.textContent = m; document.getElementById('log').appendChild(li); };
+
+async function render(fmt, lang, canvas) {
+  const F = FORMATS[fmt], L = TEXTS[lang]; canvas.width = F.W; canvas.height = F.H;
+  const ctx = canvas.getContext('2d'), A = { m: await loadImg(`/video/shots/m-home-${lang}.jpg`), d: await loadImg(`/video/shots/d-home-${lang}.jpg`) };
+  const muxer = new Mp4Muxer.Muxer({ target: new Mp4Muxer.ArrayBufferTarget(), video: { codec: 'avc', width: F.W, height: F.H, frameRate: FPS }, fastStart: 'in-memory' });
+  let failed = null;
+  const enc = new VideoEncoder({ output: (chunk, meta) => muxer.addVideoChunk(chunk, meta), error: (e) => (failed = e) });
+  let cfg = { codec: 'avc1.640028', width: F.W, height: F.H, bitrate: 5_000_000, framerate: FPS };
+  if (!(await VideoEncoder.isConfigSupported(cfg)).supported) cfg = { ...cfg, codec: 'avc1.42E028' };
+  enc.configure(cfg);
+  const n = Math.round(DURATION * FPS);
+  for (let i = 0; i < n; i++) {
+    if (failed) throw failed;
+    frame(ctx, L, F, A, i / FPS);
+    const vf = new VideoFrame(canvas, { timestamp: Math.round(i * 1e6 / FPS), duration: Math.round(1e6 / FPS) });
+    enc.encode(vf, { keyFrame: i % FPS === 0 }); vf.close();
+    while (enc.encodeQueueSize > 6) await new Promise((r) => setTimeout(r, 5));
+    if (i % 15 === 0) { document.title = `${fmt}-${lang} ${Math.round(i / n * 100)}%`; await new Promise((r) => setTimeout(r, 0)); }
+  }
+  await enc.flush(); muxer.finalize();
+  const name = `${F.file}-${lang}`, buf = muxer.target.buffer;
+  const res = await fetch('/save-video?dir=video&name=' + encodeURIComponent(name), { method: 'POST', body: buf });
+  log(`${res.ok ? 'OK' : 'FEHLER'} ${name}.mp4 (${(buf.byteLength / 1048576).toFixed(1)} MB, ${DURATION.toFixed(1)} s, ${cfg.codec})`);
+}
+
+(async () => {
+  try {
+    await Promise.all(['800 100px "Plus Jakarta Sans"', '600 40px Inter', '800 60px "Noto Sans Arabic"', '600 60px "Noto Sans Arabic"'].map((f) => document.fonts.load(f, f.includes('Arabic') ? 'سوق مار إعلان 11' : 'SouqMar24 äé')));
+    const q = new URLSearchParams(location.search), fmts = q.get('format') ? [q.get('format')] : Object.keys(FORMATS), langs = q.get('lang') ? [q.get('lang')] : Object.keys(TEXTS);
+    const cv = document.getElementById('cv');
+    if (q.has('still')) {
+      const F = FORMATS[fmts[0]], lang = langs[0]; cv.width = F.W; cv.height = F.H;
+      frame(cv.getContext('2d'), TEXTS[lang], F, { m: await loadImg(`/video/shots/m-home-${lang}.jpg`), d: await loadImg(`/video/shots/d-home-${lang}.jpg`) }, parseFloat(q.get('still')));
+      document.title = 'STILL'; return;
+    }
+    for (const f of fmts) for (const l of langs) await render(f, l, cv);
+    document.title = 'FERTIG';
+  } catch (e) { log('FEHLER: ' + e.message); document.title = 'FEHLER'; }
+})();
+</script>
+</body>
+</html>
