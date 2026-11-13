@@ -39,10 +39,11 @@ Musik fügst du in Instagram, Facebook oder TikTok beim Hochladen hinzu (dort gi
 
 ## Werbevideo (16:9) und Werbe-Reel (9:16) mit echten Screenshots
 
-`branding/video/video-16x9-<de|fr|ar|en>.mp4` (1920×1080, für Facebook-Feed, YouTube) und `branding/video/reel-9x16-<de|fr|ar|en>.mp4` (1080×1920, für Reels, Stories, TikTok, Shorts). Je 20,5 s, 30 fps, H.264, ohne Ton.
+`branding/video/video-16x9-<de|fr|ar|en>.mp4` (1920×1080, für Facebook-Feed, YouTube) und `branding/video/reel-9x16-<de|fr|ar|en>.mp4` (1080×1920, für Reels, Stories, TikTok, Shorts). Je 20,5 s, 30 fps, H.264, mit eigener Musik (AAC, Stereo).
 Ablauf: Aufhänger ("Etwas zu verkaufen?"), Logo, die echte Seite im Handy bzw. Browser (scrollt), vier Vorteile, Aufruf mit `souqmar24.com`.
 Die Vorteile entsprechen den Aussagen der Website (Anzeige in unter 2 Minuten, Prüfung durch das Team, Chat, 11 Sprachen); keine Aussage zu Preisen.
 
+- Musik: wird im Browser erzeugt (`buildAudio` in `video.html`, 120 BPM, Am7 – Fmaj7 – C – G), also lizenzfrei und ohne fremde Rechte. Ohne Ton rendern: `http://localhost:4599/video?music=0` (Dateien enden dann auf `-ohne-ton`), z. B. wenn in Instagram/TikTok ein Titel aus deren Bibliothek darübergelegt werden soll.
 - Texte und Szenen: `branding/video.html` (`TEXTS`, `SCENES`).
 - Screenshots: `branding/video/shots/` (Startseite, Handy und Desktop, je Sprache; ohne Cookie-Hinweis und ohne Partner-Banner). Neu aufnehmen: `npm i puppeteer-core` in einem beliebigen Ordner, dann `node shots.mjs` (Kopie in `branding/video/shots.mjs`, nutzt das installierte Chrome).
 - Neu rendern: `node branding/server.mjs`, dann `http://localhost:4599/video` in Chrome öffnen und warten, bis der Tab-Titel `FERTIG` zeigt (nur eines: `?format=reel&lang=de`; Standbild: `?format=wide&lang=de&still=8`). Gerendert wird Bild für Bild über WebCodecs (`vendor/mp4-muxer.js`, MIT), daher ruckelfrei.

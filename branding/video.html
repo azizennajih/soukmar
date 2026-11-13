@@ -17,6 +17,7 @@
 //   /video                      -> alle Formate und Sprachen
 //   /video?format=reel&lang=de  -> nur eines
 //   /video?format=wide&lang=de&still=8  -> Standbild bei Sekunde 8
+//   /video?music=0              -> ohne Musik
 const FPS = 30;
 const FORMATS = { reel: { W: 1080, H: 1920, file: 'reel-9x16', wide: false }, wide: { W: 1920, H: 1080, file: 'video-16x9', wide: true } };
 const C = { primary: '#D93D4A', primaryDark: '#B8313C', primaryLight: '#FEF1F2', goldLight: '#FEF6E4', accent: '#FFD95A', secondary: '#1E3A5F', navy: '#0F1F35', text: '#111827', muted: '#6B7280', white: '#FFFFFF' };
@@ -227,13 +228,76 @@ function frame(ctx, L, F, A, t) {
   } else { ctx.save(); s.draw(ctx, L, F, l, t, A); ctx.restore(); }
 }
 
-const loadImg = (src) => new Promise((ok, err) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => err(new Error('Bild fehlt: ' + src)); i.src = src; });
+// Eigene Musik (lizenzfrei, im Browser erzeugt): 120 BPM, Am7 - Fmaj7 - C - G, baut sich mit den Szenen auf.
+// Flaeche + gezupfte Toene von Anfang an, Bass ab 4 s, Schlagzeug ab 6 s, Hi-Hat ab 12 s, Rauschen zu jedem Szenenwechsel.
+const SR = 48000;
+async function buildAudio() {
+  const ac = new OfflineAudioContext(2, Math.ceil(SR * DURATION), SR), hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
+  const master = ac.createGain(); master.gain.value = 0.8;
+  const comp = ac.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 3; comp.attack.value = 0.01; comp.release.value = 0.2;
+  master.connect(comp); comp.connect(ac.destination);
+  const padBus = ac.createBiquadFilter(); padBus.type = 'lowpass'; padBus.frequency.value = 1400; padBus.connect(master);
+  const arpBus = ac.createGain(), delay = ac.createDelay(1), fb = ac.createGain(), wet = ac.createGain();
+  delay.delayTime.value = 0.375; fb.gain.value = 0.32; wet.gain.value = 0.3;
+  arpBus.connect(master); arpBus.connect(delay); delay.connect(fb); fb.connect(delay); delay.connect(wet); wet.connect(master);
+  const noise = ac.createBuffer(1, SR, SR); { const d = noise.getChannelData(0); let s = 12345; for (let i = 0; i < d.length; i++) { s = (s * 1103515245 + 12345) & 0x7fffffff; d[i] = s / 0x3fffffff - 1; } }
+  const env = (g, t, a, peak, end) => { g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(0.0001, end); };
+  function tone(dest, type, f, t, dur, peak, a = 0.006, pan = 0) {
+    const o = ac.createOscillator(), g = ac.createGain(), p = ac.createStereoPanner(); o.type = type; o.frequency.value = f; p.pan.value = pan;
+    env(g, t, a, peak, t + dur); o.connect(g); g.connect(p); p.connect(dest); o.start(t); o.stop(t + dur + 0.05);
+  }
+  function pad(f, t, dur, peak) { // weiche Flaeche: zwei leicht verstimmte Dreiecke
+    for (const det of [-5, 5]) { const o = ac.createOscillator(), g = ac.createGain(); o.type = 'triangle'; o.frequency.value = f; o.detune.value = det;
+      g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(peak, t + 0.35); g.gain.setValueAtTime(peak, t + dur - 0.3); g.gain.linearRampToValueAtTime(0.0001, t + dur + 0.25);
+      o.connect(g); g.connect(padBus); o.start(t); o.stop(t + dur + 0.3); }
+  }
+  function kick(t, peak = 0.6) { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.setValueAtTime(130, t); o.frequency.exponentialRampToValueAtTime(45, t + 0.12);
+    g.gain.setValueAtTime(peak, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3); o.connect(g); g.connect(master); o.start(t); o.stop(t + 0.32); }
+  function hit(t, type, freq, q, dur, peak, sweepTo) { // Rauschen: Clap, Hi-Hat, Uebergang
+    const s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain(); s.buffer = noise; s.loop = true; f.type = type; f.Q.value = q; f.frequency.setValueAtTime(freq, t);
+    if (sweepTo) { f.frequency.exponentialRampToValueAtTime(sweepTo, t + dur); g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(peak, t + dur * 0.85); g.gain.linearRampToValueAtTime(0.0001, t + dur + 0.15); }
+    else env(g, t, 0.002, peak, t + dur);
+    s.connect(f); f.connect(g); g.connect(master); s.start(t); s.stop(t + dur + 0.2);
+  }
+  const CH = [{ b: 45, p: [57, 60, 64, 67] }, { b: 41, p: [57, 60, 64, 65] }, { b: 48, p: [55, 60, 64, 67] }, { b: 43, p: [55, 59, 62, 67] }], ARP = [0, 1, 2, 3, 2, 1, 2, 3];
+  for (let bar = 0; bar < 10; bar++) {
+    const t0 = bar * 2, c = CH[bar % 4];
+    c.p.forEach((m) => pad(hz(m), t0, 2, 0.075));
+    ARP.forEach((n, i) => tone(arpBus, 'triangle', hz(c.p[n] + 12), t0 + i * 0.25, 0.32, bar < 2 ? 0.15 : 0.2, 0.004, i % 2 ? 0.35 : -0.35));
+    if (t0 >= 4) [0, 0.75, 1.5].forEach((o) => tone(master, 'sine', hz(c.b), t0 + o, 0.36, 0.42, 0.01));
+    if (t0 >= 4 && t0 < 6) [0, 1].forEach((o) => kick(t0 + o, 0.5));
+    if (t0 >= 6) { [0, 0.5, 1, 1.5].forEach((o) => kick(t0 + o)); [0.5, 1.5].forEach((o) => hit(t0 + o, 'bandpass', 1700, 0.9, 0.13, 0.22)); }
+    if (t0 >= 12) [0.25, 0.75, 1.25, 1.75].forEach((o) => hit(t0 + o, 'highpass', 7500, 0.7, 0.045, 0.07));
+  }
+  CH[2].p.forEach((m) => pad(hz(m), 20, 0.5, 0.06)); tone(master, 'sine', hz(36), 20, 0.5, 0.45, 0.01); kick(20); // Schlussakkord C
+  SCENES.slice(1).forEach((s) => hit(s.start - 0.55, 'bandpass', 350, 1.2, 0.6, 0.1, 4500));
+  const buf = await ac.startRendering();
+  // Auf festen Spitzenpegel bringen, kurz ein- und ausblenden
+  let peak = 0; for (let c = 0; c < 2; c++) { const d = buf.getChannelData(c); for (let i = 0; i < d.length; i++) peak = Math.max(peak, Math.abs(d[i])); }
+  const k = peak > 0 ? 0.89 / peak : 1, n = buf.length, fin = SR * 0.03, fout = SR * 0.6;
+  for (let c = 0; c < 2; c++) { const d = buf.getChannelData(c); for (let i = 0; i < n; i++) d[i] *= k * Math.min(1, i / fin, (n - i) / fout); }
+  return buf;
+}
+async function encodeAudio(buf, muxer) {
+  const cfg = { codec: 'mp4a.40.2', sampleRate: SR, numberOfChannels: 2, bitrate: 160000 };
+  if (!(await AudioEncoder.isConfigSupported(cfg)).supported) throw new Error('AAC-Kodierung wird von diesem Browser nicht unterstuetzt');
+  let failed = null; const enc = new AudioEncoder({ output: (chunk, meta) => muxer.addAudioChunk(chunk, meta), error: (e) => (failed = e) });
+  enc.configure(cfg);
+  const L = buf.getChannelData(0), R = buf.getChannelData(1), step = 1024;
+  for (let i = 0; i < buf.length; i += step) {
+    const len = Math.min(step, buf.length - i), data = new Float32Array(len * 2); data.set(L.subarray(i, i + len), 0); data.set(R.subarray(i, i + len), len);
+    const ad = new AudioData({ format: 'f32-planar', sampleRate: SR, numberOfFrames: len, numberOfChannels: 2, timestamp: Math.round(i * 1e6 / SR), data }); enc.encode(ad); ad.close();
+  }
+  await enc.flush(); if (failed) throw failed;
+}
+
+const loadImg =(src) => new Promise((ok, err) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => err(new Error('Bild fehlt: ' + src)); i.src = src; });
 const log = (m) => { const li = document.createElement('li'); li.textContent = m; document.getElementById('log').appendChild(li); };
 
-async function render(fmt, lang, canvas) {
+async function render(fmt, lang, canvas, audio) {
   const F = FORMATS[fmt], L = TEXTS[lang]; canvas.width = F.W; canvas.height = F.H;
   const ctx = canvas.getContext('2d'), A = { m: await loadImg(`/video/shots/m-home-${lang}.jpg`), d: await loadImg(`/video/shots/d-home-${lang}.jpg`) };
-  const muxer = new Mp4Muxer.Muxer({ target: new Mp4Muxer.ArrayBufferTarget(), video: { codec: 'avc', width: F.W, height: F.H, frameRate: FPS }, fastStart: 'in-memory' });
+  const muxer = new Mp4Muxer.Muxer({ target: new Mp4Muxer.ArrayBufferTarget(), video: { codec: 'avc', width: F.W, height: F.H, frameRate: FPS }, ...(audio ? { audio: { codec: 'aac', numberOfChannels: 2, sampleRate: SR } } : {}), fastStart: 'in-memory' });
   let failed = null;
   const enc = new VideoEncoder({ output: (chunk, meta) => muxer.addVideoChunk(chunk, meta), error: (e) => (failed = e) });
   let cfg = { codec: 'avc1.640028', width: F.W, height: F.H, bitrate: 5_000_000, framerate: FPS };
@@ -248,10 +312,10 @@ async function render(fmt, lang, canvas) {
     while (enc.encodeQueueSize > 6) await new Promise((r) => setTimeout(r, 5));
     if (i % 15 === 0) { document.title = `${fmt}-${lang} ${Math.round(i / n * 100)}%`; await new Promise((r) => setTimeout(r, 0)); }
   }
-  await enc.flush(); muxer.finalize();
-  const name = `${F.file}-${lang}`, buf = muxer.target.buffer;
+  await enc.flush(); if (audio) await encodeAudio(audio, muxer); muxer.finalize();
+  const name = `${F.file}-${lang}${audio ? '' : '-ohne-ton'}`, buf = muxer.target.buffer;
   const res = await fetch('/save-video?dir=video&name=' + encodeURIComponent(name), { method: 'POST', body: buf });
-  log(`${res.ok ? 'OK' : 'FEHLER'} ${name}.mp4 (${(buf.byteLength / 1048576).toFixed(1)} MB, ${DURATION.toFixed(1)} s, ${cfg.codec})`);
+  log(`${res.ok ? 'OK' : 'FEHLER'} ${name}.mp4 (${(buf.byteLength / 1048576).toFixed(1)} MB, ${DURATION.toFixed(1)} s, ${cfg.codec}${audio ? ', mit Musik' : ', ohne Ton'})`);
 }
 
 (async () => {
@@ -264,7 +328,8 @@ async function render(fmt, lang, canvas) {
       frame(cv.getContext('2d'), TEXTS[lang], F, { m: await loadImg(`/video/shots/m-home-${lang}.jpg`), d: await loadImg(`/video/shots/d-home-${lang}.jpg`) }, parseFloat(q.get('still')));
       document.title = 'STILL'; return;
     }
-    for (const f of fmts) for (const l of langs) await render(f, l, cv);
+    const audio = q.get('music') === '0' ? null : await buildAudio(); // ?music=0 -> ohne Ton (Datei endet auf -ohne-ton)
+    for (const f of fmts) for (const l of langs) await render(f, l, cv, audio);
     document.title = 'FERTIG';
   } catch (e) { log('FEHLER: ' + e.message); document.title = 'FEHLER'; }
 })();
