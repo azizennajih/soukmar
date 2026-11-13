@@ -48,6 +48,8 @@ export class AiListingAssistantComponent implements OnInit, OnDestroy {
   apply = output<AiApplyPayload>();
 
   open = false;
+  /** false until the server says an AI runtime is set up; a server without one never shows the assistant. */
+  configured = false;
   /** null = not checked yet */
   available: boolean | null = null;
   maxImages = 6;
@@ -73,7 +75,7 @@ export class AiListingAssistantComponent implements OnInit, OnDestroy {
 
   checkStatus() {
     this.ai.status().subscribe({
-      next: s => { this.available = s.available; this.maxImages = s.maxImages || 6; this.cdr.markForCheck(); },
+      next: s => { this.configured = s.configured !== false; this.available = s.available; this.maxImages = s.maxImages || 6; this.cdr.markForCheck(); },
       error: () => { this.available = false; this.cdr.markForCheck(); },
     });
   }

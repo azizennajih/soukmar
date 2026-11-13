@@ -31,7 +31,7 @@ export interface AiListingDraft {
   images_analysed: number;
 }
 
-export interface AiStatus { available: boolean; maxImages: number; }
+export interface AiStatus { configured: boolean; available: boolean; maxImages: number; }
 
 /** AI listing assistant (self-hosted vision model behind our own API — the browser never talks to an AI service). */
 @Injectable({ providedIn: 'root' })

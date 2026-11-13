@@ -1,6 +1,6 @@
 # KI-Anzeigenassistent
 
-Stand: 2026-11-13. Status: **Weg 1 umgesetzt** (Entscheidung des Betreibers vom 2026-11-13). Auf dem Live-Server ist die KI aus, bis `OLLAMA_URL` gesetzt ist.
+Stand: 2026-11-13. Status: **Weg 1 umgesetzt** (Entscheidung des Betreibers vom 2026-11-13). Auf dem Live-Server ist die KI aus und der Assistent unsichtbar, bis `OLLAMA_URL` gesetzt ist.
 
 Ziel: Anzeige in wenigen Schritten aus Produktfotos erstellen, zu 100 % ohne zusätzliche Kosten.
 
@@ -93,4 +93,8 @@ OLLAMA_MODEL=qwen3-vl:4b
 
 Weitere Schalter: `OLLAMA_TIMEOUT_MS` (Standard 240000), `AI_IMAGE_MAX_PX` (Standard 768, kleiner ist schneller), `AI_ATTRIBUTE_PASS=off` (zweiten Durchlauf abschalten).
 
-Ohne `OLLAMA_URL` zeigt der Assistent „gerade nicht verfügbar“; es springt kein anderer Dienst ein.
+Ohne `OLLAMA_URL` erscheint der Assistent im Formular gar nicht. Ist die Variable gesetzt, der KI-Rechner aber nicht erreichbar, zeigt er „gerade nicht verfügbar“. Es springt in keinem Fall ein anderer Dienst ein.
+
+### Stand der Tests (2026-11-13)
+
+Ablauf im Browser gegen einen Test-Stellvertreter für Ollama geprüft. Der erste Lauf mit dem echten Modell auf dem Entwicklungs-PC (2 Kerne, 8 GB RAM) brach nach 753 Sekunden mit leerer Antwort ab; Ursache und Erkennungsqualität sind noch offen.
