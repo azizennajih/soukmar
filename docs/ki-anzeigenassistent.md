@@ -30,7 +30,7 @@ Ziel: Anzeige in wenigen Schritten aus Produktfotos erstellen, zu 100 % ohne zus
 
 | Modell | Größe | Lizenz | Produkterkennung | DE / FR / EN / AR | Bewertung |
 |---|---|---|---|---|---|
-| `qwen3-vl:4b` | 3,3 GB | Apache 2.0 | gut, starke Texterkennung auf Produkten (32 Sprachen) | gut / gut / sehr gut / brauchbar (im Test zu prüfen) | **Empfehlung ab 8 GB RAM** |
+| `qwen3-vl:4b-instruct` | 3,3 GB | Apache 2.0 | gut, starke Texterkennung auf Produkten (32 Sprachen) | gut / gut / sehr gut / brauchbar (im Test zu prüfen) | **Empfehlung ab 8 GB RAM** |
 | `gemma4:e2b` | 4,6–7,5 GB | Apache 2.0 | gut | sehr gut, über 140 Sprachen | beste Sprachqualität, braucht aber 12 GB RAM oder mehr |
 | `gemma3:4b` | 3,4 GB | Gemma Terms of Use (kommerziell erlaubt, aber keine Open-Source-Lizenz) | gut | gut, über 140 Sprachen | Alternative, Lizenz schwächer |
 | `qwen3-vl:2b` | 1,9 GB | Apache 2.0 | mäßig, mehr Fehler | schwächer | nur als Notlösung |
@@ -41,7 +41,7 @@ Geschwindigkeit (Schätzung, nicht gemessen): ohne GPU auf 4 modernen Kernen etw
 
 ### Ergebnis
 
-- **Modell:** `qwen3-vl:4b` über Ollama, per Umgebungsvariable austauschbar (z. B. gegen `gemma4:e2b` auf stärkerer Hardware).
+- **Modell:** `qwen3-vl:4b-instruct` über Ollama (nicht `qwen3-vl:4b`: das ist die Thinking-Variante, sie verbraucht die ganze Ausgabe fürs Nachdenken und liefert eine leere Antwort), per Umgebungsvariable austauschbar (z. B. gegen `gemma4:e2b` auf stärkerer Hardware).
 - **Lizenzkosten:** 0 € (Ollama MIT, Modell Apache 2.0).
 - **Laufende Kosten:** 0 €, sofern ein eigener Rechner die KI ausführt.
 - **Benötigte Hardware:** mindestens 8 GB RAM und 4 Kerne nur für die KI, besser eine GPU.
@@ -82,19 +82,21 @@ Fehler: 503 `AI_UNAVAILABLE` (nicht eingerichtet oder nicht erreichbar), 503 `AI
 
 Auf einem eigenen Rechner mit mindestens 8 GB RAM, **nicht** auf dem Produktivserver:
 
-1. Ollama installieren (ollama.com) und `ollama pull qwen3-vl:4b` ausführen.
+1. Ollama installieren (ollama.com) und `ollama pull qwen3-vl:4b-instruct` ausführen.
 2. Den Port 11434 nur für den Server erreichbar machen, zum Beispiel über einen WireGuard- oder SSH-Tunnel. Ollama hat keine eigene Anmeldung, der Port darf nie offen im Internet stehen.
 3. In der Backend-`.env` auf dem Server eintragen und die API neu starten:
 
 ```
 OLLAMA_URL=http://<Adresse des KI-Rechners im Tunnel>:11434
-OLLAMA_MODEL=qwen3-vl:4b
+OLLAMA_MODEL=qwen3-vl:4b-instruct
 ```
 
-Weitere Schalter: `OLLAMA_TIMEOUT_MS` (Standard 240000), `AI_IMAGE_MAX_PX` (Standard 768, kleiner ist schneller), `AI_ATTRIBUTE_PASS=off` (zweiten Durchlauf abschalten).
+Weitere Schalter: `OLLAMA_TIMEOUT_MS` (Standard 240000), `OLLAMA_NUM_CTX` (Standard 8192; reicht für die Anweisung und etwa sechs Fotos), `AI_IMAGE_MAX_PX` (Standard 768, kleiner ist schneller), `AI_ATTRIBUTE_PASS=off` (zweiten Durchlauf abschalten).
 
 Ohne `OLLAMA_URL` erscheint der Assistent im Formular gar nicht. Ist die Variable gesetzt, der KI-Rechner aber nicht erreichbar, zeigt er „gerade nicht verfügbar“. Es springt in keinem Fall ein anderer Dienst ein.
 
 ### Stand der Tests (2026-11-13)
 
-Ablauf im Browser gegen einen Test-Stellvertreter für Ollama geprüft. Der erste Lauf mit dem echten Modell auf dem Entwicklungs-PC (2 Kerne, 8 GB RAM) brach nach 753 Sekunden mit leerer Antwort ab; Ursache und Erkennungsqualität sind noch offen.
+Ablauf im Browser gegen einen Test-Stellvertreter für Ollama geprüft. Der erste Lauf mit dem echten Modell auf dem Entwicklungs-PC (2 Kerne, 8 GB RAM) brach nach 753 Sekunden mit leerer Antwort ab. Ursache: `qwen3-vl:4b` ist die Thinking-Variante; behoben durch den Standard `qwen3-vl:4b-instruct` und ein Kontextfenster von 8192 Tokens. Gemessen auf diesem PC: etwa 6 Tokens pro Sekunde beim Einlesen, 1,5–2,5 beim Schreiben, also geschätzt rund 10 Minuten je Analyse.
+
+**Zurückgestellt am 2026-11-15:** Das Thema ruht, bis ein Rechner oder Server für die KI vorhanden ist. Noch offen: Erkennung echter Produktfotos (einzeln, mehrere, verschiedene Kategorien, schlechte Bilder, Marken) in Deutsch, Französisch, Englisch und Arabisch, Zeitmessung auf der Zielhardware, Tunnel zum Server. Android und iOS haben den Assistenten noch nicht.
