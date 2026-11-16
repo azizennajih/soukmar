@@ -28,7 +28,7 @@
   text-align: left; cursor: pointer; text-decoration: none;
   transition: border-color .15s, background .15s;
 
-  &:hover { border-color: #cbd5e1; background: var(--bg); }
+  &:hover { border-color: var(--border-strong); background: var(--bg); }
 
   &__icon {
     flex-shrink: 0; width: 1.8rem; height: 1.8rem;
@@ -38,5 +38,5 @@
   }
   &__body { display: flex; flex-direction: column; gap: .2rem; min-width: 0; flex: 1; }
   &__name { font-size: .95rem; font-weight: 700; color: var(--text); }
-  &__chevron { font-size: 1.3rem; color: #cbd5e1; flex-shrink: 0; }
+  &__chevron { font-size: 1.3rem; color: var(--border-strong); flex-shrink: 0; }
 }

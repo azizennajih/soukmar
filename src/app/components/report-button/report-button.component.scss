@@ -1,9 +1,9 @@
 .report-btn {
   &__toggle {
     background: none; border: none; cursor: pointer;
-    font-size: .82rem; color: #94a3b8; padding: 0;
+    font-size: .82rem; color: var(--text-subtle); padding: 0;
     transition: color .15s;
-    &:hover { color: #e63946; }
+    &:hover { color: var(--primary); }
 
     &.report-btn--compact {
       font-size: .78rem;
@@ -18,25 +18,25 @@
 
   &__form {
     background: var(--white, #fff);
-    border: 1.5px solid var(--border, #e5e9ee);
+    border: 1.5px solid var(--border);
     border-radius: .75rem;
     padding: .9rem 1rem;
     display: flex; flex-direction: column; gap: .5rem;
     max-width: 320px;
 
     label {
-      font-size: .82rem; font-weight: 700; color: var(--text, #111827);
+      font-size: .82rem; font-weight: 700; color: var(--text);
     }
 
     textarea {
       width: 100%;
       padding: .55rem .7rem;
-      border: 1.5px solid var(--border, #e5e9ee);
+      border: 1.5px solid var(--border);
       border-radius: .6rem;
       font-family: inherit;
       font-size: .82rem;
       resize: vertical;
-      &:focus { outline: none; border-color: var(--primary, #D93D4A); }
+      &:focus { outline: none; border-color: var(--primary); }
     }
   }
 

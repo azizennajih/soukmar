@@ -10,9 +10,9 @@
 
   &__empty {
     text-align: center; padding: 5rem 1rem;
-    svg   { color: #cbd5e1; margin-bottom: 1rem; }
-    p     { font-size: 1.2rem; font-weight: 700; color: #374151; margin-bottom: .4rem; }
-    small { display: block; color: #94a3b8; }
+    svg   { color: var(--border-strong); margin-bottom: 1rem; }
+    p     { font-size: 1.2rem; font-weight: 700; color: var(--text); margin-bottom: .4rem; }
+    small { display: block; color: var(--text-subtle); }
   }
 
   &__list { display: flex; flex-direction: column; gap: .6rem; }
@@ -33,7 +33,7 @@
   background: var(--white); border: 1.5px solid var(--border); border-radius: .875rem;
   text-align: left; cursor: pointer; transition: border-color .15s, background .15s;
 
-  &:hover { border-color: #cbd5e1; background: var(--bg); }
+  &:hover { border-color: var(--border-strong); background: var(--bg); }
 
   &--unread { border-color: var(--primary-light); background: var(--primary-light); }
 

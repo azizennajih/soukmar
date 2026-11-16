@@ -56,7 +56,7 @@
   &__body { flex: 1; min-width: 0; }
   &__top { display: flex; justify-content: space-between; align-items: center; gap: .5rem; }
   &__name { font-weight: 700; font-size: .9rem; color: var(--text); }
-  &__stars span { color: #e2e8f0; font-size: .85rem; }
+  &__stars span { color: var(--border); font-size: .85rem; }
   &__stars span.filled { color: var(--gold); }
   &__comment { font-size: .87rem; color: var(--text); margin: .4rem 0; line-height: 1.5; }
   &__meta { font-size: .78rem; color: var(--text-muted); }

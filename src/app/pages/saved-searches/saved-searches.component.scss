@@ -13,7 +13,7 @@
   background: var(--white); border: 1.5px solid var(--border); border-radius: .875rem;
   text-align: left; cursor: pointer; transition: border-color .15s, background .15s;
 
-  &:hover { border-color: #cbd5e1; background: var(--bg); }
+  &:hover { border-color: var(--border-strong); background: var(--bg); }
 
   &__body { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
   &__name { font-size: .9rem; font-weight: 700; color: var(--text); }
@@ -23,9 +23,9 @@
 
   &__edit, &__remove {
     flex-shrink: 0; width: 1.8rem; height: 1.8rem; border-radius: 50%;
-    background: none; border: none; cursor: pointer; color: #94a3b8; font-size: .9rem;
+    background: none; border: none; cursor: pointer; color: var(--text-subtle); font-size: .9rem;
     display: flex; align-items: center; justify-content: center;
   }
   &__edit:hover { background: var(--primary-light); color: var(--primary); }
-  &__remove:hover { background: #fef2f2; color: #e63946; }
+  &__remove:hover { background: #fef2f2; color: var(--primary); }
 }

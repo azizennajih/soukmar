@@ -218,7 +218,7 @@
             </div>
           }
           @if (listing.whatsapp) {
-            <a [href]="'https://wa.me/' + whatsappDigits" target="_blank" class="detail__contact-btn detail__contact-btn--whatsapp icon-label">
+            <a [href]="'https://wa.me/' + whatsappDigits" target="_blank" rel="noopener noreferrer" class="detail__contact-btn detail__contact-btn--whatsapp icon-label">
               <app-icon name="message" [size]="16" /> WhatsApp · {{ listing.whatsapp }}
             </a>
           }

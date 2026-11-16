@@ -114,7 +114,9 @@ export class SeoService {
     const script = this.document.createElement('script');
     script.id = id;
     script.type = 'application/ld+json';
-    script.text = JSON.stringify(data);
+    // Listing titles and descriptions end up here. Inside a script element the server-rendered HTML is not escaped, so a
+    // title containing a closing script tag would otherwise break out of the block and run as code (stored XSS).
+    script.text = JSON.stringify(data).replace(/[<>&  ]/g, (c) => '\u' + c.charCodeAt(0).toString(16).padStart(4, '0'));
     this.document.head.appendChild(script);
   }
 
