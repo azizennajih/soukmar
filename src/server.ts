@@ -6,6 +6,7 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
+import { createHash } from 'node:crypto';
 import { DEFAULT_LANG, isSupportedLang, langFromAcceptLanguage } from './app/services/locale-routing';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
@@ -25,15 +26,17 @@ app.disable('x-powered-by');
 // (map tiles). Fonts and the country lookup are served by ourselves. Even if some HTML
 // were ever injected, a stolen login token could not be sent to an attacker's
 // server (connect-src) and no foreign script could be pulled in (script-src).
-// 'unsafe-inline' remains for scripts/styles because Angular's server rendering
-// emits inline hydration and style blocks.
+// Scripts: no 'unsafe-inline'. The few inline scripts Angular's server rendering emits (event replay,
+// stylesheet swap) are allowed by their SHA-256 hash, computed per rendered page (cspFor below), so an
+// injected <script> cannot run. 'unsafe-inline' remains for styles only: Angular emits inline style
+// blocks and bindings, and injected styles cannot run code or send data (connect-src).
 const CSP = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://connect.facebook.net",
-  "style-src 'self' 'unsafe-inline'",
+  "script-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://connect.facebook.net",
+  "style-src 'self' 'unsafe-inline' https://accounts.google.com",
   "font-src 'self' data:",
   "img-src 'self' data: blob: https://res.cloudinary.com https://*.tile.openstreetmap.org",
-  "connect-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://*.facebook.com",
+  "connect-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://*.facebook.com https://connect.facebook.net",
   "frame-src https://challenges.cloudflare.com https://accounts.google.com https://*.facebook.com",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
@@ -44,13 +47,34 @@ const CSP = [
   "frame-ancestors 'self'",
 ].join('; ');
 
+/** CSP for one response; `scriptHashes` are the inline scripts of that very page. */
+function cspFor(https: boolean, scriptHashes: string[] = []): string {
+  const base = scriptHashes.length ? CSP.replace("script-src 'self'", `script-src 'self' ${scriptHashes.join(' ')}`) : CSP;
+  return https ? base + '; upgrade-insecure-requests' : base;
+}
+
+/** SHA-256 source expressions of every executable inline <script> of an HTML page (data blocks such as
+ * application/json and ld+json are never executed, so they need none). */
+function inlineScriptHashes(html: string): string[] {
+  const hashes = new Set<string>();
+  for (const m of html.matchAll(/<script(\s[^>]*)?>([\s\S]*?)<\/script>/gi)) {
+    const attrs = m[1] ?? '';
+    if (/\ssrc\s*=/i.test(attrs)) continue;
+    const type = /\stype\s*=\s*["']?([^"'\s>]+)/i.exec(attrs)?.[1]?.toLowerCase();
+    if (type && type !== 'text/javascript' && type !== 'module') continue;
+    if (!m[2]) continue;
+    hashes.add(`'sha256-${createHash('sha256').update(m[2], 'utf8').digest('base64')}'`);
+  }
+  return [...hashes];
+}
+
 app.use((req, res, next) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(self), geolocation=(self), payment=(), usb=()');
   if (IS_PRODUCTION) {
     const https = req.headers['x-forwarded-proto'] === 'https';
-    res.setHeader('Content-Security-Policy', https ? CSP + '; upgrade-insecure-requests' : CSP);
+    res.setHeader('Content-Security-Policy', cspFor(https));
   }
   next();
 });
@@ -108,9 +132,19 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
   angularApp
     .handle(req)
-    .then((response) =>
-      response ? writeResponseToNodeResponse(response, res) : next(),
-    )
+    .then(async (response) => {
+      if (!response) { next(); return; }
+      if (IS_PRODUCTION && (response.headers.get('content-type') ?? '').includes('text/html')) {
+        // Allow exactly this page's inline scripts by hash (see the CSP comment above).
+        const html = await response.text();
+        const headers = new Headers(response.headers);
+        headers.set('Content-Security-Policy', cspFor(req.headers['x-forwarded-proto'] === 'https', inlineScriptHashes(html)));
+        headers.delete('content-length');
+        await writeResponseToNodeResponse(new Response(html, { status: response.status, statusText: response.statusText, headers }), res);
+        return;
+      }
+      await writeResponseToNodeResponse(response, res);
+    })
     .catch(next);
 });
 

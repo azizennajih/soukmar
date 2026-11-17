@@ -32,6 +32,8 @@ Keine `alert()/confirm()/prompt()`: `ToastService` (`toast.error/success/info`) 
 
 - **Chat-Fotos:** im Chat (`pages/chat`) Büroklammer-Menü mit drei versteckten Dateifeldern: Kamera (`capture="environment"`), Galerie, Datei. Vorschau mit Entfernen-Knopf, Komprimierung `compressListingPhoto`, Upload `UploadService.uploadChatImage` (`POST /api/upload/chat`, Backend entfernt EXIF/GPS und speichert privat/signiert), dann `send_message` mit `imageUrl`. Anzeige in der Sprechblase, Klick → Großansicht (`chat__lightbox`); Liste zeigt „📷 Bild“. i18n-Block `chatimg.*` (per `scripts/add-chatimg-i18n.cjs` angehängt). Backend siehe `soukmar-backend/CLAUDE.md`.
 
+- **CSP (`src/server.ts`):** `script-src` ohne `'unsafe-inline'`; die inline Skripte von Angular-SSR (Event-Replay, Stylesheet-Swap) erlaubt `cspFor()` pro Seite per SHA-256-Hash (`inlineScriptHashes()`, nur Produktion). Neue Inline-Skripte oder `on…=`-Attribute im HTML funktionieren dadurch nicht mehr ohne Anpassung. `style-src` behält `'unsafe-inline'`. Prüfen: `NODE_ENV=production PORT=4001 node dist/soukmar/server/server.mjs` und in der Konsole nach `script-src`-Verstößen suchen.
+
 ## Stolperfallen
 - **Neue Seite:** Route in `app.routes.ts` (+ `PRIVATE_PATHS`, falls Login-Seite) **und** in `app.routes.server.ts` (`CLIENT_ONLY_PATHS` bei privaten Seiten) eintragen und im Backend `src/lib/sitemap.ts` (`DISALLOWED_PATHS`). Der Dev-Server liest `app.routes.server.ts` nur beim Start: sonst 404 → `ng serve` neu starten.
 - **i18n-JSON** haben CRLF und mehr als 4000 Zeilen: nie mit `JSON.stringify` neu schreiben (riesiger Diff), neue Blöcke per Skript vor der letzten `}` anhängen und mit `JSON.parse` prüfen.
