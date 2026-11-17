@@ -8,6 +8,7 @@ import { firstValueFrom } from 'rxjs';
 export interface ChatMessage {
   id: string;
   content: string;
+  imageUrl?: string | null;
   type: 'TEXT' | 'OFFER' | 'SYSTEM';
   offerAmount?: number;
   offerStatus?: 'PENDING' | 'ACCEPTED' | 'REJECTED' | 'COUNTERED' | 'CANCELLED';
@@ -209,8 +210,8 @@ export class ChatService {
     this.socket?.emit('join_conversation', conversationId);
   }
 
-  sendMessage(conversationId: string, receiverId: string, listingId: string, content: string) {
-    this.socket?.emit('send_message', { conversationId, receiverId, listingId, content });
+  sendMessage(conversationId: string, receiverId: string, listingId: string, content: string, imageUrl?: string) {
+    this.socket?.emit('send_message', { conversationId, receiverId, listingId, content, ...(imageUrl ? { imageUrl } : {}) });
   }
 
   sendOffer(conversationId: string, receiverId: string, listingId: string, amount: number) {

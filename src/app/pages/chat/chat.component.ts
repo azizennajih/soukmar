@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { LocalizedRouterLinkDirective } from '../../directives/localized-router-link.directive';
-import { Subscription } from 'rxjs';
+import { Subscription, firstValueFrom } from 'rxjs';
 import { ChatService, ChatMessage, Conversation, CallState, IncomingCallInfo } from '../../services/chat.service';
 import { AuthService } from '../../services/auth.service';
 import { CountryDatePipe } from '../../pipes/country-date.pipe';
@@ -16,6 +16,8 @@ import { StarRatingComponent } from '../../components/star-rating/star-rating.co
 import { VerifiedBadgeComponent } from '../../components/verified-badge/verified-badge.component';
 import { BlockButtonComponent } from '../../components/block-button/block-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
+import { UploadService } from '../../services/upload.service';
+import { compressListingPhoto } from '../../utils/image-compression';
 
 @Component({
   selector: 'app-chat',
@@ -42,9 +44,17 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   loading = false;
   sendingOffer = false;
   listingStatus = '';
+  /** Photo picked for the next message (local preview until sent). */
+  pendingImage: File | null = null;
+  pendingPreview: string | null = null;
+  sendingImage = false;
+  showAttachMenu = false;
+  /** Photo shown enlarged. */
+  lightboxUrl: string | null = null;
 
   private dialog = inject(DialogService);
   private toast = inject(ToastService);
+  private upload = inject(UploadService);
   private subs: Subscription[] = [];
   private typingTimer: ReturnType<typeof setTimeout> | null = null;
   private shouldScroll = false;
@@ -141,13 +151,55 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.cdr.markForCheck();
   }
 
-  sendMessage() {
-    if (!this.messageText.trim() || !this.activeConv) return;
+  async sendMessage() {
+    const text = this.messageText.trim();
+    if ((!text && !this.pendingImage) || !this.activeConv || this.sendingImage) return;
+    const conv = this.activeConv;
     const partnerId = this.getPartnerId();
-    this.chatService.sendMessage(this.activeConv.id, partnerId, this.activeConv.listingId, this.messageText.trim());
+    let imageUrl: string | undefined;
+    if (this.pendingImage) {
+      this.sendingImage = true;
+      this.cdr.markForCheck();
+      try {
+        imageUrl = await firstValueFrom(this.upload.uploadChatImage(await compressListingPhoto(this.pendingImage)));
+      } catch (err: any) {
+        this.sendingImage = false;
+        this.toast.error(err?.status === 413 ? this.i18n.t('chatimg.err_big') : err?.status === 400 ? this.i18n.t('chatimg.err_type') : this.i18n.t('chatimg.err_upload'));
+        this.cdr.markForCheck();
+        return;
+      }
+      this.sendingImage = false;
+      this.clearPendingImage();
+    }
+    this.chatService.sendMessage(conv.id, partnerId, conv.listingId, text, imageUrl);
     this.messageText = '';
-    this.chatService.emitTyping(this.activeConv.id, false);
+    this.chatService.emitTyping(conv.id, false);
+    this.cdr.markForCheck();
   }
+
+  /** A file from the camera, gallery or file picker: checks it and shows the preview before sending. */
+  onImagePicked(e: Event) {
+    const input = e.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+    this.showAttachMenu = false;
+    if (!file) return;
+    if (!['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(file.type)) { this.toast.error(this.i18n.t('chatimg.err_type')); return; }
+    if (file.size > 25 * 1024 * 1024) { this.toast.error(this.i18n.t('chatimg.err_big')); return; }
+    this.clearPendingImage();
+    this.pendingImage = file;
+    this.pendingPreview = URL.createObjectURL(file);
+    this.cdr.markForCheck();
+  }
+
+  clearPendingImage() {
+    if (this.pendingPreview) URL.revokeObjectURL(this.pendingPreview);
+    this.pendingImage = null;
+    this.pendingPreview = null;
+  }
+
+  openImage(url: string) { this.lightboxUrl = url; }
+  closeImage() { this.lightboxUrl = null; }
 
   sendOffer() {
     const amount = parseFloat(this.offerAmount);
@@ -278,7 +330,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     const last = conv.messages[0];
     if (!last) return this.i18n.t('chat.no_message');
     if (last.type === 'OFFER') return this.i18n.t('chat.offer_short', { amount: String(last.offerAmount), currency: conv.listing?.currency ?? '' });
-    return last.content.slice(0, 40);
+    if (last.imageUrl && !last.content) return '📷 ' + this.i18n.t('chatimg.label');
+    return (last.imageUrl ? '📷 ' : '') + last.content.slice(0, 40);
   }
 
   ngAfterViewChecked() {
@@ -293,6 +346,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnDestroy() {
     this.subs.forEach(s => s.unsubscribe());
+    this.clearPendingImage();
     if (this.typingTimer) clearTimeout(this.typingTimer);
   }
 }

@@ -174,7 +174,14 @@
                 <span>{{ msg.createdAt | countryDate:false }}</span>
                 <span>{{ msg.createdAt | date:'HH:mm' }}</span>
               </div>
-              <div class="chat__bubble" [class.mine]="isMine(msg)">{{ msg.content }}</div>
+              <div class="chat__bubble" [class.mine]="isMine(msg)" [class.chat__bubble--image]="msg.imageUrl">
+                @if (msg.imageUrl) {
+                  <button type="button" class="chat__photo" (click)="openImage(msg.imageUrl)" [attr.aria-label]="'chatimg.alt' | T">
+                    <img [src]="msg.imageUrl" [alt]="'chatimg.alt' | T" loading="lazy" />
+                  </button>
+                }
+                @if (msg.content) { <span class="chat__bubble-text">{{ msg.content }}</span> }
+              </div>
             </div>
           }
         }
@@ -201,8 +208,30 @@
           }
         </div>
 
+        <!-- Photo preview before sending -->
+        @if (pendingPreview) {
+          <div class="chat__preview">
+            <img [src]="pendingPreview" [alt]="'chatimg.alt' | T" />
+            @if (sendingImage) { <span class="chat__preview-status">{{ 'chatimg.uploading' | T }}</span> }
+            <button type="button" class="chat__preview-remove" (click)="clearPendingImage()" [disabled]="sendingImage" [attr.aria-label]="'chatimg.remove' | T" [title]="'chatimg.remove' | T"><app-icon name="close" [size]="14" /></button>
+          </div>
+        }
+
         <!-- Input bar -->
         <div class="chat__input-bar">
+          <div class="chat__attach">
+            <button type="button" class="chat__offer-btn" (click)="showAttachMenu=!showAttachMenu" [disabled]="sendingImage" [title]="'chatimg.attach' | T" [attr.aria-label]="'chatimg.attach' | T" [attr.aria-expanded]="showAttachMenu"><app-icon name="image" [size]="19" /></button>
+            @if (showAttachMenu) {
+              <div class="chat__attach-menu">
+                <button type="button" (click)="cameraInput.click()"><app-icon name="camera" [size]="16" /> {{ 'chatimg.camera' | T }}</button>
+                <button type="button" (click)="galleryInput.click()"><app-icon name="image" [size]="16" /> {{ 'chatimg.gallery' | T }}</button>
+                <button type="button" (click)="fileInput.click()"><app-icon name="link" [size]="16" /> {{ 'chatimg.file' | T }}</button>
+              </div>
+            }
+            <input #cameraInput class="chat__file-input" type="file" accept="image/*" capture="environment" (change)="onImagePicked($event)" tabindex="-1" aria-hidden="true" />
+            <input #galleryInput class="chat__file-input" type="file" accept="image/jpeg,image/png,image/webp,image/gif" (change)="onImagePicked($event)" tabindex="-1" aria-hidden="true" />
+            <input #fileInput class="chat__file-input" type="file" accept="image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif" (change)="onImagePicked($event)" tabindex="-1" aria-hidden="true" />
+          </div>
           @if (isBuyer) {
             <button class="chat__offer-btn" (click)="showOfferInput=!showOfferInput" [title]="'listing.offer' | T"><app-icon name="offer" [size]="19" /></button>
           }
@@ -213,7 +242,7 @@
             [placeholder]="'chat.placeholder' | T"
             rows="1"
           ></textarea>
-          <button class="chat__send-btn" (click)="sendMessage()" [disabled]="!messageText.trim()">
+          <button class="chat__send-btn" (click)="sendMessage()" [disabled]="(!messageText.trim() && !pendingImage) || sendingImage">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
             </svg>
@@ -223,3 +252,10 @@
     }
   </main>
 </div>
+
+@if (lightboxUrl) {
+  <div class="chat__lightbox" (click)="closeImage()" (keydown.escape)="closeImage()" role="dialog" aria-modal="true" tabindex="-1">
+    <button type="button" class="chat__lightbox-close" (click)="closeImage()" [attr.aria-label]="'chatimg.close' | T"><app-icon name="close" [size]="22" /></button>
+    <img [src]="lightboxUrl" [alt]="'chatimg.alt' | T" (click)="$event.stopPropagation()" />
+  </div>
+}
