@@ -4,11 +4,8 @@ Marokkanisches Kleinanzeigen-Portal. **Stack:** Angular 22 (zoneless, OnPush, st
 **Pfad:** `C:\AIProjekte\soukmar` · **GitHub:** github.com/azizennajih/soukmar · **Dev:** `npm start` (Port 4200) · Build: `npx ng build`
 Backend, Android und iOS haben eigene `CLAUDE.md` (Backend: Tests, Moderation, API-Meldungen, Deployment).
 
-## Design — immer einhalten (Redesign 2026-11, gleiches Designsystem wie Android und iOS)
-- Markenidentität: **Rot** nur für wichtige Aktionen und aktive Zustände (nie als große Fläche oder Verlauf), **Weiß** als Grund, **Gelb** als gezielter Akzent für Angebote, Boosts, Premium und Hinweise.
-- Alle Farben, Radien und Schatten stehen als CSS-Variablen in `src/styles.scss`: `--primary` #D93D4A, `--primary-dark`, `--primary-light`, `--accent` #FFC533 (gelbe Fläche, immer dunkler Text), `--gold` #8F5F00 (Text auf hellem Grund), `--gold-light`, `--text`, `--text-muted`, `--text-subtle`, `--border`, `--border-strong`, `--bg` (weiß), `--surface` (#F5F5F7), `--radius` (Karten 1rem), `--radius-md` (Felder .75rem), `--radius-sm` (Badges .5rem), `--shadow*`, `--focus-ring`. **Nur diese nutzen, keine festen Farbwerte** in Komponenten (Ausnahme: Status-Töne grün/blau/gelb/rot der Badges und die `.cat-*`-Klassen).
-- Buttons sind rund (`999px`): `.btn-primary` (rot), `.btn-outline` (weiß mit Rand), `.btn-accent` (gelb), `.btn-ghost`. Keine Farbverläufe, kein farbiger Schein unter Buttons.
-- Anzeigenkarte: Preis zuerst, dann Titel; bezahlte Sichtbarkeit (Premium, Top, Spotlight, Pro) immer in Gelb, nie in Rot.
+## Design — immer einhalten
+- Farben, Radius, Schatten stehen als CSS-Variablen in `src/styles.scss` (`--primary` #D93D4A, `--secondary`, `--gold`, `--text`, `--text-muted`, `--border`, `--bg`, `--white`, `--radius`). **Nur diese nutzen, keine neuen oder hardcodierten Farben.**
 - Preise nie rot/fett-900: `color: var(--text)`, `font-weight: 700`.
 - Fonts: Inter (Body), Plus Jakarta Sans (h1–h5). Abstände in `rem` (px nur für 1px-Borders). Inputs/Buttons `.75rem` Radius, Pills `999px`. Container `.container` (max 1280px).
 - Globale Klassen (nicht neu schreiben): `.btn-primary .btn-outline .btn-ghost .card .badge-* .container .section .grid-2/3/4 .form-group .input-icon-wrap .empty-state .fade-in .auth-page .auth-card .auth-form`; Kategorie-Badges `.cat-<farbe>` (siehe `styles.scss`).
