@@ -69,10 +69,9 @@ export class ChatService {
 
   constructor(private api: ApiService) {}
 
-  connect() {
+  connect(token: string) {
     if (this.socket?.connected) return;
-    // No token in script: the browser sends the HttpOnly login cookie with the handshake.
-    this.socket = io(backendOrigin(), { withCredentials: true });
+    this.socket = io(backendOrigin(), { auth: { token } });
     this.socket.on('connect', () => console.log('Socket connected'));
     this.socket.on('new_message', (msg: ChatMessage) => {
       this.messages$.next([...this.messages$.getValue(), msg]);

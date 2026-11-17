@@ -60,7 +60,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   async ngOnInit() {
     if (!this.auth.isLoggedIn) { this.router.navigate(this.i18n.withLang(['/auth/login'])); return; }
-    this.chatService.connect();
+    const token = localStorage.getItem('soukmar_token')!;
+    this.chatService.connect(token);
 
     this.subs.push(
       this.chatService.messages$.subscribe(msgs => {

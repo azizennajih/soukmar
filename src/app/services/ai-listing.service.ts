@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { BrowserStorageService } from './browser-storage.service';
 import { apiBase } from '../config/api.config';
 
 export interface AiCategorySuggestion {
@@ -36,6 +37,7 @@ export interface AiStatus { configured: boolean; available: boolean; maxImages: 
 @Injectable({ providedIn: 'root' })
 export class AiListingService {
   private http = inject(HttpClient);
+  private storage = inject(BrowserStorageService);
   private base = apiBase();
 
   status(): Observable<AiStatus> {
@@ -44,10 +46,12 @@ export class AiListingService {
 
   /** `force` asks for a fresh result even if the same photos were analysed before. */
   draft(files: File[], lang: string, force = false): Observable<AiListingDraft> {
+    const token = this.storage.getItem('soukmar_token');
+    const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : new HttpHeaders();
     const form = new FormData();
     files.forEach(f => form.append('images', f));
     form.append('lang', lang);
     if (force) form.append('force', '1');
-    return this.http.post<AiListingDraft>(`${this.base}/ai/listing-draft`, form);
+    return this.http.post<AiListingDraft>(`${this.base}/ai/listing-draft`, form, { headers });
   }
 }

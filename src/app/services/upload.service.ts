@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { apiBase } from '../config/api.config';
 
@@ -10,18 +10,22 @@ export class UploadService {
   constructor(private http: HttpClient) {}
 
   uploadImages(files: File[], type: 'listing' | 'avatar' | 'idVerification' | 'banner' = 'listing'): Observable<{ urls: string[] }> {
+    const token = localStorage.getItem('soukmar_token');
+    const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : new HttpHeaders();
     const form = new FormData();
     files.forEach(f => form.append('images', f));
     form.append('type', type);
-    return this.http.post<{ urls: string[] }>(`${BASE_URL}/upload`, form);
+    return this.http.post<{ urls: string[] }>(`${BASE_URL}/upload`, form, { headers });
   }
 
   uploadFile(file: File, type: 'listing' | 'avatar' | 'idVerification' | 'banner' = 'avatar'): Observable<string> {
+    const token = localStorage.getItem('soukmar_token');
+    const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : new HttpHeaders();
     const form = new FormData();
     form.append('images', file);
     form.append('type', type);
     return new Observable(observer => {
-      this.http.post<{ urls: string[] }>(`${BASE_URL}/upload`, form).subscribe({
+      this.http.post<{ urls: string[] }>(`${BASE_URL}/upload`, form, { headers }).subscribe({
         next: res => { observer.next(res.urls[0]); observer.complete(); },
         error: err => observer.error(err)
       });

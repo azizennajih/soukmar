@@ -26,9 +26,7 @@ export const SIGNUP_EMAIL_KEY = 'soukmar_signup_email';
 /** Page the visitor wanted before registering — the confirmation link is usually opened in another tab, where the in-memory value is gone. */
 export const RETURN_URL_KEY = 'soukmar_return_url';
 const AUTH_PAGE = /\/auth\/(login|register|forgot-password|reset-password)(\?|#|$)/;
-/** Older versions kept the login token here, readable by any script on the page; it is removed on start. The login
- * now lives in an HttpOnly cookie set by the server. */
-const LEGACY_TOKEN_KEY = 'soukmar_token';
+const TOKEN_KEY = 'soukmar_token';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -53,7 +51,6 @@ export class AuthService {
     this.router.events.subscribe(e => {
       if (e instanceof NavigationEnd && !AUTH_PAGE.test(e.urlAfterRedirects)) this.lastPageBeforeAuth = e.urlAfterRedirects;
     });
-    this.storage.removeItem(LEGACY_TOKEN_KEY);
     const saved = this.storage.getItem(SESSION_KEY);
     if (saved) {
       try { this.currentUser.set(JSON.parse(saved)); } catch { }
@@ -63,16 +60,17 @@ export class AuthService {
 
   /** The saved session can be stale (e.g. saved before accounts had a
    * country, or verification flags changed since) — reload it from the
-   * server once on startup. Only runs in the browser and only when a session was saved (the cookie that proves it
-   * cannot be read by script, so the saved user is the hint that a login may exist). */
+   * server once on startup. Only runs in the browser, where a token exists. */
   private refreshFromServer(): void {
-    if (!this.currentUser()) return;
-    fetch(`${BASE}/auth/me`, { credentials: 'include', headers: { 'Accept-Language': this.i18n.lang() } })
+    const token = this.token;
+    if (!token) return;
+    fetch(`${BASE}/auth/me`, { headers: { Authorization: `Bearer ${token}`, 'Accept-Language': this.i18n.lang() } })
       .then(async res => {
         // 401: token expired; 404: the account no longer exists — either way the saved login is useless.
         if (res.status === 401 || res.status === 404) {
           this.currentUser.set(null);
           this.storage.removeItem(SESSION_KEY);
+          this.storage.removeItem(TOKEN_KEY);
           return;
         }
         if (!res.ok) return;
@@ -87,9 +85,13 @@ export class AuthService {
     return this.currentUser() !== null;
   }
 
+  get token(): string | null {
+    return this.storage.getItem(TOKEN_KEY);
+  }
+
   login(email: string, password: string): Promise<{ ok: boolean; unverified?: boolean; error?: string }> {
-    return this.postJson<{ user: AuthUser }>('/auth/login', { email, password, client: 'web', lang: this.i18n.lang() })
-      .then(res => { this.setSession(res.user); return { ok: true }; })
+    return this.postJson<{ user: AuthUser; token: string }>('/auth/login', { email, password, client: 'web', lang: this.i18n.lang() })
+      .then(res => { this.setSession(res.user, res.token); return { ok: true }; })
       .catch(e => {
         const err = e as Record<string, unknown>;
         return {
@@ -145,15 +147,14 @@ export class AuthService {
   }
 
   loginSocial(provider: 'google' | 'facebook', token: string): Promise<{ ok: boolean; error?: string }> {
-    return this.postJson<{ user: AuthUser }>('/auth/social', { provider, token, client: 'web', lang: this.i18n.lang() })
-      .then(res => { this.setSession(res.user); return { ok: true }; })
+    return this.postJson<{ user: AuthUser; token: string }>('/auth/social', { provider, token, client: 'web', lang: this.i18n.lang() })
+      .then(res => { this.setSession(res.user, res.token); return { ok: true }; })
       .catch(e => ({ ok: false, error: typeof (e as Record<string, unknown>)['error'] === 'string' ? (e as { error: string }).error : this.i18n.t('auth.social_error') }));
   }
 
   private postJson<T>(path: string, body: unknown): Promise<T> {
     return fetch(`${BASE}${path}`, {
       method: 'POST',
-      credentials: 'include',
       headers: { 'Content-Type': 'application/json', 'Accept-Language': this.i18n.lang() },
       body: JSON.stringify(body),
     }).then(async res => {
@@ -164,15 +165,20 @@ export class AuthService {
   }
 
   logout(): void {
-    // The HttpOnly cookie can only be removed by the server.
-    void fetch(`${BASE}/auth/logout`, { method: 'POST', credentials: 'include' }).catch(() => { /* offline: the cookie expires on its own */ });
     this.currentUser.set(null);
     this.storage.removeItem(SESSION_KEY);
+    this.storage.removeItem(TOKEN_KEY);
     this.router.navigate(this.i18n.withLang(['/']));
   }
 
-  private setSession(user: AuthUser): void {
+  /** Swaps the stored login token (the server issues a fresh one after a password change and revokes all older ones). */
+  replaceToken(token: string): void {
+    this.storage.setItem(TOKEN_KEY, token);
+  }
+
+  private setSession(user: AuthUser, token: string): void {
     this.currentUser.set(user);
     this.storage.setItem(SESSION_KEY, JSON.stringify(user));
+    this.storage.setItem(TOKEN_KEY, token);
   }
 }

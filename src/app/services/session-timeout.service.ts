@@ -76,14 +76,18 @@ export class SessionTimeoutService {
     if (Date.now() - this.lastRefresh >= REFRESH_EVERY_MS) void this.refresh();
   }
 
-  /** Asks the server to renew the login cookie — only ever called while the user is active, so an idle session
+  /** Asks the server for a fresh token — only ever called while the user is active, so an idle session
    * is never extended. A rejection means the server already ended the session. */
   private async refresh(): Promise<void> {
-    if (!this.auth.isLoggedIn) return;
+    const token = this.auth.token;
+    if (!token) return;
     this.lastRefresh = Date.now();
     try {
-      const res = await fetch(`${apiBase()}/auth/refresh`, { method: 'POST', credentials: 'include' });
-      if (res.status === 401) this.expire();
+      const res = await fetch(`${apiBase()}/auth/refresh`, { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
+      if (res.status === 401) { this.expire(); return; }
+      if (!res.ok) return;
+      const body = await res.json() as { token?: string };
+      if (body.token) this.auth.replaceToken(body.token);
     } catch { /* offline: try again on the next tick */ }
   }
 
