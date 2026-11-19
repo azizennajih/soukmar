@@ -218,6 +218,8 @@ input[type="checkbox"], input[type="radio"] {
 @media (max-width: 768px) {
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .grid-3 { grid-template-columns: 1fr; }
+  // Anzeigenkarten (Suche, Favoriten, Bildsuche): auch auf Tablet/Handy 2 pro Zeile
+  .grid-3--cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
   .grid-2 { grid-template-columns: 1fr; }
   .section { padding: 2rem 0; }
   .container { padding: 0 .875rem; }
@@ -226,7 +228,7 @@ input[type="checkbox"], input[type="radio"] {
   .grid-3, .grid-4 { grid-template-columns: 1fr; }
   .grid-2 { grid-template-columns: 1fr; }
   // Anzeigenkarten: auf dem Handy 2 pro Zeile statt 1 riesige Karte
-  .grid-4--cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .625rem; }
+  .grid-4--cards, .grid-3--cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .625rem; }
 }
 
 /* ===== MOBILE EMPTY STATE ===== */

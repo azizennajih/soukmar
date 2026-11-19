@@ -17,7 +17,7 @@
       <a routerLink="/annonces" class="btn-primary">{{ 'mes_favoris.browse_btn' | T }}</a>
     </div>
   } @else {
-    <div class="grid-3">
+    <div class="grid-3 grid-3--cards">
       @for (listing of listings; track listing.id) {
         <app-listing-card [listing]="listing" [initialFav]="true" (favChange)="onFavChange(listing.id, $event)" />
       }

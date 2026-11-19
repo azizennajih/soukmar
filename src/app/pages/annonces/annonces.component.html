@@ -269,7 +269,7 @@
         @if (viewMode === 'map') {
           <app-listings-map [listings]="listings" />
         } @else {
-          <div class="grid-3">
+          <div class="grid-3 grid-3--cards">
             @for (listing of listings; track listing.id; let i = $index) {
               <app-listing-card [listing]="listing" [initialFav]="isFav(listing)" />
               @if ((i + 1) % adsEvery === 0 && i < listings.length - 1 && inlineBanners().length > 0) {

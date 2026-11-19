@@ -27,7 +27,7 @@
     </div>
   } @else if (results.length > 0) {
     <div class="image-search__results-title">{{ 'image_search.results_count' | T }} ({{ results.length }})</div>
-    <div class="grid-3">
+    <div class="grid-3 grid-3--cards">
       @for (listing of results; track listing.id) {
         <app-listing-card [listing]="listing" />
       }
