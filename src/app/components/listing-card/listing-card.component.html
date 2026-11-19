@@ -90,7 +90,10 @@
         <span class="listing-card__city-name">{{ listing.city | cityLabel }}</span>
         @if (foreignCountry) { <app-flag-icon [iso]="foreignCountry" [size]="14" /> }
       </span>
-      <span class="listing-card__time">{{ timeDisplay }}</span>
+      <span class="listing-card__stats">
+        <span class="listing-card__views" [title]="'listing.views' | T"><app-icon name="eye" [size]="12" /> {{ listing.views ?? 0 }}</span>
+        <span class="listing-card__time">{{ timeDisplay }}</span>
+      </span>
     </div>
   </div>
 </a>

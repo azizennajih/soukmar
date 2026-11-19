@@ -184,6 +184,8 @@
     display: flex; align-items: center; gap: .3rem;
   }
 
+  &__stats { display: flex; align-items: center; gap: .6rem; flex-shrink: 0; }
+  &__views { display: inline-flex; align-items: center; gap: .2rem; }
   &__time { flex-shrink: 0; }
 
   // Handy: 2 Karten pro Zeile -> kompaktere Darstellung
@@ -204,6 +206,7 @@
 
     &__footer { font-size: .68rem; gap: .35rem; margin-top: .3rem; padding-top: .35rem; }
     &__city { min-width: 0; }
+    &__stats { gap: .35rem; }
     &__city-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
   }
 }
