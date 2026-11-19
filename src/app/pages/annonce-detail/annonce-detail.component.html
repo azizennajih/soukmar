@@ -242,7 +242,7 @@
         <h3>{{ 'listing.seller' | T }}</h3>
         <div class="detail__seller-info">
           <div class="detail__seller-avatar">{{ listing.user?.name?.[0]?.toUpperCase() || '?' }}</div>
-          <div>
+          <div class="detail__seller-body">
             <div class="detail__seller-name">{{ listing.user?.name || ('listing.anonymous' | T) }}</div>
             <app-verified-badge [emailVerified]="listing.user?.emailVerified" [phoneVerified]="listing.user?.phoneVerified" [idVerified]="listing.user?.idVerified" size="sm" />
             @if (listing.user?.city) {
